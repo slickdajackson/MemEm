@@ -1,13 +1,20 @@
 package app.memem.ime
 
 import android.inputmethodservice.InputMethodService
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import app.memem.R
+import app.memem.ui.MemPalette
 import app.memem.a11y.MememAccessibilityService
 import app.memem.debug.DebugLog
 import app.memem.engine.InsertStep
@@ -29,6 +36,7 @@ class MememImeService : InputMethodService() {
     private val main = Handler(Looper.getMainLooper())
     private lateinit var pipeline: MemePipeline
     private lateinit var panel: KeyboardPanel
+    private lateinit var shell: FrameLayout
     private val inserter by lazy { Inserter(this) }
     private val prefs by lazy { Prefs(this) }
     private val log by lazy { DebugLog(this) }
@@ -37,6 +45,9 @@ class MememImeService : InputMethodService() {
 
     override fun onCreate() {
         super.onCreate()
+        if (Build.VERSION.SDK_INT >= 35) {
+            window?.window?.let { WindowCompat.setDecorFitsSystemWindows(it, false) }
+        }
         pipeline = MemePipeline(this)
     }
 
@@ -76,13 +87,47 @@ class MememImeService : InputMethodService() {
             }
         })
         panel.setQwertz(prefs.qwertz)
-        return panel
+        val frame = FrameLayout(this)
+        frame.setBackgroundColor(MemPalette.PAPER)
+        frame.addView(
+            panel,
+            FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT),
+        )
+        ViewCompat.setOnApplyWindowInsetsListener(frame) { view, insets ->
+            val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val gestures = insets.getInsets(WindowInsetsCompat.Type.systemGestures())
+            val mandatory = insets.getInsets(WindowInsetsCompat.Type.mandatorySystemGestures())
+            val bottom = keyboardBottomInset(nav.bottom, gestures.bottom, mandatory.bottom)
+            view.setPadding(0, 0, 0, bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+        frame.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                ViewCompat.requestApplyInsets(v)
+            }
+
+            override fun onViewDetachedFromWindow(v: View) = Unit
+        })
+        shell = frame
+        return frame
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         if (::panel.isInitialized) panel.setQwertz(prefs.qwertz)
+        if (::shell.isInitialized) ViewCompat.requestApplyInsets(shell)
         pipeline.preload()
+    }
+
+    override fun onComputeInsets(outInsets: Insets) {
+        super.onComputeInsets(outInsets)
+        if (!::shell.isInitialized || !::panel.isInitialized) return
+        val pad = shell.paddingBottom
+        if (pad <= 0 || panel.width == 0) return
+        val loc = IntArray(2)
+        panel.getLocationInWindow(loc)
+        outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
+        outInsets.touchableRegion.set(loc[0], loc[1], loc[0] + panel.width, loc[1] + panel.height)
     }
 
     override fun onDestroy() {

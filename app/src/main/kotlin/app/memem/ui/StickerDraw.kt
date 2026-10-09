@@ -12,6 +12,10 @@ object MemPalette {
     const val BLUE = 0xFF1E88FF.toInt()
     const val PURPLE = 0xFF8B5CF6.toInt()
     const val HINT = 0xFF6B6256.toInt()
+    const val KEY = 0xFFFFFFFF.toInt()
+    const val KEY_YELLOW = 0xFFF3D98A.toInt()
+    const val KEY_YELLOW_ON = 0xFFFFCC00.toInt()
+    const val KEY_LINE = 0xFFD0CBC3.toInt()
 }
 
 fun drawSticker(

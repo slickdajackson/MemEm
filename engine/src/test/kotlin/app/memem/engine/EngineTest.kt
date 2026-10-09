@@ -210,9 +210,78 @@ class MemeLayoutTest {
         assertEquals(10f, placed.angle)
         assertEquals("Anton-Regular.ttf", fontFile("impact"))
         assertEquals("TitilliumWeb-Black.ttf", fontFile("thick"))
+        assertEquals("TitilliumWeb-SemiBold.ttf", fontFile("thin"))
         assertEquals("Kalam-Regular.ttf", fontFile("comic"))
         assertEquals("NotoSans-Bold.ttf", fontFile("unknown"))
     }
+}
+
+class TextBoxGoldenTest {
+    private val measurer = TextMeasurer { text, fontPx, _ ->
+        val lines = if (text.isEmpty()) listOf("") else text.split("\n")
+        val width = lines.maxOf { (it.length * fontPx * 0.62f).toInt().coerceAtLeast(1) }
+        val height = (lines.size * fontPx * 1.25f).toInt().coerceAtLeast(1)
+        width to height
+    }
+
+    @Test
+    fun tenTemplatesMatchMemegenBoxWithinThreePercent() {
+        val samples = listOf(
+            Sample("cmm", 720, 572, FieldSpec(anchorX = 0.33f, anchorY = 0.33f, scaleX = 0.46f, scaleY = 0.25f, angle = 23f, font = "thin", color = "black", align = "center")),
+            Sample("drake", 446, 698, FieldSpec(anchorX = 0f, anchorY = 0f, scaleX = 1f, scaleY = 0.2f, font = "thick", color = "white")),
+            Sample("drake", 446, 698, FieldSpec(anchorX = 0f, anchorY = 0.8f, scaleX = 1f, scaleY = 0.2f, font = "thick", color = "white")),
+            Sample("db", 720, 480, FieldSpec(style = "default", anchorX = 0.12f, anchorY = 0.7f, scaleX = 0.325f, scaleY = 0.1f, font = "thick", color = "white")),
+            Sample("db", 720, 480, FieldSpec(style = "default", anchorX = 0.55f, anchorY = 0.45f, scaleX = 0.175f, scaleY = 0.1f, font = "thick", color = "white")),
+            Sample("db", 720, 480, FieldSpec(style = "default", anchorX = 0.74f, anchorY = 0.66f, scaleX = 0.2f, scaleY = 0.1f, font = "thick", color = "white")),
+            Sample("ds", 458, 684, FieldSpec(style = "none", anchorX = 0.085f, anchorY = 0.085f, scaleX = 0.32f, scaleY = 0.095f, angle = 12.5f, font = "thin", color = "black")),
+            Sample("ds", 458, 684, FieldSpec(style = "none", anchorX = 0.455f, anchorY = 0.055f, scaleX = 0.23f, scaleY = 0.09f, angle = 10.5f, font = "thin", color = "black")),
+            Sample("ds", 458, 684, FieldSpec(anchorX = 0.04f, anchorY = 0.82f, scaleX = 0.92f, scaleY = 0.15f, font = "thick", color = "white")),
+            Sample("buzz", 500, 380, FieldSpec(anchorY = 0.8f, scaleY = 0.2f)),
+            Sample("fry", 603, 452, FieldSpec(anchorY = 0f, scaleY = 0.2f)),
+            Sample("slap", 646, 398, FieldSpec(anchorX = 0.18f, anchorY = 0.13f, scaleX = 0.35f, scaleY = 0.3f, angle = 44f)),
+            Sample("exit", 720, 644, FieldSpec(style = "default", anchorX = 0.46f, anchorY = 0.85f, scaleX = 0.32f, scaleY = 0.1f, angle = 9f, font = "thin", color = "white")),
+            Sample("crow", 700, 703, FieldSpec(anchorX = 0.615f, anchorY = 0.72f, scaleX = 0.3f, scaleY = 0.2f, angle = 12f, font = "comic", color = "black")),
+            Sample("doge", 620, 620, FieldSpec(anchorY = 0.8f, scaleY = 0.2f)),
+        )
+        val ids = samples.map { it.id }.toSet()
+        assertTrue(ids.containsAll(listOf("cmm", "drake", "db", "ds")))
+        assertTrue(ids.size >= 10)
+        for (sample in samples) {
+            val placed = placeText(listOf(sample.field), listOf("ich denke ihr verliert alles"), sample.width, sample.height, measurer).single()
+            val ref = memegenReference(sample.width, sample.height, sample.field)
+            val tol = sample.width * 0.03f
+            assertTrue("${sample.id} anchor x", kotlin.math.abs(placed.anchorX - ref.anchorX) < tol)
+            assertTrue("${sample.id} anchor y", kotlin.math.abs(placed.anchorY - ref.anchorY) < tol)
+            assertEquals(ref.boxW, placed.boxW)
+            assertEquals(ref.boxH, placed.boxH)
+            assertEquals(sample.field.angle, placed.angle)
+            assertEquals(sample.field.align, placed.align)
+            assertEquals(sample.field.color, placed.color)
+            assertEquals(sample.field.font, placed.fontKey)
+            val (cx, cy) = visualCenter(placed.anchorX, placed.anchorY, placed.boxW, placed.boxH, placed.angle)
+            assertTrue("${sample.id} cx $cx vs ${ref.centerX}", kotlin.math.abs(cx - ref.centerX) < tol)
+            assertTrue("${sample.id} cy $cy vs ${ref.centerY}", kotlin.math.abs(cy - ref.centerY) < tol)
+            val (w, h) = measurer.measure(placed.text, placed.fontPx, placed.fontKey)
+            assertTrue("${sample.id} text wider than box $w>${placed.boxW}", w <= placed.boxW)
+            assertTrue("${sample.id} text taller than box $h>${placed.boxH}", h <= placed.boxH)
+        }
+    }
+
+    private fun memegenReference(imageW: Int, imageH: Int, field: FieldSpec): Ref {
+        val anchorX = (imageW * field.anchorX).toInt()
+        val anchorY = (imageH * field.anchorY).toInt()
+        val boxW = (imageW * field.scaleX).toInt().coerceAtLeast(1)
+        val boxH = (imageH * field.scaleY).toInt().coerceAtLeast(1)
+        val rad = Math.toRadians(field.angle.toDouble())
+        val cos = kotlin.math.abs(kotlin.math.cos(rad))
+        val sin = kotlin.math.abs(kotlin.math.sin(rad))
+        val grownW = boxW * cos + boxH * sin
+        val grownH = boxW * sin + boxH * cos
+        return Ref(anchorX, anchorY, boxW, boxH, (anchorX + grownW / 2.0).toFloat(), (anchorY + grownH / 2.0).toFloat())
+    }
+
+    private data class Sample(val id: String, val width: Int, val height: Int, val field: FieldSpec)
+    private data class Ref(val anchorX: Int, val anchorY: Int, val boxW: Int, val boxH: Int, val centerX: Float, val centerY: Float)
 }
 
 class InsertPlanTest {

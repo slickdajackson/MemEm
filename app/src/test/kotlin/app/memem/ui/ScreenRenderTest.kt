@@ -38,6 +38,7 @@ class ScreenRenderTest {
             onBattery = {},
             onAckAutostart = {},
             onFinish = {},
+            onClose = {},
         )
     }
 
@@ -57,12 +58,34 @@ class ScreenRenderTest {
             onBattery = {},
             onAckAutostart = {},
                 onFinish = {},
+                onClose = {},
                 pinnedPage = 1,
             )
     }
 
     @Test
-    fun settings() = shoot("einstellungen.png", height = 2400) {
+    fun wizardStepSeven() = shoot("wizard-schritt-7.png", height = 2400) {
+        WizardScreen(
+            checks = WizardChecks(),
+            download = DownloadSnapshot(),
+            draft = "Testnachricht",
+            onDraft = {},
+            onDownload = {},
+            onEnableKeyboard = {},
+            onPickKeyboard = {},
+            onA11y = {},
+            onAppInfo = {},
+            onAutostart = {},
+            onBattery = {},
+            onAckAutostart = {},
+            onFinish = {},
+            onClose = {},
+            pinnedPage = 6,
+        )
+    }
+
+    @Test
+    fun settings() = shoot("hauptansicht.png", height = 3600) {
         SettingsScreen(
             state = SetupUi(
                 a11y = "Bedienungshilfe aus.",
@@ -70,7 +93,12 @@ class ScreenRenderTest {
                 insert = InsertPreference.CLIPBOARD,
                 models = "Embedding fehlt, Gemma fehlt",
                 hyperos = "Autostart an. Akku auf Keine Einschränkungen.",
+                incomplete = true,
+                modelsOn = false,
+                keyboardOn = false,
+                a11yOn = false,
             ),
+            tryDraft = "Testnachricht",
             onWizard = {},
             onKeyboard = {},
             onA11y = {},

@@ -49,6 +49,11 @@ class WizardActivity : AppCompatActivity() {
                 },
                 onFinish = {
                     prefs.wizardDone = true
+                    prefs.wizardClosed = true
+                    finish()
+                },
+                onClose = {
+                    prefs.wizardClosed = true
                     finish()
                 },
             )

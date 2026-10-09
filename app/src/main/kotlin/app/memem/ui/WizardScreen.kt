@@ -1,5 +1,6 @@
 package app.memem.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -65,6 +66,7 @@ fun WizardScreen(
     onBattery: () -> Unit,
     onAckAutostart: () -> Unit,
     onFinish: () -> Unit,
+    onClose: () -> Unit,
     initialPage: Int = 0,
     pinnedPage: Int? = null,
 ) {
@@ -97,12 +99,27 @@ fun WizardScreen(
         }
     }
     fun go(page: Int) {
-        scope.launch { pager.animateScrollToPage(page) }
+        scope.launch { pager.animateScrollToPage(page.coerceIn(0, PAGES - 1)) }
+    }
+    val shown = pinnedPage ?: pager.currentPage
+    BackHandler {
+        if (shown <= 0) onClose() else go(shown - 1)
     }
     Column(Modifier.fillMaxSize().background(Paper).padding(16.dp)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            Text("MEMEM", fontFamily = Display, fontSize = 28.sp, color = Ink)
-            MonoLabel("SCHRITT ${(pinnedPage ?: pager.currentPage) + 1} VON $PAGES")
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text("MEMEM", fontFamily = Display, fontSize = 28.sp, color = Ink)
+                MonoLabel("SCHRITT ${shown + 1} VON $PAGES")
+            }
+            StickerBox(fill = Cream, radius = 12.dp, shadow = 3.dp, onClick = onClose) {
+                Text(
+                    "Schließen",
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                    color = Ink,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                )
+            }
         }
         if (pinnedPage != null) {
             Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -155,38 +172,27 @@ private fun StepPage(
         else -> TryStep(draft, onDraft)
     }
     Spacer(Modifier.height(8.dp))
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (page > 0) {
-            Box(Modifier.weight(1f)) {
-                StickerButton("Zurück", Cream) { go(page - 1) }
+    if (page == PAGES - 1) {
+        StickerButton("Fertig, los geht's", Yellow, onClick = onFinish)
+        StickerButton("Zurück", Cream) { go(page - 1) }
+        MonoLabel("Schließen oben rechts geht jederzeit in die Hauptansicht, auch wenn noch etwas fehlt.")
+    } else {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (page > 0) {
+                Box(Modifier.weight(1f)) {
+                    StickerButton("Zurück", Cream) { go(page - 1) }
+                }
             }
-        }
-        val forwardLabel = when {
-            page == PAGES - 1 -> "Fertig"
-            !done(page) && !required(page) -> "Überspringen"
-            else -> "Weiter"
-        }
-        val allow = when {
-            page == PAGES - 1 -> draft.isNotBlank() && checks.models && checks.keyboardEnabled && checks.keyboardCurrent
-            required(page) -> done(page)
-            else -> true
-        }
-        if (allow) {
-            Box(Modifier.weight(1f)) {
-                StickerButton(forwardLabel, Yellow) {
-                    if (page == PAGES - 1) onFinish() else go(page + 1)
+            val forwardLabel = if (!done(page) && !required(page)) "Überspringen" else "Weiter"
+            val allow = !required(page) || done(page)
+            if (allow) {
+                Box(Modifier.weight(1f)) {
+                    StickerButton(forwardLabel, Yellow) { go(page + 1) }
                 }
             }
         }
-    }
-    if (required(page) && !done(page)) {
-        MonoLabel("Weiter gibt es, sobald der Haken da ist.")
-    }
-    if (page == PAGES - 1 && draft.isNotBlank() && !(checks.models && checks.keyboardEnabled && checks.keyboardCurrent)) {
-        MonoLabel("Erst Modelle, Tastatur einschalten und MemEm wählen.")
-        StickerButton("Zum offenen Schritt", Blue, light = true) {
-            val target = listOf(1, 2, 3).first { !done(it) }
-            go(target)
+        if (required(page) && !done(page)) {
+            MonoLabel("Weiter gibt es, sobald der Haken da ist. Schließen oben rechts geht trotzdem in die App.")
         }
     }
     Spacer(Modifier.height(12.dp))

@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -60,6 +61,9 @@ internal val Ink = Color(MemPalette.INK)
 internal val Yellow = Color(MemPalette.YELLOW)
 internal val Blue = Color(MemPalette.BLUE)
 internal val Purple = Color(MemPalette.PURPLE)
+internal val KeyWhite = Color(MemPalette.KEY)
+internal val KeyYellow = Color(MemPalette.KEY_YELLOW)
+internal val KeyLine = Color(MemPalette.KEY_LINE)
 internal val Display = FontFamily(Font(R.font.anton))
 internal val Mono = FontFamily.Monospace
 
@@ -71,6 +75,11 @@ data class SetupUi(
     val models: String = "",
     val download: String = "",
     val hyperos: String = "",
+    val modelsOn: Boolean = false,
+    val keyboardOn: Boolean = false,
+    val keyboardEnabled: Boolean = false,
+    val a11yOn: Boolean = false,
+    val incomplete: Boolean = false,
 )
 
 @Composable
@@ -85,11 +94,28 @@ fun SettingsScreen(
     onInsert: (InsertPreference) -> Unit,
     onDownload: () -> Unit,
     onHarness: () -> Unit,
+    tryDraft: String = "",
+    onTryDraft: (String) -> Unit = {},
+    onTryMeme: () -> Unit = {},
+    tryStatus: String = "",
+    tryPreviews: List<ImageBitmap> = emptyList(),
     scroll: Boolean = true,
 ) {
     val base = Modifier.background(Paper).padding(16.dp)
     val modifier = if (scroll) base.fillMaxSize().verticalScroll(rememberScrollState()) else base.fillMaxWidth()
     Column(modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        if (state.incomplete) {
+            StickerCard {
+                MonoLabel("NOCH OFFEN")
+                Headline("Einrichtung unvollständig")
+                androidx.compose.material3.Text(
+                    "Modelle, das Einschalten der Tastatur oder MemEm als aktive Tastatur fehlen noch.",
+                    color = Ink,
+                    fontSize = 15.sp,
+                )
+                StickerButton("Einrichtung fortsetzen", Yellow, onClick = onWizard)
+            }
+        }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painterResource(R.drawable.memem_logo),
@@ -104,7 +130,7 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.1.2   SIDELOAD")
+                MonoLabel("0.1.3   SIDELOAD")
             }
         }
         androidx.compose.material3.Text(
@@ -113,6 +139,76 @@ fun SettingsScreen(
             fontSize = 16.sp,
             color = Ink,
         )
+        StickerCard {
+            MonoLabel("STATUS")
+            Headline("Bereit?")
+            StatusLine("Modelle", state.modelsOn)
+            StatusLine(
+                "Tastatur",
+                state.keyboardOn,
+                when {
+                    state.keyboardOn -> "aktiv"
+                    state.keyboardEnabled -> "eingeschaltet, nicht aktiv"
+                    else -> "aus"
+                },
+            )
+            StatusLine("Bedienungshilfe", state.a11yOn, if (state.a11yOn) "an" else "aus")
+        }
+        StickerCard {
+            MonoLabel("PROBIEREN")
+            Headline("Drei Karten")
+            androidx.compose.material3.Text(
+                "Tippe einen Satz und drücke Meme. Die drei Karten erscheinen hier in der App.",
+                color = Ink,
+                fontSize = 15.sp,
+            )
+            StickerBox(fill = Paper, shadow = 3.dp) {
+                androidx.compose.foundation.text.BasicTextField(
+                    value = tryDraft,
+                    onValueChange = onTryDraft,
+                    textStyle = androidx.compose.ui.text.TextStyle(
+                        color = Ink,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Ink),
+                    modifier = Modifier.fillMaxWidth().padding(12.dp).height(64.dp),
+                    decorationBox = { inner ->
+                        Box {
+                            if (tryDraft.isEmpty()) {
+                                androidx.compose.material3.Text(
+                                    "Testnachricht",
+                                    color = Ink.copy(alpha = 0.45f),
+                                    fontSize = 18.sp,
+                                )
+                            }
+                            inner()
+                        }
+                    },
+                )
+            }
+            StickerButton("Meme", Yellow, onClick = onTryMeme)
+            if (tryStatus.isNotBlank()) MonoLabel(tryStatus)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                repeat(3) { index ->
+                    StickerBox(Modifier.weight(1f), fill = Cream, radius = 12.dp, shadow = 3.dp) {
+                        val image = tryPreviews.getOrNull(index)
+                        if (image != null) {
+                            Image(
+                                image,
+                                contentDescription = "Meme ${index + 1}",
+                                modifier = Modifier.fillMaxWidth().height(96.dp),
+                                contentScale = ContentScale.Crop,
+                            )
+                        } else {
+                            Box(Modifier.fillMaxWidth().height(96.dp), contentAlignment = Alignment.Center) {
+                                MonoLabel("0${index + 1}")
+                            }
+                        }
+                    }
+                }
+            }
+        }
         StickerButton("Einrichtung erneut", Yellow, onClick = onWizard)
         StickerCard {
             MonoLabel("EINRICHTUNG")
@@ -173,8 +269,8 @@ fun KeyboardArt(qwertz: Boolean, modifier: Modifier = Modifier) {
         modifier.background(Paper).padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            StickerBox(fill = Yellow, radius = 14.dp, shadow = 3.dp) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            FlatKey(fill = KeyYellow, radius = 12.dp) {
                 androidx.compose.material3.Text(
                     "Meme",
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 18.dp),
@@ -188,7 +284,7 @@ fun KeyboardArt(qwertz: Boolean, modifier: Modifier = Modifier) {
                 modifier = Modifier.size(44.dp),
             )
             repeat(3) { index ->
-                StickerBox(Modifier.weight(1f), fill = Cream, radius = 12.dp, shadow = 3.dp) {
+                FlatKey(Modifier.weight(1f), fill = KeyWhite, radius = 10.dp) {
                     Box(Modifier.fillMaxWidth().height(56.dp), contentAlignment = Alignment.Center) {
                         MonoLabel("0${index + 1}")
                     }
@@ -196,7 +292,7 @@ fun KeyboardArt(qwertz: Boolean, modifier: Modifier = Modifier) {
             }
         }
         rows.forEach { row ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 if (row.sideInset > 0f) Spacer(Modifier.weight(row.sideInset))
                 row.keys.forEach { key ->
                     val label = when (key.role) {
@@ -208,23 +304,16 @@ fun KeyboardArt(qwertz: Boolean, modifier: Modifier = Modifier) {
                         KeyRole.ENTER -> "⏎"
                         else -> key.text
                     }
-                    val fill = when (key.face) {
-                        KeyFace.YELLOW -> Yellow
-                        KeyFace.BLUE -> Blue
-                        KeyFace.CREAM -> Cream
-                    }
-                    val ink = if (key.face == KeyFace.BLUE) Color.White else Ink
-                    StickerBox(
+                    val fill = if (key.face == KeyFace.YELLOW) KeyYellow else KeyWhite
+                    FlatKey(
                         Modifier.weight(key.weight),
                         fill = fill,
-                        radius = if (key.pill) 18.dp else 10.dp,
-                        shadow = 3.dp,
-                        border = 2.dp,
+                        radius = if (key.pill) 20.dp else 6.dp,
                     ) {
                         Box(Modifier.fillMaxWidth().height(40.dp), contentAlignment = Alignment.Center) {
                             androidx.compose.material3.Text(
                                 label,
-                                color = ink,
+                                color = Ink,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = if (label.length > 2) 11.sp else 16.sp,
                                 fontFamily = if (key.role == KeyRole.SPACE) Mono else FontFamily.Default,
@@ -281,6 +370,26 @@ fun HarnessScreen() {
             )
         }
         MonoLabel(log)
+    }
+}
+
+@Composable
+private fun StatusLine(label: String, on: Boolean, detail: String = if (on) "da" else "fehlt") {
+    Row(
+        Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        androidx.compose.material3.Text(label, fontWeight = FontWeight.Bold, color = Ink)
+        StickerBox(fill = if (on) Yellow else Cream, radius = 10.dp, shadow = 2.dp, border = 2.dp) {
+            androidx.compose.material3.Text(
+                detail,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                fontFamily = Mono,
+                fontSize = 12.sp,
+                color = Ink,
+            )
+        }
     }
 }
 
@@ -352,6 +461,20 @@ private fun StickerToggle(label: String, checked: Boolean, onChange: (Boolean) -
             Box(Modifier.size(if (checked) 28.dp else 22.dp).padding(6.dp).background(Ink, RoundedCornerShape(6.dp)))
         }
     }
+}
+
+@Composable
+private fun FlatKey(
+    modifier: Modifier = Modifier,
+    fill: Color,
+    radius: Dp = 6.dp,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    val shape = RoundedCornerShape(radius)
+    Box(
+        modifier.clip(shape).background(fill).border(1.dp, KeyLine, shape),
+        content = content,
+    )
 }
 
 @Composable

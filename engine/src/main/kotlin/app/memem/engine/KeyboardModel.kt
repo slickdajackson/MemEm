@@ -89,7 +89,7 @@ private fun bottomRow(modeLabel: String) = KeyRow(
     listOf(
         KeyDef(modeLabel, role = KeyRole.MODE, weight = 1.45f, pill = true, face = KeyFace.YELLOW),
         KeyDef(",", role = KeyRole.EMOJI, weight = 1.05f),
-        KeyDef("🌐", role = KeyRole.GLOBE, weight = 1.05f, face = KeyFace.BLUE),
+        KeyDef("🌐", role = KeyRole.GLOBE, weight = 1.05f),
         KeyDef(" ", role = KeyRole.SPACE, weight = 3.9f),
         KeyDef(".", role = KeyRole.CHAR, weight = 1.05f),
         KeyDef("⏎", role = KeyRole.ENTER, weight = 1.5f, pill = true, face = KeyFace.YELLOW),

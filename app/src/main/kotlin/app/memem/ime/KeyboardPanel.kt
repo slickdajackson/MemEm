@@ -31,12 +31,11 @@ import app.memem.engine.shownLong
 import app.memem.engine.shownText
 import app.memem.engine.spaceLabel
 import app.memem.ui.MemPalette
-import app.memem.ui.drawSticker
 import kotlin.math.min
 
 /**
- * Gboard-like QWERTY (optional QWERTZ). Meme strip sits above the keys.
- * Shift and backspace are yellow. ?123 and enter are pills. Digits sit on the top row.
+ * Flat QWERTY (optional QWERTZ), like Gboard: light keys on cream, thin gray edge.
+ * Shift, backspace, ?123 and enter are a soft yellow. Digits sit on the top row.
  */
 class KeyboardPanel(context: Context, private val host: Host) : View(context) {
     interface Host {
@@ -105,7 +104,9 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
         val status = if (statusText.isBlank()) 0 else dp(18)
-        val height = dp(8) + dp(76) + status + dp(6) + 4 * (dp(50) + dp(4) + dp(5)) + dp(10)
+        val pad = dp(6)
+        val gap = dp(5)
+        val height = pad + dp(68) + gap + status + 4 * dp(50) + 3 * gap + pad
         setMeasuredDimension(width, height)
     }
 
@@ -264,7 +265,6 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         previewRects.clear()
         val pad = dp(6).toFloat()
         val gap = dp(5).toFloat()
-        val shadow = dp(4).toFloat()
         var y = pad
         val logo = dp(40).toFloat()
         memeRect = RectF(pad, y, pad + dp(68), y + dp(68))
@@ -273,13 +273,12 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         val slot = (width - left - pad - gap * 2) / 3f
         for (index in 0 until 3) {
             val x = left + index * (slot + gap)
-            val rect = RectF(x, y, x + slot - shadow, y + dp(68))
+            val rect = RectF(x, y, x + slot, y + dp(68))
             previewRects.add(rect)
             hits.add(Hit(Kind.PREVIEW, rect, null, index))
         }
-        y += dp(76)
+        y = memeRect.bottom + gap
         if (statusText.isNotBlank()) y += dp(18)
-        y += dp(4)
         val keyH = dp(50).toFloat()
         val rows = keyboardRows(board, script)
         for (row in rows) {
@@ -291,25 +290,23 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
             var x = pad + row.sideInset * unit
             for (key in visible) {
                 val w = unit * key.weight
-                val rect = RectF(x, y, x + w - shadow, y + keyH)
+                val rect = RectF(x, y, x + w, y + keyH)
                 val kind = if (key.role == KeyRole.DELETE) Kind.DELETE else Kind.KEY
                 hits.add(Hit(kind, rect, key, -1))
                 x += w + gap
             }
-            y += keyH + shadow + gap
+            y += keyH + gap
         }
     }
 
     private fun drawMemeRow(canvas: Canvas) {
         val memePressed = active?.kind == Kind.MEME
-        drawSticker(canvas, memeRect, MemPalette.YELLOW, dp(14).toFloat(), dp(2.5f).toFloat(), dp(4).toFloat(), memePressed, paint)
-        val label = "Meme"
+        drawFlat(canvas, memeRect, MemPalette.KEY_YELLOW, dp(12).toFloat(), memePressed)
         paint.color = MemPalette.INK
         paint.typeface = Typeface.DEFAULT_BOLD
         paint.textSize = sp(14f)
         paint.textAlign = Paint.Align.CENTER
-        val body = bodyOf(memeRect, memePressed)
-        canvas.drawText(label, body.centerX(), body.centerY() + sp(5f), paint)
+        canvas.drawText("Meme", memeRect.centerX(), memeRect.centerY() + sp(5f), paint)
         val logoSize = dp(36).toFloat()
         val logoLeft = memeRect.right + dp(6)
         val logoTop = memeRect.centerY() - logoSize / 2f
@@ -319,20 +316,19 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         }
         previewRects.forEachIndexed { index, rect ->
             val pressed = active?.kind == Kind.PREVIEW && active?.index == index && hitMatches(active, Kind.PREVIEW, index)
-            drawSticker(canvas, rect, MemPalette.CREAM, dp(12).toFloat(), dp(2.5f).toFloat(), dp(4).toFloat(), pressed, paint)
-            val face = bodyOf(rect, pressed)
+            drawFlat(canvas, rect, MemPalette.KEY, dp(10).toFloat(), pressed)
             val bitmap = previews.getOrNull(index)
             if (bitmap != null && !bitmap.isRecycled) {
                 canvas.save()
-                canvas.clipRect(face)
-                canvas.drawBitmap(bitmap, null, inset(face, dp(3).toFloat()), paint)
+                canvas.clipRect(inset(rect, dp(4).toFloat()))
+                canvas.drawBitmap(bitmap, null, inset(rect, dp(6).toFloat()), paint)
                 canvas.restore()
             } else {
                 paint.color = MemPalette.HINT
                 paint.typeface = Typeface.MONOSPACE
                 paint.textSize = sp(12f)
                 paint.textAlign = Paint.Align.CENTER
-                canvas.drawText("0${index + 1}", face.centerX(), face.centerY() + sp(4f), paint)
+                canvas.drawText("0${index + 1}", rect.centerX(), rect.centerY() + sp(4f), paint)
             }
         }
     }
@@ -341,15 +337,14 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         val key = hit.key ?: return
         val pressed = isPressed(hit) && !emojiOpen
         val fill = when {
-            key.role == KeyRole.SHIFT && shift != ShiftState.OFF -> MemPalette.INK
-            key.face == KeyFace.YELLOW -> MemPalette.YELLOW
-            key.face == KeyFace.BLUE -> MemPalette.BLUE
-            else -> MemPalette.CREAM
+            key.role == KeyRole.SHIFT && shift != ShiftState.OFF -> MemPalette.KEY_YELLOW_ON
+            key.face == KeyFace.YELLOW -> MemPalette.KEY_YELLOW
+            else -> MemPalette.KEY
         }
-        val radius = if (key.pill) hit.rect.height() / 2f else dp(12).toFloat()
-        drawSticker(canvas, hit.rect, fill, radius, dp(2.5f).toFloat(), dp(4).toFloat(), pressed, paint)
-        val face = bodyOf(hit.rect, pressed)
-        val ink = if (fill == MemPalette.INK || fill == MemPalette.BLUE) 0xFFFFFFFF.toInt() else MemPalette.INK
+        val radius = if (key.pill) hit.rect.height() / 2f else dp(6).toFloat()
+        drawFlat(canvas, hit.rect, fill, radius, pressed)
+        val face = hit.rect
+        val ink = MemPalette.INK
         when (key.role) {
             KeyRole.SHIFT -> drawShift(canvas, face, ink, shift == ShiftState.LOCK)
             KeyRole.DELETE -> drawDelete(canvas, face, ink)
@@ -389,7 +384,7 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         val w = dp(42).toFloat()
         val h = dp(40).toFloat()
         val rect = RectF(hit.rect.centerX() - w / 2f, hit.rect.top - h - dp(6), hit.rect.centerX() + w / 2f, hit.rect.top - dp(6))
-        drawSticker(canvas, rect, MemPalette.YELLOW, dp(10).toFloat(), dp(2.5f).toFloat(), dp(3).toFloat(), false, paint)
+        drawFlat(canvas, rect, MemPalette.KEY, dp(8).toFloat(), false)
         paint.color = MemPalette.INK
         paint.textSize = sp(18f)
         paint.typeface = Typeface.DEFAULT_BOLD
@@ -405,7 +400,7 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         left = left.coerceIn(dp(4).toFloat(), (getWidth() - width - dp(4)).coerceAtLeast(dp(4).toFloat()))
         val top = (anchor.top - dp(52)).coerceAtLeast(dp(4).toFloat())
         val strip = RectF(left, top, left + width, top + dp(46))
-        drawSticker(canvas, strip, MemPalette.CREAM, dp(12).toFloat(), dp(2.5f).toFloat(), dp(3).toFloat(), false, paint)
+        drawFlat(canvas, strip, MemPalette.KEY, dp(10).toFloat(), false)
         paint.textSize = sp(18f)
         paint.textAlign = Paint.Align.CENTER
         emojis.forEachIndexed { index, emoji ->
@@ -514,9 +509,25 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         canvas.drawText(",", face.centerX(), face.bottom - dp(6), paint)
     }
 
-    private fun bodyOf(rect: RectF, pressed: Boolean): RectF {
-        val shadow = dp(4).toFloat()
-        return if (pressed) RectF(rect.left + shadow, rect.top + shadow, rect.right + shadow, rect.bottom + shadow) else rect
+    private fun drawFlat(canvas: Canvas, rect: RectF, fill: Int, radius: Float, pressed: Boolean) {
+        val border = dp(1f)
+        val inset = border / 2f
+        val face = RectF(rect.left + inset, rect.top + inset, rect.right - inset, rect.bottom - inset)
+        paint.style = Paint.Style.FILL
+        paint.color = if (pressed) darken(fill) else fill
+        canvas.drawRoundRect(face, radius, radius, paint)
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = border
+        paint.color = MemPalette.KEY_LINE
+        canvas.drawRoundRect(face, radius, radius, paint)
+        paint.style = Paint.Style.FILL
+    }
+
+    private fun darken(color: Int): Int {
+        val r = ((color shr 16) and 0xFF) * 88 / 100
+        val g = ((color shr 8) and 0xFF) * 88 / 100
+        val b = (color and 0xFF) * 88 / 100
+        return (0xFF shl 24) or (r shl 16) or (g shl 8) or b
     }
 
     private fun inset(rect: RectF, pad: Float) = RectF(rect.left + pad, rect.top + pad, rect.right - pad, rect.bottom - pad)
