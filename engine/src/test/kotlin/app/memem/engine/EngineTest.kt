@@ -89,7 +89,7 @@ class GemmaResponseTest {
         assertEquals(listOf("HEUTE", "NOCH", "FERTIG"), out[0].lines)
         assertTrue(out[0].fromModel)
         assertEquals("b", out[1].templateId)
-        assertEquals(listOf("HEUTE", "NOCH FERTIG"), out[1].lines)
+        assertEquals(listOf("HEUTE NOCH", "FERTIG"), out[1].lines)
         assertEquals("c", out[2].templateId)
         assertFalse(out[1].fromModel)
     }
@@ -100,7 +100,7 @@ class GemmaResponseTest {
         val message = "hallo welt das ist ein langer satz mit vielen worten extra"
         val out = parseSuggestions(raw, candidates, message)
         assertEquals("b", out[0].templateId)
-        assertEquals(listOf("HALLO WELT DAS IST EIN", "LANGER SATZ MIT VIELEN WORTEN EXTRA"), out[0].lines)
+        assertEquals(listOf("HALLO WELT DAS IST", "EIN LANGER SATZ MIT VIELEN WORTEN EXTRA"), out[0].lines)
         assertTrue(preservesMessageOrder(message, out[0].lines))
         assertEquals(3, out.size)
         assertFalse(out.map { it.templateId }.contains("nope"))
@@ -120,7 +120,7 @@ class GemmaResponseTest {
         val raw = """{"memes":[{"template":"b","lines":["IHR AM ALLES","WERDET ENDE VERLIEREN"]}]}"""
         val message = "ihr werdet am ende alles verlieren"
         val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
-        assertEquals(listOf("IHR WERDET AM", "ENDE ALLES VERLIEREN"), out[0].lines)
+        assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out[0].lines)
     }
 
     @Test
@@ -140,17 +140,17 @@ class GemmaResponseTest {
     @Test
     fun tenGermanSentencesSplitInOrder() {
         val cases = listOf(
-            Case("ihr werdet am ende alles verlieren", 2, "upper", listOf("IHR WERDET AM", "ENDE ALLES VERLIEREN")),
+            Case("ihr werdet am ende alles verlieren", 2, "upper", listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN")),
             Case("Ich komme später, aber ich bringe Kuchen", 2, "upper", listOf("ICH KOMME SPÄTER,", "ABER ICH BRINGE KUCHEN")),
             Case("Wir gehen ins Kino und danach essen wir", 2, "none", listOf("Wir gehen ins Kino", "und danach essen wir")),
             Case("Kommst du heute mit, weil das Wetter hält?", 2, "upper", listOf("KOMMST DU HEUTE MIT,", "WEIL DAS WETTER HÄLT?")),
-            Case("Kein Problem", 2, "upper", listOf("KEIN", "PROBLEM")),
+            Case("Kein Problem", 2, "upper", listOf("KEIN PROBLEM", "")),
             Case("Hilfe", 2, "upper", listOf("HILFE", "")),
             Case(
                 "Der Zug hat Verspätung und wir verpassen den Anschluss",
                 3,
                 "upper",
-                listOf("DER ZUG HAT VERSPÄTUNG", "UND WIR", "VERPASSEN DEN ANSCHLUSS"),
+                listOf("DER ZUG HAT VERSPÄTUNG", "UND WIR VERPASSEN", "DEN ANSCHLUSS"),
             ),
             Case("Alles bleibt, wie es ist.", 2, "upper", listOf("ALLES BLEIBT,", "WIE ES IST.")),
             Case("Bitte schick mir die Unterlagen bis Freitag", 2, "none", listOf("Bitte schick mir die Unterlagen", "bis Freitag")),
@@ -167,6 +167,13 @@ class GemmaResponseTest {
             assertEquals(item.message, item.expected, lines)
             assertEquals(item.boxes, lines.size)
             assertTrue(preservesMessageOrder(item.message, lines))
+            for (index in lines.indices) {
+                if (lines[index].isBlank()) continue
+                val lastContent = lines.drop(index + 1).all { it.isBlank() }
+                if (!lastContent) {
+                    assertFalse(item.message, endsOnOpenFunctionWord(lines[index]))
+                }
+            }
             val joined = lines.joinToString(" ") { it.trim() }.replace(Regex("\\s+"), " ").trim()
             val source = if (item.style == "upper") stylize(item.message, "upper") else item.message.trim()
             assertEquals(item.message, source, joined)
