@@ -22,7 +22,9 @@ import app.memem.insert.Inserter
 import app.memem.models.ModelCatalog
 import app.memem.pipeline.MemeOption
 import app.memem.pipeline.MemePipeline
+import app.memem.settings.AppLanguage
 import app.memem.settings.Prefs
+import android.view.inputmethod.InputMethodSubtype
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,6 +44,7 @@ class MememImeService : InputMethodService() {
     private val log by lazy { DebugLog(this) }
     private var options: List<MemeOption> = emptyList()
     private var job: Job? = null
+    private var subtypeAlignAttempts = 0
 
     override fun onCreate() {
         super.onCreate()
@@ -49,6 +52,15 @@ class MememImeService : InputMethodService() {
             window?.window?.let { WindowCompat.setDecorFitsSystemWindows(it, false) }
         }
         pipeline = MemePipeline(this)
+        AppLanguage.enableBothSubtypes(this)
+    }
+
+    override fun onCurrentInputMethodSubtypeChanged(newSubtype: InputMethodSubtype) {
+        super.onCurrentInputMethodSubtypeChanged(newSubtype)
+        val german = AppLanguage.subtypeIsGerman(newSubtype)
+        AppLanguage.apply(this, if (german) AppLanguage.DE else AppLanguage.EN)
+        if (::panel.isInitialized) panel.setQwertz(german)
+        subtypeAlignAttempts = 0
     }
 
     override fun onCreateInputView(): View {
@@ -66,6 +78,7 @@ class MememImeService : InputMethodService() {
             }
 
             override fun switchIme() {
+                if (switchToNextInputMethod(true)) return
                 if (switchToPreviousInputMethod()) return
                 val imm = getSystemService(InputMethodManager::class.java)
                 val token = window?.window?.attributes?.token ?: return
@@ -86,7 +99,7 @@ class MememImeService : InputMethodService() {
                 insertOption(index)
             }
         })
-        panel.setQwertz(prefs.qwertz)
+        alignSubtypeWithPrefs()
         val frame = FrameLayout(this)
         frame.setBackgroundColor(MemPalette.PAPER)
         frame.addView(
@@ -114,7 +127,7 @@ class MememImeService : InputMethodService() {
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        if (::panel.isInitialized) panel.setQwertz(prefs.qwertz)
+        if (::panel.isInitialized) alignSubtypeWithPrefs()
         if (::shell.isInitialized) ViewCompat.requestApplyInsets(shell)
         pipeline.preload()
     }
@@ -168,7 +181,7 @@ class MememImeService : InputMethodService() {
         if (!::panel.isInitialized) return
         val previous = options
         options = next
-        panel.showPreviews(next.map { it.bitmap }, next.map { app.memem.pipeline.memeMark(it.fromModel, it.reason) })
+        panel.showPreviews(next.map { it.bitmap }, next.map { app.memem.pipeline.memeMark(this, it.fromModel, it.reason) })
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { recycleOne(it) }
     }
 
@@ -208,6 +221,25 @@ class MememImeService : InputMethodService() {
         if (!extracted?.text.isNullOrEmpty()) return extracted.text.toString()
         return input.getTextBeforeCursor(4000, 0)?.toString().orEmpty() +
             input.getTextAfterCursor(4000, 0)?.toString().orEmpty()
+    }
+
+    private fun alignSubtypeWithPrefs() {
+        val wantDe = prefs.qwertz
+        panel.setQwertz(wantDe)
+        val imm = getSystemService(InputMethodManager::class.java)
+        val haveDe = AppLanguage.subtypeIsGerman(imm.currentInputMethodSubtype)
+        if (wantDe == haveDe) {
+            subtypeAlignAttempts = 0
+            return
+        }
+        if (subtypeAlignAttempts >= 1) return
+        subtypeAlignAttempts += 1
+        val info = imm.inputMethodList.firstOrNull { it.packageName == packageName } ?: return
+        val target = (0 until info.subtypeCount)
+            .map { info.getSubtypeAt(it) }
+            .firstOrNull { AppLanguage.subtypeIsGerman(it) == wantDe }
+            ?: return
+        imm.setCurrentInputMethodSubtype(target)
     }
 
     private fun recycle(list: List<MemeOption>) {

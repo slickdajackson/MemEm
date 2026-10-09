@@ -33,7 +33,7 @@ class Downloader {
             if (code !in 200..299) {
                 val err = conn.errorStream?.bufferedReader()?.readText().orEmpty().take(180)
                 conn.disconnect()
-                error("Download ${spec.id} HTTP $code $err")
+                error("Download ${spec.id} HTTP $code")
             }
             conn.inputStream.use { input ->
                 FileOutputStream(part, code == 206).use { out ->
@@ -49,11 +49,11 @@ class Downloader {
             }
             conn.disconnect()
         }
-        if (part.length() != spec.bytes) error("Download ${spec.id} unvollständig: ${part.length()}")
+        if (part.length() != spec.bytes) error("Download ${spec.id} incomplete: ${part.length()}")
         val hash = sha256(part)
         if (!hash.equals(spec.sha256, ignoreCase = true)) {
             part.delete()
-            error("SHA-256 von ${spec.id} stimmt nicht")
+            error("SHA-256 of ${spec.id} does not match")
         }
         if (dest.exists()) dest.delete()
         if (!part.renameTo(dest)) {
@@ -67,7 +67,7 @@ class Downloader {
         conn.instanceFollowRedirects = true
         conn.connectTimeout = 30_000
         conn.readTimeout = 120_000
-        conn.setRequestProperty("User-Agent", "MemEm/0.2.6")
+        conn.setRequestProperty("User-Agent", "MemEm/0.2.7")
         if (offset > 0) conn.setRequestProperty("Range", "bytes=$offset-")
         conn.connect()
         return conn

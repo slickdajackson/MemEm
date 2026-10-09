@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import app.memem.a11y.MememAccessibilityService
@@ -24,17 +25,25 @@ class WizardActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
     private val checks = mutableStateOf(WizardChecks())
     private val draft = mutableStateOf("")
+    private val language = mutableStateOf(AppLanguage.EN)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = Prefs(this)
+        language.value = prefs.languageTag ?: AppLanguage.phoneTag()
         setContent {
             val download by DownloadProgress.flow.collectAsState()
             val live by checks
+            val lang by language
             WizardScreen(
                 checks = live,
                 download = download,
                 draft = draft.value,
+                language = lang,
+                onLanguage = { tag ->
+                    language.value = tag
+                    AppLanguage.apply(this, tag)
+                },
                 onDraft = { draft.value = it },
                 onDownload = { startDownload() },
                 onEnableKeyboard = { startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)) },

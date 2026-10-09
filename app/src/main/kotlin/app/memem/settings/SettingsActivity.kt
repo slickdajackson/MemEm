@@ -91,8 +91,8 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     generation += 1
                 },
-                onQwertz = {
-                    prefs.qwertz = it
+                onLanguage = { tag ->
+                    AppLanguage.apply(this, tag)
                     generation += 1
                 },
                 onQuality = { checked ->
@@ -147,7 +147,7 @@ class SettingsActivity : AppCompatActivity() {
             }
             showTry(result)
             generation += 1
-            tryStatus.value = if (result.any { it.fromModel }) "KI-Fassung" else "Wörtliche Fassung"
+            tryStatus.value = getString(if (result.any { it.fromModel }) R.string.caption_ai else R.string.caption_literal)
         }
     }
 
@@ -157,7 +157,7 @@ class SettingsActivity : AppCompatActivity() {
         tryPreviews.value = next.map { option ->
             option.bitmap.copy(Bitmap.Config.ARGB_8888, false).asImageBitmap()
         }
-            tryMarks.value = next.map { app.memem.pipeline.memeMark(it.fromModel, it.reason) }
+            tryMarks.value = next.map { app.memem.pipeline.memeMark(this, it.fromModel, it.reason) }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }
@@ -176,17 +176,19 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun readState(download: String): SetupUi {
-        val embed = if (ModelCatalog.ready(this, ModelCatalog.embed)) "da" else "fehlt"
-        val cpu = if (ModelCatalog.ready(this, ModelCatalog.gemmaCpu)) "da" else "fehlt"
+        val here = getString(R.string.status_here)
+        val missing = getString(R.string.status_missing)
+        val embed = if (ModelCatalog.ready(this, ModelCatalog.embed)) here else missing
+        val cpu = if (ModelCatalog.ready(this, ModelCatalog.gemmaCpu)) here else missing
         val e4b = when {
-            !prefs.qualityE4b -> "aus"
-            ModelCatalog.ready(this, ModelCatalog.gemmaE4b) -> "da"
-            else -> "fehlt, E2B bleibt"
+            !prefs.qualityE4b -> getString(R.string.model_off)
+            ModelCatalog.ready(this, ModelCatalog.gemmaE4b) -> here
+            else -> getString(R.string.model_e4b_fallback)
         }
         val a11y = when {
-            MememAccessibilityService.instance != null -> "Bedienungshilfe aktiv, liest nur WhatsApp."
-            MememAccessibilityService.enabled(this) -> "Bedienungshilfe eingeschaltet, Dienst gerade nicht verbunden."
-            else -> "Bedienungshilfe aus."
+            MememAccessibilityService.instance != null -> getString(R.string.a11y_connected)
+            MememAccessibilityService.enabled(this) -> getString(R.string.a11y_enabled_idle)
+            else -> getString(R.string.a11y_off)
         }
         val modelsOn = ModelCatalog.ready(this, ModelCatalog.embed) && ModelCatalog.ready(this, ModelCatalog.gemmaCpu)
         val keyboardEnabled = SetupProbe.keyboardEnabled(this)
@@ -196,9 +198,10 @@ class SettingsActivity : AppCompatActivity() {
             a11y = a11y,
             overlay = prefs.overlay,
             qwertz = prefs.qwertz,
+            language = prefs.languageTag ?: AppLanguage.EN,
             qualityE4b = prefs.qualityE4b,
             insert = prefs.insertPreference,
-            models = "Embedding $embed, E2B $cpu, E4B $e4b",
+            models = getString(R.string.models_line, embed, cpu, e4b),
             download = download,
             modelsOn = modelsOn,
             keyboardOn = keyboardOn,

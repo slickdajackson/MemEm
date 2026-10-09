@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -71,6 +72,7 @@ data class SetupUi(
     val a11y: String = "",
     val overlay: Boolean = false,
     val qwertz: Boolean = false,
+    val language: String = "en",
     val qualityE4b: Boolean = false,
     val insert: InsertPreference = InsertPreference.CLIPBOARD,
     val models: String = "",
@@ -90,7 +92,7 @@ fun SettingsScreen(
     onA11y: () -> Unit,
     onOverlayPermission: () -> Unit,
     onOverlay: (Boolean) -> Unit,
-    onQwertz: (Boolean) -> Unit,
+    onLanguage: (String) -> Unit = {},
     onQuality: (Boolean) -> Unit = {},
     onInsert: (InsertPreference) -> Unit,
     onDownload: () -> Unit,
@@ -108,14 +110,14 @@ fun SettingsScreen(
     Column(modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
         if (state.incomplete) {
             StickerCard {
-                MonoLabel("NOCH OFFEN")
-                Headline("Einrichtung unvollständig")
+                MonoLabel(stringResource(R.string.incomplete_kicker))
+                Headline(stringResource(R.string.incomplete_title))
                 androidx.compose.material3.Text(
-                    "Modelle, das Einschalten der Tastatur oder MemEm als aktive Tastatur fehlen noch.",
+                    stringResource(R.string.incomplete_body),
                     color = Ink,
                     fontSize = 15.sp,
                 )
-                StickerButton("Einrichtung fortsetzen", Yellow, onClick = onWizard)
+                StickerButton(stringResource(R.string.continue_setup), Yellow, onClick = onWizard)
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -132,35 +134,39 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.2.6   SIDELOAD")
+                MonoLabel(stringResource(R.string.version_sideload))
             }
         }
         androidx.compose.material3.Text(
-            "Private Meme-Tastatur. MemEm sendet nie selbst.",
+            stringResource(R.string.tagline),
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             color = Ink,
         )
         StickerCard {
-            MonoLabel("STATUS")
-            Headline("Bereit?")
-            StatusLine("Modelle", state.modelsOn)
+            MonoLabel(stringResource(R.string.status_kicker))
+            Headline(stringResource(R.string.status_title))
+            StatusLine(stringResource(R.string.status_models), state.modelsOn)
             StatusLine(
-                "Tastatur",
+                stringResource(R.string.status_keyboard),
                 state.keyboardOn,
                 when {
-                    state.keyboardOn -> "aktiv"
-                    state.keyboardEnabled -> "eingeschaltet, nicht aktiv"
-                    else -> "aus"
+                    state.keyboardOn -> stringResource(R.string.keyboard_active)
+                    state.keyboardEnabled -> stringResource(R.string.keyboard_enabled_not_current)
+                    else -> stringResource(R.string.status_off)
                 },
             )
-            StatusLine("Bedienungshilfe", state.a11yOn, if (state.a11yOn) "an" else "aus")
+            StatusLine(
+                stringResource(R.string.status_a11y),
+                state.a11yOn,
+                stringResource(if (state.a11yOn) R.string.status_on else R.string.status_off),
+            )
         }
         StickerCard {
-            MonoLabel("PROBIEREN")
-            Headline("Drei Karten")
+            MonoLabel(stringResource(R.string.try_kicker))
+            Headline(stringResource(R.string.try_cards_title))
             androidx.compose.material3.Text(
-                "Tippe einen Satz und drücke Meme. Die drei Karten erscheinen hier in der App.",
+                stringResource(R.string.try_cards_body),
                 color = Ink,
                 fontSize = 15.sp,
             )
@@ -179,7 +185,7 @@ fun SettingsScreen(
                         Box {
                             if (tryDraft.isEmpty()) {
                                 androidx.compose.material3.Text(
-                                    "Testnachricht",
+                                    stringResource(R.string.test_hint),
                                     color = Ink.copy(alpha = 0.45f),
                                     fontSize = 18.sp,
                                 )
@@ -189,7 +195,7 @@ fun SettingsScreen(
                     },
                 )
             }
-            StickerButton("Meme", Yellow, onClick = onTryMeme)
+            StickerButton(stringResource(R.string.meme), Yellow, onClick = onTryMeme)
             if (tryStatus.isNotBlank()) MonoLabel(tryStatus)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 repeat(3) { index ->
@@ -199,7 +205,7 @@ fun SettingsScreen(
                             if (image != null) {
                                 Image(
                                     image,
-                                    contentDescription = "Meme ${index + 1}",
+                                    contentDescription = stringResource(R.string.meme_cd, index + 1),
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                 )
@@ -219,51 +225,51 @@ fun SettingsScreen(
                 }
             }
         }
-        StickerButton("Einrichtung erneut", Yellow, onClick = onWizard)
+        StickerButton(stringResource(R.string.wizard_again), Yellow, onClick = onWizard)
         StickerCard {
-            MonoLabel("EINRICHTUNG")
-            Headline("Loslegen")
-            StickerButton("Tastatur aktivieren", Yellow, onClick = onKeyboard)
-            StickerButton("Bedienungshilfe öffnen", Blue, light = true, onClick = onA11y)
+            MonoLabel(stringResource(R.string.setup_kicker))
+            Headline(stringResource(R.string.setup_title))
+            StickerButton(stringResource(R.string.activate_keyboard), Yellow, onClick = onKeyboard)
+            StickerButton(stringResource(R.string.open_a11y), Blue, light = true, onClick = onA11y)
             MonoLabel(state.a11y)
             Spacer(Modifier.height(8.dp))
-            StickerToggle("Schwebender Punkt", state.overlay, onOverlay)
-            StickerButton("Über anderen Apps", Purple, light = true, onClick = onOverlayPermission)
+            StickerToggle(stringResource(R.string.overlay_toggle), state.overlay, onOverlay)
+            StickerButton(stringResource(R.string.overlay_permission), Purple, light = true, onClick = onOverlayPermission)
         }
         StickerCard {
-            MonoLabel("TASTATUR")
-            Headline("Layout")
+            MonoLabel(stringResource(R.string.layout_kicker))
+            Headline(stringResource(R.string.layout_title))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Choice("QWERTY", !state.qwertz) { onQwertz(false) }
-                Choice("QWERTZ", state.qwertz) { onQwertz(true) }
+                Choice(stringResource(R.string.lang_en), state.language != "de") { onLanguage("en") }
+                Choice(stringResource(R.string.lang_de), state.language == "de") { onLanguage("de") }
             }
-            MonoLabel(if (state.qwertz) "Leertaste zeigt DE. Z oben, Y unten." else "Leertaste zeigt EN. Y oben, Z unten.")
-            MonoLabel("Globus kurz: vorherige Tastatur. Globus lang: Auswahl.")
+            MonoLabel(stringResource(if (state.language == "de" || state.qwertz) R.string.layout_de_hint else R.string.layout_en_hint))
+            MonoLabel(stringResource(R.string.layout_switch_hint))
         }
         StickerCard {
-            MonoLabel("EINFÜGEN")
-            Headline("Weg ins Feld")
-            Choice("Zwischenablage, dann Commit-Content", state.insert == InsertPreference.CLIPBOARD) {
+            MonoLabel(stringResource(R.string.insert_kicker))
+            Headline(stringResource(R.string.insert_title))
+            Choice(stringResource(R.string.insert_clipboard), state.insert == InsertPreference.CLIPBOARD) {
                 onInsert(InsertPreference.CLIPBOARD)
             }
-            Choice("Commit-Content, wenn das Feld Bilder annimmt", state.insert == InsertPreference.COMMIT_CONTENT) {
+            Choice(stringResource(R.string.insert_commit), state.insert == InsertPreference.COMMIT_CONTENT) {
                 onInsert(InsertPreference.COMMIT_CONTENT)
             }
-            Choice("Automatisch nach MIME-Typ", state.insert == InsertPreference.AUTO) {
+            Choice(stringResource(R.string.insert_auto), state.insert == InsertPreference.AUTO) {
                 onInsert(InsertPreference.AUTO)
             }
         }
         StickerCard {
-            MonoLabel("MODELLE")
-            Headline("Auf dem Gerät, CPU")
-            StickerButton("Modelle laden", Yellow, onClick = onDownload)
-            StickerToggle("Qualität (E4B)", state.qualityE4b, onQuality)
-            MonoLabel("Aus: Gemma E2B. An: E4B, witziger, etwa doppelt so langsam.")
-            MonoLabel("Embedding etwa 157 MB, E2B etwa 2,6 GB, E4B etwa 3,7 GB. Immer CPU.")
+            MonoLabel(stringResource(R.string.models_kicker))
+            Headline(stringResource(R.string.models_settings_title))
+            StickerButton(stringResource(R.string.load_models), Yellow, onClick = onDownload)
+            StickerToggle(stringResource(R.string.quality_e4b), state.qualityE4b, onQuality)
+            MonoLabel(stringResource(R.string.quality_hint))
+            MonoLabel(stringResource(R.string.quality_sizes))
             MonoLabel(state.models)
             if (state.download.isNotBlank()) MonoLabel(state.download)
         }
-        StickerButton("Testfeld fürs Einfügen", Yellow, onClick = onHarness)
+        StickerButton(stringResource(R.string.open_harness), Yellow, onClick = onHarness)
         Spacer(Modifier.height(12.dp))
     }
 }
@@ -336,20 +342,21 @@ fun KeyboardArt(qwertz: Boolean, modifier: Modifier = Modifier) {
 
 @Composable
 fun HarnessScreen() {
-    var log by remember { mutableStateOf("Warte auf ein Bild aus der Tastatur.") }
+    var log by remember { mutableStateOf("") }
     var image by remember { mutableStateOf<Uri?>(null) }
     Column(
         Modifier.background(Paper).fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Headline("Testfeld")
-        MonoLabel("Nimmt image/png per Commit-Content und Zwischenablage an. Nichts wird gesendet.")
+        Headline(stringResource(R.string.harness_title))
+        MonoLabel(stringResource(R.string.harness_body))
+        val waiting = stringResource(R.string.harness_waiting)
         StickerBox(fill = Cream) {
             AndroidView(
                 modifier = Modifier.fillMaxWidth().padding(8.dp),
                 factory = { context ->
                     EditText(context).apply {
-                        hint = "Hier tippen"
+                        hint = context.getString(R.string.harness_hint)
                         textSize = 18f
                         setTextColor(MemPalette.INK)
                         setHintTextColor(MemPalette.HINT)
@@ -360,7 +367,7 @@ fun HarnessScreen() {
                             for (i in 0 until clip.itemCount) {
                                 val uri = clip.getItemAt(i).uri ?: continue
                                 image = uri
-                                log = "Bild empfangen, Quelle ${payload.source}"
+                                log = context.getString(R.string.harness_got, payload.source)
                                 consumed = true
                             }
                             if (consumed) null else payload
@@ -376,12 +383,16 @@ fun HarnessScreen() {
                 update = { view -> view.setImageURI(image) },
             )
         }
-        MonoLabel(log)
+        MonoLabel(log.ifEmpty { waiting })
     }
 }
 
 @Composable
-private fun StatusLine(label: String, on: Boolean, detail: String = if (on) "da" else "fehlt") {
+private fun StatusLine(
+    label: String,
+    on: Boolean,
+    detail: String = stringResource(if (on) R.string.status_here else R.string.status_missing),
+) {
     Row(
         Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -523,7 +534,7 @@ fun OverlayPreviewCard() {
         StickerBox(fill = Yellow, radius = 28.dp, shadow = 4.dp) {
             Image(
                 painterResource(R.drawable.memem_logo),
-                contentDescription = "Punkt",
+                contentDescription = stringResource(R.string.overlay_toggle),
                 modifier = Modifier.size(56.dp).padding(4.dp),
             )
         }
@@ -540,7 +551,7 @@ fun OverlayPreviewCard() {
                     }
                 }
             }
-            StickerButton("Schließen", Cream) {}
+            StickerButton(stringResource(R.string.close), Cream) {}
         }
     }
 }

@@ -88,7 +88,7 @@ class OverlayService : Service() {
     private fun startForegroundNote() {
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(
-            NotificationChannel(CHANNEL, "Schwebender Punkt", NotificationManager.IMPORTANCE_MIN),
+            NotificationChannel(CHANNEL, getString(R.string.overlay_channel), NotificationManager.IMPORTANCE_MIN),
         )
         val open = PendingIntent.getActivity(
             this,
@@ -104,10 +104,10 @@ class OverlayService : Service() {
         )
         val note: Notification = NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(android.R.drawable.stat_notify_chat)
-            .setContentTitle("MemEm: schwebender Punkt")
-            .setContentText("Tippen schlägt Memes vor. Gesendet wird nichts.")
+            .setContentTitle(getString(R.string.overlay_note_title))
+            .setContentText(getString(R.string.overlay_note_text))
             .setContentIntent(open)
-            .addAction(0, "Punkt entfernen", stop)
+            .addAction(0, getString(R.string.overlay_remove), stop)
             .setOngoing(true)
             .build()
         val type = if (Build.VERSION.SDK_INT >= 34) ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE else 0
@@ -234,7 +234,7 @@ class OverlayService : Service() {
         val previous = options
         options = next
         panel?.previews = List(3) { next.getOrNull(it)?.bitmap }
-        panel?.marks = List(3) { next.getOrNull(it)?.let { option -> app.memem.pipeline.memeMark(option.fromModel, option.reason) }.orEmpty() }
+        panel?.marks = List(3) { next.getOrNull(it)?.let { option -> app.memem.pipeline.memeMark(this, option.fromModel, option.reason) }.orEmpty() }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }

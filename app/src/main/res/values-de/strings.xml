@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MemEm</string>
+    <string name="subtype_en">English</string>
+    <string name="subtype_de">Deutsch</string>
+    <string name="meme">Meme</string>
+    <string name="clipboard_hint">Meme liegt in der Zwischenablage, lange tippen und Einfügen</string>
+    <string name="a11y_pasted">Über die Bedienungshilfe eingefügt</string>
+    <string name="a11y_label">MemEm Meme-Hilfe</string>
+    <string name="a11y_description">Liest den geöffneten WhatsApp-Chat, damit MemEm passende Memes vorschlagen kann, und fügt ein ausgewähltes Bild ins Eingabefeld ein. MemEm sendet keine Nachricht.</string>
+    <string name="a11y_needed">Bedienungshilfe ist nicht aktiv. In den Einstellungen einschalten.</string>
+    <string name="overlay_ready">Offener WhatsApp-Chat. Meme sucht drei Vorschläge.</string>
+    <string name="overlay_close">Schließen</string>
+    <string name="overlay_pick">Einen Vorschlag antippen</string>
+    <string name="overlay_empty">Kein Text im Feld und keine Nachrichten erkannt</string>
+    <string name="version_title">MemEm 0.2.7</string>
+    <string name="version_sideload">0.2.7   SIDELOAD</string>
+    <string name="need_text">Erst einen Text tippen</string>
+    <string name="searching">Suche Vorlagen</string>
+    <string name="writing">Schreibe Sprüche</string>
+    <string name="inserted">Eingefügt</string>
+    <string name="shared">Teilen geöffnet</string>
+    <string name="insert_failed">Einfügen hat nicht geklappt</string>
+    <string name="models_missing">Modelle fehlen, Beispielzeilen. Download in der Einrichtung.</string>
+    <string name="badge_ai">KI</string>
+    <string name="badge_literal">wörtlich</string>
+    <string name="badge_stock">Ersatz</string>
+    <string name="tagline">Private Meme-Tastatur. MemEm sendet nie selbst.</string>
+    <string name="suggestions_count">3 Vorschläge</string>
+    <string name="caption_ai">KI-Fassung</string>
+    <string name="caption_literal">Wörtliche Fassung</string>
+
+    <string name="wizard_step">SCHRITT %1$d VON %2$d</string>
+    <string name="close">Schließen</string>
+    <string name="open_hint">Dieser Schritt ist noch offen. Weiter geht trotzdem, du kannst ihn später nachholen.</string>
+    <string name="next">Weiter</string>
+    <string name="next_anyway">Trotzdem weiter / Später</string>
+    <string name="back">Zurück</string>
+    <string name="finish">Fertig, los geht\'s</string>
+    <string name="close_note">Schließen oben rechts geht jederzeit in die Hauptansicht, auch wenn noch etwas fehlt.</string>
+
+    <string name="lang_kicker">SPRACHE</string>
+    <string name="lang_title">English oder Deutsch</string>
+    <string name="lang_body">Das setzt die App-Sprache und die Tastatur. English ist QWERTY, Leertaste EN. Deutsch ist QWERTZ, Leertaste DE, Umlaute bei langem Druck. Globus kurz wechselt zwischen beiden. Globus lang öffnet weiter die ganze Tastaturliste.</string>
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+
+    <string name="welcome_kicker">WILLKOMMEN</string>
+    <string name="welcome_title">Drei Memes, kein Senden</string>
+    <string name="welcome_body">MemEm ist eine Tastatur. Du tippst, drückst Meme, und drei Bilder erscheinen. Eins davon landet im Feld. Gesendet wird nie.</string>
+
+    <string name="models_kicker">MODELLE</string>
+    <string name="models_title">Einmal laden, dann lokal</string>
+    <string name="models_body">Embedding etwa 157 MB. Gemma etwa 2,6 GB. Am besten im WLAN. Der Download läuft im Hintergrund weiter, auch wenn du die App verlässt.</string>
+    <string name="download">Herunterladen</string>
+    <string name="download_running">Läuft schon</string>
+    <string name="download_resume_hint">Teildatei bleibt liegen. Nochmal tippen setzt fort.</string>
+    <string name="models_both_ready">Beide Dateien sind da. Gemma und Embedding laufen auf der CPU.</string>
+
+    <string name="keyboard_kicker">TASTATUR</string>
+    <string name="keyboard_title">MemEm einschalten</string>
+    <string name="keyboard_body">Der Knopf öffnet Einstellungen, Bildschirmtastaturen. Schalte MemEm ein. Beim Zurückkommen setzt sich der Haken von allein.</string>
+    <string name="open_ime_settings">Bildschirmtastaturen öffnen</string>
+
+    <string name="active_kicker">AKTIV</string>
+    <string name="active_title">MemEm auswählen</string>
+    <string name="active_body">Wähle MemEm als aktive Tastatur. Derselbe Dialog kommt später bei einem langen Druck auf den Globus.</string>
+    <string name="open_picker">Tastaturauswahl öffnen</string>
+
+    <string name="a11y_kicker">OPTIONAL</string>
+    <string name="a11y_title">WhatsApp Kontext</string>
+    <string name="a11y_body">Die Bedienungshilfe liest den offenen WhatsApp-Chat für die Suche und fügt das Bild ein, wenn die Tastatur das nicht schafft.</string>
+    <string name="open_a11y">Bedienungshilfe öffnen</string>
+    <string name="a11y_on_short">Bedienungshilfe ist an.</string>
+    <string name="a11y_skip_hint">Ohne diesen Schritt geht die Tastatur trotzdem. Kontext und das extra Einfügen fehlen dann.</string>
+
+    <string name="try_kicker">PROBIEREN</string>
+    <string name="try_title">Kurz tippen</string>
+    <string name="try_body">Tippe eine Testnachricht. In WhatsApp tippst du den Text und drückst Meme. Darüber erscheinen drei Karten.</string>
+    <string name="try_globe">Globus kurz: die andere MemEm-Tastatur. Globus lang: Auswahl aller Tastaturen. Leertaste lang wechselt ebenfalls, ohne den Dialog.</string>
+    <string name="test_hint">Testnachricht</string>
+
+    <string name="incomplete_kicker">NOCH OFFEN</string>
+    <string name="incomplete_title">Einrichtung unvollständig</string>
+    <string name="incomplete_body">Modelle, das Einschalten der Tastatur oder MemEm als aktive Tastatur fehlen noch.</string>
+    <string name="continue_setup">Einrichtung fortsetzen</string>
+    <string name="status_kicker">STATUS</string>
+    <string name="status_title">Bereit?</string>
+    <string name="status_models">Modelle</string>
+    <string name="status_keyboard">Tastatur</string>
+    <string name="status_a11y">Bedienungshilfe</string>
+    <string name="status_on">an</string>
+    <string name="status_off">aus</string>
+    <string name="status_here">da</string>
+    <string name="status_missing">fehlt</string>
+    <string name="keyboard_active">aktiv</string>
+    <string name="keyboard_enabled_not_current">eingeschaltet, nicht aktiv</string>
+    <string name="try_cards_title">Drei Karten</string>
+    <string name="try_cards_body">Tippe einen Satz und drücke Meme. Die drei Karten erscheinen hier in der App.</string>
+    <string name="wizard_again">Einrichtung erneut</string>
+    <string name="setup_kicker">EINRICHTUNG</string>
+    <string name="setup_title">Loslegen</string>
+    <string name="activate_keyboard">Tastatur aktivieren</string>
+    <string name="overlay_toggle">Schwebender Punkt</string>
+    <string name="overlay_permission">Über anderen Apps</string>
+    <string name="layout_kicker">SPRACHE</string>
+    <string name="layout_title">App und Tastatur</string>
+    <string name="layout_en_hint">Leertaste zeigt EN. Y oben, Z unten.</string>
+    <string name="layout_de_hint">Leertaste zeigt DE. Z oben, Y unten. Langer Druck auf a, o, u oder s für Umlaute.</string>
+    <string name="layout_switch_hint">Globus kurz: MemEm-Sprache wechseln. Globus lang: die Tastaturliste.</string>
+    <string name="insert_kicker">EINFÜGEN</string>
+    <string name="insert_title">Weg ins Feld</string>
+    <string name="insert_clipboard">Zwischenablage, dann Commit-Content</string>
+    <string name="insert_commit">Commit-Content, wenn das Feld Bilder annimmt</string>
+    <string name="insert_auto">Automatisch nach MIME-Typ</string>
+    <string name="models_settings_title">Auf dem Gerät, CPU</string>
+    <string name="load_models">Modelle laden</string>
+    <string name="quality_e4b">Qualität (E4B)</string>
+    <string name="quality_hint">Aus: Gemma E2B. An: E4B, witziger, etwa doppelt so langsam.</string>
+    <string name="quality_sizes">Embedding etwa 157 MB, E2B etwa 2,6 GB, E4B etwa 3,7 GB. Immer CPU.</string>
+    <string name="open_harness">Testfeld fürs Einfügen</string>
+    <string name="a11y_connected">Bedienungshilfe aktiv, liest nur WhatsApp.</string>
+    <string name="a11y_enabled_idle">Bedienungshilfe eingeschaltet, Dienst gerade nicht verbunden.</string>
+    <string name="a11y_off">Bedienungshilfe aus.</string>
+    <string name="model_off">aus</string>
+    <string name="model_e4b_fallback">fehlt, E2B bleibt</string>
+    <string name="models_line">Embedding %1$s, E2B %2$s, E4B %3$s</string>
+    <string name="meme_cd">Meme %1$d</string>
+
+    <string name="harness_waiting">Warte auf ein Bild aus der Tastatur.</string>
+    <string name="harness_title">Testfeld</string>
+    <string name="harness_body">Nimmt image/png per Commit-Content und Zwischenablage an. Nichts wird gesendet.</string>
+    <string name="harness_hint">Hier tippen</string>
+    <string name="harness_got">Bild empfangen, Quelle %1$s</string>
+
+    <string name="download_channel">Modell-Download</string>
+    <string name="download_starting">Download startet</string>
+    <string name="download_ready">Modelle liegen bereit</string>
+    <string name="download_failed">Download fehlgeschlagen</string>
+    <string name="download_failed_resume">Download fehlgeschlagen. Teildatei bleibt, Fortsetzen lädt weiter.</string>
+    <string name="download_resume">Fortsetzen</string>
+    <string name="download_http">Download %1$s HTTP %2$d</string>
+    <string name="download_short">Download %1$s unvollständig</string>
+    <string name="download_hash">SHA-256 von %1$s stimmt nicht</string>
+    <string name="overlay_channel">Schwebender Punkt</string>
+    <string name="overlay_note_title">MemEm: schwebender Punkt</string>
+    <string name="overlay_note_text">Tippen schlägt Memes vor. Gesendet wird nichts.</string>
+    <string name="overlay_remove">Punkt entfernen</string>
+    <string name="overlay_use">Schwebender Bedienpunkt, vom Nutzer eingeschaltet</string>
+</resources>

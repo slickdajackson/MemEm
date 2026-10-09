@@ -22,7 +22,7 @@ class DownloadNoteTest {
         assertTrue(note.flags and Notification.FLAG_AUTO_CANCEL != 0)
         assertEquals(0, note.extras.getInt(Notification.EXTRA_PROGRESS))
         assertEquals(0, note.extras.getInt(Notification.EXTRA_PROGRESS_MAX))
-        assertEquals("Modelle liegen bereit", note.extras.getCharSequence(Notification.EXTRA_TEXT).toString())
+        assertEquals("Models are ready", note.extras.getCharSequence(Notification.EXTRA_TEXT).toString())
         assertEquals(10_000L, note.timeoutAfter)
     }
 

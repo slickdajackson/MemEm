@@ -56,7 +56,7 @@ class ScreenRenderTest {
             onA11y = {},
             onFinish = {},
             onClose = {},
-            pinnedPage = 1,
+            pinnedPage = 2,
         )
     }
 
@@ -65,7 +65,7 @@ class ScreenRenderTest {
         WizardScreen(
             checks = WizardChecks(),
             download = DownloadSnapshot(),
-            draft = "Testnachricht",
+            draft = "Test message",
             onDraft = {},
             onDownload = {},
             onEnableKeyboard = {},
@@ -73,7 +73,7 @@ class ScreenRenderTest {
             onA11y = {},
             onFinish = {},
             onClose = {},
-            pinnedPage = 5,
+            pinnedPage = 6,
         )
     }
 
@@ -81,22 +81,23 @@ class ScreenRenderTest {
     fun settings() = shoot("hauptansicht.png", height = 3600) {
         SettingsScreen(
             state = SetupUi(
-                a11y = "Bedienungshilfe aus.",
+                a11y = "Accessibility is off.",
                 qwertz = false,
+                language = "en",
                 insert = InsertPreference.CLIPBOARD,
-                models = "Embedding fehlt, Gemma fehlt",
+                models = "Embedding missing, E2B missing, E4B off",
                 incomplete = true,
                 modelsOn = false,
                 keyboardOn = false,
                 a11yOn = false,
             ),
-            tryDraft = "Testnachricht",
+            tryDraft = "Test message",
             onWizard = {},
             onKeyboard = {},
             onA11y = {},
             onOverlayPermission = {},
             onOverlay = {},
-            onQwertz = {},
+            onLanguage = {},
             onInsert = {},
             onDownload = {},
             onHarness = {},
@@ -131,7 +132,7 @@ class ScreenRenderTest {
             override fun pick(index: Int) = Unit
         })
         panel.setStatus("The server is on fire")
-        panel.showPreviews(listOf(drake, fine, cmm), listOf("KI", "wörtlich", "KI"))
+        panel.showPreviews(listOf(drake, fine, cmm), listOf("AI", "literal", "AI"))
         val width = 1080
         panel.measure(
             View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
@@ -154,7 +155,7 @@ class ScreenRenderTest {
                 onA11y = {},
                 onFinish = {},
                 onClose = {},
-                pinnedPage = 0,
+                pinnedPage = 1,
             )
         }
 
@@ -162,10 +163,11 @@ class ScreenRenderTest {
         val settings = capture(height = 6400) {
             SettingsScreen(
                 state = SetupUi(
-                    a11y = "Bedienungshilfe aus.",
+                    a11y = "Accessibility is off.",
+                    language = "en",
                     qwertz = false,
                     insert = InsertPreference.CLIPBOARD,
-                    models = "Embedding und Gemma liegen auf dem Gerät.",
+                    models = "Embedding here, E2B here, E4B off.",
                     incomplete = false,
                     modelsOn = true,
                     keyboardOn = true,
@@ -173,15 +175,15 @@ class ScreenRenderTest {
                     a11yOn = false,
                 ),
                 tryDraft = "The server is on fire",
-                tryStatus = "3 Vorschläge",
+                tryStatus = "3 suggestions",
                 tryPreviews = previews,
-                tryMarks = listOf("KI", "wörtlich", "KI"),
+                tryMarks = listOf("AI", "literal", "AI"),
                 onWizard = {},
                 onKeyboard = {},
                 onA11y = {},
                 onOverlayPermission = {},
                 onOverlay = {},
-                onQwertz = {},
+                onLanguage = {},
                 onInsert = {},
                 onDownload = {},
                 onHarness = {},

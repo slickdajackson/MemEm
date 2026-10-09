@@ -14,10 +14,12 @@
     </queries>
 
     <application
+        android:name=".MememApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.MemEm">
 
@@ -58,7 +60,7 @@
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Schwebender Bedienpunkt, vom Nutzer eingeschaltet" />
+                android:value="@string/overlay_use" />
         </service>
 
         <service

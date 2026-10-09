@@ -58,10 +58,10 @@ data class MemeOption(
     val reason: String = "",
 )
 
-fun memeMark(fromModel: Boolean, reason: String): String = when {
-    fromModel -> "KI"
-    reason == "ersatz" -> "Ersatz"
-    else -> "wörtlich"
+fun memeMark(context: android.content.Context, fromModel: Boolean, reason: String): String = when {
+    fromModel -> context.getString(app.memem.R.string.badge_ai)
+    reason == "ersatz" -> context.getString(app.memem.R.string.badge_stock)
+    else -> context.getString(app.memem.R.string.badge_literal)
 }
 
 class MemePipeline(context: Context) {

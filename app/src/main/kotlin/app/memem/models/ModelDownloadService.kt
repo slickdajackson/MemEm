@@ -11,6 +11,7 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import app.memem.R
 import app.memem.settings.SettingsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,13 +35,13 @@ class ModelDownloadService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         ensureChannel()
-        val note = DownloadNotes.running(this, "Download startet", 0)
+        val note = DownloadNotes.running(this, getString(R.string.download_starting), 0)
         if (Build.VERSION.SDK_INT >= 29) {
             startForeground(DownloadNotes.ID, note, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
         } else {
             startForeground(DownloadNotes.ID, note)
         }
-        DownloadProgress.publish(DownloadSnapshot(active = true, text = "Download startet", percent = 0))
+        DownloadProgress.publish(DownloadSnapshot(active = true, text = getString(R.string.download_starting), percent = 0))
         if (job?.isActive == true) return START_REDELIVER_INTENT
         job = scope.launch {
             var failed: String? = null
@@ -59,9 +60,9 @@ class ModelDownloadService : Service() {
                         if (pct < 100) notify(DownloadNotes.running(this@ModelDownloadService, text, pct))
                     }
                 }
-                DownloadProgress.publish(DownloadSnapshot(active = false, text = "Modelle liegen bereit", percent = 100))
+                DownloadProgress.publish(DownloadSnapshot(active = false, text = getString(R.string.download_ready), percent = 100))
             } catch (t: Throwable) {
-                failed = (t.message ?: "Download fehlgeschlagen") + " Teildatei bleibt, Fortsetzen lädt weiter."
+                failed = getString(R.string.download_failed_resume)
                 DownloadProgress.publish(DownloadSnapshot(active = false, text = failed, percent = 0, failed = true))
             } finally {
                 withContext(NonCancellable + Dispatchers.Main.immediate) {
@@ -89,7 +90,7 @@ class ModelDownloadService : Service() {
 
     private fun ensureChannel() {
         val manager = getSystemService(NotificationManager::class.java)
-        val channel = NotificationChannel(channelId, "Modell-Download", NotificationManager.IMPORTANCE_LOW)
+        val channel = NotificationChannel(channelId, getString(R.string.download_channel), NotificationManager.IMPORTANCE_LOW)
         manager.createNotificationChannel(channel)
     }
 
@@ -117,7 +118,7 @@ internal object DownloadNotes {
             Intent(context, SettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
-        return base(context, "Modelle liegen bereit")
+        return base(context, context.getString(R.string.download_ready))
             .setSmallIcon(android.R.drawable.stat_sys_download_done)
             .setOngoing(false)
             .setAutoCancel(true)
@@ -138,7 +139,7 @@ internal object DownloadNotes {
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setOngoing(false)
             .setAutoCancel(true)
-            .addAction(0, "Fortsetzen", pending)
+            .addAction(0, context.getString(R.string.download_resume), pending)
             .build()
     }
 

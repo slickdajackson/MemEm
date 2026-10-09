@@ -287,7 +287,7 @@ private fun reportJson(
             JSONObject()
                 .put("template", item.templateId)
                 .put("lines", JSONArray(item.lines))
-                .put("source", if (item.fromModel) "KI" else "wörtlich")
+                .put("source", if (item.fromModel) "AI" else "literal")
                 .put("reason", item.reason)
                 .put("why", if (item.fromModel) "" else reasonText(item.reason, language))
                 .put("detail", item.detail),
@@ -314,7 +314,7 @@ private fun reportMarkdown(
     body.append("Suche: ").append(mode).append(", Latenz ").append(latencyMs).append(" ms\n")
     if (!raw.error.isNullOrBlank()) body.append("Fehler: ").append(raw.error).append('\n')
     suggestions.forEach { item ->
-        val source = if (item.fromModel) "KI" else "wörtlich"
+        val source = if (item.fromModel) "AI" else "literal"
         body.append("- ").append(item.templateId).append(" (").append(source).append(")")
         if (item.reason.isNotBlank()) body.append(", Grund: ").append(item.reason)
         body.append('\n')

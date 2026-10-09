@@ -27,12 +27,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.memem.R
 import app.memem.models.DownloadSnapshot
+import app.memem.settings.AppLanguage
 import kotlinx.coroutines.launch
 
 data class WizardChecks(
@@ -42,10 +44,7 @@ data class WizardChecks(
     val a11y: Boolean = false,
 )
 
-private const val PAGES = 6
-
-private const val OPEN_HINT =
-    "Dieser Schritt ist noch offen. Weiter geht trotzdem, du kannst ihn später nachholen."
+private const val PAGES = 7
 
 @Composable
 fun WizardScreen(
@@ -59,17 +58,20 @@ fun WizardScreen(
     onA11y: () -> Unit,
     onFinish: () -> Unit,
     onClose: () -> Unit,
+    language: String = AppLanguage.EN,
+    onLanguage: (String) -> Unit = {},
     initialPage: Int = 0,
     pinnedPage: Int? = null,
 ) {
     val pager = rememberPagerState(initialPage = initialPage.coerceIn(0, PAGES - 1)) { PAGES }
     val scope = rememberCoroutineScope()
+    val openHint = stringResource(R.string.open_hint)
     fun done(page: Int): Boolean = when (page) {
-        0 -> true
-        1 -> checks.models
-        2 -> checks.keyboardEnabled
-        3 -> checks.keyboardCurrent
-        4 -> checks.a11y
+        0, 1 -> true
+        2 -> checks.models
+        3 -> checks.keyboardEnabled
+        4 -> checks.keyboardCurrent
+        5 -> checks.a11y
         else -> draft.isNotBlank()
     }
     fun go(page: Int) {
@@ -83,11 +85,11 @@ fun WizardScreen(
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("MEMEM", fontFamily = Display, fontSize = 28.sp, color = Ink)
-                MonoLabel("SCHRITT ${shown + 1} VON $PAGES")
+                MonoLabel(stringResource(R.string.wizard_step, shown + 1, PAGES))
             }
             StickerBox(fill = Cream, radius = 12.dp, shadow = 3.dp, onClick = onClose) {
                 Text(
-                    "Schließen",
+                    stringResource(R.string.close),
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
                     color = Ink,
                     fontWeight = FontWeight.Bold,
@@ -98,8 +100,8 @@ fun WizardScreen(
         if (pinnedPage != null) {
             Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
                 StepPage(
-                    pinnedPage, checks, download, draft, onDraft, onDownload, onEnableKeyboard,
-                    onPickKeyboard, onA11y, onFinish, ::done, ::go,
+                    pinnedPage, checks, download, draft, language, onDraft, onDownload, onEnableKeyboard,
+                    onPickKeyboard, onA11y, onLanguage, onFinish, ::done, ::go, openHint,
                 )
             }
         } else {
@@ -109,8 +111,8 @@ fun WizardScreen(
             ) { page ->
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                     StepPage(
-                        page, checks, download, draft, onDraft, onDownload, onEnableKeyboard,
-                        onPickKeyboard, onA11y, onFinish, ::done, ::go,
+                        page, checks, download, draft, language, onDraft, onDownload, onEnableKeyboard,
+                        onPickKeyboard, onA11y, onLanguage, onFinish, ::done, ::go, openHint,
                     )
                 }
             }
@@ -125,41 +127,45 @@ private fun StepPage(
     checks: WizardChecks,
     download: DownloadSnapshot,
     draft: String,
+    language: String,
     onDraft: (String) -> Unit,
     onDownload: () -> Unit,
     onEnableKeyboard: () -> Unit,
     onPickKeyboard: () -> Unit,
     onA11y: () -> Unit,
+    onLanguage: (String) -> Unit,
     onFinish: () -> Unit,
     done: (Int) -> Boolean,
     go: (Int) -> Unit,
+    openHint: String,
 ) {
     when (page) {
-        0 -> WelcomeStep()
-        1 -> ModelsStep(checks.models, download, onDownload)
-        2 -> EnableStep(checks.keyboardEnabled, onEnableKeyboard)
-        3 -> PickStep(checks.keyboardCurrent, onPickKeyboard)
-        4 -> A11yStep(checks.a11y, onA11y)
+        0 -> LanguageStep(language, onLanguage)
+        1 -> WelcomeStep()
+        2 -> ModelsStep(checks.models, download, onDownload)
+        3 -> EnableStep(checks.keyboardEnabled, onEnableKeyboard)
+        4 -> PickStep(checks.keyboardCurrent, onPickKeyboard)
+        5 -> A11yStep(checks.a11y, onA11y)
         else -> TryStep(draft, onDraft)
     }
     Spacer(Modifier.height(8.dp))
-    if (!done(page)) MonoLabel(OPEN_HINT)
+    if (!done(page)) MonoLabel(openHint)
     if (page == PAGES - 1) {
         Box(Modifier.testTag("wizard-forward")) {
-            val label = if (done(page)) "Fertig, los geht's" else "Trotzdem weiter / Später"
+            val label = stringResource(if (done(page)) R.string.finish else R.string.next_anyway)
             StickerButton(label, Yellow, onClick = onFinish)
         }
-        StickerButton("Zurück", Cream) { go(page - 1) }
-        MonoLabel("Schließen oben rechts geht jederzeit in die Hauptansicht, auch wenn noch etwas fehlt.")
+        StickerButton(stringResource(R.string.back), Cream) { go(page - 1) }
+        MonoLabel(stringResource(R.string.close_note))
     } else {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (page > 0) {
                 Box(Modifier.weight(1f)) {
-                    StickerButton("Zurück", Cream) { go(page - 1) }
+                    StickerButton(stringResource(R.string.back), Cream) { go(page - 1) }
                 }
             }
             Box(Modifier.weight(1f).testTag("wizard-forward")) {
-                val label = if (done(page)) "Weiter" else "Trotzdem weiter / Später"
+                val label = stringResource(if (done(page)) R.string.next else R.string.next_anyway)
                 StickerButton(label, Yellow) { go(page + 1) }
             }
         }
@@ -168,8 +174,23 @@ private fun StepPage(
 }
 
 @Composable
+private fun LanguageStep(language: String, onLanguage: (String) -> Unit) {
+    StepCard(stringResource(R.string.lang_kicker), stringResource(R.string.lang_title), done = true) {
+        Body(stringResource(R.string.lang_body))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Box(Modifier.weight(1f)) {
+                Choice(stringResource(R.string.lang_en), language != AppLanguage.DE) { onLanguage(AppLanguage.EN) }
+            }
+            Box(Modifier.weight(1f)) {
+                Choice(stringResource(R.string.lang_de), language == AppLanguage.DE) { onLanguage(AppLanguage.DE) }
+            }
+        }
+    }
+}
+
+@Composable
 private fun WelcomeStep() {
-    StepCard("WILLKOMMEN", "Drei Memes, kein Senden", done = true) {
+    StepCard(stringResource(R.string.welcome_kicker), stringResource(R.string.welcome_title), done = true) {
         Image(
             painterResource(R.drawable.memem_logo),
             contentDescription = "MemEm",
@@ -177,56 +198,60 @@ private fun WelcomeStep() {
             contentScale = ContentScale.Fit,
         )
         Spacer(Modifier.height(8.dp))
-        Body(
-            "MemEm ist eine Tastatur. Du tippst, drückst Meme, und drei Bilder erscheinen. Eins davon landet im Feld. Gesendet wird nie.",
-        )
+        Body(stringResource(R.string.welcome_body))
     }
 }
 
 @Composable
 private fun ModelsStep(ready: Boolean, download: DownloadSnapshot, onDownload: () -> Unit) {
-    StepCard("MODELLE", "Einmal laden, dann lokal", ready) {
-        Body("Embedding etwa 157 MB. Gemma etwa 2,6 GB. Am besten im WLAN. Der Download läuft im Hintergrund weiter, auch wenn du die App verlässt.")
-        if (!ready) StickerButton(if (download.active) "Läuft schon" else "Herunterladen", Yellow, onClick = onDownload)
+    StepCard(stringResource(R.string.models_kicker), stringResource(R.string.models_title), ready) {
+        Body(stringResource(R.string.models_body))
+        if (!ready) {
+            StickerButton(
+                stringResource(if (download.active) R.string.download_running else R.string.download),
+                Yellow,
+                onClick = onDownload,
+            )
+        }
         if (download.text.isNotBlank()) MonoLabel(download.text)
         if (download.active || (download.percent in 1..99)) {
             ProgressBar(download.percent)
         }
-        if (download.failed) MonoLabel("Teildatei bleibt liegen. Nochmal tippen setzt fort.")
-        if (ready) MonoLabel("Beide Dateien sind da. Gemma und Embedding laufen auf der CPU.")
+        if (download.failed) MonoLabel(stringResource(R.string.download_resume_hint))
+        if (ready) MonoLabel(stringResource(R.string.models_both_ready))
     }
 }
 
 @Composable
 private fun EnableStep(ready: Boolean, onOpen: () -> Unit) {
-    StepCard("TASTATUR", "MemEm einschalten", ready) {
-        Body("Der Knopf öffnet Einstellungen, Bildschirmtastaturen. Schalte MemEm ein. Beim Zurückkommen setzt sich der Haken von allein.")
-        StickerButton("Bildschirmtastaturen öffnen", Yellow, onClick = onOpen)
+    StepCard(stringResource(R.string.keyboard_kicker), stringResource(R.string.keyboard_title), ready) {
+        Body(stringResource(R.string.keyboard_body))
+        StickerButton(stringResource(R.string.open_ime_settings), Yellow, onClick = onOpen)
     }
 }
 
 @Composable
 private fun PickStep(ready: Boolean, onOpen: () -> Unit) {
-    StepCard("AKTIV", "MemEm auswählen", ready) {
-        Body("Wähle MemEm als aktive Tastatur. Derselbe Dialog kommt später bei einem langen Druck auf den Globus.")
-        StickerButton("Tastaturauswahl öffnen", Yellow, onClick = onOpen)
+    StepCard(stringResource(R.string.active_kicker), stringResource(R.string.active_title), ready) {
+        Body(stringResource(R.string.active_body))
+        StickerButton(stringResource(R.string.open_picker), Yellow, onClick = onOpen)
     }
 }
 
 @Composable
 private fun A11yStep(ready: Boolean, onA11y: () -> Unit) {
-    StepCard("OPTIONAL", "WhatsApp Kontext", ready) {
-        Body("Die Bedienungshilfe liest den offenen WhatsApp-Chat für die Suche und fügt das Bild ein, wenn die Tastatur das nicht schafft.")
-        StickerButton("Bedienungshilfe öffnen", Blue, light = true, onClick = onA11y)
-        MonoLabel(if (ready) "Bedienungshilfe ist an." else "Ohne diesen Schritt geht die Tastatur trotzdem. Kontext und das extra Einfügen fehlen dann.")
+    StepCard(stringResource(R.string.a11y_kicker), stringResource(R.string.a11y_title), ready) {
+        Body(stringResource(R.string.a11y_body))
+        StickerButton(stringResource(R.string.open_a11y), Blue, light = true, onClick = onA11y)
+        MonoLabel(stringResource(if (ready) R.string.a11y_on_short else R.string.a11y_skip_hint))
     }
 }
 
 @Composable
 private fun TryStep(draft: String, onDraft: (String) -> Unit) {
-    StepCard("PROBIEREN", "Kurz tippen", draft.isNotBlank()) {
-        Body("Tippe eine Testnachricht. In WhatsApp tippst du den Text und drückst Meme. Darüber erscheinen drei Karten.")
-        Body("Globus kurz: vorherige Tastatur. Globus lang: Auswahl aller Tastaturen. Leertaste lang wechselt ebenfalls, ohne den Dialog.")
+    StepCard(stringResource(R.string.try_kicker), stringResource(R.string.try_title), draft.isNotBlank()) {
+        Body(stringResource(R.string.try_body))
+        Body(stringResource(R.string.try_globe))
         StickerBox(fill = Paper, shadow = 3.dp) {
             BasicTextField(
                 value = draft,
@@ -237,7 +262,11 @@ private fun TryStep(draft: String, onDraft: (String) -> Unit) {
                 decorationBox = { inner ->
                     Box {
                         if (draft.isEmpty()) {
-                            Text("Testnachricht", color = Ink.copy(alpha = 0.45f), fontSize = 18.sp)
+                            Text(
+                                stringResource(R.string.test_hint),
+                                color = Ink.copy(alpha = 0.45f),
+                                fontSize = 18.sp,
+                            )
                         }
                         inner()
                     }

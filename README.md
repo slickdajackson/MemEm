@@ -27,14 +27,14 @@ A short phone recording: the setup wizard, then the keyboard with meme cards.
 
 ## Download
 
-[Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.6) MemEm 0.2.6. The file is a debug sideload APK, `arm64-v8a` only, versionCode 17.
+[Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.7) MemEm 0.2.7. The file is a debug sideload APK, `arm64-v8a` only, versionCode 18.
 
-Direct file: [MemEm-debug-0.2.6.apk](https://github.com/slickdajackson/MemEm/releases/download/v0.2.6/MemEm-debug-0.2.6.apk)
+Direct file: [MemEm-debug-0.2.7.apk](https://github.com/slickdajackson/MemEm/releases/download/v0.2.7/MemEm-debug-0.2.7.apk)
 
 SHA-256:
 
 ```
-9b8ca28f873b91b8cedca9cfa043c606e6ea64f36021ad1ff7a27c57a85fbc5a
+7574a4a8fd96c5f314ed455fb84635f63834cac7dcb61056b5d4c51a584cd2fc
 ```
 
 ## How it works
@@ -53,18 +53,18 @@ SHA-256:
 </picture>
 </p>
 
-Gemma 4 E2B and EmbeddingGemma run on the CPU, in a separate process. The keyboard talks to that process on the device. While the model is still writing, the cards show your words marked `wörtlich`. A caption that passes is marked `KI`. If fewer than three cards pass, MemEm tries once more in the background and adds those cards when they are ready.
+Gemma 4 E2B and EmbeddingGemma run on the CPU, in a separate process. The keyboard talks to that process on the device. While the model is still writing, the cards show your words marked `literal`. A caption that passes is marked `AI`. If fewer than three cards pass, MemEm tries once more in the background and adds those cards when they are ready.
 
-The on-screen UI is German. The default keyboard is English QWERTY (space bar `EN`). QWERTZ is optional (space bar `DE`).
+The app UI is English or German. The phone language is the default, and the first wizard step (or settings) can switch it. English uses QWERTY, space bar `EN`. German uses QWERTZ, space bar `DE`, with umlauts on a long press. A short press on the globe switches between those two MemEm keyboards. A long press opens the full keyboard list.
 
 ## Screenshots
 
 | | |
 | --- | --- |
-| Keyboard with three suggestions | Setup wizard, step 1 |
-| <img src="docs/images/tastatur.png" alt="Keyboard with three suggestions for The server is on fire" width="360" /> | <img src="docs/images/einrichtung.png" alt="Setup wizard" width="280" /> |
+| Keyboard with three suggestions | Setup wizard |
+| <img src="docs/images/tastatur.png" alt="English keyboard with three suggestions for The server is on fire, badges AI and literal" width="360" /> | <img src="docs/images/einrichtung.png" alt="Setup wizard welcome in English" width="280" /> |
 | Main screen | Settings |
-| <img src="docs/images/hauptansicht.png" alt="Main screen, try field set to The server is on fire, three cards" width="280" /> | <img src="docs/images/einstellungen.png" alt="Settings" width="280" /> |
+| <img src="docs/images/hauptansicht.png" alt="English main screen, try field set to The server is on fire, three cards" width="280" /> | <img src="docs/images/einstellungen.png" alt="Settings in English" width="280" /> |
 
 <p>
 <img src="docs/images/meme-drake.png" alt="Drake: Another meeting today, Friday, I'm free" width="220" />
@@ -74,11 +74,11 @@ The on-screen UI is German. The default keyboard is English QWERTY (space bar `E
 
 ## Setup
 
-1. [Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.6) the APK and sideload it. Confirm the system security check.
-2. The wizard opens once: models, turn the keyboard on, choose it, optional WhatsApp help, then a try field. Every page has a forward button. You can skip a step and come back later.
+1. [Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.7) the APK and sideload it. Confirm the system security check.
+2. The wizard opens once: language, models, turn the keyboard on, choose it, optional WhatsApp help, then a try field. Every page has a forward button. You can skip a step and come back later.
 3. On first launch MemEm downloads two models and checks SHA-256: EmbeddingGemma (about 157 MB) and Gemma 4 E2B (about 2.6 GB). A stopped download keeps the partial file and resumes. The notification goes away when the files are ready.
 4. In any app, switch to MemEm and type. Press **Meme**. Three cards appear. Tap one to insert the picture.
-5. A short press on the globe goes back to the previous keyboard. A long press opens the keyboard list. A long press on space switches too. Enter inserts a newline.
+5. A short press on the globe switches between the English and German MemEm keyboards. A long press opens the keyboard list, where another app's keyboard can be chosen. A long press on space switches MemEm language too. Enter inserts a newline.
 
 WhatsApp can also share the open chat with the search, if you turn on the accessibility service. That service only looks at WhatsApp. On some Xiaomi phones the system asks for an extra switch before accessibility will start. Notes are in [docs/hyperos.md](docs/hyperos.md).
 
@@ -102,7 +102,7 @@ Same rewrite as the app, on the JVM:
 ./gradlew :tools:rewrite-cli:run --args="--gemma /path/gemma-4-E2B-it.litertlm --embed /path/embeddinggemma-2-text-270m.litertlm --sentences sentences.txt"
 ```
 
-One sentence per line. The report is Markdown and JSON: template, lines, source (`KI` or `wörtlich`), reason, raw reply, and latency to the first cards. `litertlm-jvm:0.18.0` brings `liblitertlm_jni.so` for `linux-x86_64`. JDK 21 is enough. If the embedding model does not load, search falls back to the hash index.
+One sentence per line. The report is Markdown and JSON: template, lines, source (`AI` or `literal`), reason, raw reply, and latency to the first cards. `litertlm-jvm:0.18.0` brings `liblitertlm_jni.so` for `linux-x86_64`. JDK 21 is enough. If the embedding model does not load, search falls back to the hash index.
 
 ## Privacy
 

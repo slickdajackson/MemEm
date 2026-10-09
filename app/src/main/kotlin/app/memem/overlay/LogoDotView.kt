@@ -115,7 +115,7 @@ class OverlayPanelView(context: Context) : View(context) {
         paint.typeface = Typeface.DEFAULT_BOLD
         paint.textSize = 14 * d
         paint.color = MemPalette.INK
-        canvas.drawText("Schließen", close.centerX(), close.centerY() + 5 * d, paint)
+        canvas.drawText(context.getString(R.string.overlay_close), close.centerX(), close.centerY() + 5 * d, paint)
         if (status.isNotBlank()) {
             paint.textAlign = Paint.Align.LEFT
             paint.typeface = Typeface.MONOSPACE
