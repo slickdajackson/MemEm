@@ -27,14 +27,14 @@ A short phone recording: the setup wizard, then the keyboard with meme cards.
 
 ## Download
 
-[Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.7) MemEm 0.2.7. The file is a debug sideload APK, `arm64-v8a` only, versionCode 18.
+[Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.8) MemEm 0.2.8. The file is a debug sideload APK, `arm64-v8a` only, versionCode 19.
 
-Direct file: [MemEm-debug-0.2.7.apk](https://github.com/slickdajackson/MemEm/releases/download/v0.2.7/MemEm-debug-0.2.7.apk)
+Direct file: [MemEm-debug-0.2.8.apk](https://github.com/slickdajackson/MemEm/releases/download/v0.2.8/MemEm-debug-0.2.8.apk)
 
 SHA-256:
 
 ```
-7574a4a8fd96c5f314ed455fb84635f63834cac7dcb61056b5d4c51a584cd2fc
+ca5644a434a548aa2fee63fc0ea56bb8e78120de26d2c43a134b83a50954c08d
 ```
 
 ## How it works
@@ -74,7 +74,7 @@ The app UI is English or German. The phone language is the default, and the firs
 
 ## Setup
 
-1. [Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.7) the APK and sideload it. Confirm the system security check.
+1. [Download](https://github.com/slickdajackson/MemEm/releases/tag/v0.2.8) the APK and sideload it. Confirm the system security check.
 2. The wizard opens once: language, models, turn the keyboard on, choose it, optional WhatsApp help, then a try field. Every page has a forward button. You can skip a step and come back later.
 3. On first launch MemEm downloads two models and checks SHA-256: EmbeddingGemma (about 157 MB) and Gemma 4 E2B (about 2.6 GB). A stopped download keeps the partial file and resumes. The notification goes away when the files are ready.
 4. In any app, switch to MemEm and type. Press **Meme**. Three cards appear. Tap one to insert the picture.
