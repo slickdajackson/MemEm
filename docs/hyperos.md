@@ -1,37 +1,37 @@
-# MemEm auf dem Xiaomi 15 Ultra (HyperOS 3, Android 16)
+# MemEm on the Xiaomi 15 Ultra (HyperOS 3, Android 16)
 
-Die Menüpfade stammen aus den ChatLens-Notizen (INSTALL-XIAOMI.md, RECHERCHE.md) und aus Community-Berichten. Sie sind an diesem Gerät nicht neu geprüft. Bezeichnungen können abweichen.
+Menu paths come from the ChatLens notes (`INSTALL-XIAOMI.md`, `RECHERCHE.md` in [ChatLens](https://github.com/slickdajackson/ChatLense)) and from community reports. They have not been rechecked on this device. Labels can differ. The app UI itself is German, so the quotes below are the strings on screen.
 
 ## Sideload
 
-Debug-APK installieren. HyperOS kann eine Sicherheitsprüfung zeigen. Advanced Protection aus lassen, weil der Modus ab Android 17 Bedienungshilfen auf verifizierte Tools beschränken kann.
+Install the debug APK. HyperOS can show a security check. Leave Advanced Protection off, because from Android 17 that mode can limit accessibility services to verified tools.
 
-## Bedienungshilfe
+## Accessibility
 
-1. In MemEm „Bedienungshilfe öffnen“ tippen und „MemEm Meme-Hilfe“ einschalten.
-2. Kommt der Hinweis auf eingeschränkte Einstellungen: Dialog schließen, dann Einstellungen, Apps, MemEm, Drei-Punkte-Menü, „Eingeschränkte Einstellungen zulassen“, mit Fingerabdruck oder PIN bestätigen. Auf manchen Ständen steht der Eintrag unten auf der App-Infoseite.
-3. Zurück zur Bedienungshilfe und den Schalter einschalten.
-4. Blockiert ein Overlay den Schalter, vorübergehend von Gesten auf Schaltflächen wechseln.
+1. In MemEm tap "Bedienungshilfe öffnen" and turn on "MemEm Meme-Hilfe".
+2. If the restricted-settings warning appears: close the dialog, then Settings, Apps, MemEm, three-dot menu, "Eingeschränkte Einstellungen zulassen", confirm with fingerprint or PIN. On some builds the entry is at the bottom of the app info page.
+3. Go back to accessibility and turn the switch on.
+4. If an overlay blocks the switch, switch from gestures to buttons for a moment.
 
-Der Dienst sieht nur `com.whatsapp`. Er liest den offenen Chat und fügt ein Bild ein. Er tippt nicht auf Senden.
+The service sees only `com.whatsapp`. It reads the open chat and inserts an image. It does not tap send.
 
-## Punkt, Akku, Autostart
+## Dot, battery, autostart
 
-HyperOS beendet Hintergrunddienste. Sonst verschwinden Punkt, Download und der Prozess `:llm`.
+HyperOS stops background services. Otherwise the dot, the download, and the `:llm` process disappear.
 
-* Autostart für MemEm an (App-Info oder Sicherheits-App).
-* Akku: „Keine Einschränkungen“. „App-Aktivität anhalten, wenn nicht verwendet“ aus.
-* MemEm und WhatsApp in der Zuletzt-Ansicht sperren.
-* „Über anderen Apps einblenden“ für den Punkt.
-* „Pop-up-Fenster im Hintergrund“, sonst öffnet der Punkt die App auf HyperOS oft nicht zuverlässig.
-* Schalter „Schwebender Punkt“ in MemEm. Entfernen über den Schalter oder die Benachrichtigung.
+* Turn autostart on for MemEm (app info or the security app).
+* Battery: "Keine Einschränkungen". Turn off "App-Aktivität anhalten, wenn nicht verwendet".
+* Lock MemEm and WhatsApp in the recents view.
+* "Über anderen Apps einblenden" for the dot.
+* "Pop-up-Fenster im Hintergrund", or the dot often fails to open the app on HyperOS.
+* The "Schwebender Punkt" switch in MemEm. Remove it with the switch or the notification.
 
-Nach einem Systemupdate die Bedienungshilfe erneut prüfen.
+After a system update, check accessibility again.
 
-## Zwischenablage
+## Clipboard
 
-Das PNG liegt als content-URI in der Zwischenablage. Die Tastatur versucht Einfügen. Auf diesem Weg meldet WhatsApp oft keinen Erfolg. Dann löst die Bedienungshilfe `ACTION_PASTE` im Feld `com.whatsapp:id/entry` aus. Klappt auch das nicht, erscheint der Hinweis, lange zu tippen und Einfügen zu wählen. Die Datei bleibt liegen, damit die URI gültig bleibt.
+The PNG sits in the clipboard as a content URI. The keyboard tries paste. WhatsApp often reports no success on that path. The accessibility service then runs `ACTION_PASTE` on `com.whatsapp:id/entry`. If that fails too, the hint is to long-press and choose paste. The file stays so the URI remains valid.
 
-## Modelle
+## Models
 
-Download über die Benachrichtigung. Bricht HyperOS den Dienst ab, bleibt die Teildatei. „Fortsetzen“ oder der Download-Knopf lädt ab der vorhandenen Stelle weiter und prüft danach SHA-256. WLAN und Strom sind sinnvoll, Gemma 4 E2B ist etwa 2,6 GB.
+Download through the notification. If HyperOS kills the service, the partial file stays. "Fortsetzen" or the download button continues from the bytes already there and then checks SHA-256. Wi-Fi and power are worth it. Gemma 4 E2B is about 2.6 GB.

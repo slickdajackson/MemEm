@@ -129,7 +129,7 @@ class ScreenRenderTest {
         val drake = renderer.render(template(context, "drake"), listOf("Meeting heute", "Meeting am Freitag"))
         val fine = renderer.render(template(context, "fine"), listOf("Der Server brennt", "Alles gut"))
         val cmm = renderer.render(template(context, "cmm"), listOf("Die Frist war gestern"))
-        check(drawn(drake) && drawn(fine) && drawn(cmm)) { "Meme-Vorlage blieb leer" }
+        check(drawn(drake) && drawn(fine) && drawn(cmm)) { "meme template rendered blank" }
         save(drake, "meme-drake.png", docs = true)
         save(fine, "meme-fine.png", docs = true)
         save(cmm, "meme-cmm.png", docs = true)
@@ -323,7 +323,7 @@ class ScreenRenderTest {
                 defaultLines = emptyList(),
             )
         }
-        error("Vorlage fehlt: $id")
+        error("template missing: $id")
     }
 
     private fun drawn(bitmap: Bitmap): Boolean {
