@@ -1,10 +1,10 @@
-# MemEm 0.1.3
+# MemEm 0.1.4
 
 Private Android-Tastatur (Sideload), die aus dem getippten Text drei Memes vorschlägt und eines davon in das Eingabefeld legt. MemEm sendet nie selbst. Optional liest eine Bedienungshilfe den offenen WhatsApp-Chat und ein schwebender Punkt startet denselben Vorschlag.
 
 Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`. Einstellungen und Wizard bleiben im ReadEm-Stil: cremefarbene Karten, schwarzer Rand, harter Schatten, Anton. Die Tastatur selbst ist flach: helle Tasten auf Creme, dünner grauer Rand, Sondertasten dezent gelb, Meme-Karten ohne Versatzschatten. Standardlayout ist englisches QWERTY, Leertaste `EN`. QWERTZ ist eine Einstellung, Leertaste dann `DE`. Globus kurz wechselt zur vorherigen Tastatur, Globus lang öffnet die Tastaturauswahl. Gemma und Embedding laufen immer auf der CPU.
 
-Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Schließen oder Fertig führt in die Hauptansicht. Danach startet der Wizard nicht mehr von selbst. Die Hauptansicht zeigt den Status, ein Probierfeld mit drei Karten und die Einstellungen. Die Tastatur lässt unten Platz für die Navigationsleiste, bei Gesten und bei drei Tasten. Text auf den Vorlagen sitzt in der memegen-Box (Anker, Größe, Winkel, Ausrichtung, Schrift, Farbe), dreht um den Box-Mittelpunkt und wird wie bei memegen an den Anker geklebt. Die Schrift schrumpft, bis der Text samt Umbruch in die Box passt.
+Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Schließen oder Fertig führt in die Hauptansicht. Danach startet der Wizard nicht mehr von selbst. Die Hauptansicht zeigt den Status, ein Probierfeld mit drei Karten und die Einstellungen. Die Tastatur lässt unten Platz für die Navigationsleiste, bei Gesten und bei drei Tasten. Text auf den Vorlagen sitzt in der memegen-Box (Anker, Größe, Winkel, Ausrichtung, Schrift, Farbe), dreht um den Box-Mittelpunkt und wird wie bei memegen an den Anker geklebt. Die Schrift schrumpft, bis der Text samt Umbruch in die Box passt. Mehrere Zeilen teilen die Nachricht nur an einer natürlichen Stelle und behalten die Wortreihenfolge. Verschränkte oder umsortierte Zeilen fallen auf diese Teilung zurück.
 
 ## Ablauf
 

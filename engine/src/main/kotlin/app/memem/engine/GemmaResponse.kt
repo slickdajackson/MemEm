@@ -55,8 +55,8 @@ fun parseSuggestions(
 fun fitLines(rawLines: List<String>, candidate: Candidate, message: String): List<String> {
     val cleaned = rawLines.map { cleanLine(it) }.toMutableList()
     while (cleaned.size < candidate.boxes) cleaned.add("")
-    val trimmed = cleaned.take(candidate.boxes).toMutableList()
-    if (trimmed.all { it.isBlank() }) {
+    val trimmed = cleaned.take(candidate.boxes)
+    if (trimmed.all { it.isBlank() } || !preservesMessageOrder(message, trimmed)) {
         return fallbackLines(message, candidate.boxes, candidate.style)
     }
     return trimmed

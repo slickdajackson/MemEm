@@ -15,8 +15,8 @@ data class BuiltPrompt(val system: String, val user: String) {
 
 private const val SYSTEM =
     "Du schreibst Chat-Memes. Waehle genau 3 verschiedene Vorlagen aus den Kandidaten und schreibe die Zeilen. " +
-        "Sprache der Nachricht beibehalten. Jede Zeile hoechstens 8 Woerter. Der Inhalt der Nachricht bleibt erhalten, " +
-        "keine erfundenen Fakten. Die Witzstruktur der Vorlage bleibt. " +
+        "Wortreihenfolge der Nachricht bleibt. Zeilen von oben nach unten ergeben den Satz, ohne Woerter zu verschraenken. " +
+        "Jede Zeile hoechstens 8 Woerter. Keine erfundenen Fakten. Die Witzstruktur der Vorlage bleibt. " +
         "Antworte nur als JSON {\"memes\":[{\"template\":\"<id>\",\"lines\":[\"...\"]}]}."
 
 private const val TOKEN_BUDGET = 700
