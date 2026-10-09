@@ -10,6 +10,16 @@ The on-device UI is German. Labels such as `wörtlich` and `KI` are quoted below
 <img src="docs/images/logo.png" alt="MemEm logo" width="180" />
 </p>
 
+## Demo
+
+A phone recording of the setup wizard and the MemEm keyboard with meme cards. The picture is a short preview. The full video is the MP4.
+
+<p>
+<a href="docs/demo/memem-demo.mp4"><img src="docs/demo/memem-demo.gif" alt="MemEm demo: wizard, then the keyboard with meme cards" width="360" /></a>
+</p>
+
+[memem-demo.mp4](docs/demo/memem-demo.mp4)
+
 ## Features
 
 * A Gboard-style keyboard with three meme previews. The default layout is English QWERTY, space bar `EN`. QWERTZ is optional, and the space bar then reads `DE`.
