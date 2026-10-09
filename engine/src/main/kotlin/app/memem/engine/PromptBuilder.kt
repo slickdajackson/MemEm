@@ -15,11 +15,13 @@ data class BuiltPrompt(val system: String, val user: String) {
 }
 
 const val GEMMA_MAX_OUTPUT_TOKENS = 160
+const val GEMMA_TEMPERATURE = 0.4
+const val FOLLOW_UP_TEMPERATURE = 0.8
 
 private const val SYSTEM =
     "You write chat memes. Do not copy the message. Rewrite it in the style of the examples. " +
         "Keep the core meaning and do not add facts. The caption language matches the message. " +
-        "A fixed meme phrase may stay in its original language, such as It's a trap!. " +
+        "A template's own catchphrase may stay in its original language. Do not borrow a catchphrase from a different template. " +
         "Short and pointed. For each template, fields z1, z2, and so on, one line per field, each line different and not empty. " +
         "No line ends on an article, a preposition, or a conjunction. " +
         "Reply with JSON only. Keys are the template ids. Values are objects with z1, z2, ..."
@@ -32,6 +34,25 @@ fun retryHint(reasons: List<String>, language: String = ""): String {
         "Do not copy the message or an example line."
 }
 
+fun reasonText(reason: String, language: String): String = when (reason) {
+    "woertlich" -> "The line repeats the message. Write a new setup and keep an original punchline."
+    "sprache" -> "Wrong language. Write in ${languageName(language)}."
+    "kopie" -> "That copies an example or another template's catchphrase. Write a new line."
+    "fremd" -> "That does not fit the message. Keep the meaning."
+    "doppelt" -> "The lines repeat each other. Make each line different."
+    "leer" -> "A line was empty. Fill every field."
+    "sinnlos" -> "A line was unusable. Write a real phrase."
+    "abgebrochen" -> "A line was cut off. Finish the phrase."
+    "fehlt" -> "The template was missing. Reply with its lines."
+    else -> "The lines were rejected. Write in ${languageName(language)}."
+}
+
+/** One concrete reason per template, used only when every card failed. */
+fun followUpHint(items: List<Pair<String, String>>, language: String): String {
+    if (items.isEmpty()) return retryHint(emptyList(), language)
+    return items.joinToString(" ") { (id, reason) -> "$id: ${reasonText(reason, language)}" }
+}
+
 private const val TOKEN_BUDGET = 1000
 private const val CHAR_BUDGET = TOKEN_BUDGET * 4
 private const val MAX_TEMPLATES = 3
@@ -42,13 +63,14 @@ fun buildPrompt(
     candidates: List<Brief>,
     context: List<String> = emptyList(),
     hint: String = "",
+    locale: String = "",
 ): BuiltPrompt {
     val selected = candidates.take(MAX_TEMPLATES)
     var exampleTake = 5
     var meaningLimit = 180
     var lineLimit = 72
     var ctx = context.map { clip(it, 120) }.filter { it.isNotEmpty() }.take(4)
-    val language = outputLanguage(message, ctx)
+    val language = outputLanguage(message, ctx, locale)
     var user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     if (over(user) && meaningLimit > 100) {
         meaningLimit = 100
@@ -150,10 +172,10 @@ private fun renderUser(
         val meaning = clipSentence(brief.meaning, meaningLimit)
         if (meaning.isNotBlank()) body.append(" | ").append(meaning)
         body.append('\n')
-        val examples = brief.examples.take(exampleTake).filter { lines -> lines.any { it.isNotBlank() } }
+        val examples = brief.examples.take(exampleTake).filter { lines -> lines.all { it.isNotBlank() } }
         examples.forEach { lines ->
             body.append("- ")
-            body.append(lines.joinToString(" / ") { clip(it, lineLimit).ifBlank { placeholder(language) } })
+            body.append(lines.joinToString(" / ") { clip(it, lineLimit) })
             body.append('\n')
         }
     }

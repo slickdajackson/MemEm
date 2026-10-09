@@ -7,7 +7,6 @@ import app.memem.engine.Kind
 import app.memem.engine.MemIndex
 import app.memem.engine.examplesForLanguage
 import app.memem.engine.halfToFloat
-import app.memem.engine.selectExampleGroups
 import org.json.JSONObject
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -29,6 +28,9 @@ data class MemeTemplate(
     val style: String get() = fields.firstOrNull()?.style ?: "upper"
     val meaning: String get() = meaningDe.ifBlank { meaningEn }
 
+    fun meaningFor(language: String): String =
+        if (language == "de") meaningDe.ifBlank { meaningEn } else meaningEn.ifBlank { meaningDe }
+
     fun examplesFor(language: String): List<List<String>> = examplesForLanguage(examples, examplesEn, language)
 }
 
@@ -43,7 +45,8 @@ class MemAssets(context: Context) {
 
     init {
         val catalog = JSONObject(app.assets.open("catalog.json").bufferedReader().readText())
-        val captionExamples = loadCaptionExamples()
+        val captionExamples = loadCaptionExamples("caption-examples.json")
+        val captionExamplesEn = loadCaptionExamples("caption-examples-en.json")
         val list = catalog.getJSONArray("templates")
         val loaded = LinkedHashMap<String, MemeTemplate>(list.length())
         for (i in 0 until list.length()) {
@@ -79,10 +82,7 @@ class MemAssets(context: Context) {
                 examples = captionExamples[obj.getString("id")] ?: emptyList(),
                 situationsDe = readStrings(obj.optJSONArray("situationsDe")),
                 defaultLines = readStrings(obj.optJSONArray("defaultLines")),
-                examplesEn = selectExampleGroups(
-                    readLines(obj.optJSONArray("examples")),
-                    obj.optInt("boxes", fields.size),
-                ),
+                examplesEn = captionExamplesEn[obj.getString("id")] ?: emptyList(),
             )
             loaded[template.id] = template
         }
@@ -150,9 +150,9 @@ class MemAssets(context: Context) {
         }
     }
 
-    private fun loadCaptionExamples(): Map<String, List<List<String>>> {
+    private fun loadCaptionExamples(name: String): Map<String, List<List<String>>> {
         return try {
-            val root = JSONObject(app.assets.open("caption-examples.json").bufferedReader().readText())
+            val root = JSONObject(app.assets.open(name).bufferedReader().readText())
             buildMap {
                 val keys = root.keys()
                 while (keys.hasNext()) {

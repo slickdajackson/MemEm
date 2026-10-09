@@ -7,16 +7,21 @@ data class CatalogEntry(
     val name: String,
     val boxes: Int,
     val style: String,
-    val meaning: String,
+    val meaningDe: String,
+    val meaningEn: String,
     val examplesDe: List<List<String>>,
     val examplesEn: List<List<String>>,
 ) {
+    val meaning: String get() = meaningDe.ifBlank { meaningEn }
+    fun meaningFor(language: String): String =
+        if (language == "de") meaningDe.ifBlank { meaningEn } else meaningEn.ifBlank { meaningDe }
     fun examplesFor(language: String): List<List<String>> = examplesForLanguage(examplesDe, examplesEn, language)
 }
 
-/** Reads the same catalog the app ships, plus the few-shot file when it is present. */
-fun parseCatalog(catalogJson: String, examplesJson: String = ""): List<CatalogEntry> {
+/** Reads the same catalog the app ships, plus the few-shot files when they are present. */
+fun parseCatalog(catalogJson: String, examplesJson: String = "", examplesEnJson: String = ""): List<CatalogEntry> {
     val extra = readExampleMap(examplesJson)
+    val english = readExampleMap(examplesEnJson)
     val list = JSONObject(catalogJson).getJSONArray("templates")
     return buildList {
         for (index in 0 until list.length()) {
@@ -25,16 +30,16 @@ fun parseCatalog(catalogJson: String, examplesJson: String = ""): List<CatalogEn
             val fields = obj.optJSONArray("fields")
             val style = fields?.optJSONObject(0)?.optString("style")?.ifBlank { null } ?: "upper"
             val boxes = obj.optInt("boxes", fields?.length() ?: 1).coerceAtLeast(1)
-            val fromCatalog = readExampleGroups(obj.optJSONArray("examples"))
             add(
                 CatalogEntry(
                     id = id,
                     name = obj.optString("name", id),
                     boxes = boxes,
                     style = style,
-                    meaning = obj.optString("meaningDe").ifBlank { obj.optString("meaningEn") },
+                    meaningDe = obj.optString("meaningDe"),
+                    meaningEn = obj.optString("meaningEn"),
                     examplesDe = (extra[id] ?: emptyList()).take(5),
-                    examplesEn = selectExampleGroups(fromCatalog, boxes),
+                    examplesEn = (english[id] ?: emptyList()).take(3),
                 ),
             )
         }

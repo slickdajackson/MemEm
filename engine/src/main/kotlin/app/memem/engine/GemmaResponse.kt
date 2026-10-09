@@ -24,6 +24,8 @@ data class Suggestion(
     val lines: List<String>,
     val fromModel: Boolean,
     val reason: String = "",
+    /** The model lines that were rejected, kept so the log can say why. */
+    val detail: String = "",
 )
 
 /**
@@ -50,7 +52,8 @@ fun parseSuggestions(
         val candidate = byId[item.first] ?: continue
         if (!used.add(candidate.id)) continue
         val resolved = resolveLines(item.second, candidate, message, similarity, lang)
-        out.add(Suggestion(candidate.id, resolved.lines, resolved.fromModel, resolved.reason))
+        val detail = if (resolved.fromModel) "" else item.second.joinToString(" / ") { it.trim() }
+        out.add(Suggestion(candidate.id, resolved.lines, resolved.fromModel, resolved.reason, detail))
     }
     val missingReason = if (raw.isBlank()) failure.ifBlank { "keine antwort" } else "fehlt"
     for (candidate in candidates) {
@@ -116,9 +119,9 @@ fun rejectReason(
     if (lines.any { line -> !hasVowel(line) }) return "sinnlos"
     if (duplicateLines(lines)) return "doppelt"
     if (copiesExample(lines, candidate, labels)) return "kopie"
-    if (foreignLanguage(lines, lang, labels)) return "sprache"
+    if (foreignLanguage(lines, lang, labels, candidate.id)) return "sprache"
     if (overlapsMessage(lines, message, labels)) return "woertlich"
-    if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex) }) return "abgebrochen"
+    if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex, candidate.id) }) return "abgebrochen"
     if (
         similarity != null &&
         similarity(lines.joinToString(" ")) < MIN_CAPTION_SIMILARITY &&
@@ -161,29 +164,48 @@ private fun copiesExample(lines: List<String>, candidate: Candidate, labels: Set
         val example = group.map { normCaptionLine(it) }.filter { it.isNotEmpty() }
         if (example.isNotEmpty() && example == produced) return true
     }
+    if (produced.any { line -> stolenCatchphrase(line, candidate.id) }) return true
     val singles = groups.flatten().map { normCaptionLine(it) }.filter { it.isNotEmpty() }.toSet()
-    return produced.any { line -> line in singles && !isFixedPhrase(line) && line !in labels }
+    return produced.any { line -> line in singles && !isCatchphrase(line, candidate.id) && line !in labels }
 }
+
+/**
+ * A setup line taken from the message is normal. Reject only when every line comes from
+ * the message, or when about 70 percent of the caption tokens do.
+ */
+const val CAPTION_OVERLAP = 0.70f
 
 fun overlapsMessage(lines: List<String>, message: String, labels: Set<String> = emptySet()): Boolean {
-    return lines.any { line -> lineOverlapsMessage(line, message, labels) }
-}
-
-private fun lineOverlapsMessage(line: String, message: String, labels: Set<String>): Boolean {
-    if (isFixedPhrase(line)) return false
-    val norm = normCaptionLine(line)
-    if (norm.isEmpty() || norm in labels) return false
-    val lineWords = norm.split(' ').filter { it.length >= 2 }
-    if (lineWords.size < 3) return false
-    val messageWords = normCaptionLine(message).split(' ').filter { it.length >= 2 }.toSet()
+    val messageWords = captionTokens(message).toSet()
     if (messageWords.isEmpty()) return false
-    val shared = lineWords.count { it in messageWords }
-    return shared.toFloat() / lineWords.size >= 0.8f
+    val judged = lines.filter { line ->
+        val norm = normCaptionLine(line)
+        norm.isNotEmpty() && norm !in labels
+    }
+    if (judged.isEmpty()) return false
+    val captionWords = judged.flatMap { captionTokens(it) }
+    if (captionWords.size >= 3) {
+        val shared = captionWords.count { it in messageWords }
+        if (shared.toFloat() / captionWords.size >= CAPTION_OVERLAP) return true
+    }
+    return judged.all { lineFromMessage(it, messageWords, message) }
 }
 
-private fun truncatedLine(line: String, isFinal: Boolean): Boolean {
+private fun captionTokens(text: String): List<String> =
+    normCaptionLine(text).split(' ').filter { it.length >= 2 }
+
+private fun lineFromMessage(line: String, messageWords: Set<String>, message: String): Boolean {
+    val words = captionTokens(line)
+    if (words.isEmpty()) return false
+    val shared = words.count { it in messageWords }
+    if (shared.toFloat() / words.size >= CAPTION_OVERLAP) return true
+    val norm = normCaptionLine(line)
+    return norm.length >= 8 && normCaptionLine(message).contains(norm)
+}
+
+private fun truncatedLine(line: String, isFinal: Boolean, templateId: String): Boolean {
     val trimmed = line.trim()
-    if (isFixedPhrase(trimmed)) return false
+    if (isCatchphrase(trimmed, templateId)) return false
     if (trimmed.endsWith("...") || trimmed.endsWith("…") || trimmed.endsWith("-")) return true
     val words = messageWords(trimmed)
     if (words.size > 8) return true
@@ -626,58 +648,59 @@ fun normCaptionLine(raw: String): String {
     return sb.toString().replace(Regex("\\s+"), " ").trim()
 }
 
-private val FIXED_PHRASES = setOf(
-    "it's a trap",
-    "its a trap",
-    "this is fine",
-    "alles gut",
-    "one does not simply",
-    "shut up and take my money",
-    "all your base are belong to us",
-    "why not both",
-    "you sit on a throne of lies",
-    "i immediately regret this decision",
-    "you're gonna have a bad time",
-    "youre gonna have a bad time",
-    "it's happening",
-    "its happening",
-    "feels good",
-    "stonks",
-    "do it live",
-    "i feel like i'm taking crazy pills",
-    "i feel like im taking crazy pills",
-    "what's in the box",
-    "whats in the box",
-    "our memes",
-    "worst thing ever",
-    "baby you've got a stew going",
-    "first try",
-    "yo dawg",
-    "y u no",
-    "ain't nobody got time for that",
-    "aint nobody got time for that",
-    "too damn high",
-    "this is sparta",
-    "winter is coming",
-    "what year is it",
-    "we don't do that here",
-    "we dont do that here",
-    "at least you tried",
-    "i should not have said that",
-    "you were the chosen one",
-    "but that's none of my business",
-    "that would be great",
-    "i guarantee it",
-    "so i got that goin' for me which is nice",
-    "i was told there would be cake",
-    "probably not a good idea",
-).map { normCaptionLine(it) }.toSet()
+/** Each catchphrase belongs to one template. It is not a free pass on every card. */
+private val CATCHPHRASES: Map<String, Set<String>> = mapOf(
+    "ackbar" to setOf("it's a trap", "its a trap"),
+    "fine" to setOf("this is fine", "alles gut"),
+    "toohigh" to setOf("too damn high"),
+    "officespace" to setOf("that would be great"),
+    "firsttry" to setOf("first try"),
+    "both" to setOf("why not both"),
+    "box" to setOf("what's in the box", "whats in the box"),
+    "money" to setOf("shut up and take my money"),
+    "mordor" to setOf("one does not simply"),
+    "zero-wing" to setOf("all your base are belong to us"),
+    "elf" to setOf("you sit on a throne of lies"),
+    "regret" to setOf("i immediately regret this decision"),
+    "ski" to setOf("you're gonna have a bad time", "youre gonna have a bad time"),
+    "happening" to setOf("it's happening", "its happening"),
+    "feelsgood" to setOf("feels good"),
+    "stonks" to setOf("stonks"),
+    "crazypills" to setOf("i feel like i'm taking crazy pills", "i feel like im taking crazy pills"),
+    "yodawg" to setOf("yo dawg"),
+    "yuno" to setOf("y u no"),
+    "aint-got-time" to setOf("ain't nobody got time for that", "aint nobody got time for that"),
+    "sparta" to setOf("this is sparta"),
+    "winter" to setOf("winter is coming"),
+    "whatyear" to setOf("what year is it"),
+    "wddth" to setOf("we don't do that here", "we dont do that here"),
+    "tried" to setOf("at least you tried"),
+    "hagrid" to setOf("i should not have said that"),
+    "chosen" to setOf("you were the chosen one"),
+    "cbg" to setOf("worst thing ever"),
+    "kermit" to setOf("but that's none of my business"),
+    "mw" to setOf("i guarantee it"),
+    "nice" to setOf("so i got that goin' for me which is nice"),
+    "cake" to setOf("i was told there would be cake"),
+    "stew" to setOf("baby you've got a stew going"),
+    "ugandanknuck" to setOf("do u know de wey"),
+    "live" to setOf("do it live"),
+    "jw" to setOf("probably not a good idea"),
+).mapValues { (_, phrases) -> phrases.map { normCaptionLine(it) }.toSet() }
 
-fun isFixedPhrase(line: String): Boolean {
+fun isCatchphrase(line: String, templateId: String): Boolean = phraseHit(line, CATCHPHRASES[templateId].orEmpty())
+
+fun isFixedPhrase(line: String): Boolean = CATCHPHRASES.values.any { phraseHit(line, it) }
+
+private fun phraseHit(line: String, phrases: Set<String>): Boolean {
     val norm = normCaptionLine(line)
-    if (norm.isEmpty()) return false
-    if (norm in FIXED_PHRASES) return true
-    return FIXED_PHRASES.any { phrase -> norm.startsWith("$phrase ") }
+    if (norm.isEmpty() || phrases.isEmpty()) return false
+    return phrases.any { phrase -> norm == phrase || norm.startsWith("$phrase ") }
+}
+
+private fun stolenCatchphrase(line: String, templateId: String): Boolean {
+    if (isCatchphrase(line, templateId)) return false
+    return isFixedPhrase(line)
 }
 
 private val DE_MARKERS = setOf(
@@ -695,7 +718,7 @@ private val EN_MARKERS = setOf(
     "when", "where", "who", "how", "all", "any", "more", "dont", "its", "but", "got", "get",
     "make", "take", "want", "need", "right", "left", "people", "time", "into", "over", "than",
     "then", "there", "been", "shall", "can", "why", "yes", "yeah", "gonna", "wanna",
-    "sell", "buy", "boat", "epipens", "is",
+    "sell", "buy", "boat", "epipens", "is", "am",
     "exam", "passed", "sweat", "terrible", "weather", "stuck", "spree", "shopping", "vanished",
     "again", "monday", "thumbs", "hundred", "twenty",
 )
@@ -736,10 +759,19 @@ private val MARKERS = mapOf(
     "tr" to TR_MARKERS,
 )
 
-fun outputLanguage(message: String, context: List<String> = emptyList()): String {
+fun outputLanguage(message: String, context: List<String> = emptyList(), locale: String = ""): String {
     val fromMessage = dominantLang(message)
     if (fromMessage != "?") return fromMessage
-    return dominantLang(context.joinToString(" "))
+    val fromContext = dominantLang(context.joinToString(" "))
+    if (fromContext != "?") return fromContext
+    return fallbackLocale(locale, qwertz = false)
+}
+
+/** Keyboard layout wins when the user picked QWERTZ. Otherwise the phone language, if we know it. */
+fun fallbackLocale(systemLanguage: String, qwertz: Boolean): String {
+    if (qwertz) return "de"
+    val code = systemLanguage.lowercase(Locale.ROOT).substringBefore('-').substringBefore('_').trim()
+    return if (code in MARKERS) code else "?"
 }
 
 fun languageName(code: String): String = when (code) {
@@ -764,10 +796,18 @@ fun dominantLang(text: String): String {
         for ((lang, markers) in MARKERS) {
             if (word in markers) scores[lang] = (scores[lang] ?: 0) + 1
         }
+        if (word in EN_LEXICON) scores["en"] = (scores["en"] ?: 0) + 1
+        if (word in DE_LEXICON) scores["de"] = (scores["de"] ?: 0) + 1
         if (word.length >= 5 && GERMAN_SUFFIXES.any { word.endsWith(it) }) {
             scores["de"] = (scores["de"] ?: 0) + 1
         }
     }
+    val picked = pickLang(scores)
+    if (picked != "?") return picked
+    return scriptLang(text)
+}
+
+private fun pickLang(scores: Map<String, Int>): String {
     if (scores.isEmpty()) return "?"
     val best = scores.maxBy { it.value }
     val tied = scores.filter { it.value == best.value }.keys
@@ -775,29 +815,100 @@ fun dominantLang(text: String): String {
     return best.key
 }
 
-private val GERMAN_SUFFIXES = listOf("ung", "chen", "lich", "heit", "keit")
+/**
+ * Character cues used only when the word lists find nothing.
+ * German suffixes are matched at the end of a word, so "hunger" and "kitchen" stay neutral.
+ * English cues need a word of at least four letters, so "Tee" is not English.
+ */
+private fun scriptLang(text: String): String {
+    val words = normCaptionLine(text).split(' ').filter { it.isNotEmpty() }
+    var german = 0
+    var english = 0
+    if (text.any { it in "äöüÄÖÜß" }) german += 3
+    for (word in words) {
+        if ("tsch" in word) german += 1
+        if (word.length >= 5 && GERMAN_SUFFIXES.any { word.endsWith(it) }) german += 1
+        if (word.length >= 4) {
+            for (cue in listOf("th", "wh", "ow", "oo", "ee")) {
+                english += countCue(word, cue)
+            }
+        }
+    }
+    if (german == english) return "?"
+    return if (german > english) "de" else "en"
+}
 
-fun hasLanguageSignal(text: String, language: String): Boolean {
+private fun countCue(text: String, cue: String): Int {
+    var count = 0
+    var from = 0
+    while (from <= text.length - cue.length) {
+        val found = text.indexOf(cue, from)
+        if (found < 0) break
+        count += 1
+        from = found + cue.length
+    }
+    return count
+}
+
+private val GERMAN_SUFFIXES = listOf("ung", "lich", "heit", "keit")
+
+fun hasLanguageSignal(text: String, language: String): Boolean = clearSignal(text, language)
+
+private fun clearSignal(text: String, language: String): Boolean {
     if (language == "de" && text.any { it in "äöüÄÖÜß" }) return true
-    val markers = MARKERS[language] ?: return false
     val words = normCaptionLine(text).split(' ').filter { it.length >= 2 }
-    if (words.any { it in markers }) return true
+    val own = when (language) {
+        "de" -> DE_MARKERS + DE_LEXICON
+        "en" -> EN_MARKERS + EN_LEXICON
+        else -> MARKERS[language].orEmpty()
+    }
+    if (own.isEmpty()) return false
+    val shared = DE_MARKERS.intersect(EN_MARKERS)
+    if (words.any { it in own && it !in shared }) return true
     if (language == "de") {
         return words.any { word -> word.length >= 5 && GERMAN_SUFFIXES.any { word.endsWith(it) } }
     }
     return false
 }
 
-private fun foreignLanguage(lines: List<String>, language: String, labels: Set<String>): Boolean {
+/**
+ * The card is judged as a whole. A line of three words or fewer is foreign only when it
+ * carries a clear signal for a different language, not merely because it has no signal.
+ */
+private fun foreignLanguage(
+    lines: List<String>,
+    language: String,
+    labels: Set<String>,
+    templateId: String,
+): Boolean {
     if (language == "?") return false
     val rest = lines.filter { line ->
         val norm = normCaptionLine(line)
-        norm.isNotEmpty() && !isFixedPhrase(line) && norm !in labels
+        norm.isNotEmpty() && !isCatchphrase(line, templateId) && norm !in labels
     }
     val text = rest.joinToString(" ")
     if (text.count { it.isLetter() } < 2) return false
     val captionLang = dominantLang(text)
     if (captionLang == language) return false
     if (captionLang != "?") return true
-    return !hasLanguageSignal(text, language)
+    return rest.any { line ->
+        val words = captionTokens(line)
+        if (words.size > 3) return@any opposingSignal(line, language)
+        opposingSignal(line, language)
+    }
 }
+
+private fun opposingSignal(line: String, language: String): Boolean {
+    return MARKERS.keys.any { other -> other != language && clearSignal(line, other) }
+}
+
+private val EN_LEXICON = setOf(
+    "diet", "start", "starts", "tomorrow", "promise", "boss", "weekend", "traffic", "jam",
+    "coffee", "work", "shift", "damn", "great", "drank", "wants", "shopping", "too", "high",
+)
+
+private val DE_LEXICON = setOf(
+    "stau", "wetter", "bett", "kaffee", "pruefung", "prüfung", "kino", "einkaufen", "kuchen",
+    "feierabend", "milch", "keks", "abwasch", "wecker", "montag", "dienstag", "mittwoch",
+    "donnerstag", "freitag", "samstag", "sonntag",
+)

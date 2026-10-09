@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
 import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
+import app.memem.engine.GEMMA_TEMPERATURE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -125,21 +126,31 @@ class RemoteLlmEngine(context: Context) {
         return reply.getFloatArray("vec")
     }
 
-    suspend fun generate(system: String, user: String, schema: String?): GenerateOutcome {
-        val first = generateOnce(system, user, schema)
+    suspend fun generate(
+        system: String,
+        user: String,
+        schema: String?,
+        temperature: Double = GEMMA_TEMPERATURE,
+    ): GenerateOutcome {
+        val first = generateOnce(system, user, schema, temperature)
         if (first.text != null) return first.copy(loaded = modelReady)
         if (first.error == "timeout" || schema.isNullOrBlank()) return first.copy(loaded = modelReady)
-        val second = generateOnce(system, user, null)
+        val second = generateOnce(system, user, null, temperature)
         val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ").ifBlank { null }
         return second.copy(error = if (second.text != null) first.error else error, loaded = modelReady)
     }
 
-    private suspend fun generateOnce(system: String, user: String, schema: String?): GenerateOutcome {
+    private suspend fun generateOnce(
+        system: String,
+        user: String,
+        schema: String?,
+        temperature: Double,
+    ): GenerateOutcome {
         val data = Bundle().apply {
             putString("system", system)
             putString("user", user)
             if (schema != null) putString("schema", schema)
-            putDouble("temperature", 0.4)
+            putDouble("temperature", temperature)
             putInt("maxTokens", GEMMA_MAX_OUTPUT_TOKENS)
         }
         val reply = try {

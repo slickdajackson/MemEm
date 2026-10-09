@@ -300,7 +300,31 @@ class GemmaResponseTest {
             listOf(Candidate("fine", 2, "upper")),
             german,
         ).single()
-        assertEquals("sprache", unknown.reason)
+        assertTrue(unknown.fromModel)
+        val setup = parseSuggestions(
+            """{"officespace":{"z1":"Work on the weekend","z2":"That would be great"}}""",
+            listOf(Candidate("officespace", 2, "upper")),
+            "my boss wants me to work on the weekend",
+        ).single()
+        assertTrue(setup.fromModel)
+        val shortEnglish = parseSuggestions(
+            """{"officespace":{"z1":"Weekend shift","z2":"That would be great"}}""",
+            listOf(Candidate("officespace", 2, "upper")),
+            "my boss wants me to work on the weekend",
+        ).single()
+        assertTrue(shortEnglish.fromModel)
+        val stau = parseSuggestions(
+            """{"toohigh":{"z1":"Stau","z2":"Too damn high"}}""",
+            listOf(Candidate("toohigh", 2, "upper")),
+            "schon wieder stau auf der a8",
+        ).single()
+        assertTrue(stau.fromModel)
+        val borrowed = parseSuggestions(
+            """{"fine":{"z1":"Alles wird verloren","z2":"It's a trap!"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            german,
+        ).single()
+        assertEquals("kopie", borrowed.reason)
         val english = "I finally passed the exam"
         val kept = parseSuggestions(englishCard, listOf(Candidate("fine", 2, "upper")), english).single()
         assertTrue(kept.fromModel)
@@ -320,6 +344,10 @@ class GemmaResponseTest {
         assertEquals("de", outputLanguage("ok", listOf("Wir gehen heute ins Kino")))
         assertEquals("en", outputLanguage("ok", listOf("We are going to the cinema tonight")))
         assertEquals("en", outputLanguage(english))
+        assertEquals("en", outputLanguage("diet starts tomorrow I promise"))
+        assertEquals("de", outputLanguage("ok", emptyList(), "de"))
+        assertEquals("de", fallbackLocale("en", qwertz = true))
+        assertEquals("en", fallbackLocale("en-US", qwertz = false))
         assertEquals("fr", outputLanguage("Nous allons au cinema avec vous"))
     }
 
@@ -352,7 +380,8 @@ class GemmaResponseTest {
             listOf(Candidate("cmm", 1, "upper")),
             "wer kommt heute abend mit ins kino",
         ).single()
-        assertTrue(short.fromModel)
+        assertFalse(short.fromModel)
+        assertEquals("woertlich", short.reason)
     }
 
     @Test
@@ -494,7 +523,41 @@ class CaptionExampleTest {
                     assertTrue(id, line.isNotBlank())
                     val lower = line.lowercase()
                     assertTrue(id + " " + line, banned.none { it in lower })
-                    if (dominantLang(line) == "en") assertTrue(id + " " + line, isFixedPhrase(line))
+                    if (dominantLang(line) == "en") assertTrue(id + " " + line, isCatchphrase(line, id))
+                }
+            }
+        }
+    }
+
+    @Test
+    fun everyTemplateHasCuratedEnglishCaptions() {
+        val root = listOf(File("app/src/main/assets"), File("../app/src/main/assets"))
+            .first { File(it, "catalog.json").isFile }
+        val catalog = JSONObject(File(root, "catalog.json").readText())
+        val examples = JSONObject(File(root, "caption-examples-en.json").readText())
+        val templates = catalog.getJSONArray("templates")
+        val banned = listOf("biden", "obama", "hitler", "imgflip", "upvote", "trump", "putin", "fuck", "shit")
+        assertEquals(templates.length(), examples.length())
+        for (index in 0 until templates.length()) {
+            val obj = templates.getJSONObject(index)
+            val id = obj.getString("id")
+            val boxes = obj.getInt("boxes")
+            val meaningEn = obj.optString("meaningEn")
+            assertTrue(id, meaningEn.isNotBlank())
+            val groups = examples.getJSONArray(id)
+            assertTrue(id, groups.length() in 2..3)
+            for (group in 0 until groups.length()) {
+                val lines = groups.getJSONArray(group)
+                assertEquals(id, boxes, lines.length())
+                for (lineIndex in 0 until lines.length()) {
+                    val line = lines.getString(lineIndex)
+                    assertTrue(id, line.isNotBlank())
+                    val lower = line.lowercase()
+                    assertTrue(id + " " + line, banned.none { it in lower })
+                    if (!isCatchphrase(line, id)) {
+                        assertTrue(id + " " + line, dominantLang(line) != "de")
+                        assertTrue(id + " " + line, dominantLang(line) != "es")
+                    }
                 }
             }
         }
@@ -526,6 +589,8 @@ class PromptBuilderTest {
         assertTrue(prompt.user.contains("Context"))
         assertTrue(prompt.system.contains("JSON"))
         assertTrue(prompt.system.contains("caption language matches the message"))
+        assertTrue(prompt.system.contains("catchphrase"))
+        assertFalse(prompt.system.contains("It's a trap"))
         assertTrue(prompt.user.contains("Do not copy the message."))
         assertTrue(prompt.user.contains("Write in German."))
         assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"<deutsche Zeile>\""))

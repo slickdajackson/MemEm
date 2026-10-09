@@ -12,10 +12,13 @@ import app.memem.engine.memeBrief
 import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.parseCatalog
+import app.memem.engine.FOLLOW_UP_TEMPERATURE
+import app.memem.engine.GEMMA_TEMPERATURE
+import app.memem.engine.followUpHint
 import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
-import app.memem.engine.retryHint
+import app.memem.engine.reasonText
 import app.memem.engine.searchTemplates
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
@@ -56,6 +59,7 @@ fun main(args: Array<String>) {
     val catalog = parseCatalog(
         File(assets, "catalog.json").readText(),
         File(assets, "caption-examples.json").takeIf { it.isFile }?.readText().orEmpty(),
+        File(assets, "caption-examples-en.json").takeIf { it.isFile }?.readText().orEmpty(),
     )
     val byId = catalog.associateBy { it.id }
     val cache = File(System.getProperty("java.io.tmpdir"), "memem-rewrite")
@@ -80,7 +84,7 @@ fun main(args: Array<String>) {
             val chosen = if (picked.size >= 3) picked else search.fallback(sentence).take(3)
             val lang = outputLanguage(sentence)
             val briefs = chosen.map { entry ->
-                memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examplesFor(lang), lang)
+                memeBrief(entry.id, entry.name, entry.boxes, entry.meaningFor(lang), entry.examplesFor(lang), lang)
             }
             val prompt = buildPrompt(sentence, briefs)
             val schema = memeSchema(chosen.map { it.id to it.boxes })
@@ -101,17 +105,17 @@ fun main(args: Array<String>) {
             if (plan != null) {
                 val subset = chosen.filter { it.id in plan.templateIds }
                 val reasons = subset.map { entry ->
-                    suggestions.firstOrNull { it.templateId == entry.id }?.reason.orEmpty()
+                    entry.id to suggestions.firstOrNull { it.templateId == entry.id }?.reason.orEmpty()
                 }
                 val againPrompt = buildPrompt(
                     sentence,
                     subset.map { entry ->
-                        memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examplesFor(lang), lang)
+                        memeBrief(entry.id, entry.name, entry.boxes, entry.meaningFor(lang), entry.examplesFor(lang), lang)
                     },
-                    hint = retryHint(reasons, lang),
+                    hint = followUpHint(reasons, lang),
                 )
                 val againSchema = if (plan.withoutSchema) null else memeSchema(subset.map { it.id to it.boxes })
-                val again = generate(engine, againPrompt.system, againPrompt.user, againSchema)
+                val again = generate(engine, againPrompt.system, againPrompt.user, againSchema, FOLLOW_UP_TEMPERATURE)
                 again.text?.let { rawParts += it }
                 val updated = parseSuggestions(
                     again.text.orEmpty(),
@@ -131,7 +135,7 @@ fun main(args: Array<String>) {
             }
             val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
             val latency = (System.nanoTime() - started) / 1_000_000
-            val report = reportJson(sentence, latency, search.mode, combined, suggestions)
+            val report = reportJson(sentence, latency, search.mode, combined, suggestions, lang)
             reports.put(report)
             markdown.append(reportMarkdown(sentence, latency, search.mode, combined, suggestions))
         }
@@ -151,22 +155,34 @@ fun main(args: Array<String>) {
 
 private data class ModelText(val text: String?, val error: String?)
 
-private fun generate(engine: Engine, system: String, user: String, schema: String?): ModelText {
-    val first = generateOnce(engine, system, user, schema)
+private fun generate(
+    engine: Engine,
+    system: String,
+    user: String,
+    schema: String?,
+    temperature: Double = GEMMA_TEMPERATURE,
+): ModelText {
+    val first = generateOnce(engine, system, user, schema, temperature)
     if (first.text != null) return first
     if (first.error == "timeout" || schema.isNullOrBlank()) return first
-    val second = generateOnce(engine, system, user, null)
+    val second = generateOnce(engine, system, user, null, temperature)
     if (second.text != null) return second
     val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ")
     return ModelText(null, error.ifBlank { "keine antwort" })
 }
 
-private fun generateOnce(engine: Engine, system: String, user: String, schema: String?): ModelText {
+private fun generateOnce(
+    engine: Engine,
+    system: String,
+    user: String,
+    schema: String?,
+    temperature: Double,
+): ModelText {
     return try {
         val useSchema = !schema.isNullOrBlank()
         val config = ConversationConfig(
             systemInstruction = Contents.of(system),
-            samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = 0.4),
+            samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = temperature),
             maxOutputToken = GEMMA_MAX_OUTPUT_TOKENS,
             thinkingConfig = ThinkingConfig(enableThinking = false),
             enableResponseFormat = useSchema,
@@ -191,6 +207,7 @@ private fun reportJson(
     mode: String,
     raw: ModelText,
     suggestions: List<app.memem.engine.Suggestion>,
+    language: String,
 ): JSONObject {
     val cards = JSONArray()
     suggestions.forEach { item ->
@@ -199,7 +216,9 @@ private fun reportJson(
                 .put("template", item.templateId)
                 .put("lines", JSONArray(item.lines))
                 .put("source", if (item.fromModel) "KI" else "wörtlich")
-                .put("reason", item.reason),
+                .put("reason", item.reason)
+                .put("why", if (item.fromModel) "" else reasonText(item.reason, language))
+                .put("detail", item.detail),
         )
     }
     return JSONObject()
@@ -337,7 +356,7 @@ private class Searcher(
     fun fallback(sentence: String): List<CatalogEntry> {
         val words = sentence.lowercase().split(Regex("\\W+")).filter { it.length >= 4 }.toSet()
         val ranked = catalog.map { entry ->
-            val hay = (entry.name + " " + entry.meaning).lowercase()
+            val hay = (entry.name + " " + entry.meaningDe + " " + entry.meaningEn).lowercase()
             entry to words.count { hay.contains(it) }
         }.sortedByDescending { it.second }
         val hits = ranked.filter { it.second > 0 }.map { it.first }

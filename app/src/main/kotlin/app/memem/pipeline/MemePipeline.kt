@@ -12,10 +12,15 @@ import app.memem.engine.fallbackLines
 import app.memem.engine.memeBrief
 import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
+import app.memem.engine.FOLLOW_UP_TEMPERATURE
+import app.memem.engine.GEMMA_TEMPERATURE
+import app.memem.engine.fallbackLocale
+import app.memem.engine.followUpHint
 import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
-import app.memem.engine.retryHint
+import app.memem.engine.reasonText
+import app.memem.settings.Prefs
 import app.memem.engine.searchTemplates
 import app.memem.engine.searchText
 import app.memem.llm.GenerateOutcome
@@ -80,9 +85,10 @@ class MemePipeline(context: Context) {
             fromModel = false,
         )
         onPreview(literal)
-        val lang = outputLanguage(message, context)
+        val locale = fallbackLocale(java.util.Locale.getDefault().language, Prefs(app).qwertz)
+        val lang = outputLanguage(message, context, locale)
         val gemmaStarted = System.nanoTime()
-        val outcome = generate(message, picked, context)
+        val outcome = generate(message, picked, context, locale = locale)
         val gemmaMs = ms(gemmaStarted)
         val candidates = picked.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
         val score = similarity(message)
@@ -104,9 +110,17 @@ class MemePipeline(context: Context) {
         if (plan != null) {
             val subset = picked.filter { it.id in plan.templateIds }
             val reasons = subset.map { template ->
-                suggestions.firstOrNull { it.templateId == template.id }?.reason.orEmpty()
+                template.id to suggestions.firstOrNull { it.templateId == template.id }?.reason.orEmpty()
             }
-            val again = generate(message, subset, context, retryHint(reasons, lang), withSchema = !plan.withoutSchema)
+            val again = generate(
+                message,
+                subset,
+                context,
+                followUpHint(reasons, lang),
+                withSchema = !plan.withoutSchema,
+                temperature = FOLLOW_UP_TEMPERATURE,
+                locale = locale,
+            )
             val updated = parseSuggestions(
                 again.text.orEmpty(),
                 subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
@@ -157,6 +171,9 @@ class MemePipeline(context: Context) {
                     val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
                     "${item.templateId}:$mark"
                 },
+                "rejected" to suggestions.filter { !it.fromModel }.joinToString(" | ") { item ->
+                    "${item.templateId}:${item.reason}:${reasonText(item.reason, lang)}:${item.detail}"
+                },
                 "renderMs" to renderMs,
                 "totalMs" to ms(started),
                 "templates" to rendered.joinToString(",") { it.template.id },
@@ -191,6 +208,8 @@ class MemePipeline(context: Context) {
         context: List<String>,
         hint: String = "",
         withSchema: Boolean = true,
+        temperature: Double = GEMMA_TEMPERATURE,
+        locale: String = "",
     ): GenerateOutcome {
         if (templates.isEmpty()) return GenerateOutcome(null, "keine vorlage", remote.modelReady, false)
         val model = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
@@ -203,21 +222,21 @@ class MemePipeline(context: Context) {
             embed.takeIf { it.isFile && assets.space.startsWith("litert") }?.absolutePath,
         )
         if (loadError != null) return GenerateOutcome(null, loadError, false, false)
-        val lang = outputLanguage(message, context)
+        val lang = outputLanguage(message, context, locale)
         val chosen = templates.take(3)
         val briefs = chosen.map { template ->
             memeBrief(
                 template.id,
                 template.name,
                 template.boxes,
-                template.meaning,
+                template.meaningFor(lang),
                 template.examplesFor(lang),
                 lang,
             )
         }
-        val prompt = buildPrompt(message, briefs, context, hint)
+        val prompt = buildPrompt(message, briefs, context, hint, locale)
         val schema = if (withSchema) memeSchema(chosen.map { it.id to it.boxes }) else null
-        return remote.generate(prompt.system, prompt.user, schema)
+        return remote.generate(prompt.system, prompt.user, schema, temperature)
     }
 
     private fun renderOne(template: MemeTemplate, lines: List<String>, fromModel: Boolean): MemeOption {
