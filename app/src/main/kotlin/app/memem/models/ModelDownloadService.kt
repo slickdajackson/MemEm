@@ -3,6 +3,7 @@ package app.memem.models
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -11,6 +12,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -22,7 +24,8 @@ class ModelDownloadService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val gpu = intent?.getBooleanExtra(EXTRA_GPU, false) == true
+        val gpu = intent?.getBooleanExtra(EXTRA_GPU, wantGpu) == true
+        wantGpu = gpu
         ensureChannel()
         val note = notification("Download startet", 0, 0)
         if (Build.VERSION.SDK_INT >= 29) {
@@ -30,7 +33,8 @@ class ModelDownloadService : Service() {
         } else {
             startForeground(NOTE_ID, note)
         }
-        scope.launch {
+        if (job?.isActive == true) return START_REDELIVER_INTENT
+        job = scope.launch {
             try {
                 val specs = buildList {
                     add(ModelCatalog.embed)
@@ -47,13 +51,14 @@ class ModelDownloadService : Service() {
                 }
                 notify("Modelle liegen bereit", 100, 100)
             } catch (t: Throwable) {
-                notify(t.message ?: "Download fehlgeschlagen", 0, 0)
+                val text = (t.message ?: "Download fehlgeschlagen") + " Teildatei bleibt, Fortsetzen lädt weiter."
+                notify(text, 0, 0, resume = true)
             } finally {
                 stopForeground(STOP_FOREGROUND_DETACH)
                 stopSelf(startId)
             }
         }
-        return START_NOT_STICKY
+        return START_REDELIVER_INTENT
     }
 
     override fun onDestroy() {
@@ -67,11 +72,11 @@ class ModelDownloadService : Service() {
         manager.createNotificationChannel(channel)
     }
 
-    private fun notify(text: String, progress: Int, max: Int) {
-        getSystemService(NotificationManager::class.java).notify(NOTE_ID, notification(text, progress, max))
+    private fun notify(text: String, progress: Int, max: Int, resume: Boolean = false) {
+        getSystemService(NotificationManager::class.java).notify(NOTE_ID, notification(text, progress, max, resume))
     }
 
-    private fun notification(text: String, progress: Int, max: Int): Notification {
+    private fun notification(text: String, progress: Int, max: Int, resume: Boolean = false): Notification {
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle("MemEm")
@@ -79,6 +84,11 @@ class ModelDownloadService : Service() {
             .setOnlyAlertOnce(true)
             .setOngoing(max > 0 && progress < max)
         if (max > 0) builder.setProgress(max, progress, false)
+        if (resume) {
+            val again = Intent(this, ModelDownloadService::class.java).putExtra(EXTRA_GPU, wantGpu)
+            val pending = PendingIntent.getService(this, 8, again, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            builder.addAction(0, "Fortsetzen", pending)
+        }
         return builder.build()
     }
 
@@ -86,4 +96,7 @@ class ModelDownloadService : Service() {
         const val EXTRA_GPU = "gpu"
         private const val NOTE_ID = 41
     }
+
+    private var wantGpu = false
+    private var job: Job? = null
 }

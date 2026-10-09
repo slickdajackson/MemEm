@@ -139,6 +139,27 @@ class PromptBuilderTest {
         briefs.forEach { assertTrue(prompt.user.contains(it.id)) }
         assertTrue(prompt.system.contains("JSON"))
     }
+
+    @Test
+    fun keepsShortContextAndDropsItWhenTheBudgetIsTight() {
+        val brief = Brief("drake", "Drake", 2, "Vergleich", listOf(listOf("oben", "unten")))
+        val withContext = buildPrompt("Pizza", listOf(brief), listOf("Salat war gestern"))
+        assertTrue(withContext.user.contains("Salat war gestern"))
+        assertTrue(withContext.user.contains("Kontext"))
+        val briefs = (1..8).map { i ->
+            Brief(
+                id = "id$i",
+                name = "Name $i",
+                boxes = 2,
+                meaning = "bedeutung ".repeat(40),
+                examples = listOf(listOf("alpha beta gamma delta epsilon zeta eta theta iota", "kappa")),
+            )
+        }
+        val huge = List(40) { "wort ".repeat(80) }
+        val tight = buildPrompt("hi", briefs, huge)
+        assertTrue(tight.approxTokens <= 700)
+        assertFalse(tight.user.contains("Kontext"))
+    }
 }
 
 class MemeLayoutTest {
@@ -211,5 +232,76 @@ class InsertPlanTest {
         assertFalse(insertPlan(InsertPreference.COMMIT_CONTENT, false).contains(InsertStep.COMMIT_CONTENT))
         assertTrue(fieldAcceptsPng(arrayOf("image/png")))
         assertFalse(fieldAcceptsPng(arrayOf("text/plain")))
+    }
+}
+
+class ChatContextTest {
+    @Test
+    fun keepsMessageTextAndDropsChrome() {
+        val lines = listOf(
+            ScreenLine("14:35", top = 10),
+            ScreenLine("Heute", top = 20),
+            ScreenLine("Nachrichten sind Ende-zu-Ende verschlüsselt", top = 30),
+            ScreenLine("Hallo du", viewId = "com.whatsapp:id/message_text", top = 100),
+            ScreenLine("Was geht", viewId = "com.whatsapp:id/message_text", top = 200),
+            ScreenLine("Gelesen", top = 210),
+            ScreenLine("mein entwurf", editable = true, top = 900),
+        )
+        assertEquals(listOf("Hallo du", "Was geht"), recentMessages(lines))
+    }
+
+    @Test
+    fun fallsBackWhenIdsAreMissing() {
+        val lines = listOf(
+            ScreenLine("09:01", top = 1),
+            ScreenLine("Treffen wir uns später", top = 40),
+        )
+        assertEquals(listOf("Treffen wir uns später"), recentMessages(lines))
+    }
+
+    @Test
+    fun picksTheWhatsAppEntryField() {
+        val profile = defaultWhatsAppProfile()
+        val candidates = listOf(
+            InputCandidate("other", 100, editable = true, visible = true),
+            InputCandidate("com.whatsapp:id/entry", 800, editable = true, visible = true),
+            InputCandidate("com.whatsapp:id/entry", 100, editable = false, visible = true),
+        )
+        assertEquals(1, pickInputIndex(candidates, 1000, profile))
+        val bottom = listOf(
+            InputCandidate("android:id/title", 200, editable = true, visible = true),
+            InputCandidate(null, 900, editable = true, visible = true),
+        )
+        assertEquals(1, pickInputIndex(bottom, 1000, profile))
+    }
+
+    @Test
+    fun searchTextKeepsTheTypedLineFirst() {
+        val text = searchText("Pizza", listOf("Salat war gestern", "Pizza"))
+        assertTrue(text.startsWith("Pizza"))
+        assertTrue(text.contains("Salat war gestern"))
+        assertFalse(text.contains("Pizza\nPizza"))
+        val capped = searchText("kurz", List(50) { "x".repeat(40) })
+        assertTrue(capped.length < 600)
+    }
+
+    @Test
+    fun accessibilityPasteRunsOnlyAfterAFailedImePaste() {
+        assertEquals(listOf("clipboard", "ime"), pasteSteps(imeReportedSuccess = true, accessibilityConnected = true))
+        assertEquals(listOf("clipboard", "ime", "a11y"), pasteSteps(false, true))
+        assertEquals(listOf("clipboard", "ime"), pasteSteps(false, false))
+        assertFalse(pasteSteps(false, true).any { it.contains("send") })
+    }
+
+    @Test
+    fun profileParserReadsWhatsAppIds() {
+        val json = """
+            {"packageName":"com.whatsapp","knownIds":{"messageText":["com.whatsapp:id/message_text"],"messageInput":["com.whatsapp:id/entry"],"sendButton":["com.whatsapp:id/send"]},"heuristics":{"messageInputBottomFraction":0.7}}
+        """.trimIndent()
+        val profile = parseWhatsAppProfile(json)
+        assertEquals("com.whatsapp:id/entry", profile.messageInputIds.single())
+        assertEquals("com.whatsapp:id/send", profile.sendButtonIds.single())
+        assertEquals(0.7, profile.messageInputBottomFraction, 0.001)
+        assertTrue(profile.sendButtonIds.isNotEmpty())
     }
 }

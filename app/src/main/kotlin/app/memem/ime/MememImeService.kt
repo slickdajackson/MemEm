@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import app.memem.R
+import app.memem.a11y.MememAccessibilityService
 import app.memem.debug.DebugLog
 import app.memem.engine.InsertStep
 import app.memem.insert.Inserter
@@ -91,9 +92,10 @@ class MememImeService : InputMethodService() {
         }
         panel.setStatus(getString(R.string.searching))
         job?.cancel()
+        val contextLines = MememAccessibilityService.instance?.recentTexts().orEmpty()
         job = scope.launch {
             val result = withContext(Dispatchers.Default) {
-                pipeline.suggest(text) { preview ->
+                pipeline.suggest(text, contextLines) { preview ->
                     main.post { show(preview) }
                 }
             }
@@ -117,22 +119,26 @@ class MememImeService : InputMethodService() {
         val option = options.getOrNull(index) ?: return
         val input = currentInputConnection ?: return
         val editor = currentInputEditorInfo ?: return
-        val outcome = inserter.insert(input, editor, option.file, prefs.insertPreference)
+        val outcome = inserter.insert(input, editor, option.file, prefs.insertPreference) {
+            MememAccessibilityService.instance?.pasteImage(restoreOnFailure = false) == true
+        }
         log.event(
             mapOf(
                 "kind" to "insert",
+                "via" to "ime",
                 "step" to outcome.step?.name,
                 "ok" to outcome.reportedSuccess,
                 "hint" to outcome.clipboardHint,
+                "channel" to outcome.pasteChannel,
                 "template" to option.template.id,
             ),
         )
         panel.setStatus(
             when {
+                outcome.pasteChannel == "a11y" && outcome.reportedSuccess -> getString(R.string.a11y_pasted)
                 outcome.clipboardHint -> getString(R.string.clipboard_hint)
                 outcome.step == InsertStep.SHARE && outcome.reportedSuccess -> getString(R.string.shared)
                 outcome.reportedSuccess -> getString(R.string.inserted)
-                outcome.clipboardHint -> getString(R.string.clipboard_hint)
                 else -> getString(R.string.insert_failed)
             },
         )

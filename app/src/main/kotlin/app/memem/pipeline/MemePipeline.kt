@@ -14,6 +14,7 @@ import app.memem.engine.fallbackLines
 import app.memem.engine.memeSchema
 import app.memem.engine.parseSuggestions
 import app.memem.engine.searchTemplates
+import app.memem.engine.searchText
 import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
 import app.memem.render.MemeRenderer
@@ -59,10 +60,14 @@ class MemePipeline(context: Context) {
         }.start()
     }
 
-    suspend fun suggest(message: String, onPreview: (List<MemeOption>) -> Unit): List<MemeOption> {
+    suspend fun suggest(
+        message: String,
+        context: List<String> = emptyList(),
+        onPreview: (List<MemeOption>) -> Unit,
+    ): List<MemeOption> {
         val started = System.nanoTime()
         val embedStarted = System.nanoTime()
-        val embedded = embedQuery(message)
+        val embedded = embedQuery(searchText(message, context))
         val embedMs = ms(embedStarted)
         val searchStarted = System.nanoTime()
         val hits = searchTemplates(embedded.second, embedded.first, assets.boxes, limit = 8)
@@ -72,7 +77,7 @@ class MemePipeline(context: Context) {
         val previews = renderOptions(message, previewTemplates.map { it to fallbackLines(message, it.boxes, it.style) }, fromModel = false)
         onPreview(previews)
         val gemmaStarted = System.nanoTime()
-        val modelText = generate(message, chosen)
+        val modelText = generate(message, chosen, context)
         val gemmaMs = ms(gemmaStarted)
         val renderStarted = System.nanoTime()
         val candidates = chosen.map {
@@ -98,6 +103,8 @@ class MemePipeline(context: Context) {
                 "kind" to "suggest",
                 "chars" to message.length,
                 "text" to message,
+                "contextN" to context.size,
+                "context" to context.joinToString(" | "),
                 "embedMs" to embedMs,
                 "embedSpace" to if (embedded.third) "litert" else "hash",
                 "searchMs" to searchMs,
@@ -126,7 +133,7 @@ class MemePipeline(context: Context) {
         return Triple(vec, index, false)
     }
 
-    private suspend fun generate(message: String, templates: List<MemeTemplate>): String? {
+    private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): String? {
         if (templates.isEmpty()) return null
         val gemma = if (prefs.gpu) ModelCatalog.gemmaGpu else ModelCatalog.gemmaCpu
         if (!ModelCatalog.ready(app, gemma)) return null
@@ -139,7 +146,7 @@ class MemePipeline(context: Context) {
                 examples = (template.examples.take(2) + listOf(template.situationsDe.take(1))).filter { it.isNotEmpty() },
             )
         }
-        val prompt = buildPrompt(message, briefs)
+        val prompt = buildPrompt(message, briefs, context)
         val schema = memeSchema(templates.map { it.id })
         return remote.generate(prompt.system, prompt.user, schema)
     }

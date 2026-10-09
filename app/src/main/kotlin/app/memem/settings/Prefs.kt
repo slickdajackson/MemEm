@@ -27,8 +27,15 @@ class Prefs(context: Context) {
             prefs.edit().putBoolean(KEY_GPU, value).apply()
         }
 
+    var overlay: Boolean
+        get() = prefs.getBoolean(KEY_OVERLAY, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_OVERLAY, value).apply()
+        }
+
     private companion object {
         const val KEY_INSERT = "insert"
         const val KEY_GPU = "gpu"
+        const val KEY_OVERLAY = "overlay"
     }
 }

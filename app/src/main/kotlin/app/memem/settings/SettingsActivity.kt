@@ -3,20 +3,24 @@ package app.memem.settings
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import app.memem.R
+import app.memem.a11y.MememAccessibilityService
 import app.memem.engine.InsertPreference
 import app.memem.harness.InsertHarnessActivity
 import app.memem.models.ModelCatalog
 import app.memem.models.ModelDownloadService
+import app.memem.overlay.OverlayService
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
@@ -27,6 +31,13 @@ class SettingsActivity : AppCompatActivity() {
         prefs = Prefs(this)
         findViewById<Button>(R.id.enable_keyboard).setOnClickListener {
             startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
+        }
+        findViewById<Button>(R.id.enable_a11y).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        }
+        findViewById<Button>(R.id.overlay_permission).setOnClickListener {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+            startActivity(intent)
         }
         val insert = findViewById<RadioGroup>(R.id.insert_mode)
         when (prefs.insertPreference) {
@@ -73,5 +84,26 @@ class SettingsActivity : AppCompatActivity() {
         val cpu = if (ModelCatalog.ready(this, ModelCatalog.gemmaCpu)) "da" else "fehlt"
         val gpu = if (ModelCatalog.ready(this, ModelCatalog.gemmaGpu)) "da" else "fehlt"
         findViewById<TextView>(R.id.model_status).text = "Embedding $embed, Gemma CPU $cpu, Gemma GPU $gpu"
+        val a11y = when {
+            MememAccessibilityService.instance != null -> "Bedienungshilfe aktiv, liest nur WhatsApp."
+            MememAccessibilityService.enabled(this) -> "Bedienungshilfe eingeschaltet, Dienst gerade nicht verbunden."
+            else -> "Bedienungshilfe aus. Auf HyperOS zuerst eingeschränkte Einstellungen zulassen."
+        }
+        findViewById<TextView>(R.id.a11y_status).text = a11y
+        val overlay = findViewById<CompoundButton>(R.id.overlay_switch)
+        overlay.setOnCheckedChangeListener(null)
+        overlay.isChecked = prefs.overlay
+        overlay.setOnCheckedChangeListener { _, checked ->
+            prefs.overlay = checked
+            if (!checked) {
+                OverlayService.stop(this)
+            } else if (Settings.canDrawOverlays(this)) {
+                OverlayService.start(this)
+            } else {
+                startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+            }
+        }
+        if (prefs.overlay && Settings.canDrawOverlays(this)) OverlayService.start(this)
+        if (!prefs.overlay) OverlayService.stop(this)
     }
 }
