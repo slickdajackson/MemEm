@@ -45,6 +45,11 @@ class OverlayPanelView(context: Context) : View(context) {
             field = value
             invalidate()
         }
+    var marks: List<String> = listOf("", "", "")
+        set(value) {
+            field = value
+            invalidate()
+        }
     var onMeme: () -> Unit = {}
     var onPick: (Int) -> Unit = {}
     var onClose: () -> Unit = {}
@@ -86,6 +91,23 @@ class OverlayPanelView(context: Context) : View(context) {
                 paint.typeface = Typeface.MONOSPACE
                 paint.textSize = 12 * d
                 canvas.drawText("0${index + 1}", slots[index].centerX(), slots[index].centerY(), paint)
+            }
+            val mark = marks.getOrNull(index).orEmpty()
+            if (mark.isNotBlank()) {
+                paint.typeface = Typeface.MONOSPACE
+                paint.textSize = 8 * d
+                paint.textAlign = Paint.Align.LEFT
+                val width = paint.measureText(mark) + 6 * d
+                val box = RectF(
+                    slots[index].right - width - 3 * d,
+                    slots[index].bottom - 14 * d,
+                    slots[index].right - 3 * d,
+                    slots[index].bottom - 3 * d,
+                )
+                paint.color = MemPalette.YELLOW
+                canvas.drawRoundRect(box, 3 * d, 3 * d, paint)
+                paint.color = MemPalette.INK
+                canvas.drawText(mark, box.left + 3 * d, box.bottom - 3 * d, paint)
             }
         }
         close.set(pad, slots[0].bottom + 12 * d, width - pad - shadow, slots[0].bottom + 48 * d)

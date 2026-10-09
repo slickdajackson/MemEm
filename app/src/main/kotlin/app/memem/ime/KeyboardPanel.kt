@@ -58,6 +58,7 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
     private var shift = ShiftState.OFF
     private var statusText = ""
     private var previews: List<Bitmap?> = listOf(null, null, null)
+    private var marks: List<String> = listOf("", "", "")
 
     private val hits = ArrayList<Hit>()
     private var memeRect = RectF()
@@ -91,8 +92,9 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
         invalidate()
     }
 
-    fun showPreviews(bitmaps: List<Bitmap>) {
+    fun showPreviews(bitmaps: List<Bitmap>, labels: List<String> = emptyList()) {
         previews = List(3) { bitmaps.getOrNull(it) }
+        marks = List(3) { labels.getOrNull(it).orEmpty() }
         invalidate()
     }
 
@@ -330,7 +332,24 @@ class KeyboardPanel(context: Context, private val host: Host) : View(context) {
                 paint.textAlign = Paint.Align.CENTER
                 canvas.drawText("0${index + 1}", rect.centerX(), rect.centerY() + sp(4f), paint)
             }
+            drawMark(canvas, rect, marks.getOrNull(index).orEmpty())
         }
+    }
+
+    private fun drawMark(canvas: Canvas, rect: RectF, label: String) {
+        if (label.isBlank()) return
+        paint.typeface = Typeface.MONOSPACE
+        paint.textSize = sp(8f)
+        paint.textAlign = Paint.Align.LEFT
+        val text = label
+        val width = paint.measureText(text) + dp(6).toFloat()
+        val height = dp(12).toFloat()
+        val inset = dp(3).toFloat()
+        val box = RectF(rect.right - width - inset, rect.bottom - height - inset, rect.right - inset, rect.bottom - inset)
+        paint.color = MemPalette.KEY_YELLOW
+        canvas.drawRoundRect(box, dp(3).toFloat(), dp(3).toFloat(), paint)
+        paint.color = MemPalette.INK
+        canvas.drawText(text, box.left + dp(3), box.bottom - dp(3), paint)
     }
 
     private fun drawKey(canvas: Canvas, hit: Hit) {

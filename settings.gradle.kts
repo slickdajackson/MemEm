@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "MemEm"
 include(":engine")
 include(":app")
+include(":tools:rewrite-cli")

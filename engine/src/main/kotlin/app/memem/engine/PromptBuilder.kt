@@ -15,7 +15,8 @@ data class BuiltPrompt(val system: String, val user: String) {
 }
 
 private const val SYSTEM =
-    "Du schreibst Chat-Memes. Kopiere die Nachricht nicht wörtlich. " +
+    "Du schreibst Chat-Memes. Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um. " +
+        "Kopiere die Nachricht nicht wörtlich. " +
         "Schreibe sie für jede der 3 Vorlagen so um, wie man sie genau für dieses Meme sagen würde. " +
         "Die Kernaussage bleibt, ohne neue Fakten. Deutsch, außer die Vorlage lebt von festen englischen Phrasen. " +
         "Kurz und pointiert. Pro Vorlage genau so viele Zeilen wie Felder, jede Zeile anders und nicht leer. " +
@@ -99,7 +100,19 @@ private fun renderUser(
             body.append('\n')
         }
     }
+    body.append("Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um.\n")
+    body.append("Antworte exakt in dieser Form, mit den echten Ids und genauso vielen Zeilen:\n")
+    body.append(exampleJson(candidates))
+    body.append('\n')
     return body.toString()
+}
+
+private fun exampleJson(candidates: List<Brief>): String {
+    val memes = candidates.joinToString(",") { brief ->
+        val slots = (1..brief.boxes.coerceAtLeast(1)).joinToString(",") { "\"...\"" }
+        "{\"template\":\"${brief.id}\",\"lines\":[$slots]}"
+    }
+    return "{\"memes\":[$memes]}"
 }
 
 private fun clip(text: String, limit: Int): String {

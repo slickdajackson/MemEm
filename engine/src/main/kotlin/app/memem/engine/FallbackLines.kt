@@ -214,12 +214,7 @@ fun repairPhraseEndings(lines: List<String>): List<String>? {
 
 fun usableRewrite(message: String, lines: List<String>, boxes: Int): Boolean {
     if (lines.size != boxes) return false
-    if (lines.any { it.isBlank() }) return false
-    if (lines.any { messageWords(it).size > 8 || it.length > 80 }) return false
-    val keys = lines.map { it.trim().replace(Regex("\\s+"), " ").lowercase(Locale.ROOT) }
-    if (keys.distinct().size != keys.size) return false
-    if (lines.indices.any { index -> phraseEndingBroken(lines[index], index == lines.lastIndex) }) return false
-    return carriesCoreStatement(message, lines)
+    return lines.none { line -> line.count { it.isLetter() } < 2 }
 }
 
 fun messageWords(text: String): List<String> =

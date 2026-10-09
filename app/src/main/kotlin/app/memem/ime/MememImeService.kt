@@ -168,7 +168,7 @@ class MememImeService : InputMethodService() {
         if (!::panel.isInitialized) return
         val previous = options
         options = next
-        panel.showPreviews(next.map { it.bitmap })
+        panel.showPreviews(next.map { it.bitmap }, next.map { if (it.fromModel) "KI" else "wörtlich" })
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { recycleOne(it) }
     }
 

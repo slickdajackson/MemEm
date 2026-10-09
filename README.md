@@ -1,10 +1,22 @@
-# MemEm 0.1.6
+# MemEm 0.1.7
 
 Private Android-Tastatur (Sideload), die aus dem getippten Text drei Memes vorschlägt und eines davon in das Eingabefeld legt. MemEm sendet nie selbst. Optional liest eine Bedienungshilfe den offenen WhatsApp-Chat und ein schwebender Punkt startet denselben Vorschlag.
 
 Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`. Einstellungen und Wizard bleiben im ReadEm-Stil: cremefarbene Karten, schwarzer Rand, harter Schatten, Anton. Die Tastatur selbst ist flach: helle Tasten auf Creme, dünner grauer Rand, Sondertasten dezent gelb, Meme-Karten ohne Versatzschatten. Standardlayout ist englisches QWERTY, Leertaste `EN`. QWERTZ ist eine Einstellung, Leertaste dann `DE`. Globus kurz wechselt zur vorherigen Tastatur, Globus lang öffnet die Tastaturauswahl. Gemma und Embedding laufen immer auf der CPU.
 
-Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Schließen oder Fertig führt in die Hauptansicht. Danach startet der Wizard nicht mehr von selbst. Die Hauptansicht zeigt den Status, ein Probierfeld mit drei Karten und die Einstellungen. Die Tastatur lässt unten Platz für die Navigationsleiste, bei Gesten und bei drei Tasten. Text auf den Vorlagen sitzt in der memegen-Box (Anker, Größe, Winkel, Ausrichtung, Schrift, Farbe), dreht um den Box-Mittelpunkt und wird wie bei memegen an den Anker geklebt. Die Schrift schrumpft, bis der Text samt Umbruch in die Box passt. Gemma schreibt die Nachricht für jede der drei Vorlagen meme-typisch um (Drake abgelehnt/bevorzugt, Change My Mind eine These, This is fine Lage plus ruhige Reaktion, Distracted Boyfriend drei Labels). Der Prompt enthält Name, Bedeutung, Feldrollen und drei bis fünf echte Beispielsprüche. Die Kernaussage muss bleiben, der Wortlaut nicht. Nur eine leere oder kernlose Antwort fällt auf die wörtliche Teilung zurück. Die Teilung endet nicht auf Artikel, Präposition, Verschmelzung (am, im, zum) oder Konjunktion.
+Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Schließen oder Fertig führt in die Hauptansicht. Danach startet der Wizard nicht mehr von selbst. Die Hauptansicht zeigt den Status, ein Probierfeld mit drei Karten und die Einstellungen. Die Tastatur lässt unten Platz für die Navigationsleiste, bei Gesten und bei drei Tasten. Text auf den Vorlagen sitzt in der memegen-Box (Anker, Größe, Winkel, Ausrichtung, Schrift, Farbe), dreht um den Box-Mittelpunkt und wird wie bei memegen an den Anker geklebt. Die Schrift schrumpft, bis der Text samt Umbruch in die Box passt. Gemma schreibt die Nachricht für jede der drei Vorlagen meme-typisch um. Der Prompt sagt ausdrücklich, nicht wörtlich zu formulieren, und gibt das JSON-Beispiel mit den echten Ids vor. Solange Gemma rechnet, zeigen die Karten die wörtliche Fassung und tragen das Kennzeichen `wörtlich`. Eine brauchbare Umschrift ersetzt sie und trägt `KI`. Leer oder ohne Buchstaben fällt auf die wörtliche Teilung zurück. In den Einstellungen stehen die letzten zehn Anfragen, teilbar als Text.
+
+## Umschreiben auf dem Rechner
+
+```bash
+./gradlew :tools:rewrite-cli:run --args="--gemma /pfad/gemma-4-E2B-it.litertlm --embed /pfad/embeddinggemma-2-text-270m.litertlm --sentences saetze.txt"
+```
+
+Eine Zeile pro Satz. Die Ausgabe ist Markdown und JSON: Vorlage, Zeilen, Quelle `KI` oder `wörtlich`, Fallback-Grund, Roh-Antwort, Latenz.
+
+Die Abhängigkeit `com.google.ai.edge.litertlm:litertlm-jvm:0.18.0` enthält die native Bibliothek `liblitertlm_jni.so` für `linux-x86_64`. Der Lader zieht sie aus dem JAR unter `com/google/ai/edge/litertlm/jni/linux-x86_64/liblitertlm_jni.so`. Nötig sind JDK 21 und glibc. Ein weiteres Paket ist nicht vorgesehen. Scheitert das Laden, liegt diese `.so` nicht für die Architektur im JAR, oder `LD_LIBRARY_PATH` zeigt auf eine andere `liblitertlm_jni.so`.
+
+Klappt das Embedding-Modell auf der JVM nicht, sucht das Werkzeug mit dem Hash-Index im Repo. Ohne Index bleiben feste Vorlagen. Prompt, Parser und Prüfung sind dieselben wie in der App.
 
 ## Ablauf
 

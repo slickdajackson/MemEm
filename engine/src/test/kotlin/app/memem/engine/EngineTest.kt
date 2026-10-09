@@ -112,18 +112,51 @@ class GemmaResponseTest {
         val raw = """{"memes":[{"template":"b","lines":["Ihr werdet am Ende","alles verlieren"]}]}"""
         val message = "ihr werdet am ende alles verlieren"
         val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
-        assertEquals(listOf("Ihr werdet am Ende", "alles verlieren"), out[0].lines)
-        assertTrue(out[0].fromModel)
-        assertTrue(carriesCoreStatement(message, out[0].lines))
+        assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out[0].lines)
+        assertFalse(out[0].fromModel)
+        assertEquals("woertlich", out[0].reason)
     }
 
     @Test
-    fun unrelatedGemmaLinesFallBackToTheLiteralSentence() {
+    fun paraphraseWithoutSharedWordsStays() {
         val raw = """{"memes":[{"template":"b","lines":["Pizza ist da","Hunger"]}]}"""
+        val message = "ihr werdet am ende alles verlieren"
+        val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
+        assertEquals(listOf("Pizza ist da", "Hunger"), out[0].lines)
+        assertTrue(out[0].fromModel)
+        assertEquals("", out[0].reason)
+    }
+
+    @Test
+    fun emptyLinesFallBackToTheLiteralSentence() {
+        val raw = """{"memes":[{"template":"b","lines":["",""]}]}"""
         val message = "ihr werdet am ende alles verlieren"
         val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
         assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out[0].lines)
         assertFalse(out[0].fromModel)
+        assertEquals("leer", out[0].reason)
+    }
+
+    @Test
+    fun parserAcceptsNrAndShortFieldNames() {
+        val raw = """Text {"items":[{"Nr":"drake","m":["Meeting heute","Meeting am Freitag"]}]} Ende"""
+        val message = "Meetings am Freitag sind mir lieber als welche heute"
+        val out = parseSuggestions(raw, listOf(Candidate("drake", 2, "upper", name = "Drakeposting")), message)
+        assertEquals(listOf("Meeting heute", "Meeting am Freitag"), out[0].lines)
+        assertTrue(out[0].fromModel)
+    }
+
+    @Test
+    fun parserAcceptsPlainTextAndNumericIndex() {
+        val prose = "fine:\nDer Server brennt\nAlles gut"
+        val message = "Der Server brennt und niemand merkt es"
+        val fromText = parseSuggestions(prose, listOf(Candidate("fine", 2, "upper", name = "This is Fine")), message)
+        assertEquals(listOf("Der Server brennt", "Alles gut"), fromText[0].lines)
+        assertTrue(fromText[0].fromModel)
+        val indexed = """{"memes":[{"Nr":1,"text":"Ananas bleibt eine These"}]}"""
+        val fromIndex = parseSuggestions(indexed, listOf(Candidate("cmm", 1, "upper")), "Ananas gehört nicht auf die Pizza")
+        assertEquals(listOf("Ananas bleibt eine These"), fromIndex[0].lines)
+        assertTrue(fromIndex[0].fromModel)
     }
 
     @Test
@@ -181,12 +214,12 @@ class GemmaResponseTest {
     }
 
     @Test
-    fun identicalLinesFallBack() {
+    fun identicalLinesStayWhenTheyAreARewrite() {
         val message = "ihr werdet am ende alles verlieren"
         val raw = """{"memes":[{"template":"fine","lines":["Alles vorbei","Alles vorbei"]}]}"""
         val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), message).single()
-        assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out.lines)
-        assertFalse(out.fromModel)
+        assertEquals(listOf("Alles vorbei", "Alles vorbei"), out.lines)
+        assertTrue(out.fromModel)
     }
 
     @Test
@@ -278,7 +311,9 @@ class PromptBuilderTest {
         assertTrue(prompt.user.contains("Salat war gestern"))
         assertTrue(prompt.user.contains("Kontext"))
         assertTrue(prompt.system.contains("JSON"))
-        assertTrue(prompt.system.contains("nicht wörtlich"))
+        assertTrue(prompt.system.contains("NICHT wörtlich"))
+        assertTrue(prompt.user.contains("Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um."))
+        assertTrue(prompt.user.contains("\"template\":\"id1\""))
         assertFalse(prompt.system.contains("Wortreihenfolge"))
     }
 

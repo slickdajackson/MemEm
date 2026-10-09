@@ -80,6 +80,7 @@ data class SetupUi(
     val keyboardEnabled: Boolean = false,
     val a11yOn: Boolean = false,
     val incomplete: Boolean = false,
+    val gemmaLog: String = "",
 )
 
 @Composable
@@ -99,6 +100,8 @@ fun SettingsScreen(
     onTryMeme: () -> Unit = {},
     tryStatus: String = "",
     tryPreviews: List<ImageBitmap> = emptyList(),
+    tryMarks: List<String> = emptyList(),
+    onShareLog: () -> Unit = {},
     scroll: Boolean = true,
 ) {
     val base = Modifier.background(Paper).padding(16.dp)
@@ -130,7 +133,7 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.1.6   SIDELOAD")
+                MonoLabel("0.1.7   SIDELOAD")
             }
         }
         androidx.compose.material3.Text(
@@ -193,16 +196,24 @@ fun SettingsScreen(
                 repeat(3) { index ->
                     StickerBox(Modifier.weight(1f), fill = Cream, radius = 12.dp, shadow = 3.dp) {
                         val image = tryPreviews.getOrNull(index)
-                        if (image != null) {
-                            Image(
-                                image,
-                                contentDescription = "Meme ${index + 1}",
-                                modifier = Modifier.fillMaxWidth().height(96.dp),
-                                contentScale = ContentScale.Crop,
-                            )
-                        } else {
-                            Box(Modifier.fillMaxWidth().height(96.dp), contentAlignment = Alignment.Center) {
-                                MonoLabel("0${index + 1}")
+                        Box(Modifier.fillMaxWidth().height(96.dp)) {
+                            if (image != null) {
+                                Image(
+                                    image,
+                                    contentDescription = "Meme ${index + 1}",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            } else {
+                                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    MonoLabel("0${index + 1}")
+                                }
+                            }
+                            val mark = tryMarks.getOrNull(index).orEmpty()
+                            if (mark.isNotBlank()) {
+                                Box(Modifier.align(Alignment.BottomEnd).padding(4.dp)) {
+                                    MonoLabel(mark)
+                                }
                             }
                         }
                     }
@@ -242,6 +253,17 @@ fun SettingsScreen(
             Choice("Automatisch nach MIME-Typ", state.insert == InsertPreference.AUTO) {
                 onInsert(InsertPreference.AUTO)
             }
+        }
+        StickerCard {
+            MonoLabel("GEMMA")
+            Headline("Letzte Anfragen")
+            androidx.compose.material3.Text(
+                state.gemmaLog.ifBlank { "Noch keine Anfrage." },
+                color = Ink,
+                fontSize = 12.sp,
+                fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+            )
+            StickerButton("Protokoll teilen", Blue, light = true, onClick = onShareLog)
         }
         StickerCard {
             MonoLabel("MODELLE")

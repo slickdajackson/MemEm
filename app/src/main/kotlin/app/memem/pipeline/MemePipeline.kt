@@ -16,6 +16,7 @@ import app.memem.engine.memeSchema
 import app.memem.engine.parseSuggestions
 import app.memem.engine.searchTemplates
 import app.memem.engine.searchText
+import app.memem.llm.GenerateOutcome
 import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
 import app.memem.render.MemeRenderer
@@ -71,24 +72,34 @@ class MemePipeline(context: Context) {
         val searchMs = ms(searchStarted)
         val picked = hits.mapNotNull { assets.templates[it.templateId] }.take(3)
             .ifEmpty { assets.templates.values.take(3).toList() }
+        val literal = renderOptions(
+            message,
+            picked.map { it to fallbackLines(message, it.boxes, it.style) },
+            fromModel = false,
+        )
+        onPreview(literal)
         val gemmaStarted = System.nanoTime()
-        val modelText = generate(message, picked, context)
+        val outcome = generate(message, picked, context)
         val gemmaMs = ms(gemmaStarted)
         val renderStarted = System.nanoTime()
         val candidates = picked.map {
-            Candidate(it.id, it.boxes, it.style, it.examples.firstOrNull().orEmpty())
+            Candidate(it.id, it.boxes, it.style, it.examples.firstOrNull().orEmpty(), it.name)
         }
         val suggestions = if (candidates.isEmpty()) {
             emptyList()
         } else {
-            parseSuggestions(modelText ?: "", candidates, message, wanted = 3)
+            parseSuggestions(
+                outcome.text.orEmpty(),
+                candidates,
+                message,
+                wanted = 3,
+                failure = outcome.error ?: "keine antwort",
+            )
         }
         val rendered = suggestions.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
             renderOne(template, suggestion.lines, suggestion.fromModel)
-        }.ifEmpty {
-            renderOptions(message, picked.map { it to fallbackLines(message, it.boxes, it.style) }, fromModel = false)
-        }
+        }.ifEmpty { literal }
         onPreview(rendered)
         val renderMs = ms(renderStarted)
         log.event(
@@ -102,7 +113,13 @@ class MemePipeline(context: Context) {
                 "embedSpace" to if (embedded.third) "litert" else "hash",
                 "searchMs" to searchMs,
                 "gemmaMs" to gemmaMs,
-                "gemma" to (modelText != null),
+                "gemmaLoaded" to outcome.loaded,
+                "gemmaError" to outcome.error,
+                "raw" to outcome.text?.take(500),
+                "reasons" to suggestions.joinToString(" | ") { item ->
+                    val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
+                    "${item.templateId}:$mark"
+                },
                 "renderMs" to renderMs,
                 "totalMs" to ms(started),
                 "templates" to rendered.joinToString(",") { it.template.id },
@@ -127,9 +144,18 @@ class MemePipeline(context: Context) {
         return Triple(vec, index, false)
     }
 
-    private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): String? {
-        if (templates.isEmpty()) return null
-        if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) return null
+    private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): GenerateOutcome {
+        if (templates.isEmpty()) return GenerateOutcome(null, "keine vorlage", remote.modelReady, false)
+        val model = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
+        if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) {
+            return GenerateOutcome(null, "modell fehlt", false, false)
+        }
+        val embed = ModelCatalog.file(app, ModelCatalog.embed)
+        val loadError = remote.ensureLoaded(
+            model.absolutePath,
+            embed.takeIf { it.isFile && assets.space.startsWith("litert") }?.absolutePath,
+        )
+        if (loadError != null) return GenerateOutcome(null, loadError, false, false)
         val chosen = templates.take(3)
         val briefs = chosen.map { template ->
             Brief(

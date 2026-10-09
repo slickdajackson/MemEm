@@ -11,10 +11,13 @@ import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 import java.util.concurrent.atomic.AtomicInteger
 
 class RemoteLlmEngine(context: Context) {
@@ -32,6 +35,9 @@ class RemoteLlmEngine(context: Context) {
     @Volatile private var service: Messenger? = null
     @Volatile private var bound = false
     @Volatile var crashed = false
+    @Volatile var modelReady = false
+    @Volatile var loadedPath: String? = null
+    private val gate = Mutex()
 
     private val death = IBinder.DeathRecipient {
         crashed = true
@@ -56,10 +62,13 @@ class RemoteLlmEngine(context: Context) {
 
         override fun onServiceDisconnected(name: ComponentName?) {
             crashed = true
+            modelReady = false
+            bound = false
             synchronized(lock) {
                 service = null
                 lock.notifyAll()
             }
+            bind()
         }
     }
 
@@ -88,7 +97,24 @@ class RemoteLlmEngine(context: Context) {
             putString("embed", embedPath)
         }
         val reply = request(EngineProto.LOAD, data, 180_000)
-        return reply?.getBoolean("ok") == true
+        val ok = reply?.getBoolean("ok") == true
+        if (ok) {
+            modelReady = true
+            loadedPath = gemmaPath
+        }
+        return ok
+    }
+
+    /** Waits out an in-flight load, then loads if the :llm process does not already hold this file. */
+    suspend fun ensureLoaded(gemmaPath: String, embedPath: String?): String? {
+        if (modelReady && loadedPath == gemmaPath) {
+            val ping = request(EngineProto.PING, Bundle(), 8_000)
+            if (ping?.getBoolean("ok") == true) return null
+            modelReady = false
+        }
+        if (load(gemmaPath, embedPath)) return null
+        modelReady = false
+        return "nicht geladen"
     }
 
     suspend fun embed(text: String): FloatArray? {
@@ -98,44 +124,63 @@ class RemoteLlmEngine(context: Context) {
         return reply.getFloatArray("vec")
     }
 
-    suspend fun generate(system: String, user: String, schema: String?): String? {
+    suspend fun generate(system: String, user: String, schema: String?): GenerateOutcome {
         val first = generateOnce(system, user, schema)
-        if (first != null) return first
-        if (!crashed) return null
-        awaitService(12_000)
-        return generateOnce(system, user, null)
+        if (first.text != null) return first.copy(loaded = modelReady)
+        if (first.error == "timeout") return first.copy(loaded = modelReady)
+        val second = generateOnce(system, user, null)
+        val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ").ifBlank { null }
+        return second.copy(error = if (second.text != null) first.error else error, loaded = modelReady)
     }
 
-    private suspend fun generateOnce(system: String, user: String, schema: String?): String? {
+    private suspend fun generateOnce(system: String, user: String, schema: String?): GenerateOutcome {
         val data = Bundle().apply {
             putString("system", system)
             putString("user", user)
             if (schema != null) putString("schema", schema)
             putDouble("temperature", 0.4)
-            putInt("maxTokens", 300)
+            putInt("maxTokens", 400)
         }
-        val reply = request(EngineProto.GENERATE, data, 25_000) ?: return null
-        if (!reply.getBoolean("ok")) return null
-        return reply.getString("text")
+        val reply = try {
+            request(EngineProto.GENERATE, data, 90_000)
+        } catch (_: GemmaTimeout) {
+            return GenerateOutcome(null, "timeout", modelReady, schema != null)
+        } ?: return GenerateOutcome(
+            null,
+            if (crashed) "prozess tot" else "binder fehlt",
+            modelReady,
+            schema != null,
+        )
+        if (!reply.getBoolean("ok")) {
+            val error = reply.getString("error")?.take(240)?.ifBlank { null } ?: "fehler"
+            return GenerateOutcome(null, error, modelReady, schema != null)
+        }
+        val text = reply.getString("text")
+        if (text.isNullOrBlank()) return GenerateOutcome(null, "leere antwort", modelReady, schema != null)
+        return GenerateOutcome(text, null, modelReady, schema != null)
     }
 
-    private suspend fun request(what: Int, data: Bundle, timeoutMs: Long): Bundle? = withContext(Dispatchers.IO) {
-        bind()
-        val messenger = awaitService(15_000) ?: return@withContext null
-        val id = ids.incrementAndGet()
-        val future = CompletableFuture<Bundle>()
-        pending[id] = future
-        val msg = Message.obtain(null, what)
-        msg.arg1 = id
-        msg.data = data
-        msg.replyTo = clientMessenger
-        try {
-            messenger.send(msg)
-            future.get(timeoutMs, TimeUnit.MILLISECONDS)
-        } catch (_: Exception) {
-            null
-        } finally {
-            pending.remove(id)
+    private suspend fun request(what: Int, data: Bundle, timeoutMs: Long): Bundle? = gate.withLock {
+        withContext(Dispatchers.IO) {
+            bind()
+            val messenger = awaitService(15_000) ?: return@withContext null
+            val id = ids.incrementAndGet()
+            val future = CompletableFuture<Bundle>()
+            pending[id] = future
+            val msg = Message.obtain(null, what)
+            msg.arg1 = id
+            msg.data = data
+            msg.replyTo = clientMessenger
+            try {
+                messenger.send(msg)
+                future.get(timeoutMs, TimeUnit.MILLISECONDS)
+            } catch (_: TimeoutException) {
+                throw GemmaTimeout()
+            } catch (_: Exception) {
+                null
+            } finally {
+                pending.remove(id)
+            }
         }
     }
 
@@ -151,3 +196,12 @@ class RemoteLlmEngine(context: Context) {
         }
     }
 }
+
+private class GemmaTimeout : RuntimeException()
+
+data class GenerateOutcome(
+    val text: String?,
+    val error: String?,
+    val loaded: Boolean,
+    val schemaUsed: Boolean,
+)

@@ -234,6 +234,7 @@ class OverlayService : Service() {
         val previous = options
         options = next
         panel?.previews = List(3) { next.getOrNull(it)?.bitmap }
+        panel?.marks = List(3) { next.getOrNull(it)?.let { option -> if (option.fromModel) "KI" else "wörtlich" }.orEmpty() }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }

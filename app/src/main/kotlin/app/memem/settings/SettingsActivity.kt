@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import app.memem.R
+import app.memem.debug.DebugLog
 import app.memem.a11y.MememAccessibilityService
 import app.memem.engine.InsertPreference
 import app.memem.harness.InsertHarnessActivity
@@ -47,6 +48,7 @@ class SettingsActivity : AppCompatActivity() {
     private val tryDraft = mutableStateOf("")
     private val tryStatus = mutableStateOf("")
     private val tryPreviews = mutableStateOf<List<ImageBitmap>>(emptyList())
+    private val tryMarks = mutableStateOf<List<String>>(emptyList())
     private var tryJob: Job? = null
     private var tryOptions: List<MemeOption> = emptyList()
 
@@ -63,6 +65,7 @@ class SettingsActivity : AppCompatActivity() {
             val draft by tryDraft
             val status by tryStatus
             val previews by tryPreviews
+            val marks by tryMarks
             val state = readState(download.text).let { if (tick >= 0) it else it }
             SettingsScreen(
                 state = state,
@@ -72,6 +75,8 @@ class SettingsActivity : AppCompatActivity() {
                 onTryMeme = { runTry() },
                 tryStatus = status,
                 tryPreviews = previews,
+                tryMarks = marks,
+                onShareLog = { shareLog() },
                 onKeyboard = { startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)) },
                 onA11y = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) },
                 onOverlayPermission = {
@@ -135,7 +140,8 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
             showTry(result)
-            tryStatus.value = if (result.size >= 3) "Drei Karten" else getString(R.string.models_missing)
+            generation += 1
+            tryStatus.value = if (result.any { it.fromModel }) "KI-Fassung" else "Wörtliche Fassung"
         }
     }
 
@@ -145,9 +151,19 @@ class SettingsActivity : AppCompatActivity() {
         tryPreviews.value = next.map { option ->
             option.bitmap.copy(Bitmap.Config.ARGB_8888, false).asImageBitmap()
         }
+        tryMarks.value = next.map { if (it.fromModel) "KI" else "wörtlich" }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }
+    }
+
+    private fun shareLog() {
+        val text = DebugLog(this).recentText().ifBlank { "Noch keine Anfrage." }
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(Intent.createChooser(send, "Protokoll"))
     }
 
     private fun startDownload() {
@@ -180,6 +196,7 @@ class SettingsActivity : AppCompatActivity() {
             models = "Embedding $embed, Gemma $cpu",
             download = download,
             hyperos = getString(R.string.hyperos_hint),
+            gemmaLog = DebugLog(this).recentText(),
             modelsOn = modelsOn,
             keyboardOn = keyboardOn,
             keyboardEnabled = keyboardEnabled,
