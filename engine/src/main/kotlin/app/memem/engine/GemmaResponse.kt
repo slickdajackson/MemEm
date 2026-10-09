@@ -38,7 +38,9 @@ fun parseSuggestions(
     wanted: Int = 3,
     failure: String = "",
     similarity: ((String) -> Float)? = null,
+    language: String = "",
 ): List<Suggestion> {
+    val lang = language.ifBlank { outputLanguage(message) }
     val byId = candidates.associateBy { it.id }
     val used = linkedSetOf<String>()
     val out = ArrayList<Suggestion>(wanted)
@@ -47,7 +49,7 @@ fun parseSuggestions(
         if (out.size >= wanted) break
         val candidate = byId[item.first] ?: continue
         if (!used.add(candidate.id)) continue
-        val resolved = resolveLines(item.second, candidate, message, similarity)
+        val resolved = resolveLines(item.second, candidate, message, similarity, lang)
         out.add(Suggestion(candidate.id, resolved.lines, resolved.fromModel, resolved.reason))
     }
     val missingReason = if (raw.isBlank()) failure.ifBlank { "keine antwort" } else "fehlt"
@@ -70,43 +72,60 @@ data class ResolvedLines(val lines: List<String>, val fromModel: Boolean, val re
 
 /**
  * Keeps a rewrite that is filled, not a copy, not a duplicate, and in the message language.
- * Anything else falls back to the literal split. The caller retries that one template once.
+ * Anything else falls back to the literal split.
  */
 fun resolveLines(
     rawLines: List<String>,
     candidate: Candidate,
     message: String,
     similarity: ((String) -> Float)? = null,
+    language: String = "",
 ): ResolvedLines {
     val cleaned = rawLines.map { preclean(it) }
     val sized = (cleaned + List(candidate.boxes) { "" }).take(candidate.boxes)
     val repaired = repairPhraseEndings(sized)
     val chosen = repaired ?: sized
     val literal = fallbackLines(message, candidate.boxes, candidate.style)
-    val problem = rejectReason(message, chosen, candidate, similarity)
+    val problem = rejectReason(message, chosen, candidate, similarity, language)
     if (problem != null) return ResolvedLines(literal, fromModel = false, reason = problem)
     if (sameCaption(chosen, literal)) return ResolvedLines(literal, fromModel = false, reason = "woertlich")
     return ResolvedLines(chosen.map { capWords(it) }, fromModel = true, reason = "")
 }
 
-/** Below zero the hashed caption points away from the message. Paraphrases stay. */
-const val MIN_CAPTION_SIMILARITY = 0.0f
+/**
+ * Hash cosine floor from the 0.1.8 sentences.
+ * On-topic lines such as "Stau auf der A8" score about 0.67, a close paraphrase about 0.17.
+ * Unrelated lines such as "Barista Kaffee" score about 0.01. 0.12 sits in the requested band.
+ * A caption that still carries a content word or a known synonym is kept even below the floor,
+ * because a pure paraphrase such as "Sichere Niederlage" hashes near 0.03.
+ */
+const val MIN_CAPTION_SIMILARITY = 0.12f
 
 fun rejectReason(
     message: String,
     lines: List<String>,
     candidate: Candidate,
     similarity: ((String) -> Float)? = null,
+    language: String = "",
 ): String? {
+    val lang = language.ifBlank { outputLanguage(message) }
+    val labels = fixedLabels(candidate)
     if (lines.size != candidate.boxes) return "sinnlos"
     if (lines.all { it.isBlank() }) return "leer"
     if (lines.any { line -> line.count { it.isLetter() } < 2 }) return "sinnlos"
     if (lines.any { line -> !hasVowel(line) }) return "sinnlos"
     if (duplicateLines(lines)) return "doppelt"
-    if (copiesExample(lines, candidate)) return "kopie"
-    if (foreignLanguage(message, lines)) return "sprache"
+    if (copiesExample(lines, candidate, labels)) return "kopie"
+    if (foreignLanguage(lines, lang, labels)) return "sprache"
+    if (overlapsMessage(lines, message, labels)) return "woertlich"
     if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex) }) return "abgebrochen"
-    if (similarity != null && similarity(lines.joinToString(" ")) < MIN_CAPTION_SIMILARITY) return "fremd"
+    if (
+        similarity != null &&
+        similarity(lines.joinToString(" ")) < MIN_CAPTION_SIMILARITY &&
+        !carriesCoreStatement(message, lines)
+    ) {
+        return "fremd"
+    }
     return null
 }
 
@@ -125,7 +144,16 @@ private fun duplicateLines(lines: List<String>): Boolean {
     return norms.size >= 2 && norms.toSet().size != norms.size
 }
 
-private fun copiesExample(lines: List<String>, candidate: Candidate): Boolean {
+/** A line that is the same in every example is a fixed label, not a copied joke. */
+fun fixedLabels(candidate: Candidate): Set<String> {
+    val groups = candidate.knownExamples()
+        .map { group -> group.map { normCaptionLine(it) }.filter { it.isNotEmpty() }.toSet() }
+        .filter { it.isNotEmpty() }
+    if (groups.size < 2) return emptySet()
+    return groups.reduce { left, right -> left.intersect(right) }
+}
+
+private fun copiesExample(lines: List<String>, candidate: Candidate, labels: Set<String>): Boolean {
     val produced = lines.map { normCaptionLine(it) }.filter { it.isNotEmpty() }
     if (produced.isEmpty()) return false
     val groups = candidate.knownExamples()
@@ -134,7 +162,23 @@ private fun copiesExample(lines: List<String>, candidate: Candidate): Boolean {
         if (example.isNotEmpty() && example == produced) return true
     }
     val singles = groups.flatten().map { normCaptionLine(it) }.filter { it.isNotEmpty() }.toSet()
-    return produced.any { line -> line in singles && !isFixedPhrase(line) }
+    return produced.any { line -> line in singles && !isFixedPhrase(line) && line !in labels }
+}
+
+fun overlapsMessage(lines: List<String>, message: String, labels: Set<String> = emptySet()): Boolean {
+    return lines.any { line -> lineOverlapsMessage(line, message, labels) }
+}
+
+private fun lineOverlapsMessage(line: String, message: String, labels: Set<String>): Boolean {
+    if (isFixedPhrase(line)) return false
+    val norm = normCaptionLine(line)
+    if (norm.isEmpty() || norm in labels) return false
+    val lineWords = norm.split(' ').filter { it.length >= 2 }
+    if (lineWords.size < 3) return false
+    val messageWords = normCaptionLine(message).split(' ').filter { it.length >= 2 }.toSet()
+    if (messageWords.isEmpty()) return false
+    val shared = lineWords.count { it in messageWords }
+    return shared.toFloat() / lineWords.size >= 0.8f
 }
 
 private fun truncatedLine(line: String, isFinal: Boolean): Boolean {
@@ -156,7 +200,7 @@ fun sameCaption(left: List<String>, right: List<String>): Boolean {
 fun fitLines(rawLines: List<String>, candidate: Candidate, message: String): List<String> =
     resolveLines(rawLines, candidate, message).lines
 
-/** Ids are required keys. Each box is z1, z2, ... with minLength 1. No minItems or maxItems. */
+/** Ids are required keys. Each box is z1, z2, ... No minItems or maxItems. */
 fun memeSchema(templates: List<Pair<String, Int>>): String {
     val properties = JSONObject()
     val required = JSONArray()
@@ -168,21 +212,146 @@ fun memeSchema(templates: List<Pair<String, Int>>): String {
         for (number in 1..count) {
             val key = "z$number"
             fieldRequired.put(key)
-            fields.put(key, JSONObject().put("type", "string").put("minLength", 1))
+            fields.put(
+                key,
+                JSONObject()
+                    .put("type", "string")
+                    .put("minLength", 1)
+                    .put("maxLength", 60),
+            )
         }
         properties.put(
             id,
             JSONObject()
                 .put("type", "object")
                 .put("properties", fields)
-                .put("required", fieldRequired),
+                .put("required", fieldRequired)
+                .put("additionalProperties", false),
         )
     }
     return JSONObject()
         .put("type", "object")
         .put("properties", properties)
         .put("required", required)
+        .put("additionalProperties", false)
         .toString()
+}
+
+data class FollowUp(val withoutSchema: Boolean, val templateIds: List<String>)
+
+/**
+ * One follow-up at most. Broken JSON retries without a schema.
+ * If at least one card already passed, the rejected cards stay literal and nothing waits.
+ * If every card failed, the rejected templates go out together in one call.
+ */
+fun planFollowUp(suggestions: List<Suggestion>, raw: String, alreadyFollowedUp: Boolean): FollowUp? {
+    if (alreadyFollowedUp || suggestions.isEmpty()) return null
+    if (suggestions.any { it.fromModel }) return null
+    val missing = suggestions.filter { it.reason == "fehlt" }
+    val broken = raw.isNotBlank() && (jsonUnusable(raw) || missing.isNotEmpty())
+    if (broken) {
+        val ids = if (missing.isNotEmpty()) missing.map { it.templateId } else suggestions.map { it.templateId }
+        return FollowUp(withoutSchema = true, templateIds = ids)
+    }
+    val rejected = suggestions.filter { !it.fromModel }
+    if (rejected.isEmpty()) return null
+    return FollowUp(withoutSchema = false, templateIds = rejected.map { it.templateId })
+}
+
+fun jsonUnusable(raw: String): Boolean {
+    if (raw.isBlank()) return false
+    val blobs = jsonBlobs(repairModelJson(raw)).ifEmpty { jsonBlobs(raw) }
+    if (blobs.isEmpty()) return raw.contains('{') || raw.contains('[')
+    return blobs.none { blob ->
+        try {
+            JSONTokener(blob).nextValue()
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+}
+
+fun repairModelJson(raw: String): String {
+    if (jsonValueParses(raw)) return raw
+    var text = raw
+        .replace(",\"}}", "}")
+        .replace("\"}}", "\"}")
+        .replace("}}}", "\"}")
+    if (!jsonValueParses(text)) text = balanceJson(text)
+    return text
+}
+
+private fun jsonValueParses(raw: String): Boolean {
+    if (raw.isBlank()) return false
+    return try {
+        JSONTokener(raw).nextValue()
+        true
+    } catch (_: Exception) {
+        false
+    }
+}
+
+/** Closes a string that runs into trailing braces, then balances the object. */
+private fun balanceJson(raw: String): String {
+    val out = StringBuilder()
+    var depth = 0
+    var inString = false
+    var escaped = false
+    var index = 0
+    while (index < raw.length) {
+        val ch = raw[index]
+        if (inString) {
+            if (escaped) {
+                out.append(ch)
+                escaped = false
+                index += 1
+                continue
+            }
+            if (ch == '\\') {
+                out.append(ch)
+                escaped = true
+                index += 1
+                continue
+            }
+            if (ch == '"') {
+                out.append(ch)
+                inString = false
+                index += 1
+                continue
+            }
+            val rest = raw.substring(index)
+            if ((ch == '}' || ch == ']') && rest.all { it == '}' || it == ']' || it.isWhitespace() }) {
+                out.append('"')
+                inString = false
+                continue
+            }
+            out.append(ch)
+            index += 1
+            continue
+        }
+        when (ch) {
+            '"' -> {
+                inString = true
+                out.append(ch)
+            }
+            '{' -> {
+                depth += 1
+                out.append(ch)
+            }
+            '}' -> {
+                if (depth > 0) {
+                    depth -= 1
+                    out.append(ch)
+                }
+            }
+            else -> out.append(ch)
+        }
+        index += 1
+    }
+    if (inString) out.append('"')
+    repeat(depth.coerceAtMost(4)) { out.append('}') }
+    return out.toString()
 }
 
 fun schemaAvoidsCountConstraints(schema: String): Boolean {
@@ -200,6 +369,14 @@ private val INDEX_KEYS = setOf("nr", "n", "index", "i")
 private data class FoundMeme(val id: String, val lines: List<String>, val index: Int)
 
 private fun extractMemes(raw: String, candidates: List<Candidate>): List<Pair<String, List<String>>> {
+    val direct = readMemes(raw, candidates)
+    if (direct.isNotEmpty()) return direct
+    val repaired = repairModelJson(raw)
+    if (repaired == raw) return emptyList()
+    return readMemes(repaired, candidates)
+}
+
+private fun readMemes(raw: String, candidates: List<Candidate>): List<Pair<String, List<String>>> {
     val fromJson = jsonBlobs(raw).firstNotNullOfOrNull { blob ->
         val value = try {
             JSONTokener(blob).nextValue()
@@ -518,26 +695,109 @@ private val EN_MARKERS = setOf(
     "when", "where", "who", "how", "all", "any", "more", "dont", "its", "but", "got", "get",
     "make", "take", "want", "need", "right", "left", "people", "time", "into", "over", "than",
     "then", "there", "been", "shall", "can", "why", "yes", "yeah", "gonna", "wanna",
-    "sell", "buy", "boat", "should", "epipens",
+    "sell", "buy", "boat", "epipens", "is",
+    "exam", "passed", "sweat", "terrible", "weather", "stuck", "spree", "shopping", "vanished",
+    "again", "monday", "thumbs", "hundred", "twenty",
 )
 
-fun dominantLang(text: String): String {
-    if (text.any { it in "äöüÄÖÜß" }) return "de"
-    val words = normCaptionLine(text).split(' ').filter { it.length >= 2 }
-    if (words.isEmpty()) return "?"
-    val german = words.count { it in DE_MARKERS }
-    val english = words.count { it in EN_MARKERS }
-    if (german > english && german > 0) return "de"
-    if (english > german && english > 0) return "en"
-    return "?"
+private val FR_MARKERS = setOf(
+    "les", "des", "une", "est", "pas", "dans", "pour", "avec", "vous", "nous", "mais", "cette",
+    "comme", "sur", "qui", "dans", "elle", "ils", "aux", "chez",
+)
+private val ES_MARKERS = setOf(
+    "los", "las", "una", "por", "para", "con", "esta", "como", "pero", "muy", "hola", "porque",
+    "está", "esta", "también", "tambien",
+)
+private val IT_MARKERS = setOf(
+    "che", "non", "per", "una", "con", "sono", "come", "questo", "della", "anche", "perché",
+)
+private val NL_MARKERS = setOf(
+    "het", "een", "van", "niet", "voor", "zijn", "ook", "maar", "naar", "deze",
+)
+private val PL_MARKERS = setOf(
+    "nie", "się", "sie", "jest", "jak", "ale", "dla", "czy", "tego", "już", "juz",
+)
+private val PT_MARKERS = setOf(
+    "não", "nao", "uma", "para", "com", "está", "esta", "como", "mais", "você", "voce",
+)
+private val TR_MARKERS = setOf(
+    "bir", "için", "icin", "bu", "değil", "degil", "çok", "cok", "ama", "ile", "ben",
+)
+
+private val MARKERS = mapOf(
+    "de" to DE_MARKERS,
+    "en" to EN_MARKERS,
+    "fr" to FR_MARKERS,
+    "es" to ES_MARKERS,
+    "it" to IT_MARKERS,
+    "nl" to NL_MARKERS,
+    "pl" to PL_MARKERS,
+    "pt" to PT_MARKERS,
+    "tr" to TR_MARKERS,
+)
+
+fun outputLanguage(message: String, context: List<String> = emptyList()): String {
+    val fromMessage = dominantLang(message)
+    if (fromMessage != "?") return fromMessage
+    return dominantLang(context.joinToString(" "))
 }
 
-private fun foreignLanguage(message: String, lines: List<String>): Boolean {
-    val messageLang = dominantLang(message)
-    if (messageLang == "?") return false
-    val rest = lines.filter { !isFixedPhrase(it) }.joinToString(" ")
-    if (rest.count { it.isLetter() } < 2) return false
-    val captionLang = dominantLang(rest)
-    if (captionLang == "?") return false
-    return captionLang != messageLang
+fun languageName(code: String): String = when (code) {
+    "de" -> "German"
+    "en" -> "English"
+    "fr" -> "French"
+    "es" -> "Spanish"
+    "it" -> "Italian"
+    "nl" -> "Dutch"
+    "pl" -> "Polish"
+    "pt" -> "Portuguese"
+    "tr" -> "Turkish"
+    else -> "the same language as the message"
+}
+
+fun dominantLang(text: String): String {
+    if (text.isBlank()) return "?"
+    val scores = HashMap<String, Int>()
+    if (text.any { it in "äöüÄÖÜß" }) scores["de"] = 3
+    val words = normCaptionLine(text).split(' ').filter { it.length >= 2 }
+    for (word in words) {
+        for ((lang, markers) in MARKERS) {
+            if (word in markers) scores[lang] = (scores[lang] ?: 0) + 1
+        }
+        if (word.length >= 5 && GERMAN_SUFFIXES.any { word.endsWith(it) }) {
+            scores["de"] = (scores["de"] ?: 0) + 1
+        }
+    }
+    if (scores.isEmpty()) return "?"
+    val best = scores.maxBy { it.value }
+    val tied = scores.filter { it.value == best.value }.keys
+    if (tied.size != 1 || best.value <= 0) return "?"
+    return best.key
+}
+
+private val GERMAN_SUFFIXES = listOf("ung", "chen", "lich", "heit", "keit")
+
+fun hasLanguageSignal(text: String, language: String): Boolean {
+    if (language == "de" && text.any { it in "äöüÄÖÜß" }) return true
+    val markers = MARKERS[language] ?: return false
+    val words = normCaptionLine(text).split(' ').filter { it.length >= 2 }
+    if (words.any { it in markers }) return true
+    if (language == "de") {
+        return words.any { word -> word.length >= 5 && GERMAN_SUFFIXES.any { word.endsWith(it) } }
+    }
+    return false
+}
+
+private fun foreignLanguage(lines: List<String>, language: String, labels: Set<String>): Boolean {
+    if (language == "?") return false
+    val rest = lines.filter { line ->
+        val norm = normCaptionLine(line)
+        norm.isNotEmpty() && !isFixedPhrase(line) && norm !in labels
+    }
+    val text = rest.joinToString(" ")
+    if (text.count { it.isLetter() } < 2) return false
+    val captionLang = dominantLang(text)
+    if (captionLang == language) return false
+    if (captionLang != "?") return true
+    return !hasLanguageSignal(text, language)
 }

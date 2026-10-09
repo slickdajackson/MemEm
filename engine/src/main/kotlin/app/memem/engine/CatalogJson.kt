@@ -8,8 +8,11 @@ data class CatalogEntry(
     val boxes: Int,
     val style: String,
     val meaning: String,
-    val examples: List<List<String>>,
-)
+    val examplesDe: List<List<String>>,
+    val examplesEn: List<List<String>>,
+) {
+    fun examplesFor(language: String): List<List<String>> = examplesForLanguage(examplesDe, examplesEn, language)
+}
 
 /** Reads the same catalog the app ships, plus the few-shot file when it is present. */
 fun parseCatalog(catalogJson: String, examplesJson: String = ""): List<CatalogEntry> {
@@ -30,7 +33,8 @@ fun parseCatalog(catalogJson: String, examplesJson: String = ""): List<CatalogEn
                     boxes = boxes,
                     style = style,
                     meaning = obj.optString("meaningDe").ifBlank { obj.optString("meaningEn") },
-                    examples = (extra[id] ?: fromCatalog).take(5),
+                    examplesDe = (extra[id] ?: emptyList()).take(5),
+                    examplesEn = selectExampleGroups(fromCatalog, boxes),
                 ),
             )
         }

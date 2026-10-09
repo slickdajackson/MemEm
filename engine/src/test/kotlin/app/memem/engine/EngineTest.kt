@@ -6,6 +6,7 @@ import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -149,10 +150,10 @@ class GemmaResponseTest {
 
     @Test
     fun parserAcceptsPlainTextAndNumericIndex() {
-        val prose = "fine:\nDer Server brennt\nAlles gut"
+        val prose = "fine:\nQualm im Rack\nUnd keiner merkt es"
         val message = "Der Server brennt und niemand merkt es"
         val fromText = parseSuggestions(prose, listOf(Candidate("fine", 2, "upper", name = "This is Fine")), message)
-        assertEquals(listOf("Der Server brennt", "Alles gut"), fromText[0].lines)
+        assertEquals(listOf("Qualm im Rack", "Und keiner merkt es"), fromText[0].lines)
         assertTrue(fromText[0].fromModel)
         val indexed = """{"memes":[{"Nr":1,"text":"Ananas bleibt eine These"}]}"""
         val fromIndex = parseSuggestions(indexed, listOf(Candidate("cmm", 1, "upper")), "Ananas gehört nicht auf die Pizza")
@@ -176,7 +177,7 @@ class GemmaResponseTest {
             Rewrite(
                 "Ananas gehört einfach nicht auf die Pizza",
                 Candidate("cmm", 1, "upper"),
-                listOf("Ananas gehört auf jede Pizza"),
+                listOf("Ananas auf Pizza ist falsch"),
             ),
             Rewrite(
                 "Ich sollte den Bericht fertig machen, schaue aber dauernd aufs Handy",
@@ -186,7 +187,7 @@ class GemmaResponseTest {
             Rewrite(
                 "Der Server brennt und niemand merkt es",
                 Candidate("fine", 2, "upper"),
-                listOf("Der Server brennt", "Alles gut"),
+                listOf("Qualm im Rack", "Und keiner merkt es"),
             ),
         )
         assertEquals(5, cases.size)
@@ -249,9 +250,9 @@ class GemmaResponseTest {
 
     @Test
     fun splitsSlashSeparatedEntries() {
-        val raw = """{"fine":{"z1":"Der Server brennt / Alles gut"}}"""
+        val raw = """{"fine":{"z1":"Qualm im Rack / Und keiner merkt es"}}"""
         val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), "Der Server brennt und niemand merkt es").single()
-        assertEquals(listOf("Der Server brennt", "Alles gut"), out.lines)
+        assertEquals(listOf("Qualm im Rack", "Und keiner merkt es"), out.lines)
         assertTrue(out.fromModel)
     }
 
@@ -276,15 +277,141 @@ class GemmaResponseTest {
         assertTrue(schema.contains("\"z1\""))
         assertTrue(schema.contains("\"z2\""))
         assertTrue(schema.contains("minLength"))
+        assertTrue(schema.contains("maxLength"))
+        assertTrue(schema.contains("\"additionalProperties\":false"))
         assertTrue(schema.contains("\"required\""))
         assertTrue(schemaAvoidsCountConstraints(schema))
+    }
+
+    @Test
+    fun captionLanguageFollowsTheMessage() {
+        val german = "wer kommt heute abend mit ins kino"
+        val englishCard = """{"fine":{"z1":"Exam passed","z2":"No sweat"}}"""
+        val slipped = parseSuggestions(englishCard, listOf(Candidate("fine", 2, "upper")), german).single()
+        assertEquals("sprache", slipped.reason)
+        val monday = parseSuggestions(
+            """{"fine":{"z1":"Monday","z2":"Again"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            german,
+        ).single()
+        assertEquals("sprache", monday.reason)
+        val unknown = parseSuggestions(
+            """{"fine":{"z1":"Xyzqq","z2":"Plonk"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            german,
+        ).single()
+        assertEquals("sprache", unknown.reason)
+        val english = "I finally passed the exam"
+        val kept = parseSuggestions(englishCard, listOf(Candidate("fine", 2, "upper")), english).single()
+        assertTrue(kept.fromModel)
+        assertEquals(listOf("Exam passed", "No sweat"), kept.lines)
+        val germanCard = parseSuggestions(
+            """{"fine":{"z1":"Prüfung geschafft","z2":"Kein Stress"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            english,
+        ).single()
+        assertEquals("sprache", germanCard.reason)
+        val trap = parseSuggestions(
+            """{"ackbar":{"z1":"It's a trap!","z2":"Wir verlieren"}}""",
+            listOf(Candidate("ackbar", 2, "upper")),
+            german,
+        ).single()
+        assertTrue(trap.fromModel)
+        assertEquals("de", outputLanguage("ok", listOf("Wir gehen heute ins Kino")))
+        assertEquals("en", outputLanguage("ok", listOf("We are going to the cinema tonight")))
+        assertEquals("en", outputLanguage(english))
+        assertEquals("fr", outputLanguage("Nous allons au cinema avec vous"))
+    }
+
+    @Test
+    fun fixedLabelIsNotACopyAndOverlapRejectsALine() {
+        val message = "ihr werdet am ende alles verlieren"
+        val exit = Candidate(
+            "exit",
+            2,
+            "upper",
+            examples = listOf(listOf("Raus hier", "Ich"), listOf("Nie wieder", "Ich")),
+        )
+        assertEquals(setOf("ich"), fixedLabels(exit))
+        val labeled = parseSuggestions(
+            """{"exit":{"z1":"Weg jetzt","z2":"Ich"}}""",
+            listOf(exit),
+            message,
+        ).single()
+        assertTrue(labeled.fromModel)
+        assertEquals("", labeled.reason)
+        val copied = parseSuggestions(
+            """{"fine":{"z1":"Wer kommt heute Abend","z2":"mit ins Kino"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "wer kommt heute abend mit ins kino",
+        ).single()
+        assertFalse(copied.fromModel)
+        assertEquals("woertlich", copied.reason)
+        val short = parseSuggestions(
+            """{"cmm":{"z1":"ins Kino"}}""",
+            listOf(Candidate("cmm", 1, "upper")),
+            "wer kommt heute abend mit ins kino",
+        ).single()
+        assertTrue(short.fromModel)
+    }
+
+    @Test
+    fun followUpWaitsOnlyWhenNothingPassed() {
+        val good = Suggestion("fine", listOf("Qualm", "Ruhe"), true)
+        val bad = Suggestion("drake", listOf("x"), false, "sprache")
+        assertNull(planFollowUp(listOf(good, bad), """{"fine":{"z1":"Qualm","z2":"Ruhe"}}""", false))
+        val rejected = planFollowUp(
+            listOf(
+                Suggestion("fine", listOf("A"), false, "sprache"),
+                Suggestion("drake", listOf("B"), false, "fremd"),
+            ),
+            """{"fine":{"z1":"Exam passed"},"drake":{"z1":"Monday"}}""",
+            false,
+        )
+        assertEquals(false, rejected!!.withoutSchema)
+        assertEquals(listOf("fine", "drake"), rejected.templateIds)
+        val broken = planFollowUp(
+            listOf(
+                Suggestion("fine", listOf("A"), false, "fehlt"),
+                Suggestion("drake", listOf("B"), false, "fehlt"),
+            ),
+            """{"fine":{"z2":"No one around}}}""",
+            false,
+        )
+        assertEquals(true, broken!!.withoutSchema)
+        assertEquals(listOf("fine", "drake"), broken.templateIds)
+        assertNull(planFollowUp(listOf(bad), "x", true))
+        assertNull(planFollowUp(emptyList(), "x", false))
+    }
+
+    @Test
+    fun repairsTrailingBracesAndKeepsAnExamParaphrase() {
+        val raw = """{"fine":{"z1":"Keiner da","z2":"Die Kanne bleibt leer}}}"""
+        val fixed = repairModelJson(raw)
+        assertEquals("Keiner da", JSONObject(fixed).getJSONObject("fine").getString("z1"))
+        assertEquals("Die Kanne bleibt leer", JSONObject(fixed).getJSONObject("fine").getString("z2"))
+        val comma = repairModelJson("""{"cmm":{"z1":"Einen neuen Kaffee","}}""")
+        assertEquals("Einen neuen Kaffee", JSONObject(comma).getJSONObject("cmm").getString("z1"))
+        val valid = """{"fine":{"z1":{"nested":"x"}}}"""
+        assertEquals(valid, repairModelJson(valid))
+        val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), "wer hat den letzten kaffee getrunken").single()
+        assertEquals(listOf("Keiner da", "Die Kanne bleibt leer"), out.lines)
+        assertTrue(out.fromModel)
+        val exam = parseSuggestions(
+            """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
+            listOf(Candidate("fine", 1, "upper")),
+            "hab die prüfung bestanden",
+            similarity = { 0.02f },
+        ).single()
+        assertTrue(exam.fromModel)
+        assertTrue(carriesCoreStatement("hab die prüfung bestanden", exam.lines))
     }
 
     @Test
     fun capsWordsAndUppercasesUmlauts() {
         assertEquals("GRÖSSE STRASSE", stylize("größe straße", "upper"))
         val lines = fallbackLines("eins zwei drei vier fünf sechs sieben acht neun zehn", 1, "none")
-        assertEquals("eins zwei drei vier fünf sechs sieben acht", lines.single())
+        assertEquals("eins zwei drei vier fünf sechs sieben acht neun zehn", lines.single())
     }
 
     @Test
@@ -294,8 +421,8 @@ class GemmaResponseTest {
             Case("Ich komme später, aber ich bringe Kuchen", 2, "upper", listOf("ICH KOMME SPÄTER,", "ABER ICH BRINGE KUCHEN")),
             Case("Wir gehen ins Kino und danach essen wir", 2, "none", listOf("Wir gehen ins Kino", "und danach essen wir")),
             Case("Kommst du heute mit, weil das Wetter hält?", 2, "upper", listOf("KOMMST DU HEUTE MIT,", "WEIL DAS WETTER HÄLT?")),
-            Case("Kein Problem", 2, "upper", listOf("KEIN PROBLEM", "")),
-            Case("Hilfe", 2, "upper", listOf("HILFE", "")),
+            Case("Kein Problem", 2, "upper", listOf("KEIN", "PROBLEM")),
+            Case("Hilfe", 2, "upper", listOf("HILFE", "HILFE")),
             Case(
                 "Der Zug hat Verspätung und wir verpassen den Anschluss",
                 3,
@@ -320,13 +447,18 @@ class GemmaResponseTest {
             for (index in lines.indices) {
                 if (lines[index].isBlank()) continue
                 val lastContent = lines.drop(index + 1).all { it.isBlank() }
-                if (!lastContent) {
+                val alone = messageWords(lines[index]).size == 1
+                if (!lastContent && !alone) {
                     assertFalse(item.message, endsOnOpenFunctionWord(lines[index]))
                 }
             }
             val joined = lines.joinToString(" ") { it.trim() }.replace(Regex("\\s+"), " ").trim()
             val source = if (item.style == "upper") stylize(item.message, "upper") else item.message.trim()
-            assertEquals(item.message, source, joined)
+            if (messageWords(item.message).size >= item.boxes) {
+                assertEquals(item.message, source, joined)
+            } else {
+                assertTrue(item.message, lines.all { it.isNotBlank() })
+            }
         }
     }
 
@@ -391,13 +523,19 @@ class PromptBuilderTest {
         assertTrue(prompt.user.contains("abgelehnt 1 5"))
         assertTrue(prompt.user.contains("oben abgelehnt"))
         assertTrue(prompt.user.contains("Salat war gestern"))
-        assertTrue(prompt.user.contains("Kontext"))
+        assertTrue(prompt.user.contains("Context"))
         assertTrue(prompt.system.contains("JSON"))
-        assertTrue(prompt.system.contains("NICHT wörtlich"))
-        assertTrue(prompt.user.contains("Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um."))
-        assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"...\""))
-        assertTrue(prompt.system.contains("Sprache der Nachricht"))
+        assertTrue(prompt.system.contains("caption language matches the message"))
+        assertTrue(prompt.user.contains("Do not copy the message."))
+        assertTrue(prompt.user.contains("Write in German."))
+        assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"<deutsche Zeile>\""))
         assertFalse(prompt.system.contains("Wortreihenfolge"))
+        val english = buildPrompt("I finally passed the exam", briefs.take(1))
+        assertTrue(english.user.contains("Write in English."))
+        assertTrue(english.user.contains("<english line>"))
+        val fromContext = buildPrompt("ok", briefs.take(1), listOf("Wir gehen heute ins Kino"))
+        assertTrue(fromContext.user.contains("Write in German."))
+        assertTrue(fromContext.user.contains("<deutsche Zeile>"))
     }
 
     @Test
@@ -405,7 +543,7 @@ class PromptBuilderTest {
         val brief = Brief("drake", "Drake", 2, "Vergleich", listOf(listOf("oben", "unten")), roles = fieldRoles("drake", 2))
         val withContext = buildPrompt("Pizza", listOf(brief), listOf("Salat war gestern"))
         assertTrue(withContext.user.contains("Salat war gestern"))
-        assertTrue(withContext.user.contains("Kontext"))
+        assertTrue(withContext.user.contains("Context"))
         assertTrue(withContext.user.contains("oben abgelehnt, unten bevorzugt"))
         val briefs = (1..3).map { i ->
             Brief(
@@ -419,7 +557,7 @@ class PromptBuilderTest {
         val huge = List(40) { "wort ".repeat(80) }
         val tight = buildPrompt("hi", briefs, huge)
         assertTrue("tokens=${tight.approxTokens}", tight.approxTokens <= 1000)
-        assertTrue(tight.user.contains("Kontext"))
+        assertTrue(tight.user.contains("Context"))
         assertFalse(tight.user.contains("wort ".repeat(40)))
         assertTrue(tight.user.contains("id1"))
         assertFalse(tight.user.contains("id4"))

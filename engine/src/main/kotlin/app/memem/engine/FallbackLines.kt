@@ -114,6 +114,7 @@ private val SYNONYM_GROUPS = listOf(
     setOf("brenn", "feuer", "brand"),
     setOf("verpass", "verspaet", "verspät"),
     setOf("kino", "film"),
+    setOf("pruef", "prüfung", "bestanden", "geschafft", "klausur", "exam"),
 )
 
 private val AUXILIARIES = setOf(
@@ -127,13 +128,13 @@ private val AUXILIARIES = setOf(
     "sei", "seien", "gewesen",
 )
 
-/** Split the user's own words across the boxes without reordering or breaking a phrase. */
+/** Split the user's own words across the boxes. Never drop a word and never leave a field empty. */
 fun fallbackLines(message: String, boxCount: Int, style: String): List<String> {
     val count = boxCount.coerceAtLeast(1)
     val words = messageWords(message)
     if (words.isEmpty()) return List(count) { "" }
     return splitInOrder(words, count).map { chunk ->
-        capWords(stylize(chunk.joinToString(" "), style))
+        stylize(chunk.joinToString(" "), style)
     }
 }
 
@@ -228,13 +229,38 @@ fun normalizedWords(text: String): List<String> =
 fun splitInOrder(words: List<String>, parts: Int): List<List<String>> {
     if (parts <= 1) return listOf(words)
     if (words.isEmpty()) return List(parts) { emptyList() }
-    if (words.size == 1) return listOf(words) + List(parts - 1) { emptyList() }
-    if (words.size <= parts && canEndLine(words.first())) {
-        return listOf(listOf(words.first())) + splitInOrder(words.drop(1), parts - 1)
+    if (words.size < parts) return List(parts) { listOf(words[it % words.size]) }
+    val phrase = tryPhraseSplit(words, parts)
+    if (phrase != null && phrase.all { it.isNotEmpty() } && phrase.sumOf { it.size } == words.size) return phrase
+    return evenSplit(words, parts)
+}
+
+private fun tryPhraseSplit(words: List<String>, parts: Int): List<List<String>>? {
+    if (parts <= 1) return listOf(words)
+    if (words.size < parts) return null
+    if (words.size == parts) {
+        if (words.dropLast(1).all { canEndLine(it) }) return words.map { listOf(it) }
+        return null
     }
     val goal = (words.size / parts).coerceIn(1, words.size - 1)
-    val cut = bestLegalCut(words, goal) ?: return listOf(words) + List(parts - 1) { emptyList() }
-    return listOf(words.subList(0, cut)) + splitInOrder(words.subList(cut, words.size), parts - 1)
+    val cut = bestLegalCut(words, goal) ?: return null
+    val tail = tryPhraseSplit(words.subList(cut, words.size), parts - 1) ?: return null
+    val head = words.subList(0, cut)
+    if (head.isEmpty() || tail.any { it.isEmpty() }) return null
+    return listOf(head) + tail
+}
+
+private fun evenSplit(words: List<String>, parts: Int): List<List<String>> {
+    val base = words.size / parts
+    val extra = words.size % parts
+    val out = ArrayList<List<String>>(parts)
+    var index = 0
+    for (part in 0 until parts) {
+        val count = base + if (part < extra) 1 else 0
+        out += words.subList(index, index + count)
+        index += count
+    }
+    return out
 }
 
 private fun bestLegalCut(words: List<String>, target: Int): Int? {

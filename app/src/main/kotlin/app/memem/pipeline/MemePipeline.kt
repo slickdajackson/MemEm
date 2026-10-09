@@ -12,11 +12,12 @@ import app.memem.engine.fallbackLines
 import app.memem.engine.memeBrief
 import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
+import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
+import app.memem.engine.planFollowUp
 import app.memem.engine.retryHint
 import app.memem.engine.searchTemplates
 import app.memem.engine.searchText
-import app.memem.engine.shouldRetry
 import app.memem.llm.GenerateOutcome
 import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
@@ -79,10 +80,11 @@ class MemePipeline(context: Context) {
             fromModel = false,
         )
         onPreview(literal)
+        val lang = outputLanguage(message, context)
         val gemmaStarted = System.nanoTime()
         val outcome = generate(message, picked, context)
         val gemmaMs = ms(gemmaStarted)
-        val candidates = picked.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examples) }
+        val candidates = picked.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
         val score = similarity(message)
         val suggestions = if (candidates.isEmpty()) {
             mutableListOf()
@@ -94,25 +96,34 @@ class MemePipeline(context: Context) {
                 wanted = 3,
                 failure = outcome.error ?: "keine antwort",
                 similarity = score,
+                language = lang,
             ).toMutableList()
         }
+        val plan = planFollowUp(suggestions, outcome.text.orEmpty(), alreadyFollowedUp = false)
         val retries = ArrayList<String>()
-        for (index in suggestions.indices) {
-            val item = suggestions[index]
-            if (!shouldRetry(item)) continue
-            val template = picked.firstOrNull { it.id == item.templateId } ?: continue
-            val again = generate(message, listOf(template), context, retryHint(item.reason))
-            val one = parseSuggestions(
+        if (plan != null) {
+            val subset = picked.filter { it.id in plan.templateIds }
+            val reasons = subset.map { template ->
+                suggestions.firstOrNull { it.templateId == template.id }?.reason.orEmpty()
+            }
+            val again = generate(message, subset, context, retryHint(reasons, lang), withSchema = !plan.withoutSchema)
+            val updated = parseSuggestions(
                 again.text.orEmpty(),
-                listOf(memeCandidate(template.id, template.boxes, template.style, template.name, template.examples)),
+                subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
                 message,
-                wanted = 1,
+                wanted = subset.size.coerceAtLeast(1),
                 failure = again.error ?: "keine antwort",
                 similarity = score,
-            ).firstOrNull() ?: continue
-            suggestions[index] = one
-            val mark = if (one.fromModel) "KI" else one.reason.ifBlank { "woertlich" }
-            retries += "${item.templateId}:${item.reason}->$mark"
+                language = lang,
+            )
+            for (one in updated) {
+                val index = suggestions.indexOfFirst { it.templateId == one.templateId }
+                if (index < 0) continue
+                val current = suggestions[index]
+                if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
+                val mark = if (suggestions[index].fromModel) "KI" else suggestions[index].reason.ifBlank { "woertlich" }
+                retries += "${one.templateId}:${current.reason}->$mark"
+            }
         }
         val renderStarted = System.nanoTime()
         val rendered = suggestions.mapNotNull { suggestion ->
@@ -134,6 +145,12 @@ class MemePipeline(context: Context) {
                 "gemmaMs" to gemmaMs,
                 "gemmaLoaded" to outcome.loaded,
                 "gemmaError" to outcome.error,
+                "lang" to lang,
+                "followUp" to when {
+                    plan == null -> ""
+                    plan.withoutSchema -> "noschema"
+                    else -> "schema"
+                },
                 "raw" to outcome.text?.take(500),
                 "retries" to retries.joinToString(" | "),
                 "reasons" to suggestions.joinToString(" | ") { item ->
@@ -173,6 +190,7 @@ class MemePipeline(context: Context) {
         templates: List<MemeTemplate>,
         context: List<String>,
         hint: String = "",
+        withSchema: Boolean = true,
     ): GenerateOutcome {
         if (templates.isEmpty()) return GenerateOutcome(null, "keine vorlage", remote.modelReady, false)
         val model = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
@@ -185,12 +203,20 @@ class MemePipeline(context: Context) {
             embed.takeIf { it.isFile && assets.space.startsWith("litert") }?.absolutePath,
         )
         if (loadError != null) return GenerateOutcome(null, loadError, false, false)
+        val lang = outputLanguage(message, context)
         val chosen = templates.take(3)
         val briefs = chosen.map { template ->
-            memeBrief(template.id, template.name, template.boxes, template.meaning, template.examples)
+            memeBrief(
+                template.id,
+                template.name,
+                template.boxes,
+                template.meaning,
+                template.examplesFor(lang),
+                lang,
+            )
         }
         val prompt = buildPrompt(message, briefs, context, hint)
-        val schema = memeSchema(chosen.map { it.id to it.boxes })
+        val schema = if (withSchema) memeSchema(chosen.map { it.id to it.boxes }) else null
         return remote.generate(prompt.system, prompt.user, schema)
     }
 

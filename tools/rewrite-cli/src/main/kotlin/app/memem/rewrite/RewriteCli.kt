@@ -12,10 +12,11 @@ import app.memem.engine.memeBrief
 import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.parseCatalog
+import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
+import app.memem.engine.planFollowUp
 import app.memem.engine.retryHint
 import app.memem.engine.searchTemplates
-import app.memem.engine.shouldRetry
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.ConversationConfig
@@ -36,6 +37,7 @@ import java.nio.ByteOrder
 
 /**
  * Same rewrite path as the app: search, one Gemma call, the shared parser and the same acceptance rule.
+ * A second call happens only when every card failed, and it covers those templates together.
  * Embedding on the JVM is optional. Without it the hash index in the repo is used.
  */
 fun main(args: Array<String>) {
@@ -76,8 +78,9 @@ fun main(args: Array<String>) {
             val started = System.nanoTime()
             val picked = search.top(sentence, 8).take(3).mapNotNull { byId[it] }
             val chosen = if (picked.size >= 3) picked else search.fallback(sentence).take(3)
+            val lang = outputLanguage(sentence)
             val briefs = chosen.map { entry ->
-                memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examples)
+                memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examplesFor(lang), lang)
             }
             val prompt = buildPrompt(sentence, briefs)
             val schema = memeSchema(chosen.map { it.id to it.boxes })
@@ -85,39 +88,46 @@ fun main(args: Array<String>) {
             val score = search.scorer(sentence)
             val suggestions = parseSuggestions(
                 raw.text.orEmpty(),
-                chosen.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examples) },
+                chosen.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
                 sentence,
                 wanted = 3,
                 failure = raw.error ?: "keine antwort",
                 similarity = score,
+                language = lang,
             ).toMutableList()
             val rawParts = ArrayList<String>()
             raw.text?.let { rawParts += it }
-            for (index in suggestions.indices) {
-                val item = suggestions[index]
-                if (!shouldRetry(item)) continue
-                val entry = chosen.firstOrNull { it.id == item.templateId } ?: continue
+            val plan = planFollowUp(suggestions, raw.text.orEmpty(), alreadyFollowedUp = false)
+            if (plan != null) {
+                val subset = chosen.filter { it.id in plan.templateIds }
+                val reasons = subset.map { entry ->
+                    suggestions.firstOrNull { it.templateId == entry.id }?.reason.orEmpty()
+                }
                 val againPrompt = buildPrompt(
                     sentence,
-                    listOf(memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examples)),
-                    hint = retryHint(item.reason),
+                    subset.map { entry ->
+                        memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examplesFor(lang), lang)
+                    },
+                    hint = retryHint(reasons, lang),
                 )
-                val again = generate(
-                    engine,
-                    againPrompt.system,
-                    againPrompt.user,
-                    memeSchema(listOf(entry.id to entry.boxes)),
-                )
+                val againSchema = if (plan.withoutSchema) null else memeSchema(subset.map { it.id to it.boxes })
+                val again = generate(engine, againPrompt.system, againPrompt.user, againSchema)
                 again.text?.let { rawParts += it }
-                val one = parseSuggestions(
+                val updated = parseSuggestions(
                     again.text.orEmpty(),
-                    listOf(memeCandidate(entry.id, entry.boxes, entry.style, entry.name, entry.examples)),
+                    subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
                     sentence,
-                    wanted = 1,
-                    failure = again.error ?: item.reason,
+                    wanted = subset.size.coerceAtLeast(1),
+                    failure = again.error ?: "keine antwort",
                     similarity = score,
-                ).firstOrNull() ?: continue
-                suggestions[index] = one
+                    language = lang,
+                )
+                for (one in updated) {
+                    val index = suggestions.indexOfFirst { it.templateId == one.templateId }
+                    if (index < 0) continue
+                    val current = suggestions[index]
+                    if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
+                }
             }
             val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
             val latency = (System.nanoTime() - started) / 1_000_000
@@ -141,10 +151,10 @@ fun main(args: Array<String>) {
 
 private data class ModelText(val text: String?, val error: String?)
 
-private fun generate(engine: Engine, system: String, user: String, schema: String): ModelText {
+private fun generate(engine: Engine, system: String, user: String, schema: String?): ModelText {
     val first = generateOnce(engine, system, user, schema)
     if (first.text != null) return first
-    if (first.error == "timeout") return first
+    if (first.error == "timeout" || schema.isNullOrBlank()) return first
     val second = generateOnce(engine, system, user, null)
     if (second.text != null) return second
     val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ")

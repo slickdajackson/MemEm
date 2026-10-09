@@ -128,7 +128,7 @@ class RemoteLlmEngine(context: Context) {
     suspend fun generate(system: String, user: String, schema: String?): GenerateOutcome {
         val first = generateOnce(system, user, schema)
         if (first.text != null) return first.copy(loaded = modelReady)
-        if (first.error == "timeout") return first.copy(loaded = modelReady)
+        if (first.error == "timeout" || schema.isNullOrBlank()) return first.copy(loaded = modelReady)
         val second = generateOnce(system, user, null)
         val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ").ifBlank { null }
         return second.copy(error = if (second.text != null) first.error else error, loaded = modelReady)

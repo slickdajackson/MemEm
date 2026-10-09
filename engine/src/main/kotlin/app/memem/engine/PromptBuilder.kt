@@ -17,19 +17,19 @@ data class BuiltPrompt(val system: String, val user: String) {
 const val GEMMA_MAX_OUTPUT_TOKENS = 160
 
 private const val SYSTEM =
-    "Du schreibst Chat-Memes. Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um. " +
-        "Kopiere die Nachricht nicht und kopiere keine Beispielzeile. " +
-        "Schreibe sie für jede genannte Vorlage so um, wie man sie genau für dieses Meme sagen würde. " +
-        "Die Kernaussage bleibt, ohne neue Fakten. Die Ausgabesprache ist die Sprache der Nachricht. " +
-        "Englisch nur, wenn die Vorlage eine feste englische Phrase braucht, etwa It's a trap! " +
-        "Kurz und pointiert. Pro Vorlage genau die Felder z1, z2 und so weiter, eine Zeile je Feld, jede Zeile anders und nicht leer. " +
-        "Keine Zeile endet auf Artikel, Präposition, Verschmelzung (am, im, zum) oder Konjunktion. " +
-        "Antworte nur als JSON. Schlüssel sind die Vorlagen-Ids, Werte sind Objekte mit z1, z2, ..."
+    "You write chat memes. Do not copy the message. Rewrite it in the style of the examples. " +
+        "Keep the core meaning and do not add facts. The caption language matches the message. " +
+        "A fixed meme phrase may stay in its original language, such as It's a trap!. " +
+        "Short and pointed. For each template, fields z1, z2, and so on, one line per field, each line different and not empty. " +
+        "No line ends on an article, a preposition, or a conjunction. " +
+        "Reply with JSON only. Keys are the template ids. Values are objects with z1, z2, ..."
 
-fun retryHint(reason: String): String {
-    val why = reason.ifBlank { "unbrauchbar" }
-    return "Die letzte Fassung dieser Vorlage war unbrauchbar ($why). " +
-        "Schreibe nur diese eine Vorlage neu, in der Sprache der Nachricht, ohne eine Beispielzeile zu kopieren."
+fun retryHint(reason: String, language: String = ""): String = retryHint(listOf(reason), language)
+
+fun retryHint(reasons: List<String>, language: String = ""): String {
+    val why = reasons.map { it.ifBlank { "unusable" } }.distinct().joinToString(", ")
+    return "The last lines were rejected ($why). Write in ${languageName(language.ifBlank { "?" })}. " +
+        "Do not copy the message or an example line."
 }
 
 private const val TOKEN_BUDGET = 1000
@@ -48,30 +48,37 @@ fun buildPrompt(
     var meaningLimit = 180
     var lineLimit = 72
     var ctx = context.map { clip(it, 120) }.filter { it.isNotEmpty() }.take(4)
-    var user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint)
+    val language = outputLanguage(message, ctx)
+    var user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     if (over(user) && meaningLimit > 100) {
         meaningLimit = 100
-        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint)
+        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     }
     if (over(user) && exampleTake > 3) {
         exampleTake = 3
-        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint)
+        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     }
     if (over(user) && ctx.isNotEmpty()) {
         ctx = emptyList()
-        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint)
+        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     }
     if (over(user)) {
         meaningLimit = 60
         lineLimit = 48
         exampleTake = 3
-        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint)
+        user = renderUser(message, selected, exampleTake, meaningLimit, lineLimit, ctx, hint, language)
     }
     return BuiltPrompt(SYSTEM, user)
 }
 
-fun memeBrief(id: String, name: String, boxes: Int, meaning: String, examples: List<List<String>>): Brief =
-    Brief(id, name, boxes, meaning, examples.take(5), fieldRoles(id, boxes))
+fun memeBrief(
+    id: String,
+    name: String,
+    boxes: Int,
+    meaning: String,
+    examples: List<List<String>>,
+    language: String = "de",
+): Brief = Brief(id, name, boxes, meaning, examples.take(5), fieldRoles(id, boxes, language))
 
 fun memeCandidate(id: String, boxes: Int, style: String, name: String, examples: List<List<String>>): Candidate =
     Candidate(
@@ -83,16 +90,37 @@ fun memeCandidate(id: String, boxes: Int, style: String, name: String, examples:
         examples = examples.take(5),
     )
 
-fun fieldRoles(id: String, boxes: Int): String {
+fun fieldRoles(id: String, boxes: Int, language: String = "de"): String {
+    val german = language == "de"
     val role = when (id) {
-        "drake" -> "oben abgelehnt, unten bevorzugt"
-        "cmm" -> "eine steile These"
-        "fine" -> "oben die Lage, unten die ruhige Reaktion, oft Alles gut"
-        "db" -> "links das Vernachlässigte, Mitte die Person, rechts die Ablenkung"
-        "ds" -> "zwei schwere Optionen und die Reaktion"
-        else -> "Rollen wie in den Beispielen"
+        "drake" -> if (german) "oben abgelehnt, unten bevorzugt" else "top rejected, bottom preferred"
+        "cmm" -> if (german) "eine steile These" else "one bold claim"
+        "fine" -> if (german) "oben die Lage, unten die ruhige Reaktion, oft Alles gut" else "top the situation, bottom the calm reaction, often this is fine"
+        "db" -> if (german) "links das Vernachlässigte, Mitte die Person, rechts die Ablenkung" else "left the neglected, middle the person, right the distraction"
+        "ds" -> if (german) "zwei schwere Optionen und die Reaktion" else "two hard options and the reaction"
+        else -> if (german) "Rollen wie in den Beispielen" else "roles as in the examples"
     }
-    return "$boxes Felder: $role"
+    val label = if (german) "Felder" else "fields"
+    return "$boxes $label: $role"
+}
+
+fun examplesForLanguage(
+    german: List<List<String>>,
+    english: List<List<String>>,
+    language: String,
+): List<List<String>> = when (language) {
+    "de" -> german.ifEmpty { english }
+    "en" -> english.ifEmpty { german }
+    else -> english.ifEmpty { german }
+}
+
+fun selectExampleGroups(groups: List<List<String>>, boxes: Int): List<List<String>> {
+    val banned = listOf("biden", "obama", "hitler", "imgflip", "upvote", "trump")
+    return groups.filter { lines ->
+        lines.size == boxes &&
+            lines.any { it.isNotBlank() } &&
+            banned.none { word -> lines.joinToString(" ").lowercase().contains(word) }
+    }.take(3)
 }
 
 private fun over(user: String) = SYSTEM.length + user.length > CHAR_BUDGET
@@ -105,18 +133,19 @@ private fun renderUser(
     lineLimit: Int,
     context: List<String>,
     hint: String,
+    language: String,
 ): String {
     val body = StringBuilder()
-    body.append("Nachricht: ").append(message.trim()).append('\n')
+    body.append("Message: ").append(message.trim()).append('\n')
     if (context.isNotEmpty()) {
-        body.append("Kontext, letzte Nachrichten, nur zum Verstehen, nicht übernehmen:\n")
+        body.append("Context, last messages, for understanding only, do not copy them:\n")
         context.forEach { line -> body.append("- ").append(line).append('\n') }
     }
-    body.append("Vorlagen:\n")
+    body.append("Templates:\n")
     candidates.forEachIndexed { index, brief ->
         body.append(index + 1).append(". ").append(brief.id)
         body.append(" | ").append(brief.name)
-        val roles = brief.roles.ifBlank { fieldRoles(brief.id, brief.boxes) }
+        val roles = brief.roles.ifBlank { fieldRoles(brief.id, brief.boxes, language) }
         body.append(" | ").append(roles)
         val meaning = clipSentence(brief.meaning, meaningLimit)
         if (meaning.isNotBlank()) body.append(" | ").append(meaning)
@@ -124,22 +153,30 @@ private fun renderUser(
         val examples = brief.examples.take(exampleTake).filter { lines -> lines.any { it.isNotBlank() } }
         examples.forEach { lines ->
             body.append("- ")
-            body.append(lines.joinToString(" / ") { clip(it, lineLimit).ifBlank { "…" } })
+            body.append(lines.joinToString(" / ") { clip(it, lineLimit).ifBlank { placeholder(language) } })
             body.append('\n')
         }
     }
-    body.append("Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um.\n")
-    body.append("Ausgabesprache ist die Sprache der Nachricht. Kopiere keine Beispielzeile.\n")
+    body.append("Template names may be English. The caption language still follows the instruction below.\n")
+    body.append("Do not copy the message. Rewrite it in the style of the examples.\n")
     if (hint.isNotBlank()) body.append(hint.trim()).append('\n')
-    body.append("Antworte exakt in dieser Form, mit den echten Ids und z1, z2, ...:\n")
-    body.append(exampleJson(candidates))
+    body.append("Write in ").append(languageName(language)).append(".\n")
+    body.append("Reply in exactly this shape, with the real ids and z1, z2, ...:\n")
+    body.append(exampleJson(candidates, language))
     body.append('\n')
     return body.toString()
 }
 
-private fun exampleJson(candidates: List<Brief>): String {
+private fun placeholder(language: String): String = when (language) {
+    "de" -> "<deutsche Zeile>"
+    "en" -> "<english line>"
+    else -> "<line>"
+}
+
+private fun exampleJson(candidates: List<Brief>, language: String): String {
+    val slot = placeholder(language)
     val body = candidates.joinToString(",") { brief ->
-        val fields = (1..brief.boxes.coerceAtLeast(1)).joinToString(",") { number -> "\"z$number\":\"...\"" }
+        val fields = (1..brief.boxes.coerceAtLeast(1)).joinToString(",") { number -> "\"z$number\":\"$slot\"" }
         "\"${brief.id}\":{$fields}"
     }
     return "{$body}"

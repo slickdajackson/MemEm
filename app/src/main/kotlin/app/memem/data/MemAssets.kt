@@ -5,7 +5,9 @@ import app.memem.engine.FieldSpec
 import app.memem.engine.IndexPoint
 import app.memem.engine.Kind
 import app.memem.engine.MemIndex
+import app.memem.engine.examplesForLanguage
 import app.memem.engine.halfToFloat
+import app.memem.engine.selectExampleGroups
 import org.json.JSONObject
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -22,9 +24,12 @@ data class MemeTemplate(
     val examples: List<List<String>>,
     val situationsDe: List<String>,
     val defaultLines: List<String>,
+    val examplesEn: List<List<String>> = emptyList(),
 ) {
     val style: String get() = fields.firstOrNull()?.style ?: "upper"
     val meaning: String get() = meaningDe.ifBlank { meaningEn }
+
+    fun examplesFor(language: String): List<List<String>> = examplesForLanguage(examples, examplesEn, language)
 }
 
 class MemAssets(context: Context) {
@@ -71,9 +76,13 @@ class MemAssets(context: Context) {
                 fields = fields,
                 meaningDe = obj.optString("meaningDe"),
                 meaningEn = obj.optString("meaningEn"),
-                examples = captionExamples[obj.getString("id")] ?: readLines(obj.optJSONArray("examples")),
+                examples = captionExamples[obj.getString("id")] ?: emptyList(),
                 situationsDe = readStrings(obj.optJSONArray("situationsDe")),
                 defaultLines = readStrings(obj.optJSONArray("defaultLines")),
+                examplesEn = selectExampleGroups(
+                    readLines(obj.optJSONArray("examples")),
+                    obj.optInt("boxes", fields.size),
+                ),
             )
             loaded[template.id] = template
         }
