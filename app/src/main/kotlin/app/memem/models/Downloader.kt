@@ -67,7 +67,7 @@ class Downloader {
         conn.instanceFollowRedirects = true
         conn.connectTimeout = 30_000
         conn.readTimeout = 120_000
-        conn.setRequestProperty("User-Agent", "MemEm/0.1.5")
+        conn.setRequestProperty("User-Agent", "MemEm/0.1.6")
         if (offset > 0) conn.setRequestProperty("Range", "bytes=$offset-")
         conn.connect()
         return conn

@@ -37,30 +37,35 @@ fun parseSuggestions(
         val id = item.first
         val candidate = byId[id] ?: continue
         if (!used.add(id)) continue
-        out.add(Suggestion(id, fitLines(item.second, candidate, message), fromModel = true))
+        val resolved = resolveLines(item.second, candidate, message)
+        out.add(Suggestion(id, resolved.lines, fromModel = resolved.fromModel))
     }
     for (candidate in candidates) {
         if (out.size >= wanted) break
         if (!used.add(candidate.id)) continue
-        val lines = if (candidate.example.any { it.isNotBlank() }) {
-            fitLines(candidate.example, candidate, message)
-        } else {
-            fallbackLines(message, candidate.boxes, candidate.style)
-        }
-        out.add(Suggestion(candidate.id, lines, fromModel = false))
+        out.add(Suggestion(candidate.id, fallbackLines(message, candidate.boxes, candidate.style), fromModel = false))
     }
     return out
 }
 
-fun fitLines(rawLines: List<String>, candidate: Candidate, message: String): List<String> {
-    val cleaned = rawLines.map { cleanLine(it) }.toMutableList()
-    while (cleaned.size < candidate.boxes) cleaned.add("")
-    val trimmed = cleaned.take(candidate.boxes)
-    if (trimmed.all { it.isBlank() } || !preservesMessageOrder(message, trimmed)) {
-        return fallbackLines(message, candidate.boxes, candidate.style)
+data class ResolvedLines(val lines: List<String>, val fromModel: Boolean)
+
+/**
+ * Keeps a meme-shaped rewrite when it still carries the message.
+ * Empty, identical, or unrelated lines fall back to the literal phrase split.
+ */
+fun resolveLines(rawLines: List<String>, candidate: Candidate, message: String): ResolvedLines {
+    val cleaned = rawLines.map { cleanLine(it) }
+    val sized = (cleaned + List(candidate.boxes) { "" }).take(candidate.boxes)
+    val repaired = repairPhraseEndings(sized)
+    if (repaired != null && usableRewrite(message, repaired, candidate.boxes)) {
+        return ResolvedLines(repaired, fromModel = true)
     }
-    return trimmed
+    return ResolvedLines(fallbackLines(message, candidate.boxes, candidate.style), fromModel = false)
 }
+
+fun fitLines(rawLines: List<String>, candidate: Candidate, message: String): List<String> =
+    resolveLines(rawLines, candidate, message).lines
 
 fun memeSchema(ids: List<String>): String {
     val enums = JSONArray()

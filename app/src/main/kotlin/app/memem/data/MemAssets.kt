@@ -38,6 +38,7 @@ class MemAssets(context: Context) {
 
     init {
         val catalog = JSONObject(app.assets.open("catalog.json").bufferedReader().readText())
+        val captionExamples = loadCaptionExamples()
         val list = catalog.getJSONArray("templates")
         val loaded = LinkedHashMap<String, MemeTemplate>(list.length())
         for (i in 0 until list.length()) {
@@ -70,7 +71,7 @@ class MemAssets(context: Context) {
                 fields = fields,
                 meaningDe = obj.optString("meaningDe"),
                 meaningEn = obj.optString("meaningEn"),
-                examples = readLines(obj.optJSONArray("examples")),
+                examples = captionExamples[obj.getString("id")] ?: readLines(obj.optJSONArray("examples")),
                 situationsDe = readStrings(obj.optJSONArray("situationsDe")),
                 defaultLines = readStrings(obj.optJSONArray("defaultLines")),
             )
@@ -137,6 +138,23 @@ class MemAssets(context: Context) {
         if (array == null) return emptyList()
         return buildList {
             for (i in 0 until array.length()) add(array.optString(i))
+        }
+    }
+
+    private fun loadCaptionExamples(): Map<String, List<List<String>>> {
+        return try {
+            val root = JSONObject(app.assets.open("caption-examples.json").bufferedReader().readText())
+            buildMap {
+                val keys = root.keys()
+                while (keys.hasNext()) {
+                    val id = keys.next()
+                    val groups = root.optJSONArray(id) ?: continue
+                    val lines = readLines(groups).filter { group -> group.any { it.isNotBlank() } }.take(5)
+                    if (lines.isNotEmpty()) put(id, lines)
+                }
+            }
+        } catch (_: Exception) {
+            emptyMap()
         }
     }
 

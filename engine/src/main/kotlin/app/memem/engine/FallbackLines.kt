@@ -102,6 +102,20 @@ private val TIME_NOUNS = setOf(
     "august", "september", "oktober", "november", "dezember",
 )
 
+private val SYNONYM_GROUPS = listOf(
+    setOf("verlier", "verlor", "niederlag", "pleite", "scheiter"),
+    setOf("fertig", "erledig", "geschaff"),
+    setOf("problem", "aerger", "ärger", "schwier"),
+    setOf("lieber", "bevorzug"),
+    setOf("meeting", "besprech", "termin"),
+    setOf("handy", "telefon"),
+    setOf("bericht", "report"),
+    setOf("server", "rechner"),
+    setOf("brenn", "feuer", "brand"),
+    setOf("verpass", "verspaet", "verspät"),
+    setOf("kino", "film"),
+)
+
 private val AUXILIARIES = setOf(
     "habe", "hast", "hat", "haben", "habt",
     "hatte", "hattest", "hatten", "hattet",
@@ -142,6 +156,70 @@ fun preservesMessageOrder(message: String, lines: List<String>): Boolean {
 fun endsOnOpenFunctionWord(line: String): Boolean {
     val last = messageWords(line).lastOrNull() ?: return false
     return !canEndLine(last)
+}
+
+/**
+ * A rewrite is usable when it still carries the message: at least one supporting content word
+ * or a synonym of one. Word order may change. An empty message has no core word to miss.
+ */
+fun carriesCoreStatement(message: String, lines: List<String>): Boolean {
+    val needed = coreWords(message)
+    if (needed.isEmpty()) return lines.any { it.isNotBlank() }
+    val hay = normalizedWords(lines.joinToString(" "))
+    return needed.any { word -> hay.any { related(word, it) } }
+}
+
+fun coreWords(text: String): List<String> =
+    normalizedWords(text).filter { word ->
+        word.length >= 3 && word !in FUNCTION_WORDS && word !in DANGLING_ENDINGS && word !in AUXILIARIES
+    }
+
+/** True when [line] ends on a function word. The last line of a caption may end on a pronoun. */
+fun phraseEndingBroken(line: String, isFinal: Boolean): Boolean {
+    val last = messageWords(line).lastOrNull() ?: return false
+    if (endsWithPunct(last)) return false
+    val norm = normalizeWord(last)
+    if (norm !in DANGLING_ENDINGS) return false
+    return !(isFinal && norm in PERSONAL_PRONOUNS)
+}
+
+/**
+ * Moves a dangling article, preposition or conjunction onto the next line, or pulls the next word up.
+ * Returns null when a line would have to stay empty or still end inside a phrase.
+ */
+fun repairPhraseEndings(lines: List<String>): List<String>? {
+    if (lines.isEmpty()) return emptyList()
+    val buckets = lines.map { messageWords(it).toMutableList() }.toMutableList()
+    for (index in 0 until buckets.lastIndex) {
+        while (buckets[index].size > 1 && !canEndLine(buckets[index].last())) {
+            buckets[index + 1].add(0, buckets[index].removeAt(buckets[index].lastIndex))
+        }
+        var guard = 0
+        while (
+            buckets[index].isNotEmpty() &&
+            !canEndLine(buckets[index].last()) &&
+            buckets[index + 1].size > 1 &&
+            guard < 8
+        ) {
+            buckets[index].add(buckets[index + 1].removeAt(0))
+            guard += 1
+        }
+        if (buckets[index].isEmpty() || !canEndLine(buckets[index].last())) return null
+    }
+    if (buckets.last().isEmpty() || phraseEndingBroken(buckets.last().joinToString(" "), isFinal = true)) {
+        return null
+    }
+    return buckets.map { it.joinToString(" ") }
+}
+
+fun usableRewrite(message: String, lines: List<String>, boxes: Int): Boolean {
+    if (lines.size != boxes) return false
+    if (lines.any { it.isBlank() }) return false
+    if (lines.any { messageWords(it).size > 8 || it.length > 80 }) return false
+    val keys = lines.map { it.trim().replace(Regex("\\s+"), " ").lowercase(Locale.ROOT) }
+    if (keys.distinct().size != keys.size) return false
+    if (lines.indices.any { index -> phraseEndingBroken(lines[index], index == lines.lastIndex) }) return false
+    return carriesCoreStatement(message, lines)
 }
 
 fun messageWords(text: String): List<String> =
@@ -235,6 +313,19 @@ private fun endsWithPunct(word: String): Boolean {
 
 private fun normalizeWord(raw: String): String =
     raw.lowercase(Locale.ROOT).replace("ß", "ss").replace(Regex("[^\\p{L}\\p{N}]"), "")
+
+private fun related(left: String, right: String): Boolean {
+    if (left == right) return true
+    if (left.length >= 4 && right.startsWith(left)) return true
+    if (right.length >= 4 && left.startsWith(right)) return true
+    val group = SYNONYM_GROUPS.firstOrNull { synonyms -> synonyms.any { stemHits(left, it) } } ?: return false
+    return group.any { stemHits(right, it) }
+}
+
+private fun stemHits(word: String, stem: String): Boolean {
+    if (word.startsWith(stem)) return true
+    return stem.startsWith(word) && word.length >= 4
+}
 
 fun capWords(line: String, maxWords: Int = 8, maxChars: Int = 80): String {
     val words = line.trim().split(Regex("\\s+")).filter { it.isNotBlank() }.take(maxWords)

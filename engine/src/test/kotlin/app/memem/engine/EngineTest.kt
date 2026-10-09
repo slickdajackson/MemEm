@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -87,7 +88,7 @@ class GemmaResponseTest {
         val out = parseSuggestions(raw, candidates, "heute noch fertig")
         assertEquals(3, out.size)
         assertEquals(listOf("HEUTE", "NOCH", "FERTIG"), out[0].lines)
-        assertTrue(out[0].fromModel)
+        assertFalse(out[0].fromModel)
         assertEquals("b", out[1].templateId)
         assertEquals(listOf("HEUTE NOCH", "FERTIG"), out[1].lines)
         assertEquals("c", out[2].templateId)
@@ -101,7 +102,7 @@ class GemmaResponseTest {
         val out = parseSuggestions(raw, candidates, message)
         assertEquals("b", out[0].templateId)
         assertEquals(listOf("HALLO WELT DAS IST", "EIN LANGER SATZ MIT VIELEN WORTEN EXTRA"), out[0].lines)
-        assertTrue(preservesMessageOrder(message, out[0].lines))
+        assertTrue(carriesCoreStatement(message, out[0].lines))
         assertEquals(3, out.size)
         assertFalse(out.map { it.templateId }.contains("nope"))
     }
@@ -112,15 +113,80 @@ class GemmaResponseTest {
         val message = "ihr werdet am ende alles verlieren"
         val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
         assertEquals(listOf("Ihr werdet am Ende", "alles verlieren"), out[0].lines)
-        assertTrue(preservesMessageOrder(message, out[0].lines))
+        assertTrue(out[0].fromModel)
+        assertTrue(carriesCoreStatement(message, out[0].lines))
     }
 
     @Test
-    fun interleavedGemmaLinesFallBackToTheLiteralSentence() {
-        val raw = """{"memes":[{"template":"b","lines":["IHR AM ALLES","WERDET ENDE VERLIEREN"]}]}"""
+    fun unrelatedGemmaLinesFallBackToTheLiteralSentence() {
+        val raw = """{"memes":[{"template":"b","lines":["Pizza ist da","Hunger"]}]}"""
         val message = "ihr werdet am ende alles verlieren"
         val out = parseSuggestions(raw, listOf(Candidate("b", 2, "upper")), message)
         assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out[0].lines)
+        assertFalse(out[0].fromModel)
+    }
+
+    @Test
+    fun fiveMessagesAreRewrittenForTheTemplate() {
+        val cases = listOf(
+            Rewrite(
+                "ihr werdet am ende alles verlieren",
+                Candidate("fine", 2, "upper"),
+                listOf("Sichere Niederlage", "Kein Grund zur Panik"),
+            ),
+            Rewrite(
+                "Meetings am Freitag sind mir lieber als welche heute",
+                Candidate("drake", 2, "upper"),
+                listOf("Meeting heute", "Meeting am Freitag"),
+            ),
+            Rewrite(
+                "Ananas gehört einfach nicht auf die Pizza",
+                Candidate("cmm", 1, "upper"),
+                listOf("Ananas gehört auf jede Pizza"),
+            ),
+            Rewrite(
+                "Ich sollte den Bericht fertig machen, schaue aber dauernd aufs Handy",
+                Candidate("db", 3, "upper"),
+                listOf("der Bericht", "mein Fokus", "das Handy"),
+            ),
+            Rewrite(
+                "Der Server brennt und niemand merkt es",
+                Candidate("fine", 2, "upper"),
+                listOf("Der Server brennt", "Alles gut"),
+            ),
+        )
+        assertEquals(5, cases.size)
+        for (item in cases) {
+            val raw = """{"memes":[{"template":"${item.candidate.id}","lines":[${item.lines.joinToString(",") { "\"$it\"" }}]}]}"""
+            val out = parseSuggestions(raw, listOf(item.candidate), item.message).single()
+            val literal = fallbackLines(item.message, item.candidate.boxes, item.candidate.style)
+            assertEquals(item.message, item.lines, out.lines)
+            assertTrue(item.message, out.fromModel)
+            assertEquals(item.message, item.candidate.boxes, out.lines.size)
+            assertNotEquals(item.message, joined(literal), joined(out.lines))
+            assertTrue(item.message, carriesCoreStatement(item.message, out.lines))
+            assertTrue(item.message, usableRewrite(item.message, out.lines, item.candidate.boxes))
+            assertFalse(item.message, out.lines.any { phraseEndingBroken(it, isFinal = false) && it != out.lines.last() })
+        }
+    }
+
+    @Test
+    fun repairsALineThatEndsOnAm() {
+        val message = "ihr werdet am ende alles verlieren"
+        val raw = """{"memes":[{"template":"fine","lines":["Wir sind am","Ende und verlieren"]}]}"""
+        val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), message).single()
+        assertEquals(listOf("Wir sind", "am Ende und verlieren"), out.lines)
+        assertTrue(out.fromModel)
+        assertFalse(phraseEndingBroken(out.lines[0], isFinal = false))
+    }
+
+    @Test
+    fun identicalLinesFallBack() {
+        val message = "ihr werdet am ende alles verlieren"
+        val raw = """{"memes":[{"template":"fine","lines":["Alles vorbei","Alles vorbei"]}]}"""
+        val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), message).single()
+        assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out.lines)
+        assertFalse(out.fromModel)
     }
 
     @Test
@@ -181,48 +247,64 @@ class GemmaResponseTest {
     }
 
     private data class Case(val message: String, val boxes: Int, val style: String, val expected: List<String>)
+
+    private data class Rewrite(val message: String, val candidate: Candidate, val lines: List<String>)
+
+    private fun joined(lines: List<String>) =
+        lines.joinToString(" ") { it.trim() }.replace(Regex("\\s+"), " ").trim().lowercase()
 }
 
 class PromptBuilderTest {
     @Test
-    fun staysWithinTokenBudget() {
+    fun oneCallKeepsThreeTemplatesAndFiveExamples() {
         val briefs = (1..8).map { i ->
             Brief(
                 id = "id$i",
                 name = "Name $i",
                 boxes = 2,
                 meaning = "bedeutung ".repeat(40) + "äöüß",
-                examples = listOf(
-                    listOf("alpha beta gamma delta epsilon zeta eta theta iota", "kappa"),
-                    listOf("one two three four five six seven eight nine", "ten"),
-                ),
+                roles = fieldRoles(if (i == 1) "drake" else "id$i", 2),
+                examples = (1..5).map { n -> listOf("abgelehnt $i $n", "bevorzugt $i $n") },
             )
         }
-        val prompt = buildPrompt("Kannst du das heute noch schaffen, bitte ohne Extrawege?", briefs)
-        assertTrue("tokens=${prompt.approxTokens} chars=${prompt.characters}", prompt.approxTokens <= 700)
-        briefs.forEach { assertTrue(prompt.user.contains(it.id)) }
+        val prompt = buildPrompt("Kannst du das heute noch schaffen, bitte ohne Extrawege?", briefs, listOf("Salat war gestern"))
+        assertTrue("tokens=${prompt.approxTokens} chars=${prompt.characters}", prompt.approxTokens <= 1000)
+        assertTrue(prompt.user.contains("id1"))
+        assertTrue(prompt.user.contains("id3"))
+        assertFalse(prompt.user.contains("id4"))
+        assertTrue(prompt.user.contains("abgelehnt 1 1"))
+        assertTrue(prompt.user.contains("abgelehnt 1 5"))
+        assertTrue(prompt.user.contains("oben abgelehnt"))
+        assertTrue(prompt.user.contains("Salat war gestern"))
+        assertTrue(prompt.user.contains("Kontext"))
         assertTrue(prompt.system.contains("JSON"))
+        assertTrue(prompt.system.contains("nicht wörtlich"))
+        assertFalse(prompt.system.contains("Wortreihenfolge"))
     }
 
     @Test
-    fun keepsShortContextAndDropsItWhenTheBudgetIsTight() {
-        val brief = Brief("drake", "Drake", 2, "Vergleich", listOf(listOf("oben", "unten")))
+    fun keepsShortContextAndClipsItWhenTheChatIsLong() {
+        val brief = Brief("drake", "Drake", 2, "Vergleich", listOf(listOf("oben", "unten")), roles = fieldRoles("drake", 2))
         val withContext = buildPrompt("Pizza", listOf(brief), listOf("Salat war gestern"))
         assertTrue(withContext.user.contains("Salat war gestern"))
         assertTrue(withContext.user.contains("Kontext"))
-        val briefs = (1..8).map { i ->
+        assertTrue(withContext.user.contains("oben abgelehnt, unten bevorzugt"))
+        val briefs = (1..3).map { i ->
             Brief(
                 id = "id$i",
                 name = "Name $i",
                 boxes = 2,
-                meaning = "bedeutung ".repeat(40),
-                examples = listOf(listOf("alpha beta gamma delta epsilon zeta eta theta iota", "kappa")),
+                meaning = "bedeutung ".repeat(400),
+                examples = (1..5).map { listOf("alpha ".repeat(40), "kappa ".repeat(40)) },
             )
         }
         val huge = List(40) { "wort ".repeat(80) }
         val tight = buildPrompt("hi", briefs, huge)
-        assertTrue(tight.approxTokens <= 700)
-        assertFalse(tight.user.contains("Kontext"))
+        assertTrue("tokens=${tight.approxTokens}", tight.approxTokens <= 1000)
+        assertTrue(tight.user.contains("Kontext"))
+        assertFalse(tight.user.contains("wort ".repeat(40)))
+        assertTrue(tight.user.contains("id1"))
+        assertFalse(tight.user.contains("id4"))
     }
 }
 

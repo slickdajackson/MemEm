@@ -112,7 +112,7 @@ class RemoteLlmEngine(context: Context) {
             putString("user", user)
             if (schema != null) putString("schema", schema)
             putDouble("temperature", 0.4)
-            putInt("maxTokens", 220)
+            putInt("maxTokens", 300)
         }
         val reply = request(EngineProto.GENERATE, data, 25_000) ?: return null
         if (!reply.getBoolean("ok")) return null

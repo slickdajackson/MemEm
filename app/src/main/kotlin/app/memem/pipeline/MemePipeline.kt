@@ -11,6 +11,7 @@ import app.memem.engine.HashEmbedder
 import app.memem.engine.MemIndex
 import app.memem.engine.buildPrompt
 import app.memem.engine.fallbackLines
+import app.memem.engine.fieldRoles
 import app.memem.engine.memeSchema
 import app.memem.engine.parseSuggestions
 import app.memem.engine.searchTemplates
@@ -68,15 +69,13 @@ class MemePipeline(context: Context) {
         val searchStarted = System.nanoTime()
         val hits = searchTemplates(embedded.second, embedded.first, assets.boxes, limit = 8)
         val searchMs = ms(searchStarted)
-        val chosen = hits.mapNotNull { assets.templates[it.templateId] }.take(8)
-        val previewTemplates = chosen.take(3).ifEmpty { assets.templates.values.take(3).toList() }
-        val previews = renderOptions(message, previewTemplates.map { it to fallbackLines(message, it.boxes, it.style) }, fromModel = false)
-        onPreview(previews)
+        val picked = hits.mapNotNull { assets.templates[it.templateId] }.take(3)
+            .ifEmpty { assets.templates.values.take(3).toList() }
         val gemmaStarted = System.nanoTime()
-        val modelText = generate(message, chosen, context)
+        val modelText = generate(message, picked, context)
         val gemmaMs = ms(gemmaStarted)
         val renderStarted = System.nanoTime()
-        val candidates = chosen.map {
+        val candidates = picked.map {
             Candidate(it.id, it.boxes, it.style, it.examples.firstOrNull().orEmpty())
         }
         val suggestions = if (candidates.isEmpty()) {
@@ -84,15 +83,13 @@ class MemePipeline(context: Context) {
         } else {
             parseSuggestions(modelText ?: "", candidates, message, wanted = 3)
         }
-        val finalists = suggestions.mapNotNull { suggestion ->
+        val rendered = suggestions.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
-            template to suggestion.lines
+            renderOne(template, suggestion.lines, suggestion.fromModel)
+        }.ifEmpty {
+            renderOptions(message, picked.map { it to fallbackLines(message, it.boxes, it.style) }, fromModel = false)
         }
-        val rendered = if (finalists.size >= 3) {
-            renderOptions(message, finalists.take(3), fromModel = modelText != null)
-        } else {
-            previews
-        }
+        onPreview(rendered)
         val renderMs = ms(renderStarted)
         log.event(
             mapOf(
@@ -109,6 +106,7 @@ class MemePipeline(context: Context) {
                 "renderMs" to renderMs,
                 "totalMs" to ms(started),
                 "templates" to rendered.joinToString(",") { it.template.id },
+                "rewritten" to rendered.count { it.fromModel },
             ),
         )
         sweep(rendered.map { it.file.name }.toSet())
@@ -132,18 +130,28 @@ class MemePipeline(context: Context) {
     private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): String? {
         if (templates.isEmpty()) return null
         if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) return null
-        val briefs = templates.map { template ->
+        val chosen = templates.take(3)
+        val briefs = chosen.map { template ->
             Brief(
                 id = template.id,
                 name = template.name,
                 boxes = template.boxes,
                 meaning = template.meaning,
-                examples = (template.examples.take(2) + listOf(template.situationsDe.take(1))).filter { it.isNotEmpty() },
+                examples = template.examples.take(5),
+                roles = fieldRoles(template.id, template.boxes),
             )
         }
         val prompt = buildPrompt(message, briefs, context)
-        val schema = memeSchema(templates.map { it.id })
+        val schema = memeSchema(chosen.map { it.id })
         return remote.generate(prompt.system, prompt.user, schema)
+    }
+
+    private fun renderOne(template: MemeTemplate, lines: List<String>, fromModel: Boolean): MemeOption {
+        val dir = File(app.filesDir, "memes")
+        val bitmap = renderer.render(template, lines)
+        val file = File(dir, "${template.id}-${System.nanoTime()}.png")
+        renderer.writePng(bitmap, file)
+        return MemeOption(template, lines, bitmap, file, fromModel)
     }
 
     private fun renderOptions(
@@ -151,13 +159,7 @@ class MemePipeline(context: Context) {
         rows: List<Pair<MemeTemplate, List<String>>>,
         fromModel: Boolean,
     ): List<MemeOption> {
-        val dir = File(app.filesDir, "memes")
-        return rows.map { (template, lines) ->
-            val bitmap = renderer.render(template, lines)
-            val file = File(dir, "${template.id}-${System.nanoTime()}.png")
-            renderer.writePng(bitmap, file)
-            MemeOption(template, lines, bitmap, file, fromModel)
-        }
+        return rows.map { (template, lines) -> renderOne(template, lines, fromModel) }
     }
 
     private fun sweep(keep: Set<String>) {
