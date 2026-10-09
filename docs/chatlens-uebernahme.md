@@ -1,5 +1,7 @@
 # Übernahme aus ChatLens 0.3.0
 
+Quelle: [github.com/slickdajackson/ChatLense](https://github.com/slickdajackson/ChatLense).
+
 Grundlage ist der mitgelieferte ChatLens-Quellstand. Übernommen wurde nur, was MemEm für WhatsApp auf dem Xiaomi 15 Ultra braucht. Der Agent, der Chats öffnet, scrollt, Profile baut oder Nachrichten sendet, ist nicht enthalten. MemEm sendet nie.
 
 ## Bedienungshilfe

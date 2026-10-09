@@ -61,7 +61,7 @@ Alle fünf Dateien liegen unter `app/src/main/assets/fonts/`. Der Text der SIL O
 
 ## Eigene Vorarbeit
 
-ChatLens ist die frühere eigene Codebasis. Übernommen sind Bedienungshilfe, Einfügen, der schwebende Punkt und die HyperOS-Hinweise, beschrieben in `docs/chatlens-uebernahme.md`. Der Agent, der Chats öffnet oder Nachrichten sendet, ist nicht enthalten.
+[ChatLens](https://github.com/slickdajackson/ChatLense) ist die frühere eigene Codebasis. Übernommen sind Bedienungshilfe, Einfügen, der schwebende Punkt und die HyperOS-Hinweise, beschrieben in `docs/chatlens-uebernahme.md`. Der Agent, der Chats öffnet oder Nachrichten sendet, ist nicht enthalten.
 
 ## Nur im Prototyp, nicht in der App
 

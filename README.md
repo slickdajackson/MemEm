@@ -28,7 +28,7 @@ MemEm steht auf diesen Arbeiten. Die Lizenzen stehen in [THIRD_PARTY_NOTICES.md]
 * [LoC-meme-generator](https://huggingface.co/datasets/pszemraj/LoC-meme-generator): weitere Bildunterschriften, ODC-BY.
 * [Gemma 4](https://ai.google.dev/gemma/docs/core) und [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) von Google, unter den [Gemma Terms of Use](https://ai.google.dev/gemma/terms). Die Gewichte liegen nicht in diesem Repo.
 * [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM): Inferenz auf dem Gerät und in `rewrite-cli`.
-* ChatLens: eigene frühere Basis für Bedienungshilfe, Einfügen und den schwebenden Punkt. Was übernommen wurde, steht in [docs/chatlens-uebernahme.md](docs/chatlens-uebernahme.md).
+* [ChatLens](https://github.com/slickdajackson/ChatLense): eigene frühere Basis für Bedienungshilfe, Einfügen und den schwebenden Punkt. Was übernommen wurde, steht in [docs/chatlens-uebernahme.md](docs/chatlens-uebernahme.md).
 
 ## Architektur
 
