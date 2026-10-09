@@ -145,7 +145,15 @@ private val OBVIOUS_TYPOS = setOf(
     "tommorrow",
     "sucess",
     "occured",
+    "recieve",
+    "untill",
+    "wierd",
+    "freind",
+    "becuase",
 )
+
+/** Typos that drop a card. "wünsch" stays, because a repaired line may still contain it. */
+private val REJECT_TYPOS = OBVIOUS_TYPOS - setOf("wünsch", "wuensch")
 
 /** A token that is cut off or misshapen, such as "wünsch" or "Müdeheit". */
 fun hasBrokenWord(line: String): Boolean {
@@ -244,13 +252,45 @@ fun relevanceMargin(messageVec: FloatArray, captionVec: FloatArray, references: 
  */
 const val DISTRACTOR_SAME_TOPIC = 0.9f
 
+/**
+ * Everyday messages for the rank test. None of these is a rewrite-test sentence.
+ * A caption has to beat three of them, not the sentences used to grade the app.
+ */
 val MESSAGE_DISTRACTORS = listOf(
-    "schon wieder stau auf der a8",
-    "wer hat den letzten kaffee getrunken",
-    "hab die prüfung bestanden",
-    "mein chef will dass ich am wochenende arbeite",
-    "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
-    "das wetter ist so schlecht ich bleib im bett",
+    "Die Waschmaschine ist schon wieder voll",
+    "Ich finde meinen Hausschlüssel nicht",
+    "Der Bus kam zehn Minuten zu spät",
+    "Morgen ist der Zahnarzttermin",
+    "Die Blumen auf dem Balkon brauchen Wasser",
+    "Mein Akku ist mitten im Gespräch leer",
+    "Die Spülmaschine riecht komisch",
+    "Das Paket liegt seit gestern beim Nachbarn",
+    "Ich habe den Kuchen im Ofen vergessen",
+    "Der Wecker hat heute nicht geklingelt",
+    "Die Fahrradkette ist abgesprungen",
+    "Im Kühlschrank ist nur noch Senf",
+    "Der Drucker klemmt schon wieder",
+    "Ich habe die Geburtstagskarte zu Hause vergessen",
+    "Das WLAN bricht im Wohnzimmer ab",
+    "Der Hund muss heute zum Tierarzt",
+    "Die Schuhe sind immer noch nass",
+    "The laundry is still damp",
+    "I locked the keys in the car",
+    "The dentist moved my appointment",
+    "The houseplants look thirsty",
+    "My phone battery died at noon",
+    "The dishwasher smells strange",
+    "A parcel is waiting at the neighbor",
+    "I burned the cookies again",
+    "The alarm never went off",
+    "The bike chain came off",
+    "The fridge only has mustard left",
+    "The printer jammed this morning",
+    "I forgot the birthday card at home",
+    "The wifi drops in the living room",
+    "The dog needs a vet visit today",
+    "I spilled tea on the notebook",
+    "The library book is overdue",
 )
 
 /**
@@ -330,6 +370,8 @@ fun rejectReason(
     if (namesTemplate(lines, candidate, otherNames)) return "name"
     if (foreignLanguage(lines, lang, labels, candidate)) return "sprache"
     if (overlapsMessage(lines, message, labels, candidate, copyCosine)) return "woertlich"
+    if (lines.any { obviousTypo(it) }) return "tippfehler"
+    if (splitsPhrase(lines)) return "abgebrochen"
     if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex, candidate) }) return "abgebrochen"
     if (similarity != null && similarity(lines.joinToString(" ")) < MIN_RELEVANCE_MARGIN) return "fremd"
     return null
@@ -339,12 +381,36 @@ fun shouldRetry(suggestion: Suggestion): Boolean = !suggestion.fromModel
 
 private val JSON_EDGE = Regex("^[{\\[\"'“”«»`]+|[}\\]\"'“”«»`]+$")
 
+private val QUESTION_START = setOf(
+    "wer", "was", "wie", "wo", "wann", "warum", "wieso", "weshalb",
+    "welche", "welcher", "welches", "woher", "wohin",
+    "who", "what", "why", "when", "where", "how", "which", "whose", "whom",
+)
+
 private fun preclean(raw: String): String {
     var line = raw.replace(Regex("\\s+"), " ").trim()
     line = JSON_EDGE.replace(line, "")
     line = line.trim().trim('"', '“', '”', '\'')
     line = line.replace(" - ", ", ")
+    line = stripStatementQuestion(line)
     return line.trim()
+}
+
+/** A statement does not keep a trailing question mark. A real question does. */
+private fun stripStatementQuestion(line: String): String {
+    val trimmed = line.trim()
+    if (!trimmed.endsWith("?")) return trimmed
+    val first = captionTokens(trimmed).firstOrNull() ?: return trimmed
+    if (first in QUESTION_START) return trimmed
+    return trimmed.replace(Regex("[?]+$"), "").trim()
+}
+
+private fun obviousTypo(line: String): Boolean {
+    for (word in messageWords(line)) {
+        val letters = word.filter { it.isLetter() }.lowercase(Locale.GERMAN)
+        if (letters in REJECT_TYPOS) return true
+    }
+    return false
 }
 
 private fun hasVowel(line: String): Boolean = line.any { it.lowercaseChar() in "aeiouäöüy" }
@@ -438,12 +504,36 @@ fun overlapsMessage(
     }
     if (rest.isEmpty()) return false
     if (rest.any { coversMessage(it, messageWords) }) return true
+    if (rest.any { repeatsMessageRun(it, message) }) return true
     val catchphrase = lines.any { isOwnPhrase(it, candidate) }
     // One setup line plus this template's catchphrase is a normal card, unless that
     // setup line already contains most of the message.
     if (!(catchphrase && rest.size == 1) && rest.all { lineFromMessage(it, messageSet, message) }) return true
     if (copyCosine != null && copyCosine(lines.joinToString(" ")) > COPY_COSINE) return true
     return false
+}
+
+/**
+ * Three content words from the message in a row are a copy.
+ * So is a four-word slice of a short message, such as "stau auf der a8".
+ * "Prüfung bestanden" is only two content words and stays.
+ */
+private fun repeatsMessageRun(line: String, message: String): Boolean {
+    val messageContent = lineContentWords(message).toSet()
+    var run = 0
+    for (word in lineContentWords(line)) {
+        if (word in messageContent) {
+            run += 1
+            if (run >= 3) return true
+        } else {
+            run = 0
+        }
+    }
+    val messageTokens = captionTokens(message)
+    val lineTokens = captionTokens(line)
+    if (messageTokens.size > 7 || lineTokens.size < 4 || messageTokens.size < 4) return false
+    val slices = lineTokens.windowed(4).toSet()
+    return messageTokens.windowed(4).any { it in slices }
 }
 
 private fun coversMessage(line: String, messageWords: List<String>): Boolean {
@@ -584,27 +674,58 @@ private fun digitScore(value: Any?): Int? {
 
 data class FollowUp(val withoutSchema: Boolean, val templateIds: List<String>)
 
+data class FollowUpTarget(val index: Int, val templateId: String, val replaced: Boolean)
+
 /**
- * One follow-up at most. A missing template is tried again even when another card passed.
- * Broken JSON retries without a schema. A rejected card is not retried once one card passed.
- * If every card failed, the rejected templates go out together in one call.
+ * One follow-up at most, when fewer than two cards passed.
+ * Skipped and cut-off cards are included even then, so a later search hit can fill the slot.
+ * Broken JSON retries without a schema.
  */
 fun planFollowUp(suggestions: List<Suggestion>, raw: String, alreadyFollowedUp: Boolean): FollowUp? {
     if (alreadyFollowedUp || suggestions.isEmpty()) return null
-    val missing = suggestions.filter { it.reason == "fehlt" }
-    if (missing.isNotEmpty()) {
-        val allMissing = missing.size == suggestions.size
-        val rawBroken = raw.isNotBlank() && !jsonValueParses(cutBlankLineRun(raw))
-        val broken = raw.isNotBlank() && (jsonUnusable(raw) || (allMissing && rawBroken))
-        return FollowUp(withoutSchema = broken, templateIds = missing.map { it.templateId })
+    val passed = suggestions.count { it.fromModel }
+    val failed = suggestions.filter { !it.fromModel }
+    if (failed.isEmpty()) return null
+    val retry = if (passed < 2) {
+        failed
+    } else {
+        failed.filter { it.reason == "fehlt" || it.reason == "abgebrochen" }
     }
-    if (suggestions.any { it.fromModel }) return null
-    if (raw.isNotBlank() && jsonUnusable(raw)) {
-        return FollowUp(withoutSchema = true, templateIds = suggestions.map { it.templateId })
+    if (retry.isEmpty()) return null
+    val allMissing = failed.size == suggestions.size && retry.all { it.reason == "fehlt" }
+    val rawBroken = raw.isNotBlank() && !jsonValueParses(cutBlankLineRun(raw))
+    val broken = raw.isNotBlank() && (jsonUnusable(raw) || (allMissing && rawBroken))
+    return FollowUp(withoutSchema = broken, templateIds = retry.map { it.templateId })
+}
+
+/**
+ * Skipped and cut-off templates take the next search hits.
+ * Other failures in this follow-up stay on the same template.
+ * The call stays at three templates.
+ */
+fun followUpTargets(
+    suggestions: List<Suggestion>,
+    plan: FollowUp,
+    reserveIds: List<String>,
+): List<FollowUpTarget> {
+    val used = suggestions.map { it.templateId }.toMutableSet()
+    val pool = ArrayDeque(reserveIds.filter { it !in used })
+    val out = ArrayList<FollowUpTarget>()
+    for (id in plan.templateIds) {
+        if (out.size >= 3) break
+        val index = suggestions.indexOfFirst { it.templateId == id }
+        if (index < 0) continue
+        val reason = suggestions[index].reason
+        val nextId = if (reason == "fehlt" || reason == "abgebrochen") {
+            pool.removeFirstOrNull() ?: continue
+        } else {
+            id
+        }
+        if (out.any { it.templateId == nextId }) continue
+        used += nextId
+        out += FollowUpTarget(index, nextId, replaced = nextId != id)
     }
-    val rejected = suggestions.filter { !it.fromModel }
-    if (rejected.isEmpty()) return null
-    return FollowUp(withoutSchema = false, templateIds = rejected.map { it.templateId })
+    return out
 }
 
 fun jsonUnusable(raw: String): Boolean {

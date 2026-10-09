@@ -443,13 +443,25 @@ class GemmaResponseTest {
             listOf(Candidate("money", 2, "upper")),
             "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
         ).single()
-        assertTrue(longShop.fromModel)
+        assertEquals("woertlich", longShop.reason)
         val weekendSleep = parseSuggestions(
             """{"officespace":{"z1":"My boss wants weekend work","z2":"Weekend is for sleeping"}}""",
             listOf(Candidate("officespace", 2, "upper")),
             "my boss wants me to work on the weekend",
         ).single()
-        assertTrue(weekendSleep.fromModel)
+        assertEquals("woertlich", weekendSleep.reason)
+        val stauSlice = parseSuggestions(
+            """{"fine":{"z1":"Stau auf der A8","z2":"Keine Bewegung möglich"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "schon wieder stau auf der a8",
+        ).single()
+        assertEquals("woertlich", stauSlice.reason)
+        val kinoQuestion = parseSuggestions(
+            """{"fine":{"z1":"Was ist im Kino","z2":"Wer kommt heute Abend mit"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "wer kommt heute abend mit ins kino",
+        ).single()
+        assertEquals("woertlich", kinoQuestion.reason)
         val mixed = parseSuggestions(
             """{"fine":{"z1":"Prüfung geschafft","z2":"Mission accomplished"}}""",
             listOf(Candidate("fine", 2, "upper")),
@@ -487,7 +499,20 @@ class GemmaResponseTest {
     fun followUpWaitsOnlyWhenNothingPassed() {
         val good = Suggestion("fine", listOf("Qualm", "Ruhe"), true)
         val bad = Suggestion("drake", listOf("x"), false, "sprache")
-        assertNull(planFollowUp(listOf(good, bad), """{"fine":{"z1":"Qualm","z2":"Ruhe"}}""", false))
+        val onePassed = planFollowUp(listOf(good, bad), """{"fine":{"z1":"Qualm","z2":"Ruhe"}}""", false)
+        assertEquals(listOf("drake"), onePassed!!.templateIds)
+        assertEquals(false, onePassed.withoutSchema)
+        val alsoGood = Suggestion("exit", listOf("Bitte", "Gehen"), true)
+        assertNull(planFollowUp(listOf(good, alsoGood, bad), """{"fine":{"z1":"Qualm"}}""", false))
+        val fillSlot = planFollowUp(
+            listOf(good, alsoGood, Suggestion("ds", listOf("A"), false, "fehlt")),
+            """{"fine":{"z1":"Qualm"},"exit":{"z1":"Bitte"}}""",
+            false,
+        )
+        assertEquals(listOf("ds"), fillSlot!!.templateIds)
+        val targets = followUpTargets(listOf(good, alsoGood, Suggestion("ds", listOf("A"), false, "fehlt")), fillSlot, listOf("fry", "cmm"))
+        assertEquals("fry", targets.single().templateId)
+        assertEquals(true, targets.single().replaced)
         val rejected = planFollowUp(
             listOf(
                 Suggestion("fine", listOf("A"), false, "sprache"),
@@ -539,6 +564,38 @@ class GemmaResponseTest {
         ).single()
         assertEquals(listOf("Diet begins soon", "Cake can wait"), junk.lines)
         assertTrue(junk.fromModel)
+        val stated = parseSuggestions(
+            """{"fine":{"z1":"Alles ist gut?","z2":"Der geht weg?"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals(listOf("Alles ist gut", "Der geht weg"), stated.lines)
+        assertTrue(stated.fromModel)
+        val asked = parseSuggestions(
+            """{"cmm":{"z1":"Was ist hier los?"}}""",
+            listOf(Candidate("cmm", 1, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals(listOf("Was ist hier los?"), asked.lines)
+        val typo = parseSuggestions(
+            """{"regret":{"z1":"Diese Ausgaben sind schlim"}}""",
+            listOf(Candidate("regret", 1, "upper")),
+            "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+        ).single()
+        assertEquals("tippfehler", typo.reason)
+        val midPhrase = parseSuggestions(
+            """{"fine":{"z1":"Ja wenn der Plan","z2":"wäre toll"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals("abgebrochen", midPhrase.reason)
+        val joined = parseSuggestions(
+            """{"fine":{"z1":"Ja wenn der Plan","z2":"wäre toll Aber sonst egal"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals(listOf("Ja wenn der Plan wäre toll", "Aber sonst egal"), joined.lines)
+        assertTrue(joined.fromModel)
         val low = parseSuggestions(
             """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
             listOf(Candidate("fine", 1, "upper")),
@@ -747,6 +804,10 @@ class PromptBuilderTest {
         )
         assertTrue(reasonText("sprache", "en").startsWith("Wrong language"))
         assertTrue(retryHint("woertlich", "de").startsWith("Die letzten Zeilen"))
+        assertTrue(followUpHint(listOf("fine" to "woertlich"), "de").contains(REPHRASE_HINT))
+        assertTrue(MESSAGE_DISTRACTORS.size >= 30)
+        val banned = TEST_SENTENCES.map { normCaptionLine(it) }.toSet()
+        assertTrue(MESSAGE_DISTRACTORS.none { normCaptionLine(it) in banned })
         val same = parseSuggestions(
             """{"fine":{"z1":"Montag","z2":"Kein Bock"},"drake":{"z1":"Montag","z2":"Kein Bock"}}""",
             listOf(Candidate("fine", 2, "upper"), Candidate("drake", 2, "upper")),

@@ -193,6 +193,21 @@ fun phraseEndingBroken(line: String, isFinal: Boolean): Boolean {
  */
 private val SEIN_PARTICLES = setOf("weg", "aus", "vorbei", "fertig", "hin", "her", "tot", "leer", "offen")
 
+/** A line that still contains one of these has not finished the clause. */
+private val OPEN_CLAUSE = setOf(
+    "wenn", "weil", "dass", "daß", "obwohl", "falls", "damit", "ob",
+    "bevor", "nachdem", "sobald",
+)
+
+private val COPY_CONTENT_STOP = setOf(
+    "hab", "wer", "was", "wie", "wo", "wann", "warum", "wieso", "weshalb",
+    "welche", "welcher", "welches", "woher", "wohin",
+    "the", "a", "an", "of", "to", "on", "in", "for", "and", "or", "but", "with",
+    "my", "your", "his", "her", "our", "their", "me", "you", "it", "we", "they",
+    "is", "was", "are", "be", "been", "am", "do", "does", "did", "have", "has",
+    "this", "that", "from", "at", "by", "as", "if", "so", "not", "no", "i",
+)
+
 fun repairPhraseEndings(lines: List<String>): List<String>? {
     if (lines.isEmpty()) return emptyList()
     val buckets = lines.map { messageWords(it).toMutableList() }.toMutableList()
@@ -247,6 +262,14 @@ private fun pullContinuation(buckets: MutableList<MutableList<String>>) {
             }
         } else if (firstNorm == "sein" && prevNorm in SEIN_PARTICLES) {
             take = 1
+        } else if (prev.any { normalizeWord(it) in OPEN_CLAUSE }) {
+            while (
+                take < next.size &&
+                next[take].firstOrNull()?.isLowerCase() == true &&
+                normalizeWord(next[take]) !in CONJUNCTIONS
+            ) {
+                take += 1
+            }
         }
         if (take == 0) continue
         val rest = next.getOrNull(take)
@@ -267,6 +290,27 @@ fun messageWords(text: String): List<String> =
 
 fun contentWords(text: String): List<String> =
     normalizedWords(text).filter { it.length > 1 && it !in FUNCTION_WORDS }
+
+/** Content words used by the copy check. Pronouns, auxiliaries, and English function words are out. */
+fun lineContentWords(text: String): List<String> =
+    normalizedWords(text).filter { word ->
+        word.length > 1 &&
+            word !in FUNCTION_WORDS &&
+            word !in PERSONAL_PRONOUNS &&
+            word !in AUXILIARIES &&
+            word !in COPY_CONTENT_STOP
+    }
+
+/** True when a clause opener is left hanging and the next line continues it in lowercase. */
+fun splitsPhrase(lines: List<String>): Boolean {
+    for (index in 0 until lines.lastIndex) {
+        val prev = messageWords(lines[index])
+        val next = messageWords(lines[index + 1]).firstOrNull() ?: continue
+        if (next.firstOrNull()?.isLowerCase() != true) continue
+        if (prev.any { normalizeWord(it) in OPEN_CLAUSE }) return true
+    }
+    return false
+}
 
 fun normalizedWords(text: String): List<String> =
     messageWords(text).map { normalizeWord(it) }.filter { it.isNotEmpty() }

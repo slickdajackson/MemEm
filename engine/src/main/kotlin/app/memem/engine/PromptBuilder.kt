@@ -33,7 +33,8 @@ private const val SYSTEM =
         "A template's own catchphrase may stay in its original language. Do not borrow a catchphrase from a different template. " +
         "Short and pointed. For each template, fields z1, z2, and so on, one line per field, each line different and not empty. " +
         "No line ends on an article, a preposition, or a conjunction. " +
-        "End each field at a sentence break. Do not stop in the middle of a sentence. " +
+        "End each field at a sentence break. Do not stop in the middle of a sentence. Do not break a phrase across fields. " +
+        "Do not put a question mark on a statement. " +
         "Do not put a slash in a field. One field is one line. " +
         "Reply with JSON only. Keys are the template ids. Values are objects with z1, z2, ..."
 
@@ -99,6 +100,11 @@ fun reasonText(reason: String, language: String): String {
         } else {
             "The template was missing. Reply with its lines."
         }
+        "tippfehler" -> if (german) {
+            "Ein Wort ist falsch geschrieben. Schreib es richtig."
+        } else {
+            "A word is misspelled. Spell it correctly."
+        }
         "name" -> if (german) {
             "Der Name einer anderen Vorlage steht in der Caption. Schreib eine eigene Zeile."
         } else {
@@ -130,10 +136,16 @@ fun languageNameDe(code: String): String = when (code) {
     else -> "der Sprache der Nachricht"
 }
 
-/** One concrete reason per template, used only when every card failed. */
+const val REPHRASE_HINT = "Do not repeat the message, rephrase it / answer it as a meme."
+
+/** One concrete reason per template, plus a reminder not to copy the message. */
 fun followUpHint(items: List<Pair<String, String>>, language: String): String {
-    if (items.isEmpty()) return retryHint(emptyList(), language)
-    return items.joinToString(" ") { (id, reason) -> "$id: ${reasonText(reason, language)}" }
+    val detail = if (items.isEmpty()) {
+        retryHint(emptyList(), language)
+    } else {
+        items.joinToString(" ") { (id, reason) -> "$id: ${reasonText(reason, language)}" }
+    }
+    return "$detail $REPHRASE_HINT"
 }
 
 private const val TOKEN_BUDGET = 1000

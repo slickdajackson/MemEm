@@ -12,8 +12,8 @@ android {
         applicationId = "app.memem"
         minSdk = 29
         targetSdk = 36
-        versionCode = 14
-        versionName = "0.2.3"
+        versionCode = 15
+        versionName = "0.2.4"
         ndk {
             abiFilters += listOf("arm64-v8a")
         }

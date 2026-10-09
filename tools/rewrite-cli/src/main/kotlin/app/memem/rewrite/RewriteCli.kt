@@ -21,6 +21,7 @@ import app.memem.engine.absorbModelText
 import app.memem.engine.cosine
 import app.memem.engine.dedupeCaptions
 import app.memem.engine.followUpHint
+import app.memem.engine.followUpTargets
 import app.memem.engine.hasBlankLineRun
 import app.memem.engine.orderByRules
 import app.memem.engine.outputLanguage
@@ -121,41 +122,56 @@ fun main(args: Array<String>) {
             val rawParts = ArrayList<String>()
             raw.text?.let { rawParts += it }
             val plan = planFollowUp(suggestions, raw.text.orEmpty(), alreadyFollowedUp = false)
+            val reserveEntries = rankedIds.mapNotNull { byId[it] }
+                .filter { entry -> chosen.none { it.id == entry.id } }
+                .take(2)
+            val judgedCandidates = candidates.toMutableList()
             if (plan != null) {
-                val subset = chosen.filter { it.id in plan.templateIds }
-                val reasons = subset.map { entry ->
-                    entry.id to suggestions.firstOrNull { it.templateId == entry.id }?.reason.orEmpty()
+                val targets = followUpTargets(suggestions, plan, reserveEntries.map { it.id })
+                val subset = targets.mapNotNull { target ->
+                    chosen.firstOrNull { it.id == target.templateId }
+                        ?: reserveEntries.firstOrNull { it.id == target.templateId }
                 }
-                val againPrompt = buildPrompt(
-                    sentence,
-                    subset.map { entry ->
-                        memeBrief(entry.id, entry.name, entry.boxes, entry.meaningFor(lang), entry.examplesFor(lang), lang)
-                    },
-                    hint = followUpHint(reasons, lang),
-                )
-                val againSchema = if (plan.withoutSchema) null else memeSchema(subset.map { it.id to it.boxes })
-                val again = generate(engine, againPrompt.system, againPrompt.user, againSchema, FOLLOW_UP_TEMPERATURE)
-                again.text?.let { rawParts += it }
-                val updated = parseSuggestions(
-                    again.text.orEmpty(),
-                    subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
-                    sentence,
-                    wanted = subset.size.coerceAtLeast(1),
-                    failure = again.error ?: "keine antwort",
-                    similarity = judged.margin,
-                    language = lang,
-                    copyCosine = judged.cosine,
-                    otherNames = names,
-                )
-                for (one in updated) {
-                    val index = suggestions.indexOfFirst { it.templateId == one.templateId }
-                    if (index < 0) continue
-                    val current = suggestions[index]
-                    if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
+                if (subset.isNotEmpty()) {
+                    val reasons = targets.map { target ->
+                        target.templateId to suggestions[target.index].reason
+                    }
+                    val againPrompt = buildPrompt(
+                        sentence,
+                        subset.map { entry ->
+                            memeBrief(entry.id, entry.name, entry.boxes, entry.meaningFor(lang), entry.examplesFor(lang), lang)
+                        },
+                        hint = followUpHint(reasons, lang),
+                    )
+                    val againSchema = if (plan.withoutSchema) null else memeSchema(subset.map { it.id to it.boxes })
+                    val again = generate(engine, againPrompt.system, againPrompt.user, againSchema, FOLLOW_UP_TEMPERATURE)
+                    again.text?.let { rawParts += it }
+                    val fresh = subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
+                    judgedCandidates += fresh.filter { candidate -> judgedCandidates.none { it.id == candidate.id } }
+                    val updated = parseSuggestions(
+                        again.text.orEmpty(),
+                        fresh,
+                        sentence,
+                        wanted = fresh.size.coerceAtLeast(1),
+                        failure = again.error ?: "keine antwort",
+                        similarity = judged.margin,
+                        language = lang,
+                        copyCosine = judged.cosine,
+                        otherNames = names,
+                    )
+                    for (one in updated) {
+                        val target = targets.firstOrNull { it.templateId == one.templateId } ?: continue
+                        val current = suggestions[target.index]
+                        if (target.replaced) {
+                            if (one.fromModel) suggestions[target.index] = one
+                        } else if (one.fromModel || current.reason == "fehlt") {
+                            suggestions[target.index] = one
+                        }
+                    }
                 }
             }
             val ordered = orderByRules(
-                dedupeCaptions(suggestions, candidates, sentence).filter { it.fromModel },
+                dedupeCaptions(suggestions, judgedCandidates, sentence).filter { it.fromModel },
                 sentence,
             )
             suggestions.clear()

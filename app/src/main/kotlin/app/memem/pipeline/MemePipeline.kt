@@ -20,6 +20,7 @@ import app.memem.engine.cosine
 import app.memem.engine.dedupeCaptions
 import app.memem.engine.fallbackLocale
 import app.memem.engine.followUpHint
+import app.memem.engine.followUpTargets
 import app.memem.engine.orderByRules
 import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
@@ -129,41 +130,54 @@ class MemePipeline(context: Context) {
         }
         val plan = planFollowUp(suggestions, outcome.text.orEmpty(), alreadyFollowedUp = false)
         val retries = ArrayList<String>()
+        val reservePool = ordered.filter { it.id !in picked.map { pickedOne -> pickedOne.id } }.take(2)
+        val judgedCandidates = candidates.toMutableList()
         if (plan != null) {
-            val subset = picked.filter { it.id in plan.templateIds }
-            val reasons = subset.map { template ->
-                template.id to suggestions.firstOrNull { it.templateId == template.id }?.reason.orEmpty()
+            val targets = followUpTargets(suggestions, plan, reservePool.map { it.id })
+            val subset = targets.mapNotNull { target ->
+                picked.firstOrNull { it.id == target.templateId } ?: reservePool.firstOrNull { it.id == target.templateId }
             }
-            val again = generate(
-                message,
-                subset,
-                context,
-                followUpHint(reasons, lang),
-                withSchema = !plan.withoutSchema,
-                temperature = FOLLOW_UP_TEMPERATURE,
-                locale = locale,
-            )
-            val updated = parseSuggestions(
-                again.text.orEmpty(),
-                subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
-                message,
-                wanted = subset.size.coerceAtLeast(1),
-                failure = again.error ?: "keine antwort",
-                similarity = score.margin,
-                language = lang,
-                copyCosine = score.cosine,
-                otherNames = names,
-            )
-            for (one in updated) {
-                val index = suggestions.indexOfFirst { it.templateId == one.templateId }
-                if (index < 0) continue
-                val current = suggestions[index]
-                if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
-                val mark = if (suggestions[index].fromModel) "KI" else suggestions[index].reason.ifBlank { "woertlich" }
-                retries += "${one.templateId}:${current.reason}->$mark"
+            if (subset.isNotEmpty()) {
+                val reasons = targets.map { target ->
+                    val reason = suggestions[target.index].reason
+                    target.templateId to reason
+                }
+                val again = generate(
+                    message,
+                    subset,
+                    context,
+                    followUpHint(reasons, lang),
+                    withSchema = !plan.withoutSchema,
+                    temperature = FOLLOW_UP_TEMPERATURE,
+                    locale = locale,
+                )
+                val fresh = subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
+                judgedCandidates += fresh.filter { candidate -> judgedCandidates.none { it.id == candidate.id } }
+                val updated = parseSuggestions(
+                    again.text.orEmpty(),
+                    fresh,
+                    message,
+                    wanted = fresh.size.coerceAtLeast(1),
+                    failure = again.error ?: "keine antwort",
+                    similarity = score.margin,
+                    language = lang,
+                    copyCosine = score.cosine,
+                    otherNames = names,
+                )
+                for (one in updated) {
+                    val target = targets.firstOrNull { it.templateId == one.templateId } ?: continue
+                    val current = suggestions[target.index]
+                    if (target.replaced) {
+                        if (one.fromModel) suggestions[target.index] = one
+                    } else if (one.fromModel || current.reason == "fehlt") {
+                        suggestions[target.index] = one
+                    }
+                    val mark = if (suggestions[target.index].fromModel) "KI" else suggestions[target.index].reason.ifBlank { "woertlich" }
+                    retries += "${current.templateId}->${one.templateId}:${current.reason}->$mark"
+                }
             }
         }
-        val merged = dedupeCaptions(suggestions, candidates, message)
+        val merged = dedupeCaptions(suggestions, judgedCandidates, message)
         val ranked = orderByRules(merged.filter { it.fromModel }, message)
         val renderStarted = System.nanoTime()
         val rendered = ranked.mapNotNull { suggestion ->
