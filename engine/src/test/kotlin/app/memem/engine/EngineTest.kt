@@ -503,7 +503,10 @@ class GemmaResponseTest {
         assertEquals(listOf("drake"), onePassed!!.templateIds)
         assertEquals(false, onePassed.withoutSchema)
         val alsoGood = Suggestion("exit", listOf("Bitte", "Gehen"), true)
-        assertNull(planFollowUp(listOf(good, alsoGood, bad), """{"fine":{"z1":"Qualm"}}""", false))
+        val twoPassed = planFollowUp(listOf(good, alsoGood, bad), """{"fine":{"z1":"Qualm"}}""", false)
+        assertEquals(listOf("drake"), twoPassed!!.templateIds)
+        val third = Suggestion("cmm", listOf("These"), true)
+        assertNull(planFollowUp(listOf(good, alsoGood, third), """{"fine":{"z1":"Qualm"}}""", false))
         val fillSlot = planFollowUp(
             listOf(good, alsoGood, Suggestion("ds", listOf("A"), false, "fehlt")),
             """{"fine":{"z1":"Qualm"},"exit":{"z1":"Bitte"}}""",
@@ -583,6 +586,42 @@ class GemmaResponseTest {
             "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
         ).single()
         assertEquals("tippfehler", typo.reason)
+        val cloupen = parseSuggestions(
+            """{"fine":{"z1":"Versprechen ist alles","z2":"Die Umsetzung zählt cloupen"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "ab morgen mache ich diät",
+        ).single()
+        assertEquals("tippfehler", cloupen.reason)
+        val anyway = parseSuggestions(
+            """{"fine":{"z1":"Ich gehe abtrotzdem","z2":"Der Plan steht"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals("tippfehler", anyway.reason)
+        val disappointed = parseSuggestions(
+            """{"fine":{"z1":"Ich bin entäuscht","z2":"Der Plan scheitert"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals("tippfehler", disappointed.reason)
+        val article = parseSuggestions(
+            """{"fine":{"z1":"Die Zug hat Verspätung","z2":"Schon wieder"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertEquals("tippfehler", article.reason)
+        val accusative = parseSuggestions(
+            """{"fine":{"z1":"Ich nehme den Zug","z2":"Schon wieder"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        ).single()
+        assertTrue(accusative.fromModel)
+        val oneLine = parseSuggestions(
+            """{"exit":{"z1":"Traffic gridlock"}}""",
+            listOf(Candidate("exit", 3, "upper")),
+            "traffic jam again",
+        ).single()
+        assertEquals("leer", oneLine.reason)
         val midPhrase = parseSuggestions(
             """{"fine":{"z1":"Ja wenn der Plan","z2":"wäre toll"}}""",
             listOf(Candidate("fine", 2, "upper")),
@@ -604,6 +643,13 @@ class GemmaResponseTest {
         ).single()
         assertFalse(low.fromModel)
         assertEquals("fremd", low.reason)
+        val slight = parseSuggestions(
+            """{"fine":{"z1":"Die Bohrmaschine läuft schon lange","z2":"Meine Geduld ist erschöpft"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "der nachbar bohrt seit sieben uhr morgens",
+            similarity = { -0.02f },
+        ).single()
+        assertTrue(slight.fromModel)
         val near = parseSuggestions(
             """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
             listOf(Candidate("fine", 1, "upper")),
@@ -805,6 +851,7 @@ class PromptBuilderTest {
         assertTrue(reasonText("sprache", "en").startsWith("Wrong language"))
         assertTrue(retryHint("woertlich", "de").startsWith("Die letzten Zeilen"))
         assertTrue(followUpHint(listOf("fine" to "woertlich"), "de").contains(REPHRASE_HINT))
+        assertTrue(FOLLOW_UP_TEMPERATURE in 0.5..0.6)
         assertTrue(MESSAGE_DISTRACTORS.size >= 30)
         val banned = TEST_SENTENCES.map { normCaptionLine(it) }.toSet()
         assertTrue(MESSAGE_DISTRACTORS.none { normCaptionLine(it) in banned })

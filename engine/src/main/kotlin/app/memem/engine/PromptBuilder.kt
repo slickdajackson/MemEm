@@ -16,7 +16,7 @@ data class BuiltPrompt(val system: String, val user: String) {
 
 const val GEMMA_MAX_OUTPUT_TOKENS = 160
 const val GEMMA_TEMPERATURE = 0.4
-const val FOLLOW_UP_TEMPERATURE = 0.8
+const val FOLLOW_UP_TEMPERATURE = 0.55
 const val GEMMA_REPETITION_PENALTY = 1.2f
 
 /** Streaming chunks are sometimes the full text so far, sometimes only the new piece. */

@@ -55,7 +55,8 @@ import java.nio.ByteOrder
 
 /**
  * Same rewrite path as the app: search, one Gemma call, the shared parser and the same acceptance rule.
- * A second call happens only when every card failed, and it covers those templates together.
+ * Latency is the time until the first passing cards are ready. A follow-up, when fewer than three
+ * cards passed, still runs afterwards and its cards stay in the report.
  * Embedding on the JVM is optional. Without it the hash index in the repo is used.
  */
 fun main(args: Array<String>) {
@@ -119,6 +120,7 @@ fun main(args: Array<String>) {
                 copyCosine = judged.cosine,
                 otherNames = names,
             ).toMutableList()
+            val latency = (System.nanoTime() - started) / 1_000_000
             val rawParts = ArrayList<String>()
             raw.text?.let { rawParts += it }
             val plan = planFollowUp(suggestions, raw.text.orEmpty(), alreadyFollowedUp = false)
@@ -177,7 +179,6 @@ fun main(args: Array<String>) {
             suggestions.clear()
             suggestions.addAll(ordered)
             val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
-            val latency = (System.nanoTime() - started) / 1_000_000
             val report = reportJson(sentence, latency, search.mode, combined, suggestions, lang)
             reports.put(report)
             markdown.append(reportMarkdown(sentence, latency, search.mode, combined, suggestions))

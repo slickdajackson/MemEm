@@ -150,6 +150,10 @@ private val OBVIOUS_TYPOS = setOf(
     "wierd",
     "freind",
     "becuase",
+    "cloupen",
+    "abtrotzdem",
+    "entäuscht",
+    "entaeuscht",
 )
 
 /** Typos that drop a card. "wünsch" stays, because a repaired line may still contain it. */
@@ -206,9 +210,10 @@ fun resolveLines(
  * Calibrated on the 0.2.1 sentences with EmbeddingGemma.
  * Reported nonsense sits under 0 (pizza vs traffic -0.01, "Banane Auto Himmel" -0.03).
  * Paraphrases sit at 0.00 to 0.15 ("Geld ist weg" 0.00, "Goal achieved" 0.01,
- * "Keiner da" 0.04). A negative margin is off topic. A raw floor is not used.
+ * "Keiner da" 0.04). A score under -0.03 is off topic. Slightly negative scores stay,
+ * so a good caption is not dropped for a near miss. A raw floor is not used.
  */
-const val MIN_RELEVANCE_MARGIN = 0f
+const val MIN_RELEVANCE_MARGIN = -0.03f
 
 /** Fixed distractors. None of these is a test sentence. */
 val RELEVANCE_REFERENCES = listOf(
@@ -363,6 +368,7 @@ fun rejectReason(
     val labels = fixedLabels(candidate)
     if (lines.size != candidate.boxes) return "sinnlos"
     if (lines.all { it.isBlank() }) return "leer"
+    if (candidate.boxes > 1 && lines.count { line -> line.count { it.isLetter() } >= 2 } < 2) return "leer"
     if (lines.any { line -> line.count { it.isLetter() } < 2 }) return "sinnlos"
     if (lines.any { line -> !hasVowel(line) }) return "sinnlos"
     if (duplicateLines(lines)) return "doppelt"
@@ -370,7 +376,7 @@ fun rejectReason(
     if (namesTemplate(lines, candidate, otherNames)) return "name"
     if (foreignLanguage(lines, lang, labels, candidate)) return "sprache"
     if (overlapsMessage(lines, message, labels, candidate, copyCosine)) return "woertlich"
-    if (lines.any { obviousTypo(it) }) return "tippfehler"
+    if (lines.any { obviousTypo(it) || articleMiss(it) }) return "tippfehler"
     if (splitsPhrase(lines)) return "abgebrochen"
     if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex, candidate) }) return "abgebrochen"
     if (similarity != null && similarity(lines.joinToString(" ")) < MIN_RELEVANCE_MARGIN) return "fremd"
@@ -409,6 +415,19 @@ private fun obviousTypo(line: String): Boolean {
     for (word in messageWords(line)) {
         val letters = word.filter { it.isLetter() }.lowercase(Locale.GERMAN)
         if (letters in REJECT_TYPOS) return true
+    }
+    return false
+}
+
+/** A few nouns whose article is fixed in the nominative. "Die Zug" is wrong. */
+private val ARTICLE_FOR_NOUN = mapOf("zug" to "der")
+
+private fun articleMiss(line: String): Boolean {
+    val tokens = normCaptionLine(line).split(' ')
+    for (index in 0 until tokens.lastIndex) {
+        val expect = ARTICLE_FOR_NOUN[tokens[index + 1]] ?: continue
+        val article = tokens[index]
+        if (article in setOf("der", "die", "das") && article != expect) return true
     }
     return false
 }
@@ -677,21 +696,16 @@ data class FollowUp(val withoutSchema: Boolean, val templateIds: List<String>)
 data class FollowUpTarget(val index: Int, val templateId: String, val replaced: Boolean)
 
 /**
- * One follow-up at most, when fewer than two cards passed.
- * Skipped and cut-off cards are included even then, so a later search hit can fill the slot.
- * Broken JSON retries without a schema.
+ * One follow-up at most, when fewer than three cards passed.
+ * It does not run when three cards already passed. Broken JSON retries without a schema.
  */
 fun planFollowUp(suggestions: List<Suggestion>, raw: String, alreadyFollowedUp: Boolean): FollowUp? {
     if (alreadyFollowedUp || suggestions.isEmpty()) return null
     val passed = suggestions.count { it.fromModel }
+    if (passed >= 3) return null
     val failed = suggestions.filter { !it.fromModel }
     if (failed.isEmpty()) return null
-    val retry = if (passed < 2) {
-        failed
-    } else {
-        failed.filter { it.reason == "fehlt" || it.reason == "abgebrochen" }
-    }
-    if (retry.isEmpty()) return null
+    val retry = failed
     val allMissing = failed.size == suggestions.size && retry.all { it.reason == "fehlt" }
     val rawBroken = raw.isNotBlank() && !jsonValueParses(cutBlankLineRun(raw))
     val broken = raw.isNotBlank() && (jsonUnusable(raw) || (allMissing && rawBroken))

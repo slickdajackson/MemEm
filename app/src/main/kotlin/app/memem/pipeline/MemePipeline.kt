@@ -16,6 +16,8 @@ import app.memem.engine.FOLLOW_UP_TEMPERATURE
 import app.memem.engine.GEMMA_TEMPERATURE
 import app.memem.engine.MESSAGE_DISTRACTORS
 import app.memem.engine.RELEVANCE_REFERENCES
+import app.memem.engine.Candidate
+import app.memem.engine.FollowUp
 import app.memem.engine.cosine
 import app.memem.engine.dedupeCaptions
 import app.memem.engine.fallbackLocale
@@ -37,7 +39,13 @@ import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
 import app.memem.render.MemeRenderer
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.runBlocking
 
 data class MemeOption(
@@ -65,6 +73,9 @@ class MemePipeline(context: Context) {
     private var hash: MemIndex? = null
     private var referenceVecs: List<FloatArray>? = null
     private var distractorVecs: List<FloatArray>? = null
+    private val followScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val suggestGeneration = AtomicInteger(0)
+    private var followJob: Job? = null
 
     fun preload() {
         val gemmaFile = ModelCatalog.file(app, activeGemma())
@@ -90,6 +101,8 @@ class MemePipeline(context: Context) {
         context: List<String> = emptyList(),
         onPreview: (List<MemeOption>) -> Unit,
     ): List<MemeOption> {
+        followJob?.cancel()
+        val generationId = suggestGeneration.incrementAndGet()
         val started = System.nanoTime()
         val embedStarted = System.nanoTime()
         val embedded = embedQuery(searchText(message, context))
@@ -129,55 +142,7 @@ class MemePipeline(context: Context) {
             ).toMutableList()
         }
         val plan = planFollowUp(suggestions, outcome.text.orEmpty(), alreadyFollowedUp = false)
-        val retries = ArrayList<String>()
-        val reservePool = ordered.filter { it.id !in picked.map { pickedOne -> pickedOne.id } }.take(2)
-        val judgedCandidates = candidates.toMutableList()
-        if (plan != null) {
-            val targets = followUpTargets(suggestions, plan, reservePool.map { it.id })
-            val subset = targets.mapNotNull { target ->
-                picked.firstOrNull { it.id == target.templateId } ?: reservePool.firstOrNull { it.id == target.templateId }
-            }
-            if (subset.isNotEmpty()) {
-                val reasons = targets.map { target ->
-                    val reason = suggestions[target.index].reason
-                    target.templateId to reason
-                }
-                val again = generate(
-                    message,
-                    subset,
-                    context,
-                    followUpHint(reasons, lang),
-                    withSchema = !plan.withoutSchema,
-                    temperature = FOLLOW_UP_TEMPERATURE,
-                    locale = locale,
-                )
-                val fresh = subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
-                judgedCandidates += fresh.filter { candidate -> judgedCandidates.none { it.id == candidate.id } }
-                val updated = parseSuggestions(
-                    again.text.orEmpty(),
-                    fresh,
-                    message,
-                    wanted = fresh.size.coerceAtLeast(1),
-                    failure = again.error ?: "keine antwort",
-                    similarity = score.margin,
-                    language = lang,
-                    copyCosine = score.cosine,
-                    otherNames = names,
-                )
-                for (one in updated) {
-                    val target = targets.firstOrNull { it.templateId == one.templateId } ?: continue
-                    val current = suggestions[target.index]
-                    if (target.replaced) {
-                        if (one.fromModel) suggestions[target.index] = one
-                    } else if (one.fromModel || current.reason == "fehlt") {
-                        suggestions[target.index] = one
-                    }
-                    val mark = if (suggestions[target.index].fromModel) "KI" else suggestions[target.index].reason.ifBlank { "woertlich" }
-                    retries += "${current.templateId}->${one.templateId}:${current.reason}->$mark"
-                }
-            }
-        }
-        val merged = dedupeCaptions(suggestions, judgedCandidates, message)
+        val merged = dedupeCaptions(suggestions.toList(), candidates, message)
         val ranked = orderByRules(merged.filter { it.fromModel }, message)
         val renderStarted = System.nanoTime()
         val rendered = ranked.mapNotNull { suggestion ->
@@ -186,6 +151,11 @@ class MemePipeline(context: Context) {
         }
         onPreview(rendered)
         val renderMs = ms(renderStarted)
+        val followLabel = when {
+            plan == null -> ""
+            plan.withoutSchema -> "background-noschema"
+            else -> "background"
+        }
         log.event(
             mapOf(
                 "kind" to "suggest",
@@ -200,13 +170,8 @@ class MemePipeline(context: Context) {
                 "gemmaLoaded" to outcome.loaded,
                 "gemmaError" to outcome.error,
                 "lang" to lang,
-                "followUp" to when {
-                    plan == null -> ""
-                    plan.withoutSchema -> "noschema"
-                    else -> "schema"
-                },
+                "followUp" to followLabel,
                 "raw" to outcome.text?.take(500),
-                "retries" to retries.joinToString(" | "),
                 "reasons" to ranked.joinToString(" | ") { item ->
                     val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
                     "${item.templateId}:$mark"
@@ -221,7 +186,143 @@ class MemePipeline(context: Context) {
             ),
         )
         sweep(rendered.map { it.file.name }.toSet())
+        if (plan != null && generationId == suggestGeneration.get()) {
+            val reservePool = ordered.filter { it.id !in picked.map { pickedOne -> pickedOne.id } }.take(2)
+            followJob = followScope.launch {
+                try {
+                    val appended = appendFollowUp(
+                        message = message,
+                        context = context,
+                        locale = locale,
+                        lang = lang,
+                        names = names,
+                        score = score,
+                        suggestions = suggestions,
+                        candidates = candidates,
+                        plan = plan,
+                        picked = picked,
+                        reservePool = reservePool,
+                        shown = rendered,
+                        generationId = generationId,
+                    )
+                    ensureActive()
+                    if (appended != null && generationId == suggestGeneration.get()) onPreview(appended)
+                } catch (error: CancellationException) {
+                    throw error
+                } catch (_: Exception) {
+                }
+            }
+        }
         return rendered
+    }
+
+    /**
+     * Second Gemma call for the cards that failed. The first cards stay in place.
+     * New cards are appended, and the combined list stays at three.
+     */
+    private suspend fun appendFollowUp(
+        message: String,
+        context: List<String>,
+        locale: String,
+        lang: String,
+        names: List<String>,
+        score: CaptionSignals,
+        suggestions: MutableList<Suggestion>,
+        candidates: List<Candidate>,
+        plan: FollowUp,
+        picked: List<MemeTemplate>,
+        reservePool: List<MemeTemplate>,
+        shown: List<MemeOption>,
+        generationId: Int,
+    ): List<MemeOption>? {
+        val followStarted = System.nanoTime()
+        val retries = ArrayList<String>()
+        val judgedCandidates = candidates.toMutableList()
+        val targets = followUpTargets(suggestions, plan, reservePool.map { it.id })
+        val subset = targets.mapNotNull { target ->
+            picked.firstOrNull { it.id == target.templateId } ?: reservePool.firstOrNull { it.id == target.templateId }
+        }
+        if (subset.isNotEmpty() && generationId == suggestGeneration.get()) {
+            val reasons = targets.map { target ->
+                target.templateId to suggestions[target.index].reason
+            }
+            val again = generate(
+                message,
+                subset,
+                context,
+                followUpHint(reasons, lang),
+                withSchema = !plan.withoutSchema,
+                temperature = FOLLOW_UP_TEMPERATURE,
+                locale = locale,
+            )
+            val fresh = subset.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
+            judgedCandidates += fresh.filter { candidate -> judgedCandidates.none { it.id == candidate.id } }
+            val updated = parseSuggestions(
+                again.text.orEmpty(),
+                fresh,
+                message,
+                wanted = fresh.size.coerceAtLeast(1),
+                failure = again.error ?: "keine antwort",
+                similarity = score.margin,
+                language = lang,
+                copyCosine = score.cosine,
+                otherNames = names,
+            )
+            for (one in updated) {
+                val target = targets.firstOrNull { it.templateId == one.templateId } ?: continue
+                val current = suggestions[target.index]
+                if (target.replaced) {
+                    if (one.fromModel) suggestions[target.index] = one
+                } else if (one.fromModel || current.reason == "fehlt") {
+                    suggestions[target.index] = one
+                }
+                val mark = if (suggestions[target.index].fromModel) "KI" else suggestions[target.index].reason.ifBlank { "woertlich" }
+                retries += "${current.templateId}->${one.templateId}:${current.reason}->$mark"
+            }
+        }
+        if (generationId != suggestGeneration.get()) return null
+        val shownIds = shown.map { it.template.id }.toSet()
+        val merged = dedupeCaptions(suggestions, judgedCandidates, message)
+        val extras = orderByRules(
+            merged.filter { it.fromModel && it.templateId !in shownIds },
+            message,
+        ).mapNotNull { suggestion ->
+            val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
+            renderOne(template, suggestion.lines, suggestion.fromModel, suggestion.reason)
+        }
+        val room = (3 - shown.size).coerceAtLeast(0)
+        val kept = extras.take(room)
+        extras.drop(room).forEach { option ->
+            if (!option.bitmap.isRecycled) option.bitmap.recycle()
+            option.file.delete()
+        }
+        if (generationId != suggestGeneration.get()) {
+            kept.forEach { option ->
+                if (!option.bitmap.isRecycled) option.bitmap.recycle()
+                option.file.delete()
+            }
+            return null
+        }
+        val combined = shown + kept
+        if (kept.isEmpty()) return null
+        log.event(
+            mapOf(
+                "kind" to "follow",
+                "text" to message,
+                "lang" to lang,
+                "followUp" to if (plan.withoutSchema) "background-noschema" else "background",
+                "retries" to retries.joinToString(" | "),
+                "reasons" to combined.joinToString(" | ") { option ->
+                    val mark = if (option.fromModel) "KI" else option.reason.ifBlank { "woertlich" }
+                    "${option.template.id}:$mark"
+                },
+                "followMs" to ms(followStarted),
+                "templates" to combined.joinToString(",") { it.template.id },
+                "rewritten" to combined.count { it.fromModel },
+            ),
+        )
+        sweep(combined.map { it.file.name }.toSet())
+        return combined
     }
 
     private suspend fun embedQuery(message: String): Triple<FloatArray, MemIndex, Boolean> {
