@@ -1,63 +1,131 @@
-# MemEm 0.1.8
+# MemEm
 
-Private Android-Tastatur (Sideload), die aus dem getippten Text drei Memes vorschlägt und eines davon in das Eingabefeld legt. MemEm sendet nie selbst. Optional liest eine Bedienungshilfe den offenen WhatsApp-Chat und ein schwebender Punkt startet denselben Vorschlag.
+MemEm ist eine Android-Tastatur zum Sideload. Aus dem getippten Text werden drei Memes vorgeschlagen. Ein Tippen auf eine Karte legt das PNG ins Eingabefeld. MemEm sendet nie selbst.
 
-Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`. Einstellungen und Wizard bleiben im ReadEm-Stil: cremefarbene Karten, schwarzer Rand, harter Schatten, Anton. Die Tastatur selbst ist flach: helle Tasten auf Creme, dünner grauer Rand, Sondertasten dezent gelb, Meme-Karten ohne Versatzschatten. Standardlayout ist englisches QWERTY, Leertaste `EN`. QWERTZ ist eine Einstellung, Leertaste dann `DE`. Globus kurz wechselt zur vorherigen Tastatur, Globus lang öffnet die Tastaturauswahl. Gemma und Embedding laufen immer auf der CPU.
+Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`. Version 0.1.8.
 
-Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Schließen oder Fertig führt in die Hauptansicht. Danach startet der Wizard nicht mehr von selbst. Die Hauptansicht zeigt den Status, ein Probierfeld mit drei Karten und die Einstellungen. Die Tastatur lässt unten Platz für die Navigationsleiste, bei Gesten und bei drei Tasten. Text auf den Vorlagen sitzt in der memegen-Box (Anker, Größe, Winkel, Ausrichtung, Schrift, Farbe), dreht um den Box-Mittelpunkt und wird wie bei memegen an den Anker geklebt. Die Schrift schrumpft, bis der Text samt Umbruch in die Box passt. Gemma schreibt die Nachricht für jede der drei Vorlagen meme-typisch um, in der Sprache der Nachricht. Die Beispiele in `caption-examples.json` sind kurze deutsche Sprüche, Englisch nur bei festen Phrasen. Das Schema verlangt die drei Vorlagen-Ids und die Felder `z1`, `z2`, höchstens etwa 160 Ausgabetokens. Gleiche Zeilen, Beispielkopien, fremde Sprache und abgebrochene Zeilen werden verworfen, die betroffene Vorlage einmal neu versucht. Solange Gemma rechnet, zeigen die Karten die wörtliche Fassung und tragen das Kennzeichen `wörtlich`. Eine brauchbare Umschrift ersetzt sie und trägt `KI`. In den Einstellungen stehen die letzten zehn Anfragen, teilbar als Text.
+<p>
+<img src="docs/images/logo.png" alt="MemEm Logo" width="180" />
+</p>
 
-## Umschreiben auf dem Rechner
+## Funktionen
+
+* Tastatur im Gboard-Zuschnitt mit drei Meme-Vorschlägen. Standard ist englisches QWERTY, Leertaste `EN`. QWERTZ ist zuschaltbar, Leertaste dann `DE`.
+* Lokale Umschrift mit Gemma 4 E2B, immer auf der CPU. Solange das Modell rechnet, zeigen die Karten die wörtliche Fassung (`wörtlich`). Eine brauchbare Umschrift ersetzt sie (`KI`).
+* Vektorsuche über 6.491 Punkte (EmbeddingGemma, sonst ein Hash-Index im Repo). Die besten drei Vorlagen gehen in einem Aufruf an Gemma.
+* Chat-Kontext über die Bedienungshilfe, nur WhatsApp. Die letzten sichtbaren Nachrichten gehen in Suche und Prompt. Der getippte Text bleibt die Nachricht.
+* Einfügen über die Zwischenablage (`content://` vom FileProvider) und, wenn das Feld Bilder annimmt, über Commit-Content. Meldet die Tastatur keinen Erfolg, folgt `ACTION_PASTE` im WhatsApp-Feld. Zuletzt bleibt Teilen. Der Senden-Knopf wird nicht gedrückt.
+* Globus kurz wechselt zur vorherigen Tastatur. Globus lang öffnet die Tastaturauswahl. Langer Druck auf die Leertaste wechselt ebenfalls, ohne den Dialog. Enter fügt einen Zeilenumbruch ein.
+
+Die App bleibt im ReadEm-Stil: cremefarbene Karten, schwarzer Rand, harter Schatten, Anton. Die Tastatur selbst ist flach.
+
+## Quellen
+
+MemEm steht auf diesen Arbeiten. Die Lizenzen stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+* [memegen](https://github.com/jacebrowning/memegen) von Jace Browning: Vorlagen und die Textfeld-Konfiguration, auf denen Ablage und Renderer aufbauen. Der Code ist MIT. Die Vorlagenbilder können Rechte Dritter sein.
+* [ImgFlip575K](https://github.com/schesa/ImgFlip575K_Dataset): Bildunterschriften im Suchindex.
+* [LoC-meme-generator](https://huggingface.co/datasets/pszemraj/LoC-meme-generator): weitere Bildunterschriften, ODC-BY.
+* [Gemma 4](https://ai.google.dev/gemma/docs/core) und [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) von Google, unter den [Gemma Terms of Use](https://ai.google.dev/gemma/terms). Die Gewichte liegen nicht in diesem Repo.
+* [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM): Inferenz auf dem Gerät und in `rewrite-cli`.
+* ChatLens: eigene frühere Basis für Bedienungshilfe, Einfügen und den schwebenden Punkt. Was übernommen wurde, steht in [docs/chatlens-uebernahme.md](docs/chatlens-uebernahme.md).
+
+## Architektur
+
+```mermaid
+flowchart TD
+    tippen[Getippter Text]
+    chat[WhatsApp nur mit Bedienungshilfe]
+    suche[Suche: Embedding oder Hash, Top 8]
+    gemma[Gemma 4 E2B im Prozess llm, Top 3]
+    pruefung[Parser, Prüfung, ein Retry je Vorlage]
+    bild[Renderer mit memegen-Box]
+    feld[Zwischenablage, Commit-Content oder Teilen]
+    tippen --> suche
+    chat --> suche
+    suche --> gemma
+    gemma --> pruefung
+    pruefung --> bild
+    bild --> feld
+```
+
+Gemma und das Embedding laufen im Prozess `:llm` über LiteRT-LM, immer `Backend.CPU`. Die Tastatur spricht den Prozess per Binder an. Ein nativer Abbruch beendet nur `:llm`. Die Tastatur startet ihn neu.
+
+Die Prüfung verwirft leere, doppelte, abgebrochene und beispielgleiche Zeilen sowie eine fremde Sprache, außer bei festen Phrasen wie `It's a trap!`. Fällt eine Karte durch, wird nur diese Vorlage einmal neu versucht. Sonst bleibt die gekennzeichnete wörtliche Fassung.
+
+## Bilder
+
+Aufgenommen mit Robolectric aus der laufenden Oberfläche (`ScreenRenderTest`), die drei Memes mit demselben Renderer wie die Tastatur.
+
+| | |
+| --- | --- |
+| Tastatur mit drei Vorschlägen | Einrichtung, Schritt 1 |
+| <img src="docs/images/tastatur.png" alt="Tastatur mit drei Meme-Vorschlägen" width="360" /> | <img src="docs/images/einrichtung.png" alt="Einrichtungs-Assistent" width="280" /> |
+| Hauptansicht | Einstellungen |
+| <img src="docs/images/hauptansicht.png" alt="Hauptansicht mit drei Karten" width="280" /> | <img src="docs/images/einstellungen.png" alt="Einstellungen" width="280" /> |
+
+Beispiel-Memes, gerendert aus den mitgelieferten Vorlagen:
+
+<p>
+<img src="docs/images/meme-drake.png" alt="Drake: Meeting heute, Meeting am Freitag" width="220" />
+<img src="docs/images/meme-fine.png" alt="This is fine: Der Server brennt, Alles gut" width="240" />
+<img src="docs/images/meme-cmm.png" alt="Change my mind: Die Frist war gestern" width="240" />
+</p>
+
+## Installation
+
+1. Debug-APK sideloaden und die Sicherheitsprüfung des Systems bestätigen.
+2. Beim ersten Start führt der Assistent durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS und ein Probierfeld. Schließen oder Fertig öffnet die Hauptansicht. Danach startet der Assistent nicht von selbst. Unfertige Pflichtpunkte bleiben als Hinweis „Einrichtung unvollständig“, mit Knopf zum Fortsetzen.
+3. Bildschirmtastaturen: MemEm einschalten, danach als aktive Tastatur wählen.
+4. In WhatsApp mit MemEm tippen und **Meme** drücken. Es erscheinen immer drei Vorschaubilder. Ein Vorschlag löscht den Text und fügt das PNG ein.
+
+### Xiaomi, HyperOS
+
+Kommt beim Einschalten der Bedienungshilfe der Hinweis auf eingeschränkte Einstellungen: Dialog schließen, dann Einstellungen, Apps, MemEm, Drei-Punkte-Menü, **Eingeschränkte Einstellungen zulassen**, mit Fingerabdruck oder PIN bestätigen. Danach zurück zur Bedienungshilfe und den Schalter einschalten.
+
+Ohne Autostart und ohne „Keine Einschränkungen“ beim Akku beendet HyperOS den Download, den schwebenden Punkt und den Prozess `:llm`. Die Pfade stehen in [docs/hyperos.md](docs/hyperos.md). Sie sind am Xiaomi 15 Ultra in diesem Stand nicht erneut geprüft.
+
+### Modelle
+
+Ein Vordergrunddienst lädt beim ersten Start:
+
+* EmbeddingGemma 2 Text 270M, etwa 157 MB
+* Gemma 4 E2B, etwa 2,6 GB, immer CPU
+
+SHA-256 wird geprüft. Ein abgebrochener Download bleibt als Teildatei und setzt fort. Nach Erfolg verschwindet die Download-Benachrichtigung.
+
+## Bauen
+
+JDK 21, Android SDK, `local.properties` mit `sdk.dir` falls nötig.
+
+```bash
+python3 tools/build_assets.py
+python3 tools/build_index.py /pfad/embeddinggemma-2-text-270m.litertlm
+./gradlew :engine:test :app:testDebugUnitTest :app:assembleDebug
+```
+
+`build_assets.py` liest die memegen-Konfiguration und schreibt Katalog und Bilder. `build_index.py` bettet die Punkte neu ein (Präfix `task: search result | text: `, Anfrage `task: search query | text: `). Solange das Einbettungsmodell fehlt, sucht die App mit `vectors-hash.f16`.
+
+Der Prototyp liegt unter `reference/memechat/`.
+
+## rewrite-cli
+
+Dieselbe Umschrift wie in der App, auf der JVM:
 
 ```bash
 ./gradlew :tools:rewrite-cli:run --args="--gemma /pfad/gemma-4-E2B-it.litertlm --embed /pfad/embeddinggemma-2-text-270m.litertlm --sentences saetze.txt"
 ```
 
-Eine Zeile pro Satz. Die Ausgabe ist Markdown und JSON: Vorlage, Zeilen, Quelle `KI` oder `wörtlich`, Fallback-Grund, Roh-Antwort, Latenz.
+Eine Zeile pro Satz. Die Ausgabe ist Markdown und JSON: Vorlage, Zeilen, Quelle `KI` oder `wörtlich`, Grund, Roh-Antwort, Latenz.
 
-Die Abhängigkeit `com.google.ai.edge.litertlm:litertlm-jvm:0.18.0` enthält die native Bibliothek `liblitertlm_jni.so` für `linux-x86_64`. Der Lader zieht sie aus dem JAR unter `com/google/ai/edge/litertlm/jni/linux-x86_64/liblitertlm_jni.so`. Nötig sind JDK 21 und glibc. Ein weiteres Paket ist nicht vorgesehen. Scheitert das Laden, liegt diese `.so` nicht für die Architektur im JAR, oder `LD_LIBRARY_PATH` zeigt auf eine andere `liblitertlm_jni.so`.
+`com.google.ai.edge.litertlm:litertlm-jvm:0.18.0` enthält `liblitertlm_jni.so` für `linux-x86_64`. Der Lader zieht sie aus dem JAR unter `com/google/ai/edge/litertlm/jni/linux-x86_64/liblitertlm_jni.so`. Nötig sind JDK 21 und glibc. Ein weiteres Paket ist nicht vorgesehen. Scheitert das Laden, fehlt diese `.so` für die Architektur, oder `LD_LIBRARY_PATH` zeigt auf eine andere `liblitertlm_jni.so`.
 
-Klappt das Embedding-Modell auf der JVM nicht, sucht das Werkzeug mit dem Hash-Index im Repo. Ohne Index bleiben feste Vorlagen. Prompt, Parser und Prüfung sind dieselben wie in der App.
+Klappt das Embedding-Modell nicht, sucht das Werkzeug mit dem Hash-Index. Prompt, Parser, Prüfung und der eine Retry je Vorlage sind dieselben wie in der App. Der erste Embedding-Aufruf wird verworfen.
 
-## Ablauf
+## Datenschutz
 
-1. Der Wizard öffnet Bildschirmtastaturen. MemEm dort einschalten und danach als aktive Tastatur wählen.
-2. In WhatsApp mit MemEm tippen, oder mit einer anderen Tastatur tippen und dann zu MemEm wechseln. Der Text wird über `getExtractedText` und `getTextBeforeCursor` gelesen.
-3. Auf **Meme** tippen. Es erscheinen immer drei Vorschaubilder.
-4. Ein Vorschlag löscht den Text und fügt das PNG ein. Standardweg ist die Zwischenablage (`content://` über den FileProvider, danach Einfügen). Meldet die Tastatur keinen Erfolg und ist die Bedienungshilfe an, folgt `ACTION_PASTE` im WhatsApp-Feld. Danach Commit-Content, ganz zuletzt Teilen an WhatsApp.
-5. Mit aktiver Bedienungshilfe gehen die letzten sichtbaren Nachrichten in die Suche und in den Prompt. Der getippte Text bleibt die Nachricht.
-6. Welcher Weg gemeldet hat, steht in `files/debug/pipeline.jsonl` auf dem Gerät. Dort stehen auch die Zeiten für Einbetten, Suche, Gemma und Rendern.
+Alles bleibt auf dem Gerät. Es gibt kein Konto und keinen eigenen Server. Modelle, Embeddings, der Suchindex und das Protokoll der letzten Anfragen (`files/debug/pipeline.jsonl`) verlassen das Telefon nicht, außer der Nutzer teilt das Protokoll selbst. Die Bedienungshilfe sieht nur `com.whatsapp` und liest den offenen Chat, solange sie an ist. Sie tippt nicht auf Senden.
 
-Einrichtung auf HyperOS: `docs/hyperos.md`. Was aus ChatLens stammt: `docs/chatlens-uebernahme.md`.
+## Lizenz
 
-## Modelle
-
-Beim ersten Start lädt ein Vordergrunddienst:
-
-* EmbeddingGemma 2 Text 270M (`embeddinggemma-2-text-270m.litertlm`, etwa 157 MB)
-* Gemma 4 E2B (`gemma-4-E2B-it.litertlm`, etwa 2,6 GB), immer CPU
-
-SHA-256 wird geprüft, ein abgebrochener Download wird fortgesetzt (Teildatei und Knopf Fortsetzen). Auf HyperOS die Akku-Einschränkung für MemEm aufheben, sonst beendet das System den Modell-Download, den Punkt und den Prozess `:llm`.
-
-Gemma läuft in einem eigenen Prozess `:llm`. Ein nativer Abbruch beendet nur diesen Prozess. Die Tastatur startet ihn neu und versucht die Antwort einmal ohne JSON-Schema erneut. Das Schema enthält kein `minItems`/`maxItems`.
-
-## Suche
-
-Der mitgelieferte Index ist ein Vollscan über 6.491 Vektoren (float16, 768 Dimensionen), fusioniert wie im Prototyp (gewichtetes RRF, k=60, Gewichte Text 1, Bild 0,5, Bild+Text 1). Vorlagen mit mehr als vier Textfeldern fallen weg.
-
-`tools/build_index.py` bettet die Punkte mit LiteRT-LM und EmbeddingGemma 2 Text 270M neu ein (Präfix `task: search result | text: `, Anfrage `task: search query | text: `). Solange das Einbettungsmodell auf dem Gerät fehlt, sucht die Tastatur mit dem Hash-Index `vectors-hash.f16`.
-
-Bild- und Bild-Text-Punkte liegen in diesem Build im selben Textraum (Bedeutung bzw. Caption), nicht im 440M-Sichtmodell. Das steht in `docs/search-eval.json`.
-
-## Bauen
-
-```bash
-python3 tools/build_assets.py
-python3 tools/build_index.py /pfad/embeddinggemma-2-text-270m.litertlm
-./gradlew :engine:test :app:assembleDebug
-```
-
-Der Prototyp liegt unter `reference/memechat/`. Impact.ttf wird nicht ausgeliefert. Ersatz ist Anton (OFL), dazu Titillium Web Black, Kalam und Noto Sans Bold.
-
-## ReadEm
-
-Das private Repo `slickdajackson/ReadEm` (Zweig `cursor/stimme-parakeet-086-dbc6`) war von diesem Lauf aus nicht lesbar. Die LiteRT-LM-Anbindung (Prozess `:llm`, Neustart nach Abbruch, Schema ohne Mindestanzahl) ist anhand von LiteRT-LM 0.18.0 neu geschrieben.
+Eigener Code: [MIT](LICENSE). Bestandteile Dritter, einschließlich der Vorlagenbilder und der Gemma-Bedingungen: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
