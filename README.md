@@ -2,7 +2,7 @@
 
 MemEm is a sideload Android keyboard. Typed text becomes three meme suggestions. A tap on a card puts the PNG into the input field. MemEm never sends a message.
 
-Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.0.
+Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.1.
 
 The on-device UI is German. Labels such as `wörtlich`, `KI`, and "Eingeschränkte Einstellungen zulassen" are quoted below as they appear in the app.
 
@@ -14,7 +14,7 @@ The on-device UI is German. Labels such as `wörtlich`, `KI`, and "Eingeschränk
 
 * A Gboard-style keyboard with three meme previews. The default layout is English QWERTY, space bar `EN`. QWERTZ is optional, and the space bar then reads `DE`.
 * A local rewrite with Gemma 4 E2B, always on the CPU. While the model runs, the cards show the literal wording (`wörtlich`). A usable rewrite replaces it (`KI`).
-* Captions follow the language of the typed message. If the line is too short to tell, recent chat decides, then the keyboard layout or the phone language. Each template keeps its own catchphrase. German and English example captions are both curated.
+* Captions follow the language of the typed message, checked line by line. If the line is too short to tell, recent chat decides, then the keyboard layout or the phone language. Relevance is the EmbeddingGemma cosine. A short quality pass sorts the cards that pass. Each template keeps its own catchphrase. German and English example captions are both curated.
 * Vector search over 6,491 points (EmbeddingGemma, or a hash index shipped in the repo). The best three templates go to Gemma in one call.
 * Chat context through the accessibility service, WhatsApp only. The last visible messages go into search and the prompt. The typed text stays the message.
 * Insert via the clipboard (`content://` from the FileProvider) and, when the field accepts images, via commit-content. If the keyboard does not report success, `ACTION_PASTE` runs on the WhatsApp field. Share is last. The send button is never pressed.
@@ -41,7 +41,7 @@ flowchart TD
     chat[WhatsApp, only with accessibility]
     search[Search: embedding or hash, top 8]
     gemma[Gemma 4 E2B in the llm process, top 3]
-    check[Parser, check, one combined retry]
+    check[Parser, check, retry, quality sort]
     render[Renderer using the memegen box]
     field[Clipboard, commit-content, or share]
     typed --> search
@@ -54,7 +54,7 @@ flowchart TD
 
 Gemma and the embedding run in the `:llm` process through LiteRT-LM, always `Backend.CPU`. The keyboard talks to that process over Binder. A native abort ends only `:llm`. The keyboard starts it again.
 
-The caption language matches the typed message. Recent chat, then the keyboard layout or the phone language, fills in when the typed line is unclear. A catchphrase is allowed only on its own template. The check rejects empty, duplicate, truncated, and example-copy lines. A caption is too close to the message only when every line, or about 70 percent of the tokens, comes from it. A short line is the wrong language only when it shows a clear signal for another language. If every card fails, those templates are tried once together at a higher temperature, with a concrete reason for each. If one card already passed, the others stay as the marked literal wording and nothing waits. Every rejected card is logged with its reason.
+The caption language matches the typed message, checked line by line. Recent chat, then the keyboard layout or the phone language, fills in when the typed line is unclear. A catchphrase is allowed only on its own template, and the template name is not a caption. Relevance is the EmbeddingGemma cosine between the caption and the message. A setup line may repeat the message when the punchline is new. The template catchphrase and a single message word do not count as a literal copy. Identical captions are kept on one card only. If every card fails, those templates are tried once together at a higher temperature, with a concrete reason in the message language. A short second call then scores grammar and punchline and sorts the cards. Every rejected card is logged with its reason.
 
 ## Screenshots
 

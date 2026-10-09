@@ -11,10 +11,17 @@ import com.google.ai.edge.litertlm.EmbeddingOptions
 import com.google.ai.edge.litertlm.Engine
 import com.google.ai.edge.litertlm.EngineConfig
 import com.google.ai.edge.litertlm.InputData
+import com.google.ai.edge.litertlm.MessageCallback
+import com.google.ai.edge.litertlm.RepetitionPenaltyConfig
 import com.google.ai.edge.litertlm.ResponseFormat
 import com.google.ai.edge.litertlm.SamplerConfig
 import com.google.ai.edge.litertlm.ThinkingConfig
 import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
+import app.memem.engine.GEMMA_REPETITION_PENALTY
+import app.memem.engine.absorbModelText
+import app.memem.engine.hasBlankLineRun
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 import java.io.File
 
 /**
@@ -158,12 +165,32 @@ class EngineHost(private val cacheDir: File) {
             enableResponseFormat = useSchema,
         )
         engine.createConversation(config).use { conversation ->
-            val response = conversation.sendMessage(
+            val done = CompletableFuture<String>()
+            val buffer = StringBuilder()
+            val format = if (useSchema) ResponseFormat.json(schema) else null
+            conversation.sendMessageAsync(
                 com.google.ai.edge.litertlm.Message.user(user),
+                object : MessageCallback {
+                    override fun onMessage(message: com.google.ai.edge.litertlm.Message) {
+                        val next = absorbModelText(buffer.toString(), message.toString())
+                        buffer.clear()
+                        buffer.append(next)
+                        if (hasBlankLineRun(buffer.toString())) conversation.cancelProcess()
+                    }
+
+                    override fun onDone() {
+                        done.complete(buffer.toString())
+                    }
+
+                    override fun onError(throwable: Throwable) {
+                        if (buffer.isNotEmpty()) done.complete(buffer.toString()) else done.completeExceptionally(throwable)
+                    }
+                },
                 maxOutputToken = maxTokens,
-                responseFormat = if (useSchema) ResponseFormat.json(schema!!) else null,
+                repetitionPenaltyConfig = RepetitionPenaltyConfig(GEMMA_REPETITION_PENALTY, null, 0.3f, 32),
+                responseFormat = format,
             )
-            return response.toString()
+            return done.get(90, TimeUnit.SECONDS)
         }
     }
 }

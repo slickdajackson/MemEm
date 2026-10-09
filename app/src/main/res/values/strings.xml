@@ -12,7 +12,7 @@
     <string name="overlay_close">Schließen</string>
     <string name="overlay_pick">Einen Vorschlag antippen</string>
     <string name="overlay_empty">Kein Text im Feld und keine Nachrichten erkannt</string>
-    <string name="version_title">MemEm 0.2.0</string>
+    <string name="version_title">MemEm 0.2.1</string>
     <string name="need_text">Erst einen Text tippen</string>
     <string name="searching">Suche Vorlagen</string>
     <string name="writing">Schreibe Sprüche</string>

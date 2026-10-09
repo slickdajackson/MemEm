@@ -249,11 +249,28 @@ class GemmaResponseTest {
     }
 
     @Test
-    fun splitsSlashSeparatedEntries() {
-        val raw = """{"fine":{"z1":"Qualm im Rack / Und keiner merkt es"}}"""
-        val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), "Der Server brennt und niemand merkt es").single()
-        assertEquals(listOf("Qualm im Rack", "Und keiner merkt es"), out.lines)
-        assertTrue(out.fromModel)
+    fun slashStaysInsideTheField() {
+        val kept = parseSuggestions(
+            """{"fine":{"z1":"Qualm im Rack / das Regal brennt","z2":"Keiner schaut hin"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "Der Server brennt und niemand merkt es",
+        ).single()
+        assertEquals(listOf("Qualm im Rack / das Regal brennt", "Keiner schaut hin"), kept.lines)
+        assertTrue(kept.fromModel)
+        val extra = parseSuggestions(
+            """{"fine":{"z1":"Qualm im Rack","z2":"Keiner da","z3":"Noch eine Zeile"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "Der Server brennt und niemand merkt es",
+        ).single()
+        assertEquals(2, extra.lines.size)
+        assertEquals(listOf("Qualm im Rack", "Keiner da"), extra.lines)
+        val split = parseSuggestions(
+            """{"fine":{"z1":"Ich / Im Bett bleiben"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "das wetter ist so schlecht ich bleib im bett",
+        ).single()
+        assertFalse(split.fromModel)
+        assertEquals(2, split.lines.size)
     }
 
     @Test
@@ -382,6 +399,30 @@ class GemmaResponseTest {
         ).single()
         assertFalse(short.fromModel)
         assertEquals("woertlich", short.reason)
+        val shopping = parseSuggestions(
+            """{"money":{"z1":"Nur kurz einkaufen","z2":"200 Euro weg"}}""",
+            listOf(Candidate("money", 2, "upper")),
+            "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+        ).single()
+        assertTrue(shopping.fromModel)
+        val traffic = parseSuggestions(
+            """{"toohigh":{"z1":"Stau wieder auf der A8","z2":"Too damn high"}}""",
+            listOf(Candidate("toohigh", 2, "upper")),
+            "schon wieder stau auf der a8",
+        ).single()
+        assertTrue(traffic.fromModel)
+        val mixed = parseSuggestions(
+            """{"fine":{"z1":"Prüfung geschafft","z2":"Mission accomplished"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "hab die prüfung bestanden",
+        ).single()
+        assertEquals("sprache", mixed.reason)
+        val named = parseSuggestions(
+            """{"success":{"z1":"Prüfung geschafft","z2":"Success Kid"}}""",
+            listOf(Candidate("success", 2, "upper", name = "Success Kid")),
+            "hab die prüfung bestanden",
+        ).single()
+        assertEquals("name", named.reason)
     }
 
     @Test
@@ -426,14 +467,22 @@ class GemmaResponseTest {
         val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), "wer hat den letzten kaffee getrunken").single()
         assertEquals(listOf("Keiner da", "Die Kanne bleibt leer"), out.lines)
         assertTrue(out.fromModel)
-        val exam = parseSuggestions(
+        val low = parseSuggestions(
             """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
             listOf(Candidate("fine", 1, "upper")),
             "hab die prüfung bestanden",
             similarity = { 0.02f },
         ).single()
-        assertTrue(exam.fromModel)
-        assertTrue(carriesCoreStatement("hab die prüfung bestanden", exam.lines))
+        assertFalse(low.fromModel)
+        assertEquals("fremd", low.reason)
+        val near = parseSuggestions(
+            """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
+            listOf(Candidate("fine", 1, "upper")),
+            "hab die prüfung bestanden",
+            similarity = { MIN_EMBED_SIMILARITY + 0.05f },
+        ).single()
+        assertTrue(near.fromModel)
+        assertTrue(carriesCoreStatement("hab die prüfung bestanden", near.lines))
     }
 
     @Test
@@ -524,6 +573,7 @@ class CaptionExampleTest {
                     val lower = line.lowercase()
                     assertTrue(id + " " + line, banned.none { it in lower })
                     if (dominantLang(line) == "en") assertTrue(id + " " + line, isCatchphrase(line, id))
+                    assertFalse(id + " " + line, exampleMatchesTestSentence(line))
                 }
             }
         }
@@ -558,9 +608,36 @@ class CaptionExampleTest {
                         assertTrue(id + " " + line, dominantLang(line) != "de")
                         assertTrue(id + " " + line, dominantLang(line) != "es")
                     }
+                    assertFalse(id + " " + line, exampleMatchesTestSentence(line))
                 }
             }
         }
+    }
+}
+
+private val TEST_SENTENCES = listOf(
+    "schon wieder stau auf der a8",
+    "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+    "hab die pruefung bestanden",
+    "hab die prüfung bestanden",
+    "wer kommt heute abend mit ins kino",
+    "ihr werdet am ende alles verlieren",
+    "das wetter ist so schlecht ich bleib im bett",
+    "wer hat den letzten kaffee getrunken",
+    "mein chef will dass ich am wochenende arbeite",
+    "my boss wants me to work on the weekend",
+    "who drank the last coffee",
+    "traffic jam again",
+    "passed my exam",
+    "diet starts tomorrow i promise",
+)
+
+private fun exampleMatchesTestSentence(line: String): Boolean {
+    val norm = normCaptionLine(line)
+    if (norm.split(' ').size < 3) return false
+    return TEST_SENTENCES.any { sentence ->
+        val message = normCaptionLine(sentence)
+        norm.length >= 12 && norm in message
     }
 }
 
@@ -590,7 +667,37 @@ class PromptBuilderTest {
         assertTrue(prompt.system.contains("JSON"))
         assertTrue(prompt.system.contains("caption language matches the message"))
         assertTrue(prompt.system.contains("catchphrase"))
+        assertTrue(prompt.system.contains("slash"))
         assertFalse(prompt.system.contains("It's a trap"))
+        assertEquals(
+            "Die Zeile wiederholt die Nachricht. Schreib eine neue Einleitung und eine eigene Pointe.",
+            reasonText("woertlich", "de"),
+        )
+        assertTrue(reasonText("sprache", "en").startsWith("Wrong language"))
+        assertTrue(retryHint("woertlich", "de").startsWith("Die letzten Zeilen"))
+        val same = parseSuggestions(
+            """{"fine":{"z1":"Montag","z2":"Kein Bock"},"drake":{"z1":"Montag","z2":"Kein Bock"}}""",
+            listOf(Candidate("fine", 2, "upper"), Candidate("drake", 2, "upper")),
+            "der server brennt und niemand merkt es",
+        )
+        assertTrue(same[0].fromModel)
+        assertEquals("doppelt", same[1].reason)
+        val flooded = """{"exit":{"z1":"Bitte gehen","z2":"Tuer bleibt"},"fine":{"z1":"Qualm""" + "\n\n\n\n"
+        val repaired = repairModelJson(flooded)
+        assertTrue(repaired, repaired.contains(""""z2":"Tuer bleibt""""))
+        val saved = parseSuggestions(flooded, listOf(Candidate("exit", 2, "upper"), Candidate("fine", 2, "upper")), "der server qualmt laut")
+        assertEquals("exit", saved[0].templateId)
+        assertEquals(listOf("Bitte gehen", "Tuer bleibt"), saved[0].lines)
+        assertTrue(saved[0].fromModel)
+        val scores = parseQuality("""{"fine":{"g":"4","p":"5"},"drake":{"g":"1","p":"2"}}""", listOf("fine", "drake"))
+        val ordered = orderByQuality(
+            listOf(
+                Suggestion("drake", listOf("Schwach"), true),
+                Suggestion("fine", listOf("Stark"), true),
+            ),
+            scores,
+        )
+        assertEquals(listOf("fine", "drake"), ordered.map { it.templateId })
         assertTrue(prompt.user.contains("Do not copy the message."))
         assertTrue(prompt.user.contains("Write in German."))
         assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"<deutsche Zeile>\""))

@@ -14,13 +14,22 @@ import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.FOLLOW_UP_TEMPERATURE
 import app.memem.engine.GEMMA_TEMPERATURE
+import app.memem.engine.QUALITY_MAX_TOKENS
+import app.memem.engine.QUALITY_TEMPERATURE
+import app.memem.engine.cosine
 import app.memem.engine.fallbackLocale
 import app.memem.engine.followUpHint
+import app.memem.engine.orderByQuality
 import app.memem.engine.outputLanguage
+import app.memem.engine.parseQuality
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
+import app.memem.engine.qualityPrompt
+import app.memem.engine.qualitySchema
 import app.memem.engine.reasonText
+import app.memem.engine.similarityText
 import app.memem.settings.Prefs
+import app.memem.engine.Suggestion
 import app.memem.engine.searchTemplates
 import app.memem.engine.searchText
 import app.memem.llm.GenerateOutcome
@@ -28,6 +37,8 @@ import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
 import app.memem.render.MemeRenderer
 import java.io.File
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 data class MemeOption(
     val template: MemeTemplate,
@@ -139,8 +150,9 @@ class MemePipeline(context: Context) {
                 retries += "${one.templateId}:${current.reason}->$mark"
             }
         }
+        val ranked = rankByQuality(suggestions, lang)
         val renderStarted = System.nanoTime()
-        val rendered = suggestions.mapNotNull { suggestion ->
+        val rendered = ranked.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
             renderOne(template, suggestion.lines, suggestion.fromModel)
         }.ifEmpty { literal }
@@ -167,11 +179,11 @@ class MemePipeline(context: Context) {
                 },
                 "raw" to outcome.text?.take(500),
                 "retries" to retries.joinToString(" | "),
-                "reasons" to suggestions.joinToString(" | ") { item ->
+                "reasons" to ranked.joinToString(" | ") { item ->
                     val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
                     "${item.templateId}:$mark"
                 },
-                "rejected" to suggestions.filter { !it.fromModel }.joinToString(" | ") { item ->
+                "rejected" to ranked.filter { !it.fromModel }.joinToString(" | ") { item ->
                     "${item.templateId}:${item.reason}:${reasonText(item.reason, lang)}:${item.detail}"
                 },
                 "renderMs" to renderMs,
@@ -198,8 +210,40 @@ class MemePipeline(context: Context) {
         return Triple(vec, index, false)
     }
 
-    private fun similarity(message: String): (String) -> Float = { caption ->
-        HashEmbedder.similarity(message, caption, assets.idf(), assets.idfDocs())
+    private fun similarity(message: String): ((String) -> Float)? {
+        val embedReady = assets.space.startsWith("litert") && ModelCatalog.ready(app, ModelCatalog.embed)
+        if (!embedReady) return null
+        val messageVec = embedCaption(message) ?: return null
+        val cache = HashMap<String, Float>()
+        return { caption ->
+            cache.getOrPut(caption) {
+                val vec = embedCaption(caption) ?: return@getOrPut 1f
+                cosine(messageVec, vec)
+            }
+        }
+    }
+
+    private fun embedCaption(text: String): FloatArray? {
+        return try {
+            runBlocking(Dispatchers.IO) { remote.embed(similarityText(text)) }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private suspend fun rankByQuality(suggestions: MutableList<Suggestion>, language: String): List<Suggestion> {
+        val live = suggestions.filter { it.fromModel }
+        if (live.size < 2) return suggestions
+        val prompt = qualityPrompt(live.map { it.templateId to it.lines }, language)
+        val outcome = remote.generate(
+            prompt.system,
+            prompt.user,
+            qualitySchema(live.map { it.templateId }),
+            QUALITY_TEMPERATURE,
+            QUALITY_MAX_TOKENS,
+            retryWithoutSchema = false,
+        )
+        return orderByQuality(suggestions, parseQuality(outcome.text.orEmpty(), live.map { it.templateId }))
     }
 
     private suspend fun generate(

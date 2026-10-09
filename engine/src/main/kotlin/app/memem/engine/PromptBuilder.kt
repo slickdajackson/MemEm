@@ -17,6 +17,15 @@ data class BuiltPrompt(val system: String, val user: String) {
 const val GEMMA_MAX_OUTPUT_TOKENS = 160
 const val GEMMA_TEMPERATURE = 0.4
 const val FOLLOW_UP_TEMPERATURE = 0.8
+const val GEMMA_REPETITION_PENALTY = 1.2f
+
+/** Streaming chunks are sometimes the full text so far, sometimes only the new piece. */
+fun absorbModelText(previous: String, incoming: String): String {
+    if (incoming.isEmpty()) return previous
+    if (previous.isEmpty() || incoming.startsWith(previous)) return incoming
+    if (previous.endsWith(incoming)) return previous
+    return previous + incoming
+}
 
 private const val SYSTEM =
     "You write chat memes. Do not copy the message. Rewrite it in the style of the examples. " +
@@ -24,27 +33,95 @@ private const val SYSTEM =
         "A template's own catchphrase may stay in its original language. Do not borrow a catchphrase from a different template. " +
         "Short and pointed. For each template, fields z1, z2, and so on, one line per field, each line different and not empty. " +
         "No line ends on an article, a preposition, or a conjunction. " +
+        "Do not put a slash in a field. One field is one line. " +
         "Reply with JSON only. Keys are the template ids. Values are objects with z1, z2, ..."
 
 fun retryHint(reason: String, language: String = ""): String = retryHint(listOf(reason), language)
 
 fun retryHint(reasons: List<String>, language: String = ""): String {
+    val lang = language.ifBlank { "?" }
     val why = reasons.map { it.ifBlank { "unusable" } }.distinct().joinToString(", ")
-    return "The last lines were rejected ($why). Write in ${languageName(language.ifBlank { "?" })}. " +
-        "Do not copy the message or an example line."
+    return if (language == "de") {
+        "Die letzten Zeilen wurden verworfen ($why). Schreibe auf ${languageNameDe(lang)}. " +
+            "Kopiere weder die Nachricht noch eine Beispielzeile."
+    } else {
+        "The last lines were rejected ($why). Write in ${languageName(lang)}. " +
+            "Do not copy the message or an example line."
+    }
 }
 
-fun reasonText(reason: String, language: String): String = when (reason) {
-    "woertlich" -> "The line repeats the message. Write a new setup and keep an original punchline."
-    "sprache" -> "Wrong language. Write in ${languageName(language)}."
-    "kopie" -> "That copies an example or another template's catchphrase. Write a new line."
-    "fremd" -> "That does not fit the message. Keep the meaning."
-    "doppelt" -> "The lines repeat each other. Make each line different."
-    "leer" -> "A line was empty. Fill every field."
-    "sinnlos" -> "A line was unusable. Write a real phrase."
-    "abgebrochen" -> "A line was cut off. Finish the phrase."
-    "fehlt" -> "The template was missing. Reply with its lines."
-    else -> "The lines were rejected. Write in ${languageName(language)}."
+fun reasonText(reason: String, language: String): String {
+    val german = language == "de"
+    return when (reason) {
+        "woertlich" -> if (german) {
+            "Die Zeile wiederholt die Nachricht. Schreib eine neue Einleitung und eine eigene Pointe."
+        } else {
+            "The line repeats the message. Write a new setup and keep an original punchline."
+        }
+        "sprache" -> if (german) {
+            "Falsche Sprache. Schreibe auf ${languageNameDe(language)}."
+        } else {
+            "Wrong language. Write in ${languageName(language)}."
+        }
+        "kopie" -> if (german) {
+            "Das kopiert ein Beispiel oder die Catchphrase einer anderen Vorlage. Schreib eine neue Zeile."
+        } else {
+            "That copies an example or another template's catchphrase. Write a new line."
+        }
+        "fremd" -> if (german) {
+            "Das passt nicht zur Nachricht. Behalte die Bedeutung."
+        } else {
+            "That does not fit the message. Keep the meaning."
+        }
+        "doppelt" -> if (german) {
+            "Dieselbe Caption steht schon auf einer Karte, oder die Zeilen wiederholen sich. Schreib etwas anderes."
+        } else {
+            "That caption is already on another card, or the lines repeat. Write something else."
+        }
+        "leer" -> if (german) {
+            "Eine Zeile war leer. Fülle jedes Feld."
+        } else {
+            "A line was empty. Fill every field."
+        }
+        "sinnlos" -> if (german) {
+            "Eine Zeile war unbrauchbar. Schreib einen echten Satz."
+        } else {
+            "A line was unusable. Write a real phrase."
+        }
+        "abgebrochen" -> if (german) {
+            "Eine Zeile ist abgeschnitten. Beende den Satz."
+        } else {
+            "A line was cut off. Finish the phrase."
+        }
+        "fehlt" -> if (german) {
+            "Die Vorlage fehlt. Antworte mit ihren Zeilen."
+        } else {
+            "The template was missing. Reply with its lines."
+        }
+        "name" -> if (german) {
+            "Der Vorlagenname steht in der Caption. Schreib eine eigene Zeile."
+        } else {
+            "The template name is in the caption. Write a new line."
+        }
+        else -> if (german) {
+            "Die Zeilen wurden verworfen. Schreibe auf ${languageNameDe(language)}."
+        } else {
+            "The lines were rejected. Write in ${languageName(language)}."
+        }
+    }
+}
+
+fun languageNameDe(code: String): String = when (code) {
+    "de" -> "Deutsch"
+    "en" -> "Englisch"
+    "fr" -> "Französisch"
+    "es" -> "Spanisch"
+    "it" -> "Italienisch"
+    "nl" -> "Niederländisch"
+    "pl" -> "Polnisch"
+    "pt" -> "Portugiesisch"
+    "tr" -> "Türkisch"
+    else -> "der Sprache der Nachricht"
 }
 
 /** One concrete reason per template, used only when every card failed. */
@@ -175,12 +252,12 @@ private fun renderUser(
         val examples = brief.examples.take(exampleTake).filter { lines -> lines.all { it.isNotBlank() } }
         examples.forEach { lines ->
             body.append("- ")
-            body.append(lines.joinToString(" / ") { clip(it, lineLimit) })
+            body.append(lines.joinToString(" | ") { clip(it, lineLimit) })
             body.append('\n')
         }
     }
     body.append("Template names may be English. The caption language still follows the instruction below.\n")
-    body.append("Do not copy the message. Rewrite it in the style of the examples.\n")
+    body.append("Do not copy the message. Rewrite it in the style of the examples. Do not use a slash.\n")
     if (hint.isNotBlank()) body.append(hint.trim()).append('\n')
     body.append("Write in ").append(languageName(language)).append(".\n")
     body.append("Reply in exactly this shape, with the real ids and z1, z2, ...:\n")
@@ -202,6 +279,27 @@ private fun exampleJson(candidates: List<Brief>, language: String): String {
         "\"${brief.id}\":{$fields}"
     }
     return "{$body}"
+}
+
+const val QUALITY_MAX_TOKENS = 48
+const val QUALITY_TEMPERATURE = 0.2
+
+/** A short second call. g is grammar, p is the punchline, each from 1 to 5. */
+fun qualityPrompt(cards: List<Pair<String, List<String>>>, language: String): BuiltPrompt {
+    val german = language == "de"
+    val system = if (german) {
+        "Du bewertest Meme-Zeilen. g ist Grammatik von 1 bis 5. p ist die Pointe von 1 bis 5. Antworte nur mit JSON."
+    } else {
+        "You score meme captions. g is grammar from 1 to 5. p is the punchline from 1 to 5. Reply with JSON only."
+    }
+    val user = StringBuilder()
+    cards.forEach { (id, lines) ->
+        user.append(id).append(": ").append(lines.joinToString(" | ")).append('\n')
+    }
+    val shape = cards.joinToString(",") { (id, _) -> "\"$id\":{\"g\":\"3\",\"p\":\"4\"}" }
+    user.append(if (german) "Bewerte nur diese Karten.\n" else "Score only these cards.\n")
+    user.append('{').append(shape).append('}')
+    return BuiltPrompt(system, user.toString())
 }
 
 private fun clip(text: String, limit: Int): String {

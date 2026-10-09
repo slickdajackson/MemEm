@@ -131,11 +131,13 @@ class RemoteLlmEngine(context: Context) {
         user: String,
         schema: String?,
         temperature: Double = GEMMA_TEMPERATURE,
+        maxTokens: Int = GEMMA_MAX_OUTPUT_TOKENS,
+        retryWithoutSchema: Boolean = true,
     ): GenerateOutcome {
-        val first = generateOnce(system, user, schema, temperature)
+        val first = generateOnce(system, user, schema, temperature, maxTokens)
         if (first.text != null) return first.copy(loaded = modelReady)
-        if (first.error == "timeout" || schema.isNullOrBlank()) return first.copy(loaded = modelReady)
-        val second = generateOnce(system, user, null, temperature)
+        if (!retryWithoutSchema || first.error == "timeout" || schema.isNullOrBlank()) return first.copy(loaded = modelReady)
+        val second = generateOnce(system, user, null, temperature, maxTokens)
         val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ").ifBlank { null }
         return second.copy(error = if (second.text != null) first.error else error, loaded = modelReady)
     }
@@ -145,13 +147,14 @@ class RemoteLlmEngine(context: Context) {
         user: String,
         schema: String?,
         temperature: Double,
+        maxTokens: Int,
     ): GenerateOutcome {
         val data = Bundle().apply {
             putString("system", system)
             putString("user", user)
             if (schema != null) putString("schema", schema)
             putDouble("temperature", temperature)
-            putInt("maxTokens", GEMMA_MAX_OUTPUT_TOKENS)
+            putInt("maxTokens", maxTokens)
         }
         val reply = try {
             request(EngineProto.GENERATE, data, 90_000)

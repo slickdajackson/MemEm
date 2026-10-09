@@ -13,12 +13,23 @@ import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.parseCatalog
 import app.memem.engine.FOLLOW_UP_TEMPERATURE
+import app.memem.engine.GEMMA_REPETITION_PENALTY
 import app.memem.engine.GEMMA_TEMPERATURE
+import app.memem.engine.QUALITY_MAX_TOKENS
+import app.memem.engine.QUALITY_TEMPERATURE
+import app.memem.engine.absorbModelText
+import app.memem.engine.cosine
 import app.memem.engine.followUpHint
+import app.memem.engine.hasBlankLineRun
+import app.memem.engine.orderByQuality
 import app.memem.engine.outputLanguage
+import app.memem.engine.parseQuality
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
+import app.memem.engine.qualityPrompt
+import app.memem.engine.qualitySchema
 import app.memem.engine.reasonText
+import app.memem.engine.similarityText
 import app.memem.engine.searchTemplates
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
@@ -29,9 +40,13 @@ import com.google.ai.edge.litertlm.EmbeddingOptions
 import com.google.ai.edge.litertlm.Engine
 import com.google.ai.edge.litertlm.EngineConfig
 import com.google.ai.edge.litertlm.InputData
+import com.google.ai.edge.litertlm.MessageCallback
+import com.google.ai.edge.litertlm.RepetitionPenaltyConfig
 import com.google.ai.edge.litertlm.ResponseFormat
 import com.google.ai.edge.litertlm.SamplerConfig
 import com.google.ai.edge.litertlm.ThinkingConfig
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -133,6 +148,22 @@ fun main(args: Array<String>) {
                     if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
                 }
             }
+            val live = suggestions.filter { it.fromModel }
+            if (live.size >= 2) {
+                val prompt = qualityPrompt(live.map { it.templateId to it.lines }, lang)
+                val judged = generate(
+                    engine,
+                    prompt.system,
+                    prompt.user,
+                    qualitySchema(live.map { it.templateId }),
+                    QUALITY_TEMPERATURE,
+                    QUALITY_MAX_TOKENS,
+                    retryWithoutSchema = false,
+                )
+                val ordered = orderByQuality(suggestions, parseQuality(judged.text.orEmpty(), live.map { it.templateId }))
+                suggestions.clear()
+                suggestions.addAll(ordered)
+            }
             val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
             val latency = (System.nanoTime() - started) / 1_000_000
             val report = reportJson(sentence, latency, search.mode, combined, suggestions, lang)
@@ -161,11 +192,13 @@ private fun generate(
     user: String,
     schema: String?,
     temperature: Double = GEMMA_TEMPERATURE,
+    maxTokens: Int = GEMMA_MAX_OUTPUT_TOKENS,
+    retryWithoutSchema: Boolean = true,
 ): ModelText {
-    val first = generateOnce(engine, system, user, schema, temperature)
+    val first = generateOnce(engine, system, user, schema, temperature, maxTokens)
     if (first.text != null) return first
-    if (first.error == "timeout" || schema.isNullOrBlank()) return first
-    val second = generateOnce(engine, system, user, null, temperature)
+    if (!retryWithoutSchema || first.error == "timeout" || schema.isNullOrBlank()) return first
+    val second = generateOnce(engine, system, user, null, temperature, maxTokens)
     if (second.text != null) return second
     val error = listOfNotNull(first.error, second.error).distinct().joinToString("; ")
     return ModelText(null, error.ifBlank { "keine antwort" })
@@ -177,23 +210,44 @@ private fun generateOnce(
     user: String,
     schema: String?,
     temperature: Double,
+    maxTokens: Int,
 ): ModelText {
     return try {
         val useSchema = !schema.isNullOrBlank()
         val config = ConversationConfig(
             systemInstruction = Contents.of(system),
             samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = temperature),
-            maxOutputToken = GEMMA_MAX_OUTPUT_TOKENS,
+            maxOutputToken = maxTokens,
             thinkingConfig = ThinkingConfig(enableThinking = false),
             enableResponseFormat = useSchema,
         )
         engine.createConversation(config).use { conversation ->
-            val response = conversation.sendMessage(
+            val done = CompletableFuture<String>()
+            val buffer = StringBuilder()
+            val format = if (useSchema) ResponseFormat.json(schema) else null
+            conversation.sendMessageAsync(
                 com.google.ai.edge.litertlm.Message.user(user),
-                maxOutputToken = GEMMA_MAX_OUTPUT_TOKENS,
-                responseFormat = if (useSchema) ResponseFormat.json(schema) else null,
+                object : MessageCallback {
+                    override fun onMessage(message: com.google.ai.edge.litertlm.Message) {
+                        val next = absorbModelText(buffer.toString(), message.toString())
+                        buffer.clear()
+                        buffer.append(next)
+                        if (hasBlankLineRun(buffer.toString())) conversation.cancelProcess()
+                    }
+
+                    override fun onDone() {
+                        done.complete(buffer.toString())
+                    }
+
+                    override fun onError(throwable: Throwable) {
+                        if (buffer.isNotEmpty()) done.complete(buffer.toString()) else done.completeExceptionally(throwable)
+                    }
+                },
+                maxOutputToken = maxTokens,
+                repetitionPenaltyConfig = RepetitionPenaltyConfig(GEMMA_REPETITION_PENALTY, null, 0.3f, 32),
+                responseFormat = format,
             )
-            val text = response.toString()
+            val text = done.get(90, TimeUnit.SECONDS)
             if (text.isBlank()) ModelText(null, "leere antwort") else ModelText(text, null)
         }
     } catch (error: Throwable) {
@@ -349,8 +403,26 @@ private class Searcher(
     }
 
     fun scorer(message: String): ((String) -> Float)? {
-        if (idf.isEmpty()) return null
-        return { caption -> HashEmbedder.similarity(message, caption, idf, idfDocs) }
+        val engine = embedder ?: return null
+        val left = embedPair(engine, message) ?: return null
+        val cache = HashMap<String, Float>()
+        return { caption ->
+            cache.getOrPut(caption) {
+                val right = embedPair(engine, caption) ?: return@getOrPut 1f
+                cosine(left, right)
+            }
+        }
+    }
+
+    private fun embedPair(engine: EmbeddingEngine, text: String): FloatArray? {
+        return try {
+            engine.computeEmbedding(
+                listOf(InputData.Text(similarityText(text))),
+                EmbeddingOptions(normalize = true, outputSize = 768),
+            ).embedding
+        } catch (_: Exception) {
+            null
+        }
     }
 
     fun fallback(sentence: String): List<CatalogEntry> {
