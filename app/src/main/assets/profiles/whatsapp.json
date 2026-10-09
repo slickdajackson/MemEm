@@ -12,7 +12,7 @@
     "evidence": [
       "Appium-Testskript fuer WhatsApp unter Android 5.1.1: https://github.com/akhayapanigrahi/AndroidAutomation/blob/master/src/test/java/com/test/androidautomationtest/AndroidAutomation/WhatsApp_Message.java (menuitem_search, search_src_text, conversations_row_contact_name, entry, send; message_text steht dort in auskommentiertem Code)",
       "Automate-Forum 2021: https://groups.google.com/g/automate-user/c/cypGo9aWsAA (conversations_row_contact_name) und https://groups.google.com/g/automate-user/c/Nxb1T1-GPQ8 (contactpicker_row_name, dort mit dem Paket com.whatsapp.w4b)",
-      "contact_row_container: Hinweis von Meiner aus dem Geraetelog zu Version 0.2.2 (Chatliste), nicht selbst geprueft.",
+      "contact_row_container: Hinweis aus einem Geraetelog zu Version 0.2.2 (Chatliste), nicht selbst geprueft.",
       "Alle Quellen sind alt und nicht auf aktuelle WhatsApp-Versionen bezogen. WhatsApp kann IDs aendern oder verschleiern. Die App benutzt die IDs nur als Zusatzsignal und faellt auf die Heuristik zurueck, wenn nichts passt."
     ],
     "searchButton": ["com.whatsapp:id/menuitem_search"],

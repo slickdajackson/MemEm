@@ -9,6 +9,7 @@ index with LiteRT-LM EmbeddingGemma 2 vectors.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -19,12 +20,12 @@ from PIL import Image
 from hash_embed import DIM, embed, embed_matrix, idf_table
 
 ROOT = Path(__file__).resolve().parents[1]
-MEMEGEN = Path("/tmp/memegen-src")
+MEMEGEN = Path(os.environ.get("MEMEM_MEMEGEN", ROOT / "vendor" / "memegen"))
 CAPTIONS = ROOT / "reference" / "memechat" / "data" / "captions"
 PAYLOADS = ROOT / "data" / "payloads-6491.json"
 ASSETS = ROOT / "app" / "src" / "main" / "assets"
 FONTS_SRC = {
-    "Anton-Regular.ttf": Path("/tmp/fonts/Anton-Regular.ttf"),
+    "Anton-Regular.ttf": Path(os.environ.get("MEMEM_FONT_ANTON", MEMEGEN / "fonts" / "Anton-Regular.ttf")),
     "TitilliumWeb-Black.ttf": MEMEGEN / "fonts" / "TitilliumWeb-Black.ttf",
     "Kalam-Regular.ttf": MEMEGEN / "fonts" / "Kalam-Regular.ttf",
     "NotoSans-Bold.ttf": MEMEGEN / "fonts" / "NotoSans-Bold.ttf",

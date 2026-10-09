@@ -89,7 +89,7 @@ class MemeBoxGoldenTest {
         val tol = template.width * 0.03f
         assertTrue("cx $cx expected $expectX", abs(cx - expectX) < tol)
         assertTrue("cy $cy expected $expectY", abs(cy - expectY) < tol)
-        val out = File("/opt/cursor/artifacts/cmm-text.png")
+        val out = File(System.getProperty("java.io.tmpdir"), "memem-cmm-text.png")
         out.parentFile?.mkdirs()
         out.outputStream().use { rendered.compress(Bitmap.CompressFormat.PNG, 100, it) }
         rendered.recycle()

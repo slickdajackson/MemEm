@@ -203,8 +203,6 @@ class ScreenRenderTest {
         val docs = File(repoRoot(), "docs/images")
         docs.mkdirs()
         logo.copyTo(File(docs, "logo.png"), overwrite = true)
-        File("/opt/cursor/artifacts").mkdirs()
-        logo.copyTo(File("/opt/cursor/artifacts/logo.png"), overwrite = true)
     }
 
     @Test
@@ -257,7 +255,7 @@ class ScreenRenderTest {
     }
 
     private fun save(bitmap: Bitmap, name: String, docs: Boolean = false) {
-        val dirs = mutableListOf(File("/opt/cursor/artifacts"))
+        val dirs = mutableListOf(File(repoRoot(), "build/screenshots"))
         if (docs) dirs += File(repoRoot(), "docs/images")
         for (dir in dirs) {
             dir.mkdirs()
@@ -396,11 +394,11 @@ class ScreenRenderTest {
     }
 
     private fun repoRoot(): File {
-        var dir = File(System.getProperty("user.dir") ?: "/workspace")
-        repeat(6) {
+        var dir = File(System.getProperty("user.dir") ?: ".").absoluteFile
+        repeat(8) {
             if (File(dir, "settings.gradle.kts").exists()) return dir
-            dir = dir.parentFile ?: return File("/workspace")
+            dir = dir.parentFile ?: return File(System.getProperty("user.dir") ?: ".")
         }
-        return File("/workspace")
+        return File(System.getProperty("user.dir") ?: ".")
     }
 }

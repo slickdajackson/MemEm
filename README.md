@@ -94,7 +94,7 @@ python3 tools/build_index.py /path/embeddinggemma-2-text-270m.litertlm
 ./gradlew :engine:test :app:testDebugUnitTest :app:assembleDebug
 ```
 
-`build_assets.py` reads the memegen config and writes the catalog and images. `build_index.py` rebuilds the search vectors. Until that embedding file is present, search uses the hash index shipped in the repo. Package `app.memem`, minSdk 29, targetSdk 36.
+`build_assets.py` reads a memegen checkout (`MEMEM_MEMEGEN`, default `vendor/memegen`) and writes the catalog and images. `build_index.py` takes the path to the EmbeddingGemma file and rebuilds the search vectors. Until that file is present, search uses the hash index shipped in the repo. The model weights themselves are not in the repo. Package `app.memem`, minSdk 29, targetSdk 36.
 
 ## rewrite-cli
 

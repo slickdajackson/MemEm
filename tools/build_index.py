@@ -29,7 +29,6 @@ from build_assets import evaluate, load_caption, text_documents  # noqa: E402
 ASSETS = ROOT / "app" / "src" / "main" / "assets"
 INDEX = ASSETS / "index"
 PAYLOADS = ROOT / "data" / "payloads-6491.json"
-DEFAULT_MODEL = Path("/tmp/models/embeddinggemma-2-text-270m.litertlm")
 DOC_PREFIX = "task: search result | text: "
 QUERY_PREFIX = "task: search query | text: "
 
@@ -59,7 +58,9 @@ def documents(catalog: dict, payloads: list[dict]) -> list[str]:
 
 
 def main() -> None:
-    model = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_MODEL
+    if len(sys.argv) < 2:
+        raise SystemExit("usage: build_index.py MODEL.litertlm")
+    model = Path(sys.argv[1])
     if not model.exists():
         raise SystemExit(f"missing model {model}. Download the 270M .litertlm first.")
     from litert_lm import EmbeddingEngine, EmbeddingOptions
