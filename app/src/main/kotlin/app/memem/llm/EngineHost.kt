@@ -1,5 +1,6 @@
 package app.memem.llm
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Message
 import com.google.ai.edge.litertlm.Backend
@@ -16,6 +17,7 @@ import com.google.ai.edge.litertlm.RepetitionPenaltyConfig
 import com.google.ai.edge.litertlm.ResponseFormat
 import com.google.ai.edge.litertlm.SamplerConfig
 import com.google.ai.edge.litertlm.ThinkingConfig
+import app.memem.R
 import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
 import app.memem.engine.GEMMA_REPETITION_PENALTY
 import app.memem.engine.absorbModelText
@@ -27,7 +29,7 @@ import java.io.File
 /**
  * Owns the native engines inside the :llm process. A native abort kills only that process.
  */
-class EngineHost(private val cacheDir: File) {
+class EngineHost(private val cacheDir: File, private val context: Context) {
     private var gemma: Engine? = null
     private var embedder: EmbeddingEngine? = null
     private var loadedGemma: String? = null
@@ -141,7 +143,7 @@ class EngineHost(private val cacheDir: File) {
     }
 
     private fun embed(text: String): FloatArray {
-        val engine = embedder ?: error("embedding nicht geladen")
+        val engine = embedder ?: error(context.getString(R.string.error_embedding_not_loaded))
         return engine.computeEmbedding(
             listOf(InputData.Text(text)),
             EmbeddingOptions(normalize = true, outputSize = 768),
@@ -155,7 +157,7 @@ class EngineHost(private val cacheDir: File) {
         temperature: Double,
         maxTokens: Int,
     ): String {
-        val engine = gemma ?: error("gemma nicht geladen")
+        val engine = gemma ?: error(context.getString(R.string.error_gemma_not_loaded))
         val useSchema = !schema.isNullOrBlank()
         val config = ConversationConfig(
             systemInstruction = Contents.of(system),

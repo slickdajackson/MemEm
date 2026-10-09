@@ -17,7 +17,7 @@ class LlmService : Service() {
     override fun onCreate() {
         super.onCreate()
         thread.start()
-        host = EngineHost(File(cacheDir, "litert"))
+        host = EngineHost(File(cacheDir, "litert"), this)
         val handler = object : Handler(thread.looper) {
             override fun handleMessage(msg: android.os.Message) {
                 host.handle(msg)

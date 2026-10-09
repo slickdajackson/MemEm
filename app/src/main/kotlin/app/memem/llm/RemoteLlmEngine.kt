@@ -10,6 +10,7 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
+import app.memem.R
 import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
 import app.memem.engine.GEMMA_TEMPERATURE
 import kotlinx.coroutines.Dispatchers
@@ -116,7 +117,7 @@ class RemoteLlmEngine(context: Context) {
         }
         if (load(gemmaPath, embedPath)) return null
         modelReady = false
-        return "nicht geladen"
+        return app.getString(R.string.error_not_loaded)
     }
 
     suspend fun embed(text: String): FloatArray? {

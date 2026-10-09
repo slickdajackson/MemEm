@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MemEm</string>
-    <string name="subtype_en">English</string>
-    <string name="subtype_de">Deutsch</string>
+    <string name="subtype_en">English (QWERTY)</string>
+    <string name="subtype_de">Deutsch (QWERTZ)</string>
     <string name="meme">Meme</string>
     <string name="clipboard_hint">The meme is on the clipboard. Long-press the field and tap Paste.</string>
     <string name="a11y_pasted">Inserted with accessibility</string>
@@ -13,8 +13,8 @@
     <string name="overlay_close">Close</string>
     <string name="overlay_pick">Tap a suggestion</string>
     <string name="overlay_empty">No text in the field and no messages found</string>
-    <string name="version_title">MemEm 0.2.7</string>
-    <string name="version_sideload">0.2.7   SIDELOAD</string>
+    <string name="version_title">MemEm 0.2.8</string>
+    <string name="version_sideload">0.2.8   SIDELOAD</string>
     <string name="need_text">Type something first</string>
     <string name="searching">Searching templates</string>
     <string name="writing">Writing captions</string>
@@ -22,6 +22,9 @@
     <string name="shared">Share opened</string>
     <string name="insert_failed">Insert did not work</string>
     <string name="models_missing">Models are missing, so these are example lines. Download them in setup.</string>
+    <string name="error_not_loaded">Not loaded</string>
+    <string name="error_gemma_not_loaded">Gemma is not loaded</string>
+    <string name="error_embedding_not_loaded">Embedding is not loaded</string>
     <string name="badge_ai">AI</string>
     <string name="badge_literal">literal</string>
     <string name="badge_stock">backup</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MemEm</string>
-    <string name="subtype_en">English</string>
-    <string name="subtype_de">Deutsch</string>
+    <string name="subtype_en">English (QWERTY)</string>
+    <string name="subtype_de">Deutsch (QWERTZ)</string>
     <string name="meme">Meme</string>
     <string name="clipboard_hint">Meme liegt in der Zwischenablage, lange tippen und Einfügen</string>
     <string name="a11y_pasted">Über die Bedienungshilfe eingefügt</string>
@@ -13,8 +13,8 @@
     <string name="overlay_close">Schließen</string>
     <string name="overlay_pick">Einen Vorschlag antippen</string>
     <string name="overlay_empty">Kein Text im Feld und keine Nachrichten erkannt</string>
-    <string name="version_title">MemEm 0.2.7</string>
-    <string name="version_sideload">0.2.7   SIDELOAD</string>
+    <string name="version_title">MemEm 0.2.8</string>
+    <string name="version_sideload">0.2.8   SIDELOAD</string>
     <string name="need_text">Erst einen Text tippen</string>
     <string name="searching">Suche Vorlagen</string>
     <string name="writing">Schreibe Sprüche</string>
@@ -22,6 +22,9 @@
     <string name="shared">Teilen geöffnet</string>
     <string name="insert_failed">Einfügen hat nicht geklappt</string>
     <string name="models_missing">Modelle fehlen, Beispielzeilen. Download in der Einrichtung.</string>
+    <string name="error_not_loaded">nicht geladen</string>
+    <string name="error_gemma_not_loaded">gemma nicht geladen</string>
+    <string name="error_embedding_not_loaded">embedding nicht geladen</string>
     <string name="badge_ai">KI</string>
     <string name="badge_literal">wörtlich</string>
     <string name="badge_stock">Ersatz</string>
