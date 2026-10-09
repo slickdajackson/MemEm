@@ -26,13 +26,6 @@ object ModelCatalog {
         sha256 = "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c",
         bytes = 2_588_147_712L,
     )
-    val gemmaGpu = ModelSpec(
-        id = "gemma-gpu",
-        fileName = "gemma-4-E2B-it-gpu.litertlm",
-        url = "https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it-gpu.litertlm",
-        sha256 = "a53a59001894c58e6bdb5b9b227709f91a2e3e556baa7d85acf9c55402ba5cf5",
-        bytes = 2_008_432_640L,
-    )
 
     fun file(context: Context, spec: ModelSpec): File = File(context.filesDir, "models/${spec.fileName}")
 

@@ -23,7 +23,6 @@ class EngineHost(private val cacheDir: File) {
     private var gemma: Engine? = null
     private var embedder: EmbeddingEngine? = null
     private var loadedGemma: String? = null
-    private var loadedGpu: Boolean? = null
 
     fun handle(msg: Message) {
         val reply = Bundle()
@@ -33,7 +32,6 @@ class EngineHost(private val cacheDir: File) {
                     load(
                         gemmaPath = msg.data.getString("gemma").orEmpty(),
                         embedPath = msg.data.getString("embed"),
-                        gpu = msg.data.getBoolean("gpu"),
                     )
                     reply.putBoolean("ok", true)
                 }
@@ -86,17 +84,16 @@ class EngineHost(private val cacheDir: File) {
         gemma = null
         embedder = null
         loadedGemma = null
-        loadedGpu = null
     }
 
-    private fun load(gemmaPath: String, embedPath: String?, gpu: Boolean) {
+    private fun load(gemmaPath: String, embedPath: String?) {
         cacheDir.mkdirs()
-        if (gemma?.isInitialized() != true || loadedGemma != gemmaPath || loadedGpu != gpu) {
+        if (gemma?.isInitialized() != true || loadedGemma != gemmaPath) {
             try {
                 gemma?.close()
             } catch (_: Exception) {
             }
-            val backend = if (gpu) Backend.GPU() else Backend.CPU(threadCount = 4)
+            val backend = Backend.CPU(threadCount = 4)
             val engine = Engine(
                 EngineConfig(
                     modelPath = gemmaPath,
@@ -108,7 +105,6 @@ class EngineHost(private val cacheDir: File) {
             engine.initialize()
             gemma = engine
             loadedGemma = gemmaPath
-            loadedGpu = gpu
         }
         if (!embedPath.isNullOrBlank() && embedder?.isInitialized() != true) {
             val emb = EmbeddingEngine(

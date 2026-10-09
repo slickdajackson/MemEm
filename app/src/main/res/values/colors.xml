@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg">#1C1C1E</color>
-    <color name="key">#3A3A3C</color>
-    <color name="key_text">#FFFFFF</color>
-    <color name="accent">#F5C518</color>
-    <color name="strip">#111113</color>
+    <color name="paper">#F3EDE0</color>
+    <color name="cream">#FBF6EA</color>
+    <color name="ink">#111111</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="blue">#1E88FF</color>
+    <color name="purple">#8B5CF6</color>
+    <color name="icon_background">#FBF6EA</color>
 </resources>

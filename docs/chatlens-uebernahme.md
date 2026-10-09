@@ -18,6 +18,6 @@ Ist die Bedienungshilfe aktiv, gehen die letzten sichtbaren Nachrichten zusätzl
 
 ## Modelle und HyperOS
 
-Der Download bleibt ein Vordergrunddienst mit Bereichsfortsetzung und SHA-256. Neu ist die Meldung, dass die Teildatei bleibt, plus die Aktion Fortsetzen, und `START_REDELIVER_INTENT`, weil HyperOS den Dienst beenden kann. Für die GPU sind `libOpenCL.so` und `libvndksupport.so` als optionale native Bibliotheken eingetragen, wie in ChatLens.
+Der Download bleibt ein Vordergrunddienst mit Bereichsfortsetzung und SHA-256. Neu ist die Meldung, dass die Teildatei bleibt, plus die Aktion Fortsetzen, und `START_REDELIVER_INTENT`, weil HyperOS den Dienst beenden kann. Ab 0.1.2 laufen Gemma und Embedding nur auf der CPU. Die optionalen OpenCL-Einträge aus ChatLens sind nicht mehr im Manifest.
 
 Die Einrichtungshinweise (eingeschränkte Einstellungen, Autostart, Akku ohne Einschränkung, Sperren in der Zuletzt-Ansicht, Overlay, Pop-up im Hintergrund, Zwischenablage, Advanced Protection) stehen in `docs/hyperos.md` und in den Einstellungen. Sie stammen aus `INSTALL-XIAOMI.md` und `RECHERCHE.md` und sind am Xiaomi 15 Ultra weiterhin nicht von diesem Lauf geprüft.

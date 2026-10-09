@@ -54,10 +54,17 @@ class MememImeService : InputMethodService() {
                 currentInputConnection?.commitText("\n", 1)
             }
 
-            override fun switchKeyboard() {
+            override fun switchIme() {
+                if (switchToPreviousInputMethod()) return
                 val imm = getSystemService(InputMethodManager::class.java)
                 val token = window?.window?.attributes?.token ?: return
-                imm.switchToNextInputMethod(token, false)
+                if (imm.shouldOfferSwitchingToNextInputMethod(token)) {
+                    switchToNextInputMethod(false)
+                }
+            }
+
+            override fun showImePicker() {
+                getSystemService(InputMethodManager::class.java).showInputMethodPicker()
             }
 
             override fun meme() {
@@ -68,11 +75,13 @@ class MememImeService : InputMethodService() {
                 insertOption(index)
             }
         })
+        panel.setQwertz(prefs.qwertz)
         return panel
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
+        if (::panel.isInitialized) panel.setQwertz(prefs.qwertz)
         pipeline.preload()
     }
 
@@ -100,9 +109,12 @@ class MememImeService : InputMethodService() {
                 }
             }
             show(result)
-            val gemma = if (prefs.gpu) ModelCatalog.gemmaGpu else ModelCatalog.gemmaCpu
             panel.setStatus(
-                if (ModelCatalog.ready(this@MememImeService, gemma)) "" else getString(R.string.models_missing),
+                if (ModelCatalog.ready(this@MememImeService, ModelCatalog.gemmaCpu)) {
+                    ""
+                } else {
+                    getString(R.string.models_missing)
+                },
             )
         }
     }

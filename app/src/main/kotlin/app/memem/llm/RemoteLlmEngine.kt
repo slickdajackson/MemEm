@@ -82,11 +82,10 @@ class RemoteLlmEngine(context: Context) {
         }
     }
 
-    suspend fun load(gemmaPath: String, embedPath: String?, gpu: Boolean): Boolean {
+    suspend fun load(gemmaPath: String, embedPath: String?): Boolean {
         val data = Bundle().apply {
             putString("gemma", gemmaPath)
             putString("embed", embedPath)
-            putBoolean("gpu", gpu)
         }
         val reply = request(EngineProto.LOAD, data, 180_000)
         return reply?.getBoolean("ok") == true

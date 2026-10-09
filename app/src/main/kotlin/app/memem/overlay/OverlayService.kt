@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.PixelFormat
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
@@ -17,10 +16,6 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import app.memem.R
@@ -49,10 +44,8 @@ class OverlayService : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val inserter by lazy { Inserter(this) }
     private val log by lazy { DebugLog(this) }
-    private var dot: TextView? = null
-    private var panel: LinearLayout? = null
-    private var status: TextView? = null
-    private val previews = ArrayList<ImageView>(3)
+    private var dot: View? = null
+    private var panel: OverlayPanelView? = null
     private var options: List<MemeOption> = emptyList()
     private var job: Job? = null
     private var dotX = 0
@@ -126,17 +119,8 @@ class OverlayService : Service() {
     }
 
     private fun addDot() {
-        val size = dp(56)
-        val view = TextView(this).apply {
-            text = "M"
-            gravity = Gravity.CENTER
-            textSize = 22f
-            setTextColor(0xFF111113.toInt())
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(0xFFF5C518.toInt())
-            }
-        }
+        val size = dp(64)
+        val view = LogoDotView(this)
         val params = baseParams(size, size)
         val area = screenArea()
         dotX = area.third - size - dp(8)
@@ -199,70 +183,39 @@ class OverlayService : Service() {
     }
 
     private fun showPanel() {
-        val box = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setBackgroundColor(0xF0181818.toInt())
-            setPadding(dp(10), dp(10), dp(10), dp(10))
+        val view = OverlayPanelView(this).apply {
+            status = getString(R.string.overlay_ready)
+            onMeme = { runMeme() }
+            onPick = { index -> pick(index) }
+            onClose = { hidePanel() }
         }
-        val label = TextView(this).apply {
-            setTextColor(0xFFFFFFFF.toInt())
-            text = getString(R.string.overlay_ready)
-        }
-        status = label
-        val meme = Button(this).apply {
-            text = getString(R.string.meme)
-            setOnClickListener { runMeme() }
-        }
-        val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-        previews.clear()
-        repeat(3) { index ->
-            val image = ImageView(this).apply {
-                setBackgroundColor(0xFF2A2A2C.toInt())
-                scaleType = ImageView.ScaleType.CENTER_CROP
-                setOnClickListener { pick(index) }
-            }
-            previews += image
-            val lp = LinearLayout.LayoutParams(dp(84), dp(84))
-            lp.marginEnd = dp(6)
-            row.addView(image, lp)
-        }
-        val close = Button(this).apply {
-            text = getString(R.string.overlay_close)
-            setOnClickListener { hidePanel() }
-        }
-        box.addView(label)
-        box.addView(meme)
-        box.addView(row)
-        box.addView(close)
-        val params = baseParams(dp(300), WindowManager.LayoutParams.WRAP_CONTENT).apply {
+        val params = baseParams(dp(320), dp(250)).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
             y = dp(72)
         }
-        windowManager.addView(box, params)
-        panel = box
+        windowManager.addView(view, params)
+        panel = view
     }
 
     private fun hidePanel() {
         panel?.let { runCatching { windowManager.removeView(it) } }
         panel = null
-        status = null
-        previews.clear()
     }
 
     private fun runMeme() {
         val service = MememAccessibilityService.instance
         if (service == null) {
-            status?.text = getString(R.string.a11y_needed)
+            panel?.status = getString(R.string.a11y_needed)
             return
         }
         val draft = service.draftText().trim()
         val context = service.recentTexts()
         val message = if (draft.isNotEmpty()) draft else context.takeLast(3).joinToString(" ")
         if (message.isBlank()) {
-            status?.text = getString(R.string.overlay_empty)
+            panel?.status = getString(R.string.overlay_empty)
             return
         }
-        status?.text = getString(R.string.searching)
+        panel?.status = getString(R.string.searching)
         job?.cancel()
         val usedContext = if (draft.isNotEmpty()) context else emptyList()
         job = scope.launch {
@@ -272,7 +225,7 @@ class OverlayService : Service() {
                 }
             }
             show(result)
-            status?.text = getString(R.string.overlay_pick)
+            panel?.status = getString(R.string.overlay_pick)
         }
     }
 
@@ -280,9 +233,7 @@ class OverlayService : Service() {
         if (panel == null) return
         val previous = options
         options = next
-        previews.forEachIndexed { index, image ->
-            image.setImageBitmap(next.getOrNull(index)?.bitmap)
-        }
+        panel?.previews = List(3) { next.getOrNull(it)?.bitmap }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }
@@ -292,7 +243,7 @@ class OverlayService : Service() {
         val option = options.getOrNull(index) ?: return
         val service = MememAccessibilityService.instance
         if (service == null) {
-            status?.text = getString(R.string.a11y_needed)
+            panel?.status = getString(R.string.a11y_needed)
             return
         }
         val outcome = inserter.insertViaAccessibility(option.file) { service.pasteImage(restoreOnFailure = true) }
@@ -307,7 +258,7 @@ class OverlayService : Service() {
                 "template" to option.template.id,
             ),
         )
-        status?.text = when {
+        panel?.status = when {
             outcome.pasteChannel == "a11y" && outcome.reportedSuccess -> getString(R.string.a11y_pasted)
             outcome.clipboardHint -> getString(R.string.clipboard_hint)
             outcome.reportedSuccess -> getString(R.string.shared)

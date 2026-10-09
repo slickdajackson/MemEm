@@ -1,12 +1,14 @@
-# MemEm 0.1.1
+# MemEm 0.1.2
 
 Private Android-Tastatur (Sideload), die aus dem getippten Text drei Memes vorschlägt und eines davon in das Eingabefeld legt. MemEm sendet nie selbst. Optional liest eine Bedienungshilfe den offenen WhatsApp-Chat und ein schwebender Punkt startet denselben Vorschlag.
 
-Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`.
+Paket `app.memem`, minSdk 29, targetSdk 36, nur `arm64-v8a`. Oberfläche im ReadEm-Stil: cremefarbene Karten, schwarzer Rand, harter Schatten, Anton. Standardlayout ist englisches QWERTY, Leertaste `EN`. QWERTZ ist eine Einstellung, Leertaste dann `DE`. Globus kurz wechselt zur vorherigen Tastatur, Globus lang öffnet die Tastaturauswahl. Gemma und Embedding laufen immer auf der CPU.
+
+Beim ersten Start führt ein Wizard durch Download, Tastatur einschalten, Tastatur wählen, optionale Bedienungshilfe, optionales HyperOS (Autostart und Akku) und ein Probierfeld. Danach liegt er in den Einstellungen unter „Einrichtung erneut“.
 
 ## Ablauf
 
-1. Tastatur in den Systemeinstellungen aktivieren (die App öffnet den passenden Bildschirm).
+1. Der Wizard öffnet Bildschirmtastaturen. MemEm dort einschalten und danach als aktive Tastatur wählen.
 2. In WhatsApp mit MemEm tippen, oder mit einer anderen Tastatur tippen und dann zu MemEm wechseln. Der Text wird über `getExtractedText` und `getTextBeforeCursor` gelesen.
 3. Auf **Meme** tippen. Es erscheinen immer drei Vorschaubilder.
 4. Ein Vorschlag löscht den Text und fügt das PNG ein. Standardweg ist die Zwischenablage (`content://` über den FileProvider, danach Einfügen). Meldet die Tastatur keinen Erfolg und ist die Bedienungshilfe an, folgt `ACTION_PASTE` im WhatsApp-Feld. Danach Commit-Content, ganz zuletzt Teilen an WhatsApp.
@@ -19,9 +21,8 @@ Einrichtung auf HyperOS: `docs/hyperos.md`. Was aus ChatLens stammt: `docs/chatl
 
 Beim ersten Start lädt ein Vordergrunddienst:
 
-* EmbeddingGemma 2 Text 270M (`embeddinggemma-2-text-270m.litertlm`)
-* Gemma 4 E2B CPU (`gemma-4-E2B-it.litertlm`, 2,59 GB)
-* optional die GPU-Datei
+* EmbeddingGemma 2 Text 270M (`embeddinggemma-2-text-270m.litertlm`, etwa 157 MB)
+* Gemma 4 E2B (`gemma-4-E2B-it.litertlm`, etwa 2,6 GB), immer CPU
 
 SHA-256 wird geprüft, ein abgebrochener Download wird fortgesetzt (Teildatei und Knopf Fortsetzen). Auf HyperOS die Akku-Einschränkung für MemEm aufheben, sonst beendet das System den Modell-Download, den Punkt und den Prozess `:llm`.
 

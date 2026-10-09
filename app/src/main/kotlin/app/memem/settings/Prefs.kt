@@ -21,10 +21,10 @@ class Prefs(context: Context) {
             prefs.edit().putString(KEY_INSERT, raw).apply()
         }
 
-    var gpu: Boolean
-        get() = prefs.getBoolean(KEY_GPU, false)
+    var qwertz: Boolean
+        get() = prefs.getBoolean(KEY_QWERTZ, false)
         set(value) {
-            prefs.edit().putBoolean(KEY_GPU, value).apply()
+            prefs.edit().putBoolean(KEY_QWERTZ, value).apply()
         }
 
     var overlay: Boolean
@@ -33,9 +33,23 @@ class Prefs(context: Context) {
             prefs.edit().putBoolean(KEY_OVERLAY, value).apply()
         }
 
+    var wizardDone: Boolean
+        get() = prefs.getBoolean(KEY_WIZARD, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_WIZARD, value).apply()
+        }
+
+    var autostartAck: Boolean
+        get() = prefs.getBoolean(KEY_AUTOSTART, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_AUTOSTART, value).apply()
+        }
+
     private companion object {
         const val KEY_INSERT = "insert"
-        const val KEY_GPU = "gpu"
+        const val KEY_QWERTZ = "qwertz"
         const val KEY_OVERLAY = "overlay"
+        const val KEY_WIZARD = "wizard_done"
+        const val KEY_AUTOSTART = "autostart_ack"
     }
 }

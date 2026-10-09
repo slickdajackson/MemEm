@@ -18,7 +18,6 @@ import app.memem.engine.searchText
 import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
 import app.memem.render.MemeRenderer
-import app.memem.settings.Prefs
 import java.io.File
 
 data class MemeOption(
@@ -34,14 +33,12 @@ class MemePipeline(context: Context) {
     private val assets = MemAssets(app)
     private val renderer = MemeRenderer(app)
     private val log = DebugLog(app)
-    private val prefs = Prefs(app)
     val remote = RemoteLlmEngine(app)
     private var litert: MemIndex? = null
     private var hash: MemIndex? = null
 
     fun preload() {
-        val gemma = if (prefs.gpu) ModelCatalog.gemmaGpu else ModelCatalog.gemmaCpu
-        val gemmaFile = ModelCatalog.file(app, gemma)
+        val gemmaFile = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
         if (!gemmaFile.isFile) return
         val embedFile = ModelCatalog.file(app, ModelCatalog.embed)
         remote.bind()
@@ -52,7 +49,6 @@ class MemePipeline(context: Context) {
                     remote.load(
                         gemmaPath = gemmaFile.absolutePath,
                         embedPath = embedFile.takeIf { it.isFile && assets.space.startsWith("litert") }?.absolutePath,
-                        gpu = prefs.gpu,
                     )
                 }
             } catch (_: Exception) {
@@ -135,8 +131,7 @@ class MemePipeline(context: Context) {
 
     private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): String? {
         if (templates.isEmpty()) return null
-        val gemma = if (prefs.gpu) ModelCatalog.gemmaGpu else ModelCatalog.gemmaCpu
-        if (!ModelCatalog.ready(app, gemma)) return null
+        if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) return null
         val briefs = templates.map { template ->
             Brief(
                 id = template.id,
