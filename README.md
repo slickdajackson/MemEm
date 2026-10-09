@@ -2,7 +2,7 @@
 
 MemEm is a sideload Android keyboard. Typed text becomes three meme suggestions. A tap on a card puts the PNG into the input field. MemEm never sends a message.
 
-Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.2.
+Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.3.
 
 The on-device UI is German. Labels such as `wörtlich`, `KI`, and "Eingeschränkte Einstellungen zulassen" are quoted below as they appear in the app.
 
@@ -14,7 +14,7 @@ The on-device UI is German. Labels such as `wörtlich`, `KI`, and "Eingeschränk
 
 * A Gboard-style keyboard with three meme previews. The default layout is English QWERTY, space bar `EN`. QWERTZ is optional, and the space bar then reads `DE`.
 * A local rewrite with Gemma 4 E2B, always on the CPU. While the model runs, the cards show the literal wording (`wörtlich`). A usable rewrite replaces it (`KI`).
-* Captions follow the language of the typed message. Wrong language needs two clear foreign words. Relevance is a margin against unrelated sentences, not a fixed cosine cutoff. A missing card is filled from another template. Gemma E2B is the default. Qualität (E4B) is an optional slower model. German and English example captions are both curated.
+* Captions follow the language of the typed message. Wrong language needs two clear foreign words. Relevance is a margin against unrelated sentences, kept at 0, plus a check that the caption is closer to its own message than to other messages. A short setup may repeat a few words. A missing template is tried once more. If it still fails, MemEm shows one or two cards. Gemma E2B is the default. Qualität (E4B) is an optional slower model. German and English example captions are both curated.
 * Vector search over 6,491 points (EmbeddingGemma, or a hash index shipped in the repo). The best three templates go to Gemma in one call.
 * Chat context through the accessibility service, WhatsApp only. The last visible messages go into search and the prompt. The typed text stays the message.
 * Insert via the clipboard (`content://` from the FileProvider) and, when the field accepts images, via commit-content. If the keyboard does not report success, `ACTION_PASTE` runs on the WhatsApp field. Share is last. The send button is never pressed.
@@ -54,7 +54,7 @@ flowchart TD
 
 Gemma and the embedding run in the `:llm` process through LiteRT-LM, always `Backend.CPU`. The keyboard talks to that process over Binder. A native abort ends only `:llm`. The keyboard starts it again.
 
-The caption language matches the typed message. Recent chat, then the keyboard layout or the phone language, fills in when the typed line is unclear. A line is the wrong language only when it has at least two unambiguous foreign words. Each template may keep its own catchphrase, including its display name. Another template's name is rejected. Relevance is the EmbeddingGemma margin against unrelated reference sentences. A line that contains at least 80 percent of the message's words, or a cosine above 0.95, is a copy. Identical captions are kept on one card only. If every card fails, those templates are tried once together at a higher temperature, with a concrete reason in the message language. A missing or failed card is filled from another template's example instead of a literal split. Cards are sorted with cheap rules: copies, broken words, and lines cut mid-sentence sort lower. Qualität (E4B) is off unless the user turns it on. Every rejected card is logged with its reason.
+The caption language matches the typed message. Recent chat, then the keyboard layout or the phone language, fills in when the typed line is unclear. A line is the wrong language only when it has at least two unambiguous foreign words. Each template may keep its own catchphrase, including its display name. Another template's name is rejected. Relevance stays a margin of 0 against unrelated reference sentences, and the caption must also be closer to the typed message than to three other messages. A line is a copy only when it has at least four words and covers at least 80 percent of the message. The cosine copy test runs once on the whole caption, above 0.97. Short setups such as "Prüfung bestanden" stay. Identical captions are kept on one card only. Leftover JSON braces and quotes are stripped from lines. If a template is missing, that template is tried once more. Cards that still fail are dropped, so the keyboard can show one or two cards. Cards are sorted with cheap rules: copies, a short list of obvious typos, and lines cut mid-sentence sort lower. Qualität (E4B) is off unless the user turns it on. Every rejected card is logged with its reason.
 
 ## Screenshots
 

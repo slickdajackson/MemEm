@@ -99,7 +99,7 @@ fun dedupeCaptions(suggestions: List<Suggestion>, candidates: List<Candidate>, m
 }
 
 /**
- * Model cards stay in front, then a stock caption from another template, then a literal split.
+ * Model cards stay in front.
  * Among cards in the same band, copies, broken words, and mid-sentence cuts sort lower.
  */
 fun orderByRules(suggestions: List<Suggestion>, message: String): List<Suggestion> {
@@ -131,10 +131,27 @@ fun ruleScore(item: Suggestion, message: String): Int {
     return score
 }
 
+/** Obvious misspellings. Colloquial words such as "hab" are not in this list. */
+private val OBVIOUS_TYPOS = setOf(
+    "schlim",
+    "mudeheit",
+    "müdeheit",
+    "wünsch",
+    "wuensch",
+    "acheived",
+    "seperate",
+    "definately",
+    "tommorow",
+    "tommorrow",
+    "sucess",
+    "occured",
+)
+
 /** A token that is cut off or misshapen, such as "wünsch" or "Müdeheit". */
 fun hasBrokenWord(line: String): Boolean {
     for (word in messageWords(line)) {
         val letters = word.filter { it.isLetter() }.lowercase(Locale.GERMAN)
+        if (letters in OBVIOUS_TYPOS) return true
         if (letters.length < 4) continue
         if (letters.endsWith("deheit") || letters.endsWith("keitheit")) return true
         if (letters.endsWith("sch") && letters.any { it in "äöü" }) return true
@@ -145,39 +162,6 @@ fun hasBrokenWord(line: String): Boolean {
         }
     }
     return false
-}
-
-/**
- * A missing or rejected card takes the next template's own example caption.
- * The user's sentence is not pasted onto that template.
- */
-fun fillMissing(suggestions: List<Suggestion>, fallbacks: List<Candidate>): List<Suggestion> {
-    val used = suggestions.map { it.templateId }.toMutableSet()
-    val pool = fallbacks.filter { it.id !in used }.toMutableList()
-    return suggestions.map { item ->
-        if (item.fromModel) return@map item
-        val index = pool.indexOfFirst { exampleCaption(it) != null }
-        if (index < 0) return@map item
-        val next = pool.removeAt(index)
-        val lines = exampleCaption(next) ?: return@map item
-        used += next.id
-        Suggestion(
-            next.id,
-            lines,
-            fromModel = false,
-            reason = "ersatz",
-            detail = item.templateId + ":" + item.reason,
-        )
-    }
-}
-
-private fun exampleCaption(candidate: Candidate): List<String>? {
-    val group = candidate.knownExamples().firstOrNull { lines ->
-        lines.count { it.isNotBlank() } == candidate.boxes
-    } ?: return null
-    val lines = group.map { capWords(it.trim()) }
-    if (lines.size != candidate.boxes || lines.any { it.isBlank() }) return null
-    return lines
 }
 
 data class ResolvedLines(val lines: List<String>, val fromModel: Boolean, val reason: String = "")
@@ -254,6 +238,60 @@ fun relevanceMargin(messageVec: FloatArray, captionVec: FloatArray, references: 
     return messageSim - best
 }
 
+/**
+ * Other messages a caption is compared with. Same-topic lines are dropped so a
+ * paraphrase is not scored against the message itself.
+ */
+const val DISTRACTOR_SAME_TOPIC = 0.9f
+
+val MESSAGE_DISTRACTORS = listOf(
+    "schon wieder stau auf der a8",
+    "wer hat den letzten kaffee getrunken",
+    "hab die prüfung bestanden",
+    "mein chef will dass ich am wochenende arbeite",
+    "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+    "das wetter ist so schlecht ich bleib im bett",
+)
+
+/**
+ * Up to three other messages this caption is closest to.
+ * A distractor as close to the typed message as 0.9 is the same topic and is skipped.
+ */
+fun pickDistractors(
+    messageVec: FloatArray,
+    captionVec: FloatArray,
+    distractors: List<FloatArray>,
+): List<FloatArray> {
+    return distractors
+        .filter { cosine(messageVec, it) < DISTRACTOR_SAME_TOPIC }
+        .sortedByDescending { cosine(captionVec, it) }
+        .take(3)
+}
+
+/** Cosine to the typed message, minus cosine to the closest of three other messages. */
+fun rankAgainstMessages(
+    messageVec: FloatArray,
+    captionVec: FloatArray,
+    distractors: List<FloatArray>,
+): Float {
+    val picked = pickDistractors(messageVec, captionVec, distractors)
+    if (picked.isEmpty()) return 1f
+    val own = cosine(messageVec, captionVec)
+    val bestOther = picked.maxOf { cosine(captionVec, it) }
+    return own - bestOther
+}
+
+/** The lower of the reference margin and the rank against other messages. */
+fun relevanceScore(
+    messageVec: FloatArray,
+    captionVec: FloatArray,
+    references: List<FloatArray>,
+    distractors: List<FloatArray>,
+): Float = minOf(
+    relevanceMargin(messageVec, captionVec, references),
+    rankAgainstMessages(messageVec, captionVec, distractors),
+)
+
 const val EMBED_SIMILARITY_PREFIX = "task: sentence similarity | query: "
 
 fun similarityText(text: String): String = EMBED_SIMILARITY_PREFIX + text.trim()
@@ -299,8 +337,12 @@ fun rejectReason(
 
 fun shouldRetry(suggestion: Suggestion): Boolean = !suggestion.fromModel
 
+private val JSON_EDGE = Regex("^[{\\[\"'“”«»`]+|[}\\]\"'“”«»`]+$")
+
 private fun preclean(raw: String): String {
-    var line = raw.replace(Regex("\\s+"), " ").trim().trim('"', '“', '”')
+    var line = raw.replace(Regex("\\s+"), " ").trim()
+    line = JSON_EDGE.replace(line, "")
+    line = line.trim().trim('"', '“', '”', '\'')
     line = line.replace(" - ", ", ")
     return line.trim()
 }
@@ -365,16 +407,17 @@ fun isOwnPhrase(line: String, candidate: Candidate): Boolean {
 }
 
 /**
- * Each remaining line is checked. A line that contains at least 80 percent of the
- * message's words is a copy, even when another line is new. So is a line, or the
- * joined caption, whose cosine with the message is above [COPY_COSINE].
- * The template's own catchphrase and a single message word do not count.
+ * A line is a copy only when it has at least [MIN_COPY_WORDS] words and those words
+ * cover at least 80 percent of the message. A short setup such as "Prüfung bestanden"
+ * stays. The cosine test runs once, on the whole caption, above [COPY_COSINE].
+ * The template's own catchphrase and a single message word do not count as a copied line.
  * A caption whose every remaining line is taken from the message is still a copy,
  * which keeps a kino card that is only the sentence split in two.
  */
 const val CAPTION_OVERLAP = 0.70f
 const val MESSAGE_WORD_COVERAGE = 0.80f
-const val COPY_COSINE = 0.95f
+const val COPY_COSINE = 0.97f
+const val MIN_COPY_WORDS = 4
 
 fun overlapsMessage(
     lines: List<String>,
@@ -383,7 +426,6 @@ fun overlapsMessage(
     candidate: Candidate = Candidate("", 0, ""),
     copyCosine: ((String) -> Float)? = null,
 ): Boolean {
-    val templateId = candidate.id
     val messageWords = captionTokens(message)
     if (messageWords.isEmpty()) return false
     val messageSet = messageWords.toSet()
@@ -400,16 +442,15 @@ fun overlapsMessage(
     // One setup line plus this template's catchphrase is a normal card, unless that
     // setup line already contains most of the message.
     if (!(catchphrase && rest.size == 1) && rest.all { lineFromMessage(it, messageSet, message) }) return true
-    if (copyCosine != null) {
-        if (copyCosine(rest.joinToString(" ")) > COPY_COSINE) return true
-        if (rest.any { copyCosine(it) > COPY_COSINE }) return true
-    }
+    if (copyCosine != null && copyCosine(lines.joinToString(" ")) > COPY_COSINE) return true
     return false
 }
 
 private fun coversMessage(line: String, messageWords: List<String>): Boolean {
-    val have = captionTokens(line).toSet()
-    val covered = messageWords.count { it in have }
+    val have = captionTokens(line)
+    if (have.size < MIN_COPY_WORDS) return false
+    val set = have.toSet()
+    val covered = messageWords.count { it in set }
     return covered.toFloat() / messageWords.size >= MESSAGE_WORD_COVERAGE
 }
 
@@ -544,18 +585,22 @@ private fun digitScore(value: Any?): Int? {
 data class FollowUp(val withoutSchema: Boolean, val templateIds: List<String>)
 
 /**
- * One follow-up at most. Broken JSON retries without a schema.
- * If at least one card already passed, the rejected cards stay literal and nothing waits.
+ * One follow-up at most. A missing template is tried again even when another card passed.
+ * Broken JSON retries without a schema. A rejected card is not retried once one card passed.
  * If every card failed, the rejected templates go out together in one call.
  */
 fun planFollowUp(suggestions: List<Suggestion>, raw: String, alreadyFollowedUp: Boolean): FollowUp? {
     if (alreadyFollowedUp || suggestions.isEmpty()) return null
-    if (suggestions.any { it.fromModel }) return null
     val missing = suggestions.filter { it.reason == "fehlt" }
-    val broken = raw.isNotBlank() && (jsonUnusable(raw) || missing.isNotEmpty())
-    if (broken) {
-        val ids = if (missing.isNotEmpty()) missing.map { it.templateId } else suggestions.map { it.templateId }
-        return FollowUp(withoutSchema = true, templateIds = ids)
+    if (missing.isNotEmpty()) {
+        val allMissing = missing.size == suggestions.size
+        val rawBroken = raw.isNotBlank() && !jsonValueParses(cutBlankLineRun(raw))
+        val broken = raw.isNotBlank() && (jsonUnusable(raw) || (allMissing && rawBroken))
+        return FollowUp(withoutSchema = broken, templateIds = missing.map { it.templateId })
+    }
+    if (suggestions.any { it.fromModel }) return null
+    if (raw.isNotBlank() && jsonUnusable(raw)) {
+        return FollowUp(withoutSchema = true, templateIds = suggestions.map { it.templateId })
     }
     val rejected = suggestions.filter { !it.fromModel }
     if (rejected.isEmpty()) return null

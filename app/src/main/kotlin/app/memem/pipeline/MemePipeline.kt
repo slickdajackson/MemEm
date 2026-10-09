@@ -14,17 +14,18 @@ import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.FOLLOW_UP_TEMPERATURE
 import app.memem.engine.GEMMA_TEMPERATURE
+import app.memem.engine.MESSAGE_DISTRACTORS
 import app.memem.engine.RELEVANCE_REFERENCES
 import app.memem.engine.cosine
+import app.memem.engine.dedupeCaptions
 import app.memem.engine.fallbackLocale
-import app.memem.engine.fillMissing
 import app.memem.engine.followUpHint
 import app.memem.engine.orderByRules
 import app.memem.engine.outputLanguage
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
 import app.memem.engine.reasonText
-import app.memem.engine.relevanceMargin
+import app.memem.engine.relevanceScore
 import app.memem.engine.similarityText
 import app.memem.settings.Prefs
 import app.memem.engine.Suggestion
@@ -62,6 +63,7 @@ class MemePipeline(context: Context) {
     private var litert: MemIndex? = null
     private var hash: MemIndex? = null
     private var referenceVecs: List<FloatArray>? = null
+    private var distractorVecs: List<FloatArray>? = null
 
     fun preload() {
         val gemmaFile = ModelCatalog.file(app, activeGemma())
@@ -96,7 +98,6 @@ class MemePipeline(context: Context) {
         val searchMs = ms(searchStarted)
         val ordered = hits.mapNotNull { assets.templates[it.templateId] }
         val picked = ordered.take(3).ifEmpty { assets.templates.values.take(3).toList() }
-        val extras = ordered.drop(picked.size)
         val literal = renderOptions(
             message,
             picked.map { it to fallbackLines(message, it.boxes, it.style) },
@@ -162,17 +163,13 @@ class MemePipeline(context: Context) {
                 retries += "${one.templateId}:${current.reason}->$mark"
             }
         }
-        val preferred = listOf("fine", "drake", "cmm", "ds", "fry", "db").mapNotNull { assets.templates[it] }
-        val pool = (extras + preferred).distinctBy { it.id }.map {
-            memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang))
-        }
-        val filled = fillMissing(suggestions, pool)
-        val ranked = orderByRules(filled, message)
+        val merged = dedupeCaptions(suggestions, candidates, message)
+        val ranked = orderByRules(merged.filter { it.fromModel }, message)
         val renderStarted = System.nanoTime()
         val rendered = ranked.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
             renderOne(template, suggestion.lines, suggestion.fromModel, suggestion.reason)
-        }.ifEmpty { literal }
+        }
         onPreview(rendered)
         val renderMs = ms(renderStarted)
         log.event(
@@ -200,7 +197,7 @@ class MemePipeline(context: Context) {
                     val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
                     "${item.templateId}:$mark"
                 },
-                "rejected" to ranked.filter { !it.fromModel }.joinToString(" | ") { item ->
+                "rejected" to merged.filter { !it.fromModel }.joinToString(" | ") { item ->
                     "${item.templateId}:${item.reason}:${reasonText(item.reason, lang)}:${item.detail}"
                 },
                 "renderMs" to renderMs,
@@ -237,12 +234,13 @@ class MemePipeline(context: Context) {
         if (!embedReady) return CaptionSignals(null, null)
         val messageVec = embedCaption(message) ?: return CaptionSignals(null, null)
         val refs = referenceVectors()
+        val distractors = distractorVectors()
         val cache = HashMap<String, FloatArray?>()
         fun vec(text: String): FloatArray? = cache.getOrPut(text) { embedCaption(text) }
         return CaptionSignals(
             margin = { text ->
                 val caption = vec(text) ?: return@CaptionSignals 1f
-                relevanceMargin(messageVec, caption, refs)
+                relevanceScore(messageVec, caption, refs, distractors)
             },
             cosine = { text ->
                 val caption = vec(text) ?: return@CaptionSignals 0f
@@ -255,6 +253,13 @@ class MemePipeline(context: Context) {
         referenceVecs?.let { return it }
         val vecs = RELEVANCE_REFERENCES.mapNotNull { embedCaption(it) }
         if (vecs.size == RELEVANCE_REFERENCES.size) referenceVecs = vecs
+        return vecs
+    }
+
+    private fun distractorVectors(): List<FloatArray> {
+        distractorVecs?.let { return it }
+        val vecs = MESSAGE_DISTRACTORS.mapNotNull { embedCaption(it) }
+        if (vecs.size == MESSAGE_DISTRACTORS.size) distractorVecs = vecs
         return vecs
     }
 
