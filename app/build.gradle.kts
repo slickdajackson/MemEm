@@ -12,8 +12,8 @@ android {
         applicationId = "app.memem"
         minSdk = 29
         targetSdk = 36
-        versionCode = 16
-        versionName = "0.2.5"
+        versionCode = 17
+        versionName = "0.2.6"
         ndk {
             abiFilters += listOf("arm64-v8a")
         }
@@ -70,6 +70,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.10.1")
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.compose.ui:ui-test-junit4")
+    testImplementation("androidx.compose.ui:ui-test-manifest")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("org.robolectric:robolectric:4.16.1")
     testImplementation("androidx.test:core:1.6.1")

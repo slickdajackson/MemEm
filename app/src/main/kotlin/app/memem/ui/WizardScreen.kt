@@ -20,17 +20,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,11 +40,12 @@ data class WizardChecks(
     val keyboardEnabled: Boolean = false,
     val keyboardCurrent: Boolean = false,
     val a11y: Boolean = false,
-    val battery: Boolean = false,
-    val autostartAck: Boolean = false,
 )
 
-private const val PAGES = 7
+private const val PAGES = 6
+
+private const val OPEN_HINT =
+    "Dieser Schritt ist noch offen. Weiter geht trotzdem, du kannst ihn später nachholen."
 
 @Composable
 fun WizardScreen(
@@ -61,10 +57,6 @@ fun WizardScreen(
     onEnableKeyboard: () -> Unit,
     onPickKeyboard: () -> Unit,
     onA11y: () -> Unit,
-    onAppInfo: () -> Unit,
-    onAutostart: () -> Unit,
-    onBattery: () -> Unit,
-    onAckAutostart: () -> Unit,
     onFinish: () -> Unit,
     onClose: () -> Unit,
     initialPage: Int = 0,
@@ -72,31 +64,13 @@ fun WizardScreen(
 ) {
     val pager = rememberPagerState(initialPage = initialPage.coerceIn(0, PAGES - 1)) { PAGES }
     val scope = rememberCoroutineScope()
-    var gate by remember { mutableIntStateOf(initialPage.coerceIn(0, PAGES - 1)) }
     fun done(page: Int): Boolean = when (page) {
         0 -> true
         1 -> checks.models
         2 -> checks.keyboardEnabled
         3 -> checks.keyboardCurrent
         4 -> checks.a11y
-        5 -> checks.battery && checks.autostartAck
         else -> draft.isNotBlank()
-    }
-    fun required(page: Int) = page in 1..3
-    LaunchedEffect(pager, checks, draft) {
-        snapshotFlow { pager.settledPage }.collect { page ->
-            if (page <= gate) {
-                gate = page
-                return@collect
-            }
-            val stop = (gate until page).firstOrNull { required(it) && !done(it) }
-            if (stop != null) {
-                pager.scrollToPage(stop)
-                gate = stop
-            } else {
-                gate = page
-            }
-        }
     }
     fun go(page: Int) {
         scope.launch { pager.animateScrollToPage(page.coerceIn(0, PAGES - 1)) }
@@ -125,15 +99,18 @@ fun WizardScreen(
             Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
                 StepPage(
                     pinnedPage, checks, download, draft, onDraft, onDownload, onEnableKeyboard,
-                    onPickKeyboard, onA11y, onAppInfo, onAutostart, onBattery, onAckAutostart, onFinish, ::done, ::required, ::go,
+                    onPickKeyboard, onA11y, onFinish, ::done, ::go,
                 )
             }
         } else {
-            HorizontalPager(state = pager, modifier = Modifier.weight(1f).fillMaxWidth()) { page ->
+            HorizontalPager(
+                state = pager,
+                modifier = Modifier.weight(1f).fillMaxWidth().testTag("wizard-pager"),
+            ) { page ->
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                     StepPage(
                         page, checks, download, draft, onDraft, onDownload, onEnableKeyboard,
-                        onPickKeyboard, onA11y, onAppInfo, onAutostart, onBattery, onAckAutostart, onFinish, ::done, ::required, ::go,
+                        onPickKeyboard, onA11y, onFinish, ::done, ::go,
                     )
                 }
             }
@@ -153,13 +130,8 @@ private fun StepPage(
     onEnableKeyboard: () -> Unit,
     onPickKeyboard: () -> Unit,
     onA11y: () -> Unit,
-    onAppInfo: () -> Unit,
-    onAutostart: () -> Unit,
-    onBattery: () -> Unit,
-    onAckAutostart: () -> Unit,
     onFinish: () -> Unit,
     done: (Int) -> Boolean,
-    required: (Int) -> Boolean,
     go: (Int) -> Unit,
 ) {
     when (page) {
@@ -167,13 +139,16 @@ private fun StepPage(
         1 -> ModelsStep(checks.models, download, onDownload)
         2 -> EnableStep(checks.keyboardEnabled, onEnableKeyboard)
         3 -> PickStep(checks.keyboardCurrent, onPickKeyboard)
-        4 -> A11yStep(checks.a11y, onA11y, onAppInfo)
-        5 -> HyperStep(checks, onAutostart, onBattery, onAckAutostart)
+        4 -> A11yStep(checks.a11y, onA11y)
         else -> TryStep(draft, onDraft)
     }
     Spacer(Modifier.height(8.dp))
+    if (!done(page)) MonoLabel(OPEN_HINT)
     if (page == PAGES - 1) {
-        StickerButton("Fertig, los geht's", Yellow, onClick = onFinish)
+        Box(Modifier.testTag("wizard-forward")) {
+            val label = if (done(page)) "Fertig, los geht's" else "Trotzdem weiter / Später"
+            StickerButton(label, Yellow, onClick = onFinish)
+        }
         StickerButton("Zurück", Cream) { go(page - 1) }
         MonoLabel("Schließen oben rechts geht jederzeit in die Hauptansicht, auch wenn noch etwas fehlt.")
     } else {
@@ -183,16 +158,10 @@ private fun StepPage(
                     StickerButton("Zurück", Cream) { go(page - 1) }
                 }
             }
-            val forwardLabel = if (!done(page) && !required(page)) "Überspringen" else "Weiter"
-            val allow = !required(page) || done(page)
-            if (allow) {
-                Box(Modifier.weight(1f)) {
-                    StickerButton(forwardLabel, Yellow) { go(page + 1) }
-                }
+            Box(Modifier.weight(1f).testTag("wizard-forward")) {
+                val label = if (done(page)) "Weiter" else "Trotzdem weiter / Später"
+                StickerButton(label, Yellow) { go(page + 1) }
             }
-        }
-        if (required(page) && !done(page)) {
-            MonoLabel("Weiter gibt es, sobald der Haken da ist. Schließen oben rechts geht trotzdem in die App.")
         }
     }
     Spacer(Modifier.height(12.dp))
@@ -245,24 +214,11 @@ private fun PickStep(ready: Boolean, onOpen: () -> Unit) {
 }
 
 @Composable
-private fun A11yStep(ready: Boolean, onA11y: () -> Unit, onAppInfo: () -> Unit) {
+private fun A11yStep(ready: Boolean, onA11y: () -> Unit) {
     StepCard("OPTIONAL", "WhatsApp Kontext", ready) {
-        Body("Die Bedienungshilfe liest den offenen WhatsApp-Chat für die Suche und fügt das Bild ein, wenn die Tastatur das nicht schafft. Auf HyperOS zuerst eingeschränkte Einstellungen zulassen: App-Infos, Drei-Punkte-Menü.")
+        Body("Die Bedienungshilfe liest den offenen WhatsApp-Chat für die Suche und fügt das Bild ein, wenn die Tastatur das nicht schafft.")
         StickerButton("Bedienungshilfe öffnen", Blue, light = true, onClick = onA11y)
-        StickerButton("App-Infos für HyperOS", Purple, light = true, onClick = onAppInfo)
         MonoLabel(if (ready) "Bedienungshilfe ist an." else "Ohne diesen Schritt geht die Tastatur trotzdem. Kontext und das extra Einfügen fehlen dann.")
-    }
-}
-
-@Composable
-private fun HyperStep(checks: WizardChecks, onAutostart: () -> Unit, onBattery: () -> Unit, onAck: () -> Unit) {
-    val ready = checks.battery && checks.autostartAck
-    StepCard("OPTIONAL", "HyperOS wach halten", ready) {
-        Body("Xiaomi beendet sonst Download, den schwebenden Punkt und Gemma. Autostart an. Akku auf Keine Einschränkungen.")
-        StickerButton("Autostart öffnen", Yellow, onClick = onAutostart)
-        StickerButton("Akku öffnen", Yellow, onClick = onBattery)
-        StickerButton(if (checks.autostartAck) "Autostart bestätigt" else "Autostart ist an", Cream, onClick = onAck)
-        MonoLabel(if (checks.battery) "Akku: keine Einschränkung erkannt." else "Akku: Einschränkung noch da, oder das System meldet sie nicht.")
     }
 }
 

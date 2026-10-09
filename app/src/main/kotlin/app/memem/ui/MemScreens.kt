@@ -75,13 +75,11 @@ data class SetupUi(
     val insert: InsertPreference = InsertPreference.CLIPBOARD,
     val models: String = "",
     val download: String = "",
-    val hyperos: String = "",
     val modelsOn: Boolean = false,
     val keyboardOn: Boolean = false,
     val keyboardEnabled: Boolean = false,
     val a11yOn: Boolean = false,
     val incomplete: Boolean = false,
-    val gemmaLog: String = "",
 )
 
 @Composable
@@ -103,7 +101,6 @@ fun SettingsScreen(
     tryStatus: String = "",
     tryPreviews: List<ImageBitmap> = emptyList(),
     tryMarks: List<String> = emptyList(),
-    onShareLog: () -> Unit = {},
     scroll: Boolean = true,
 ) {
     val base = Modifier.background(Paper).padding(16.dp)
@@ -135,7 +132,7 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.2.5   SIDELOAD")
+                MonoLabel("0.2.6   SIDELOAD")
             }
         }
         androidx.compose.material3.Text(
@@ -257,17 +254,6 @@ fun SettingsScreen(
             }
         }
         StickerCard {
-            MonoLabel("GEMMA")
-            Headline("Letzte Anfragen")
-            androidx.compose.material3.Text(
-                state.gemmaLog.ifBlank { "Noch keine Anfrage." },
-                color = Ink,
-                fontSize = 12.sp,
-                fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
-            )
-            StickerButton("Protokoll teilen", Blue, light = true, onClick = onShareLog)
-        }
-        StickerCard {
             MonoLabel("MODELLE")
             Headline("Auf dem Gerät, CPU")
             StickerButton("Modelle laden", Yellow, onClick = onDownload)
@@ -276,11 +262,6 @@ fun SettingsScreen(
             MonoLabel("Embedding etwa 157 MB, E2B etwa 2,6 GB, E4B etwa 3,7 GB. Immer CPU.")
             MonoLabel(state.models)
             if (state.download.isNotBlank()) MonoLabel(state.download)
-        }
-        StickerCard {
-            MonoLabel("HYPEROS")
-            Headline("Xiaomi")
-            androidx.compose.material3.Text(state.hyperos, color = Ink, fontSize = 14.sp)
         }
         StickerButton("Testfeld fürs Einfügen", Yellow, onClick = onHarness)
         Spacer(Modifier.height(12.dp))

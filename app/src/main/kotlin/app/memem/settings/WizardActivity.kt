@@ -40,13 +40,6 @@ class WizardActivity : AppCompatActivity() {
                 onEnableKeyboard = { startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)) },
                 onPickKeyboard = { getSystemService(InputMethodManager::class.java).showInputMethodPicker() },
                 onA11y = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) },
-                onAppInfo = { SystemLinks.appDetails(this) },
-                onAutostart = { SystemLinks.autostart(this) },
-                onBattery = { SystemLinks.battery(this) },
-                onAckAutostart = {
-                    prefs.autostartAck = true
-                    refresh()
-                },
                 onFinish = {
                     prefs.wizardDone = true
                     prefs.wizardClosed = true
@@ -81,8 +74,6 @@ class WizardActivity : AppCompatActivity() {
             keyboardEnabled = SetupProbe.keyboardEnabled(this),
             keyboardCurrent = SetupProbe.keyboardSelected(this),
             a11y = MememAccessibilityService.enabled(this),
-            battery = SetupProbe.batteryFree(this),
-            autostartAck = prefs.autostartAck,
         )
     }
 

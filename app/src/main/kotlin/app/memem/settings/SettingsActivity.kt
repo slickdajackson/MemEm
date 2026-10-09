@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import app.memem.R
-import app.memem.debug.DebugLog
 import app.memem.a11y.MememAccessibilityService
 import app.memem.engine.InsertPreference
 import app.memem.harness.InsertHarnessActivity
@@ -76,7 +75,6 @@ class SettingsActivity : AppCompatActivity() {
                 tryStatus = status,
                 tryPreviews = previews,
                 tryMarks = marks,
-                onShareLog = { shareLog() },
                 onKeyboard = { startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)) },
                 onA11y = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) },
                 onOverlayPermission = {
@@ -165,15 +163,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun shareLog() {
-        val text = DebugLog(this).recentText().ifBlank { "Noch keine Anfrage." }
-        val send = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-        startActivity(Intent.createChooser(send, "Protokoll"))
-    }
-
     private fun startDownload(e4b: Boolean = false) {
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
@@ -197,7 +186,7 @@ class SettingsActivity : AppCompatActivity() {
         val a11y = when {
             MememAccessibilityService.instance != null -> "Bedienungshilfe aktiv, liest nur WhatsApp."
             MememAccessibilityService.enabled(this) -> "Bedienungshilfe eingeschaltet, Dienst gerade nicht verbunden."
-            else -> "Bedienungshilfe aus. Auf HyperOS zuerst eingeschränkte Einstellungen zulassen."
+            else -> "Bedienungshilfe aus."
         }
         val modelsOn = ModelCatalog.ready(this, ModelCatalog.embed) && ModelCatalog.ready(this, ModelCatalog.gemmaCpu)
         val keyboardEnabled = SetupProbe.keyboardEnabled(this)
@@ -211,8 +200,6 @@ class SettingsActivity : AppCompatActivity() {
             insert = prefs.insertPreference,
             models = "Embedding $embed, E2B $cpu, E4B $e4b",
             download = download,
-            hyperos = getString(R.string.hyperos_hint),
-            gemmaLog = DebugLog(this).recentText(),
             modelsOn = modelsOn,
             keyboardOn = keyboardOn,
             keyboardEnabled = keyboardEnabled,

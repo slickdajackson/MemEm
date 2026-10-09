@@ -53,12 +53,6 @@ class Prefs(context: Context) {
             prefs.edit().putBoolean(KEY_WIZARD_CLOSED, value).apply()
         }
 
-    var autostartAck: Boolean
-        get() = prefs.getBoolean(KEY_AUTOSTART, false)
-        set(value) {
-            prefs.edit().putBoolean(KEY_AUTOSTART, value).apply()
-        }
-
     private companion object {
         const val KEY_INSERT = "insert"
         const val KEY_QWERTZ = "qwertz"
@@ -66,6 +60,5 @@ class Prefs(context: Context) {
         const val KEY_OVERLAY = "overlay"
         const val KEY_WIZARD = "wizard_done"
         const val KEY_WIZARD_CLOSED = "wizard_closed"
-        const val KEY_AUTOSTART = "autostart_ack"
     }
 }

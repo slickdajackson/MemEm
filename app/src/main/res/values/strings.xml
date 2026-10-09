@@ -12,7 +12,7 @@
     <string name="overlay_close">Schließen</string>
     <string name="overlay_pick">Einen Vorschlag antippen</string>
     <string name="overlay_empty">Kein Text im Feld und keine Nachrichten erkannt</string>
-    <string name="version_title">MemEm 0.2.5</string>
+    <string name="version_title">MemEm 0.2.6</string>
     <string name="need_text">Erst einen Text tippen</string>
     <string name="searching">Suche Vorlagen</string>
     <string name="writing">Schreibe Sprüche</string>
@@ -20,5 +20,4 @@
     <string name="shared">Teilen geöffnet</string>
     <string name="insert_failed">Einfügen hat nicht geklappt</string>
     <string name="models_missing">Modelle fehlen, Beispielzeilen. Download in der Einrichtung.</string>
-    <string name="hyperos_hint">HyperOS beendet Hintergrundprozesse. Autostart für MemEm an, Akku auf „Keine Einschränkungen“, „App-Aktivität anhalten“ aus, MemEm und WhatsApp in der Zuletzt-Ansicht sperren. Bedienungshilfe: erst den Schalter versuchen, dann in der App-Info über das Drei-Punkte-Menü „Eingeschränkte Einstellungen zulassen“, danach den Schalter erneut. Overlay: „Über anderen Apps einblenden“ und „Pop-up-Fenster im Hintergrund“. Die Zwischenablage legt das PNG ab. Meldet die Tastatur kein Einfügen, löst die Bedienungshilfe ACTION_PASTE im WhatsApp-Feld aus. Sonst lange tippen und Einfügen. Advanced Protection aus lassen. Nach einem Systemupdate die Bedienungshilfe prüfen. Ein abgebrochener Modell-Download behält die Teildatei, Fortsetzen lädt weiter.</string>
 </resources>

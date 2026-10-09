@@ -2,9 +2,9 @@
 
 MemEm is a sideload Android keyboard. Typed text becomes three meme suggestions. A tap on a card puts the PNG into the input field. MemEm never sends a message.
 
-Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.5.
+Package `app.memem`, minSdk 29, targetSdk 36, `arm64-v8a` only. Version 0.2.6.
 
-The on-device UI is German. Labels such as `wörtlich`, `KI`, and "Eingeschränkte Einstellungen zulassen" are quoted below as they appear in the app.
+The on-device UI is German. Labels such as `wörtlich` and `KI` are quoted below as they appear in the app.
 
 <p>
 <img src="docs/images/logo.png" alt="MemEm logo" width="180" />
@@ -78,7 +78,7 @@ Example memes, rendered from the shipped templates:
 ## Install
 
 1. Sideload the debug APK and confirm the system security check.
-2. On first launch the wizard covers download, enabling the keyboard, choosing the keyboard, optional accessibility, optional HyperOS, and a try field. Close or finish opens the main screen. After that the wizard does not start on its own. Unfinished required steps stay as the hint "Einrichtung unvollständig", with a button to continue.
+2. On first launch the wizard covers download, enabling the keyboard, choosing the keyboard, optional accessibility, and a try field. Every page has a forward button. An open step shows a hint and still lets you continue. Close or finish opens the main screen. After that the wizard does not start on its own. Unfinished setup stays as the hint "Einrichtung unvollständig", with a button to continue.
 3. On-screen keyboards: turn MemEm on, then choose it as the active keyboard.
 4. In WhatsApp, type with MemEm and press **Meme**. Three previews always appear. A suggestion clears the text and inserts the PNG.
 

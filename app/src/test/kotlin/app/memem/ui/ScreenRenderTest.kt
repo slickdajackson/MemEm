@@ -38,10 +38,6 @@ class ScreenRenderTest {
             onEnableKeyboard = {},
             onPickKeyboard = {},
             onA11y = {},
-            onAppInfo = {},
-            onAutostart = {},
-            onBattery = {},
-            onAckAutostart = {},
             onFinish = {},
             onClose = {},
         )
@@ -58,14 +54,10 @@ class ScreenRenderTest {
             onEnableKeyboard = {},
             onPickKeyboard = {},
             onA11y = {},
-            onAppInfo = {},
-            onAutostart = {},
-            onBattery = {},
-            onAckAutostart = {},
-                onFinish = {},
-                onClose = {},
-                pinnedPage = 1,
-            )
+            onFinish = {},
+            onClose = {},
+            pinnedPage = 1,
+        )
     }
 
     @Test
@@ -79,13 +71,9 @@ class ScreenRenderTest {
             onEnableKeyboard = {},
             onPickKeyboard = {},
             onA11y = {},
-            onAppInfo = {},
-            onAutostart = {},
-            onBattery = {},
-            onAckAutostart = {},
             onFinish = {},
             onClose = {},
-            pinnedPage = 6,
+            pinnedPage = 5,
         )
     }
 
@@ -97,7 +85,6 @@ class ScreenRenderTest {
                 qwertz = false,
                 insert = InsertPreference.CLIPBOARD,
                 models = "Embedding fehlt, Gemma fehlt",
-                hyperos = "Autostart an. Akku auf Keine Einschränkungen.",
                 incomplete = true,
                 modelsOn = false,
                 keyboardOn = false,
@@ -165,10 +152,6 @@ class ScreenRenderTest {
                 onEnableKeyboard = {},
                 onPickKeyboard = {},
                 onA11y = {},
-                onAppInfo = {},
-                onAutostart = {},
-                onBattery = {},
-                onAckAutostart = {},
                 onFinish = {},
                 onClose = {},
                 pinnedPage = 0,
@@ -183,13 +166,11 @@ class ScreenRenderTest {
                     qwertz = false,
                     insert = InsertPreference.CLIPBOARD,
                     models = "Embedding und Gemma liegen auf dem Gerät.",
-                    hyperos = "Autostart an. Akku auf Keine Einschränkungen. Eingeschränkte Einstellungen zulassen, bevor die Bedienungshilfe an geht.",
                     incomplete = false,
                     modelsOn = true,
                     keyboardOn = true,
                     keyboardEnabled = true,
                     a11yOn = false,
-                    gemmaLog = "Meeting am Freitag\ndrake  KI",
                 ),
                 tryDraft = "Meeting am Freitag",
                 tryStatus = "3 Vorschläge",

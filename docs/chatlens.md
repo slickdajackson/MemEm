@@ -22,4 +22,4 @@ While accessibility is on, the last visible messages also go into search and the
 
 The download stays a foreground service with range resume and SHA-256. New is the message that the partial file remains, plus the resume action, and `START_REDELIVER_INTENT`, because HyperOS can kill the service. From 0.1.2, Gemma and the embedding run only on the CPU. The optional OpenCL entries from ChatLens are no longer in the manifest.
 
-The setup notes (restricted settings, autostart, battery with no restriction, locking in recents, overlay, background pop-up, clipboard, Advanced Protection) are in `docs/hyperos.md` and in settings. They come from `INSTALL-XIAOMI.md` and `RECHERCHE.md` in ChatLens and have still not been rechecked on a Xiaomi 15 Ultra by this run.
+The setup notes (restricted settings, autostart, battery with no restriction, locking in recents, overlay, background pop-up, clipboard, Advanced Protection) are in `docs/hyperos.md`. They come from `INSTALL-XIAOMI.md` and `RECHERCHE.md` in ChatLens and have still not been rechecked on a Xiaomi 15 Ultra by this run. The app no longer shows those notes.
