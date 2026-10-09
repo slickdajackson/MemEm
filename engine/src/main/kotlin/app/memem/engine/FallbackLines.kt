@@ -175,19 +175,24 @@ fun coreWords(text: String): List<String> =
         word.length >= 3 && word !in FUNCTION_WORDS && word !in DANGLING_ENDINGS && word !in AUXILIARIES
     }
 
-/** True when [line] ends on a function word. The last line of a caption may end on a pronoun. */
+/** True when [line] ends mid-phrase. A pronoun may close a line. "weg sein" may too. */
 fun phraseEndingBroken(line: String, isFinal: Boolean): Boolean {
-    val last = messageWords(line).lastOrNull() ?: return false
+    val words = messageWords(line)
+    val last = words.lastOrNull() ?: return false
     if (endsWithPunct(last)) return false
     val norm = normalizeWord(last)
+    if (norm in PERSONAL_PRONOUNS) return false
+    if (norm == "sein" && words.size >= 2 && normalizeWord(words[words.lastIndex - 1]) in SEIN_PARTICLES) return false
     if (norm !in DANGLING_ENDINGS) return false
-    return !(isFinal && norm in PERSONAL_PRONOUNS)
+    return true
 }
 
 /**
  * Moves a dangling article, preposition or conjunction onto the next line, or pulls the next word up.
  * Returns null when a line would have to stay empty or still end inside a phrase.
  */
+private val SEIN_PARTICLES = setOf("weg", "aus", "vorbei", "fertig", "hin", "her", "tot", "leer", "offen")
+
 fun repairPhraseEndings(lines: List<String>): List<String>? {
     if (lines.isEmpty()) return emptyList()
     val buckets = lines.map { messageWords(it).toMutableList() }.toMutableList()
@@ -207,10 +212,50 @@ fun repairPhraseEndings(lines: List<String>): List<String>? {
         }
         if (buckets[index].isEmpty() || !canEndLine(buckets[index].last())) return null
     }
-    if (buckets.last().isEmpty() || phraseEndingBroken(buckets.last().joinToString(" "), isFinal = true)) {
-        return null
+    pullContinuation(buckets)
+    if (buckets.any { it.isEmpty() }) return null
+    for (index in buckets.indices) {
+        val line = buckets[index].joinToString(" ")
+        if (phraseEndingBroken(line, isFinal = index == buckets.lastIndex)) return null
     }
     return buckets.map { it.joinToString(" ") }
+}
+
+/**
+ * Pulls a lowercase continuation back onto the previous field.
+ * "wünsch / ich mir Aber ..." becomes one sentence, then "Aber ...".
+ * "weg / sein Enttäuschung" becomes "weg sein" and "Enttäuschung".
+ */
+private fun pullContinuation(buckets: MutableList<MutableList<String>>) {
+    for (index in 0 until buckets.lastIndex) {
+        val prev = buckets[index]
+        val next = buckets[index + 1]
+        if (prev.isEmpty() || next.isEmpty()) continue
+        val first = next[0]
+        if (first.firstOrNull()?.isLowerCase() != true) continue
+        val firstNorm = normalizeWord(first)
+        val prevNorm = normalizeWord(prev.last())
+        val clipped = prevNorm.length >= 4 && prevNorm.endsWith("sch") && prevNorm.any { it in "äöü" }
+        var take = 0
+        if (firstNorm in PERSONAL_PRONOUNS && (clipped || !canEndLine(prev.last()))) {
+            while (
+                take < next.size &&
+                next[take].firstOrNull()?.isLowerCase() == true &&
+                normalizeWord(next[take]) in PERSONAL_PRONOUNS
+            ) {
+                take += 1
+            }
+        } else if (firstNorm == "sein" && prevNorm in SEIN_PARTICLES) {
+            take = 1
+        }
+        if (take == 0) continue
+        val rest = next.getOrNull(take)
+        val startsNew = rest == null ||
+            rest.firstOrNull()?.isUpperCase() == true ||
+            normalizeWord(rest) in CONJUNCTIONS
+        if (!startsNew) continue
+        repeat(take) { prev.add(next.removeAt(0)) }
+    }
 }
 
 fun usableRewrite(message: String, lines: List<String>, boxes: Int): Boolean {
@@ -292,7 +337,9 @@ private fun boundaryKind(words: List<String>, cut: Int): Int {
 
 private fun canEndLine(word: String): Boolean {
     if (endsWithPunct(word)) return true
-    return normalizeWord(word) !in DANGLING_ENDINGS
+    val norm = normalizeWord(word)
+    if (norm in PERSONAL_PRONOUNS) return true
+    return norm !in DANGLING_ENDINGS
 }
 
 private fun endsCompletedTimePhrase(words: List<String>, cut: Int): Boolean {

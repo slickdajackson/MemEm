@@ -27,6 +27,15 @@ object ModelCatalog {
         bytes = 2_588_147_712L,
     )
 
+    /** Optional. Funnier than E2B and about twice as slow. Off unless the user turns it on. */
+    val gemmaE4b = ModelSpec(
+        id = "gemma-e4b",
+        fileName = "gemma-4-E4B-it.litertlm",
+        url = "https://huggingface.co/litert-community/gemma-4-E4B-it-litert-lm/resolve/main/gemma-4-E4B-it.litertlm",
+        sha256 = "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+        bytes = 3_659_530_240L,
+    )
+
     fun file(context: Context, spec: ModelSpec): File = File(context.filesDir, "models/${spec.fileName}")
 
     fun ready(context: Context, spec: ModelSpec): Boolean {

@@ -14,19 +14,17 @@ import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.FOLLOW_UP_TEMPERATURE
 import app.memem.engine.GEMMA_TEMPERATURE
-import app.memem.engine.QUALITY_MAX_TOKENS
-import app.memem.engine.QUALITY_TEMPERATURE
+import app.memem.engine.RELEVANCE_REFERENCES
 import app.memem.engine.cosine
 import app.memem.engine.fallbackLocale
+import app.memem.engine.fillMissing
 import app.memem.engine.followUpHint
-import app.memem.engine.orderByQuality
+import app.memem.engine.orderByRules
 import app.memem.engine.outputLanguage
-import app.memem.engine.parseQuality
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
-import app.memem.engine.qualityPrompt
-import app.memem.engine.qualitySchema
 import app.memem.engine.reasonText
+import app.memem.engine.relevanceMargin
 import app.memem.engine.similarityText
 import app.memem.settings.Prefs
 import app.memem.engine.Suggestion
@@ -46,7 +44,14 @@ data class MemeOption(
     val bitmap: Bitmap,
     val file: File,
     val fromModel: Boolean,
+    val reason: String = "",
 )
+
+fun memeMark(fromModel: Boolean, reason: String): String = when {
+    fromModel -> "KI"
+    reason == "ersatz" -> "Ersatz"
+    else -> "wörtlich"
+}
 
 class MemePipeline(context: Context) {
     private val app = context.applicationContext
@@ -56,9 +61,10 @@ class MemePipeline(context: Context) {
     val remote = RemoteLlmEngine(app)
     private var litert: MemIndex? = null
     private var hash: MemIndex? = null
+    private var referenceVecs: List<FloatArray>? = null
 
     fun preload() {
-        val gemmaFile = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
+        val gemmaFile = ModelCatalog.file(app, activeGemma())
         if (!gemmaFile.isFile) return
         val embedFile = ModelCatalog.file(app, ModelCatalog.embed)
         remote.bind()
@@ -88,8 +94,9 @@ class MemePipeline(context: Context) {
         val searchStarted = System.nanoTime()
         val hits = searchTemplates(embedded.second, embedded.first, assets.boxes, limit = 8)
         val searchMs = ms(searchStarted)
-        val picked = hits.mapNotNull { assets.templates[it.templateId] }.take(3)
-            .ifEmpty { assets.templates.values.take(3).toList() }
+        val ordered = hits.mapNotNull { assets.templates[it.templateId] }
+        val picked = ordered.take(3).ifEmpty { assets.templates.values.take(3).toList() }
+        val extras = ordered.drop(picked.size)
         val literal = renderOptions(
             message,
             picked.map { it to fallbackLines(message, it.boxes, it.style) },
@@ -102,7 +109,8 @@ class MemePipeline(context: Context) {
         val outcome = generate(message, picked, context, locale = locale)
         val gemmaMs = ms(gemmaStarted)
         val candidates = picked.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
-        val score = similarity(message)
+        val names = assets.templates.values.map { it.name }
+        val score = signals(message)
         val suggestions = if (candidates.isEmpty()) {
             mutableListOf()
         } else {
@@ -112,8 +120,10 @@ class MemePipeline(context: Context) {
                 message,
                 wanted = 3,
                 failure = outcome.error ?: "keine antwort",
-                similarity = score,
+                similarity = score.margin,
                 language = lang,
+                copyCosine = score.cosine,
+                otherNames = names,
             ).toMutableList()
         }
         val plan = planFollowUp(suggestions, outcome.text.orEmpty(), alreadyFollowedUp = false)
@@ -138,8 +148,10 @@ class MemePipeline(context: Context) {
                 message,
                 wanted = subset.size.coerceAtLeast(1),
                 failure = again.error ?: "keine antwort",
-                similarity = score,
+                similarity = score.margin,
                 language = lang,
+                copyCosine = score.cosine,
+                otherNames = names,
             )
             for (one in updated) {
                 val index = suggestions.indexOfFirst { it.templateId == one.templateId }
@@ -150,11 +162,16 @@ class MemePipeline(context: Context) {
                 retries += "${one.templateId}:${current.reason}->$mark"
             }
         }
-        val ranked = rankByQuality(suggestions, lang)
+        val preferred = listOf("fine", "drake", "cmm", "ds", "fry", "db").mapNotNull { assets.templates[it] }
+        val pool = (extras + preferred).distinctBy { it.id }.map {
+            memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang))
+        }
+        val filled = fillMissing(suggestions, pool)
+        val ranked = orderByRules(filled, message)
         val renderStarted = System.nanoTime()
         val rendered = ranked.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
-            renderOne(template, suggestion.lines, suggestion.fromModel)
+            renderOne(template, suggestion.lines, suggestion.fromModel, suggestion.reason)
         }.ifEmpty { literal }
         onPreview(rendered)
         val renderMs = ms(renderStarted)
@@ -210,17 +227,35 @@ class MemePipeline(context: Context) {
         return Triple(vec, index, false)
     }
 
-    private fun similarity(message: String): ((String) -> Float)? {
+    private data class CaptionSignals(
+        val margin: ((String) -> Float)?,
+        val cosine: ((String) -> Float)?,
+    )
+
+    private fun signals(message: String): CaptionSignals {
         val embedReady = assets.space.startsWith("litert") && ModelCatalog.ready(app, ModelCatalog.embed)
-        if (!embedReady) return null
-        val messageVec = embedCaption(message) ?: return null
-        val cache = HashMap<String, Float>()
-        return { caption ->
-            cache.getOrPut(caption) {
-                val vec = embedCaption(caption) ?: return@getOrPut 1f
-                cosine(messageVec, vec)
-            }
-        }
+        if (!embedReady) return CaptionSignals(null, null)
+        val messageVec = embedCaption(message) ?: return CaptionSignals(null, null)
+        val refs = referenceVectors()
+        val cache = HashMap<String, FloatArray?>()
+        fun vec(text: String): FloatArray? = cache.getOrPut(text) { embedCaption(text) }
+        return CaptionSignals(
+            margin = { text ->
+                val caption = vec(text) ?: return@CaptionSignals 1f
+                relevanceMargin(messageVec, caption, refs)
+            },
+            cosine = { text ->
+                val caption = vec(text) ?: return@CaptionSignals 0f
+                cosine(messageVec, caption)
+            },
+        )
+    }
+
+    private fun referenceVectors(): List<FloatArray> {
+        referenceVecs?.let { return it }
+        val vecs = RELEVANCE_REFERENCES.mapNotNull { embedCaption(it) }
+        if (vecs.size == RELEVANCE_REFERENCES.size) referenceVecs = vecs
+        return vecs
     }
 
     private fun embedCaption(text: String): FloatArray? {
@@ -231,19 +266,9 @@ class MemePipeline(context: Context) {
         }
     }
 
-    private suspend fun rankByQuality(suggestions: MutableList<Suggestion>, language: String): List<Suggestion> {
-        val live = suggestions.filter { it.fromModel }
-        if (live.size < 2) return suggestions
-        val prompt = qualityPrompt(live.map { it.templateId to it.lines }, language)
-        val outcome = remote.generate(
-            prompt.system,
-            prompt.user,
-            qualitySchema(live.map { it.templateId }),
-            QUALITY_TEMPERATURE,
-            QUALITY_MAX_TOKENS,
-            retryWithoutSchema = false,
-        )
-        return orderByQuality(suggestions, parseQuality(outcome.text.orEmpty(), live.map { it.templateId }))
+    private fun activeGemma() = when {
+        Prefs(app).qualityE4b && ModelCatalog.ready(app, ModelCatalog.gemmaE4b) -> ModelCatalog.gemmaE4b
+        else -> ModelCatalog.gemmaCpu
     }
 
     private suspend fun generate(
@@ -256,8 +281,9 @@ class MemePipeline(context: Context) {
         locale: String = "",
     ): GenerateOutcome {
         if (templates.isEmpty()) return GenerateOutcome(null, "keine vorlage", remote.modelReady, false)
-        val model = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
-        if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) {
+        val spec = activeGemma()
+        val model = ModelCatalog.file(app, spec)
+        if (!ModelCatalog.ready(app, spec)) {
             return GenerateOutcome(null, "modell fehlt", false, false)
         }
         val embed = ModelCatalog.file(app, ModelCatalog.embed)
@@ -283,12 +309,17 @@ class MemePipeline(context: Context) {
         return remote.generate(prompt.system, prompt.user, schema, temperature)
     }
 
-    private fun renderOne(template: MemeTemplate, lines: List<String>, fromModel: Boolean): MemeOption {
+    private fun renderOne(
+        template: MemeTemplate,
+        lines: List<String>,
+        fromModel: Boolean,
+        reason: String = "",
+    ): MemeOption {
         val dir = File(app.filesDir, "memes")
         val bitmap = renderer.render(template, lines)
         val file = File(dir, "${template.id}-${System.nanoTime()}.png")
         renderer.writePng(bitmap, file)
-        return MemeOption(template, lines, bitmap, file, fromModel)
+        return MemeOption(template, lines, bitmap, file, fromModel, reason)
     }
 
     private fun renderOptions(

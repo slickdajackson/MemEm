@@ -41,6 +41,8 @@ fun parseSuggestions(
     failure: String = "",
     similarity: ((String) -> Float)? = null,
     language: String = "",
+    copyCosine: ((String) -> Float)? = null,
+    otherNames: Collection<String> = emptyList(),
 ): List<Suggestion> {
     val lang = language.ifBlank { outputLanguage(message) }
     val byId = candidates.associateBy { it.id }
@@ -51,7 +53,7 @@ fun parseSuggestions(
         if (out.size >= wanted) break
         val candidate = byId[item.first] ?: continue
         if (!used.add(candidate.id)) continue
-        val resolved = resolveLines(item.second, candidate, message, similarity, lang)
+        val resolved = resolveLines(item.second, candidate, message, similarity, lang, copyCosine, otherNames)
         val detail = if (resolved.fromModel) "" else item.second.joinToString(" / ") { it.trim() }
         out.add(Suggestion(candidate.id, resolved.lines, resolved.fromModel, resolved.reason, detail))
     }
@@ -96,13 +98,86 @@ fun dedupeCaptions(suggestions: List<Suggestion>, candidates: List<Candidate>, m
     }
 }
 
-/** Usable cards stay in front. Among them, the higher grammar-plus-punchline score comes first. */
-fun orderByQuality(suggestions: List<Suggestion>, scores: Map<String, Int>): List<Suggestion> {
-    if (scores.isEmpty()) return suggestions
+/**
+ * Model cards stay in front, then a stock caption from another template, then a literal split.
+ * Among cards in the same band, copies, broken words, and mid-sentence cuts sort lower.
+ */
+fun orderByRules(suggestions: List<Suggestion>, message: String): List<Suggestion> {
     return suggestions.sortedWith(
-        compareByDescending<Suggestion> { if (it.fromModel) 1 else 0 }
-            .thenByDescending { scores[it.templateId] ?: 0 },
+        compareByDescending<Suggestion> { suggestionBand(it) }
+            .thenByDescending { ruleScore(it, message) },
     )
+}
+
+private fun suggestionBand(item: Suggestion): Int = when {
+    item.fromModel -> 2
+    item.reason == "ersatz" -> 1
+    else -> 0
+}
+
+fun ruleScore(item: Suggestion, message: String): Int {
+    var score = 100
+    val messageWords = captionTokens(message)
+    if (messageWords.isNotEmpty()) {
+        val have = item.lines.flatMap { captionTokens(it) }.toSet()
+        val ratio = messageWords.count { it in have }.toFloat() / messageWords.size
+        if (ratio >= 0.45f) score -= ((ratio - 0.45f) * 100f).toInt()
+    }
+    val last = item.lines.lastIndex
+    item.lines.forEachIndexed { index, line ->
+        if (index != last && phraseEndingBroken(line, isFinal = false)) score -= 30
+        if (hasBrokenWord(line)) score -= 20
+    }
+    return score
+}
+
+/** A token that is cut off or misshapen, such as "wünsch" or "Müdeheit". */
+fun hasBrokenWord(line: String): Boolean {
+    for (word in messageWords(line)) {
+        val letters = word.filter { it.isLetter() }.lowercase(Locale.GERMAN)
+        if (letters.length < 4) continue
+        if (letters.endsWith("deheit") || letters.endsWith("keitheit")) return true
+        if (letters.endsWith("sch") && letters.any { it in "äöü" }) return true
+        var run = 0
+        for (ch in letters) {
+            run = if (ch in "aeiouäöüy") 0 else run + 1
+            if (run >= 4) return true
+        }
+    }
+    return false
+}
+
+/**
+ * A missing or rejected card takes the next template's own example caption.
+ * The user's sentence is not pasted onto that template.
+ */
+fun fillMissing(suggestions: List<Suggestion>, fallbacks: List<Candidate>): List<Suggestion> {
+    val used = suggestions.map { it.templateId }.toMutableSet()
+    val pool = fallbacks.filter { it.id !in used }.toMutableList()
+    return suggestions.map { item ->
+        if (item.fromModel) return@map item
+        val index = pool.indexOfFirst { exampleCaption(it) != null }
+        if (index < 0) return@map item
+        val next = pool.removeAt(index)
+        val lines = exampleCaption(next) ?: return@map item
+        used += next.id
+        Suggestion(
+            next.id,
+            lines,
+            fromModel = false,
+            reason = "ersatz",
+            detail = item.templateId + ":" + item.reason,
+        )
+    }
+}
+
+private fun exampleCaption(candidate: Candidate): List<String>? {
+    val group = candidate.knownExamples().firstOrNull { lines ->
+        lines.count { it.isNotBlank() } == candidate.boxes
+    } ?: return null
+    val lines = group.map { capWords(it.trim()) }
+    if (lines.size != candidate.boxes || lines.any { it.isBlank() }) return null
+    return lines
 }
 
 data class ResolvedLines(val lines: List<String>, val fromModel: Boolean, val reason: String = "")
@@ -117,28 +192,67 @@ fun resolveLines(
     message: String,
     similarity: ((String) -> Float)? = null,
     language: String = "",
+    copyCosine: ((String) -> Float)? = null,
+    otherNames: Collection<String> = emptyList(),
 ): ResolvedLines {
     val cleaned = rawLines.map { preclean(it) }
     val sized = (cleaned + List(candidate.boxes) { "" }).take(candidate.boxes)
     val repaired = repairPhraseEndings(sized)
     val chosen = repaired ?: sized
     val literal = fallbackLines(message, candidate.boxes, candidate.style)
-    val problem = rejectReason(message, chosen, candidate, similarity, language)
+    val problem = rejectReason(message, chosen, candidate, similarity, language, copyCosine, otherNames)
     if (problem != null) return ResolvedLines(literal, fromModel = false, reason = problem)
     if (sameCaption(chosen, literal)) return ResolvedLines(literal, fromModel = false, reason = "woertlich")
     return ResolvedLines(chosen.map { capWords(it) }, fromModel = true, reason = "")
 }
 
 /**
- * EmbeddingGemma cosine floor, same prefix on the message and the caption.
- * Calibrated on the 0.2.0 sentences with EmbeddingGemma, prefix
- * "task: sentence similarity | query: ". Paraphrases sit at 0.75 to 0.95
- * ("Geld ist weg" 0.80, "Goal achieved" 0.81, "Keine Verlockungen mehr" 0.75).
- * Cross-topic pairs sit at 0.74 to 0.75. Short on-topic mismatches such as
- * "Barista Kaffee" still reach 0.87, so the floor keeps paraphrases and only
- * drops the weakest cross-topic captions. Hash overlap is not used.
+ * A caption is off topic when it is not closer to the message than to unrelated
+ * reference sentences. Good paraphrases and nonsense both land near 0.73 to 0.78
+ * in raw cosine, so an absolute floor does not separate them. The value is the
+ * margin cosine(message, caption) minus the closest unrelated reference.
+ * Calibrated on the 0.2.1 sentences with EmbeddingGemma.
+ * Reported nonsense sits under 0 (pizza vs traffic -0.01, "Banane Auto Himmel" -0.03).
+ * Paraphrases sit at 0.00 to 0.15 ("Geld ist weg" 0.00, "Goal achieved" 0.01,
+ * "Keiner da" 0.04). A negative margin is off topic. A raw floor is not used.
  */
-const val MIN_EMBED_SIMILARITY = 0.75f
+const val MIN_RELEVANCE_MARGIN = 0f
+
+/** Fixed distractors. None of these is a test sentence. */
+val RELEVANCE_REFERENCES = listOf(
+    "Ich liebe Pizza mit Ananas",
+    "Banane Auto Himmel",
+    "The cat sat on a sunny windowsill",
+    "Bitte den Drucker im Keller neu starten",
+    "Quantenphysik beschreibt das Universum",
+    "Ancient maps show a hidden island",
+    "Der Hund traegt einen kleinen Hut",
+    "Please water the cactus on Tuesday",
+    "Ein Regenschirm liegt auf dem Klavier",
+    "The museum closed before the concert",
+)
+
+/**
+ * Drops a reference that is as close to the message as the caption is, then
+ * returns cosine(message, caption) minus the closest remaining reference.
+ * With no unrelated reference left, the raw cosine is not used as a floor.
+ */
+fun relevanceMargin(messageVec: FloatArray, captionVec: FloatArray, references: List<FloatArray>): Float {
+    val messageSim = cosine(messageVec, captionVec)
+    var best = Float.NEGATIVE_INFINITY
+    var saw = false
+    for (ref in references) {
+        val messageToRef = cosine(messageVec, ref)
+        if (messageToRef >= messageSim - 0.01f) continue
+        val captionToRef = cosine(captionVec, ref)
+        if (!saw || captionToRef > best) {
+            best = captionToRef
+            saw = true
+        }
+    }
+    if (!saw) return 1f
+    return messageSim - best
+}
 
 const val EMBED_SIMILARITY_PREFIX = "task: sentence similarity | query: "
 
@@ -164,6 +278,8 @@ fun rejectReason(
     candidate: Candidate,
     similarity: ((String) -> Float)? = null,
     language: String = "",
+    copyCosine: ((String) -> Float)? = null,
+    otherNames: Collection<String> = emptyList(),
 ): String? {
     val lang = language.ifBlank { outputLanguage(message) }
     val labels = fixedLabels(candidate)
@@ -173,11 +289,11 @@ fun rejectReason(
     if (lines.any { line -> !hasVowel(line) }) return "sinnlos"
     if (duplicateLines(lines)) return "doppelt"
     if (copiesExample(lines, candidate, labels)) return "kopie"
-    if (namesTemplate(lines, candidate)) return "name"
-    if (foreignLanguage(lines, lang, labels, candidate.id)) return "sprache"
-    if (overlapsMessage(lines, message, labels, candidate.id)) return "woertlich"
-    if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex, candidate.id) }) return "abgebrochen"
-    if (similarity != null && similarity(lines.joinToString(" ")) < MIN_EMBED_SIMILARITY) return "fremd"
+    if (namesTemplate(lines, candidate, otherNames)) return "name"
+    if (foreignLanguage(lines, lang, labels, candidate)) return "sprache"
+    if (overlapsMessage(lines, message, labels, candidate, copyCosine)) return "woertlich"
+    if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex, candidate) }) return "abgebrochen"
+    if (similarity != null && similarity(lines.joinToString(" ")) < MIN_RELEVANCE_MARGIN) return "fremd"
     return null
 }
 
@@ -218,43 +334,83 @@ private fun copiesExample(lines: List<String>, candidate: Candidate, labels: Set
     return produced.any { line -> line in singles && !isCatchphrase(line, candidate.id) && line !in labels }
 }
 
-/** Rejects a caption that pastes the template's display name into a line. */
-fun namesTemplate(lines: List<String>, candidate: Candidate): Boolean {
-    val name = normCaptionLine(candidate.name)
-    if (name.length < 8) return false
+/**
+ * The template's own name is its catchphrase and may stay.
+ * A different template's name in the caption is rejected.
+ */
+fun namesTemplate(
+    lines: List<String>,
+    candidate: Candidate,
+    otherNames: Collection<String> = emptyList(),
+): Boolean {
+    val own = normCaptionLine(candidate.name)
     return lines.any { line ->
-        if (isCatchphrase(line, candidate.id)) return@any false
+        if (isOwnPhrase(line, candidate)) return@any false
         val norm = normCaptionLine(line)
-        norm.isNotEmpty() && name in norm
+        if (norm.isEmpty()) return@any false
+        otherNames.any { raw ->
+            val name = normCaptionLine(raw)
+            name.length >= 8 && name != own && name in norm
+        }
     }
 }
 
+/** This template's catchphrase, or its display name used as the punchline. */
+fun isOwnPhrase(line: String, candidate: Candidate): Boolean {
+    if (isCatchphrase(line, candidate.id)) return true
+    val name = normCaptionLine(candidate.name)
+    if (name.length < 8) return false
+    val norm = normCaptionLine(line)
+    return norm.isNotEmpty() && (norm == name || norm.startsWith("$name ") || name in norm)
+}
+
 /**
- * A setup line taken from the message is normal. The template catchphrase and a line that
- * is only one word from the message do not count. Reject when every remaining line is
- * taken from the message. A setup plus the template catchphrase stays.
+ * Each remaining line is checked. A line that contains at least 80 percent of the
+ * message's words is a copy, even when another line is new. So is a line, or the
+ * joined caption, whose cosine with the message is above [COPY_COSINE].
+ * The template's own catchphrase and a single message word do not count.
+ * A caption whose every remaining line is taken from the message is still a copy,
+ * which keeps a kino card that is only the sentence split in two.
  */
 const val CAPTION_OVERLAP = 0.70f
+const val MESSAGE_WORD_COVERAGE = 0.80f
+const val COPY_COSINE = 0.95f
 
 fun overlapsMessage(
     lines: List<String>,
     message: String,
     labels: Set<String> = emptySet(),
-    templateId: String = "",
+    candidate: Candidate = Candidate("", 0, ""),
+    copyCosine: ((String) -> Float)? = null,
 ): Boolean {
-    val messageWords = captionTokens(message).toSet()
+    val templateId = candidate.id
+    val messageWords = captionTokens(message)
     if (messageWords.isEmpty()) return false
-    val hasCatchphrase = templateId.isNotEmpty() && lines.any { isCatchphrase(it, templateId) }
+    val messageSet = messageWords.toSet()
     val rest = lines.filter { line ->
         val norm = normCaptionLine(line)
         norm.isNotEmpty() &&
             norm !in labels &&
-            !isCatchphrase(line, templateId) &&
-            !singleMessageWord(line, messageWords)
+            !isOwnPhrase(line, candidate) &&
+            !singleMessageWord(line, messageSet)
     }
     if (rest.isEmpty()) return false
-    if (hasCatchphrase && rest.size == 1) return false
-    return rest.all { lineFromMessage(it, messageWords, message) }
+    if (rest.any { coversMessage(it, messageWords) }) return true
+    val catchphrase = lines.any { isOwnPhrase(it, candidate) }
+    // One setup line plus this template's catchphrase is a normal card, unless that
+    // setup line already contains most of the message.
+    if (!(catchphrase && rest.size == 1) && rest.all { lineFromMessage(it, messageSet, message) }) return true
+    if (copyCosine != null) {
+        if (copyCosine(rest.joinToString(" ")) > COPY_COSINE) return true
+        if (rest.any { copyCosine(it) > COPY_COSINE }) return true
+    }
+    return false
+}
+
+private fun coversMessage(line: String, messageWords: List<String>): Boolean {
+    val have = captionTokens(line).toSet()
+    val covered = messageWords.count { it in have }
+    return covered.toFloat() / messageWords.size >= MESSAGE_WORD_COVERAGE
 }
 
 private fun singleMessageWord(line: String, messageWords: Set<String>): Boolean {
@@ -274,9 +430,9 @@ private fun lineFromMessage(line: String, messageWords: Set<String>, message: St
     return norm.length >= 8 && normCaptionLine(message).contains(norm)
 }
 
-private fun truncatedLine(line: String, isFinal: Boolean, templateId: String): Boolean {
+private fun truncatedLine(line: String, isFinal: Boolean, candidate: Candidate): Boolean {
     val trimmed = line.trim()
-    if (isCatchphrase(trimmed, templateId)) return false
+    if (isOwnPhrase(trimmed, candidate)) return false
     if (trimmed.endsWith("...") || trimmed.endsWith("…") || trimmed.endsWith("-")) return true
     val words = messageWords(trimmed)
     if (words.size > 8) return true
@@ -905,6 +1061,8 @@ private val CATCHPHRASES: Map<String, Set<String>> = mapOf(
     "zero-wing" to setOf("all your base are belong to us"),
     "elf" to setOf("you sit on a throne of lies"),
     "regret" to setOf("i immediately regret this decision"),
+    "gone" to setOf("and it's gone", "and its gone"),
+    "sohappy" to setOf("i would be so happy"),
     "ski" to setOf("you're gonna have a bad time", "youre gonna have a bad time"),
     "happening" to setOf("it's happening", "its happening"),
     "feelsgood" to setOf("feels good"),
@@ -1115,26 +1273,44 @@ private fun clearSignal(text: String, language: String): Boolean {
 }
 
 /**
- * Each line is judged on its own. A line of three words or fewer is foreign only on a
- * clear signal for another language. A longer line is foreign when its language is known
- * and different, or when it shows that signal.
+ * Wrong language needs at least two unambiguous foreign words.
+ * One odd word, or a short German line with no foreign lexicon hit, stays.
+ * The template's own catchphrase is not counted.
  */
 private fun foreignLanguage(
     lines: List<String>,
     language: String,
     labels: Set<String>,
-    templateId: String,
+    candidate: Candidate,
 ): Boolean {
     if (language == "?") return false
     val rest = lines.filter { line ->
         val norm = normCaptionLine(line)
-        norm.isNotEmpty() && !isCatchphrase(line, templateId) && norm !in labels
+        norm.isNotEmpty() && !isOwnPhrase(line, candidate) && norm !in labels
     }
-    if (rest.joinToString(" ").count { it.isLetter() } < 2) return false
-    return rest.any { line ->
-        val captionLang = dominantLang(line)
-        val knownOther = captionLang != "?" && captionLang != language
-        knownOther || opposingSignal(line, language)
+    return unambiguousForeignWords(rest.joinToString(" "), language).size >= 2
+}
+
+fun unambiguousForeignWords(text: String, language: String): List<String> {
+    if (language == "?" || language !in MARKERS) return emptyList()
+    val own = when (language) {
+        "de" -> DE_MARKERS + DE_LEXICON
+        "en" -> EN_MARKERS + EN_LEXICON
+        else -> MARKERS[language].orEmpty()
+    }
+    val shared = DE_MARKERS.intersect(EN_MARKERS)
+    val words = normCaptionLine(text).split(' ').filter { it.length >= 3 }
+    return words.filter { word ->
+        if (word in own || word in shared) return@filter false
+        MARKERS.any { (lang, markers) ->
+            if (lang == language) return@any false
+            val lexicon = when (lang) {
+                "de" -> DE_LEXICON
+                "en" -> EN_LEXICON
+                else -> emptySet()
+            }
+            word in markers || word in lexicon
+        }
     }
 }
 

@@ -22,6 +22,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ModelDownloadService : Service() {
+    companion object {
+        const val EXTRA_WHICH = "which"
+    }
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val channelId = DownloadNotes.CHANNEL
     private var job: Job? = null
@@ -41,7 +45,11 @@ class ModelDownloadService : Service() {
         job = scope.launch {
             var failed: String? = null
             try {
-                val specs = listOf(ModelCatalog.embed, ModelCatalog.gemmaCpu)
+                val specs = if (intent?.getStringExtra(EXTRA_WHICH) == "e4b") {
+                    listOf(ModelCatalog.gemmaE4b)
+                } else {
+                    listOf(ModelCatalog.embed, ModelCatalog.gemmaCpu)
+                }
                 val downloader = Downloader()
                 specs.forEachIndexed { index, spec ->
                     downloader.download(spec, ModelCatalog.file(this@ModelDownloadService, spec)) { done, total ->

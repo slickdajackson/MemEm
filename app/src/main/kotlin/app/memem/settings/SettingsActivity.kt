@@ -97,6 +97,14 @@ class SettingsActivity : AppCompatActivity() {
                     prefs.qwertz = it
                     generation += 1
                 },
+                onQuality = { checked ->
+                    prefs.qualityE4b = checked
+                    if (checked && !ModelCatalog.ready(this, ModelCatalog.gemmaE4b)) {
+                        startDownload(e4b = true)
+                    }
+                    if (::pipeline.isInitialized) pipeline.preload()
+                    generation += 1
+                },
                 onInsert = {
                     prefs.insertPreference = it
                     generation += 1
@@ -151,7 +159,7 @@ class SettingsActivity : AppCompatActivity() {
         tryPreviews.value = next.map { option ->
             option.bitmap.copy(Bitmap.Config.ARGB_8888, false).asImageBitmap()
         }
-        tryMarks.value = next.map { if (it.fromModel) "KI" else "wörtlich" }
+            tryMarks.value = next.map { app.memem.pipeline.memeMark(it.fromModel, it.reason) }
         previous.filter { old -> next.none { it.bitmap === old.bitmap } }.forEach { option ->
             if (!option.bitmap.isRecycled) option.bitmap.recycle()
         }
@@ -166,19 +174,26 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(Intent.createChooser(send, "Protokoll"))
     }
 
-    private fun startDownload() {
+    private fun startDownload(e4b: Boolean = false) {
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
         }
-        ContextCompat.startForegroundService(this, Intent(this, ModelDownloadService::class.java))
+        val intent = Intent(this, ModelDownloadService::class.java)
+        if (e4b) intent.putExtra(ModelDownloadService.EXTRA_WHICH, "e4b")
+        ContextCompat.startForegroundService(this, intent)
         generation += 1
     }
 
     private fun readState(download: String): SetupUi {
         val embed = if (ModelCatalog.ready(this, ModelCatalog.embed)) "da" else "fehlt"
         val cpu = if (ModelCatalog.ready(this, ModelCatalog.gemmaCpu)) "da" else "fehlt"
+        val e4b = when {
+            !prefs.qualityE4b -> "aus"
+            ModelCatalog.ready(this, ModelCatalog.gemmaE4b) -> "da"
+            else -> "fehlt, E2B bleibt"
+        }
         val a11y = when {
             MememAccessibilityService.instance != null -> "Bedienungshilfe aktiv, liest nur WhatsApp."
             MememAccessibilityService.enabled(this) -> "Bedienungshilfe eingeschaltet, Dienst gerade nicht verbunden."
@@ -192,8 +207,9 @@ class SettingsActivity : AppCompatActivity() {
             a11y = a11y,
             overlay = prefs.overlay,
             qwertz = prefs.qwertz,
+            qualityE4b = prefs.qualityE4b,
             insert = prefs.insertPreference,
-            models = "Embedding $embed, Gemma $cpu",
+            models = "Embedding $embed, E2B $cpu, E4B $e4b",
             download = download,
             hyperos = getString(R.string.hyperos_hint),
             gemmaLog = DebugLog(this).recentText(),

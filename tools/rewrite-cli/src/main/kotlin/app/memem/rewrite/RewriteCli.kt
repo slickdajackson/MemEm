@@ -15,20 +15,18 @@ import app.memem.engine.parseCatalog
 import app.memem.engine.FOLLOW_UP_TEMPERATURE
 import app.memem.engine.GEMMA_REPETITION_PENALTY
 import app.memem.engine.GEMMA_TEMPERATURE
-import app.memem.engine.QUALITY_MAX_TOKENS
-import app.memem.engine.QUALITY_TEMPERATURE
+import app.memem.engine.RELEVANCE_REFERENCES
 import app.memem.engine.absorbModelText
 import app.memem.engine.cosine
+import app.memem.engine.fillMissing
 import app.memem.engine.followUpHint
 import app.memem.engine.hasBlankLineRun
-import app.memem.engine.orderByQuality
+import app.memem.engine.orderByRules
 import app.memem.engine.outputLanguage
-import app.memem.engine.parseQuality
 import app.memem.engine.parseSuggestions
 import app.memem.engine.planFollowUp
-import app.memem.engine.qualityPrompt
-import app.memem.engine.qualitySchema
 import app.memem.engine.reasonText
+import app.memem.engine.relevanceMargin
 import app.memem.engine.similarityText
 import app.memem.engine.searchTemplates
 import com.google.ai.edge.litertlm.Backend
@@ -95,8 +93,10 @@ fun main(args: Array<String>) {
     try {
         for (sentence in lines) {
             val started = System.nanoTime()
-            val picked = search.top(sentence, 8).take(3).mapNotNull { byId[it] }
+            val rankedIds = search.top(sentence, 8)
+            val picked = rankedIds.take(3).mapNotNull { byId[it] }
             val chosen = if (picked.size >= 3) picked else search.fallback(sentence).take(3)
+            val extras = rankedIds.drop(3).mapNotNull { byId[it] }
             val lang = outputLanguage(sentence)
             val briefs = chosen.map { entry ->
                 memeBrief(entry.id, entry.name, entry.boxes, entry.meaningFor(lang), entry.examplesFor(lang), lang)
@@ -104,15 +104,18 @@ fun main(args: Array<String>) {
             val prompt = buildPrompt(sentence, briefs)
             val schema = memeSchema(chosen.map { it.id to it.boxes })
             val raw = generate(engine, prompt.system, prompt.user, schema)
-            val score = search.scorer(sentence)
+            val judged = search.judges(sentence)
+            val names = catalog.map { it.name }
             val suggestions = parseSuggestions(
                 raw.text.orEmpty(),
                 chosen.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) },
                 sentence,
                 wanted = 3,
                 failure = raw.error ?: "keine antwort",
-                similarity = score,
+                similarity = judged.margin,
                 language = lang,
+                copyCosine = judged.cosine,
+                otherNames = names,
             ).toMutableList()
             val rawParts = ArrayList<String>()
             raw.text?.let { rawParts += it }
@@ -138,8 +141,10 @@ fun main(args: Array<String>) {
                     sentence,
                     wanted = subset.size.coerceAtLeast(1),
                     failure = again.error ?: "keine antwort",
-                    similarity = score,
+                    similarity = judged.margin,
                     language = lang,
+                    copyCosine = judged.cosine,
+                    otherNames = names,
                 )
                 for (one in updated) {
                     val index = suggestions.indexOfFirst { it.templateId == one.templateId }
@@ -148,22 +153,12 @@ fun main(args: Array<String>) {
                     if (one.fromModel || current.reason == "fehlt") suggestions[index] = one
                 }
             }
-            val live = suggestions.filter { it.fromModel }
-            if (live.size >= 2) {
-                val prompt = qualityPrompt(live.map { it.templateId to it.lines }, lang)
-                val judged = generate(
-                    engine,
-                    prompt.system,
-                    prompt.user,
-                    qualitySchema(live.map { it.templateId }),
-                    QUALITY_TEMPERATURE,
-                    QUALITY_MAX_TOKENS,
-                    retryWithoutSchema = false,
-                )
-                val ordered = orderByQuality(suggestions, parseQuality(judged.text.orEmpty(), live.map { it.templateId }))
-                suggestions.clear()
-                suggestions.addAll(ordered)
-            }
+            val pool = (extras + search.fallback(sentence))
+                .distinctBy { it.id }
+                .map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examplesFor(lang)) }
+            val ordered = orderByRules(fillMissing(suggestions, pool), sentence)
+            suggestions.clear()
+            suggestions.addAll(ordered)
             val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
             val latency = (System.nanoTime() - started) / 1_000_000
             val report = reportJson(sentence, latency, search.mode, combined, suggestions, lang)
@@ -185,6 +180,11 @@ fun main(args: Array<String>) {
 }
 
 private data class ModelText(val text: String?, val error: String?)
+
+private data class CaptionSignals(
+    val margin: ((String) -> Float)?,
+    val cosine: ((String) -> Float)?,
+)
 
 private fun generate(
     engine: Engine,
@@ -402,16 +402,22 @@ private class Searcher(
         return fallback(sentence).take(limit).map { it.id }
     }
 
-    fun scorer(message: String): ((String) -> Float)? {
-        val engine = embedder ?: return null
-        val left = embedPair(engine, message) ?: return null
-        val cache = HashMap<String, Float>()
-        return { caption ->
-            cache.getOrPut(caption) {
-                val right = embedPair(engine, caption) ?: return@getOrPut 1f
-                cosine(left, right)
-            }
-        }
+    fun judges(message: String): CaptionSignals {
+        val engine = embedder ?: return CaptionSignals(null, null)
+        val left = embedPair(engine, message) ?: return CaptionSignals(null, null)
+        val refs = RELEVANCE_REFERENCES.mapNotNull { embedPair(engine, it) }
+        val cache = HashMap<String, FloatArray?>()
+        fun vec(text: String) = cache.getOrPut(text) { embedPair(engine, text) }
+        return CaptionSignals(
+            margin = { text ->
+                val caption = vec(text) ?: return@CaptionSignals 1f
+                relevanceMargin(left, caption, refs)
+            },
+            cosine = { text ->
+                val caption = vec(text) ?: return@CaptionSignals 0f
+                cosine(left, caption)
+            },
+        )
     }
 
     private fun embedPair(engine: EmbeddingEngine, text: String): FloatArray? {

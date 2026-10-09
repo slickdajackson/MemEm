@@ -410,19 +410,51 @@ class GemmaResponseTest {
             listOf(Candidate("toohigh", 2, "upper")),
             "schon wieder stau auf der a8",
         ).single()
-        assertTrue(traffic.fromModel)
+        assertEquals("woertlich", traffic.reason)
+        val coffee = parseSuggestions(
+            """{"hipster":{"z1":"Wer hat den letzten Kaffee getrunken","z2":"Der Barista"}}""",
+            listOf(Candidate("hipster", 2, "upper")),
+            "wer hat den letzten kaffee getrunken",
+        ).single()
+        assertEquals("woertlich", coffee.reason)
+        val nearCopy = parseSuggestions(
+            """{"fine":{"z1":"Geschafft beim ersten Anlauf","z2":"Ruhig bleiben"}}""",
+            listOf(Candidate("fine", 2, "upper")),
+            "hab die prüfung bestanden",
+            copyCosine = { 0.97f },
+        ).single()
+        assertEquals("woertlich", nearCopy.reason)
         val mixed = parseSuggestions(
             """{"fine":{"z1":"Prüfung geschafft","z2":"Mission accomplished"}}""",
             listOf(Candidate("fine", 2, "upper")),
             "hab die prüfung bestanden",
         ).single()
-        assertEquals("sprache", mixed.reason)
+        assertTrue(mixed.fromModel)
         val named = parseSuggestions(
             """{"success":{"z1":"Prüfung geschafft","z2":"Success Kid"}}""",
             listOf(Candidate("success", 2, "upper", name = "Success Kid")),
             "hab die prüfung bestanden",
         ).single()
-        assertEquals("name", named.reason)
+        assertTrue(named.fromModel)
+        val otherName = parseSuggestions(
+            """{"fine":{"z1":"Prüfung geschafft","z2":"Success Kid"}}""",
+            listOf(Candidate("fine", 2, "upper", name = "This is Fine")),
+            "hab die prüfung bestanden",
+            otherNames = listOf("Success Kid"),
+        ).single()
+        assertEquals("name", otherName.reason)
+        val ownCatch = parseSuggestions(
+            """{"gone":{"z1":"Die 20 Euro sind weg","z2":"And It's Gone"}}""",
+            listOf(Candidate("gone", 2, "upper", name = "And It's Gone")),
+            "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+        ).single()
+        assertTrue(ownCatch.fromModel)
+        val germanBudget = parseSuggestions(
+            """{"gone":{"z1":"Geld verschwunden","z2":"Budget leer geworden"}}""",
+            listOf(Candidate("gone", 2, "upper", name = "And It's Gone")),
+            "ich wollte nur kurz einkaufen und hab jetzt 200 euro ausgegeben",
+        ).single()
+        assertTrue(germanBudget.fromModel)
     }
 
     @Test
@@ -471,7 +503,7 @@ class GemmaResponseTest {
             """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
             listOf(Candidate("fine", 1, "upper")),
             "hab die prüfung bestanden",
-            similarity = { 0.02f },
+            similarity = { -0.05f },
         ).single()
         assertFalse(low.fromModel)
         assertEquals("fremd", low.reason)
@@ -479,7 +511,7 @@ class GemmaResponseTest {
             """{"fine":{"z1":"Geschafft beim ersten Anlauf"}}""",
             listOf(Candidate("fine", 1, "upper")),
             "hab die prüfung bestanden",
-            similarity = { MIN_EMBED_SIMILARITY + 0.05f },
+            similarity = { MIN_RELEVANCE_MARGIN + 0.05f },
         ).single()
         assertTrue(near.fromModel)
         assertTrue(carriesCoreStatement("hab die prüfung bestanden", near.lines))
@@ -689,15 +721,44 @@ class PromptBuilderTest {
         assertEquals("exit", saved[0].templateId)
         assertEquals(listOf("Bitte gehen", "Tuer bleibt"), saved[0].lines)
         assertTrue(saved[0].fromModel)
-        val scores = parseQuality("""{"fine":{"g":"4","p":"5"},"drake":{"g":"1","p":"2"}}""", listOf("fine", "drake"))
-        val ordered = orderByQuality(
+        val ordered = orderByRules(
             listOf(
-                Suggestion("drake", listOf("Schwach"), true),
-                Suggestion("fine", listOf("Stark"), true),
+                Suggestion("drake", listOf("schon wieder stau auf der a8", "nochmal"), true),
+                Suggestion("fine", listOf("Autobahn steht", "Zu teuer das"), true),
+                Suggestion("exit", listOf("RAUS", "HIER"), false, "fehlt"),
             ),
-            scores,
+            "schon wieder stau auf der a8",
         )
-        assertEquals(listOf("fine", "drake"), ordered.map { it.templateId })
+        assertEquals(listOf("fine", "drake", "exit"), ordered.map { it.templateId })
+        val wish = parseSuggestions(
+            """{"sohappy":{"z1":"Wochenende frei wünsch","z2":"ich mir Aber Chef sagt nein"}}""",
+            listOf(Candidate("sohappy", 2, "upper", name = "I Would Be So Happy")),
+            "mein chef will dass ich am wochenende arbeite",
+        ).single()
+        assertEquals(listOf("Wochenende frei wünsch ich mir", "Aber Chef sagt nein"), wish.lines)
+        assertTrue(wish.fromModel)
+        val goneSplit = parseSuggestions(
+            """{"gone":{"z1":"Alles wird weg","z2":"sein Enttäuschung"}}""",
+            listOf(Candidate("gone", 2, "upper", name = "And It's Gone")),
+            "ihr werdet am ende alles verlieren",
+        ).single()
+        assertEquals(listOf("Alles wird weg sein", "Enttäuschung"), goneSplit.lines)
+        assertTrue(goneSplit.fromModel)
+        val filled = fillMissing(
+            listOf(
+                Suggestion("fine", listOf("Qualm", "Ruhe"), true),
+                Suggestion("drake", listOf("X", "Y"), false, "fehlt"),
+            ),
+            listOf(Candidate("ds", 2, "upper", examples = listOf(listOf("Morgen die Diät", "Heute der Kuchen")))),
+        )
+        assertEquals("ds", filled[1].templateId)
+        assertEquals("ersatz", filled[1].reason)
+        assertEquals(listOf("Morgen die Diät", "Heute der Kuchen"), filled[1].lines)
+        val message = floatArrayOf(1f, 0f)
+        val close = relevanceMargin(message, floatArrayOf(0.9f, 0.1f), listOf(floatArrayOf(0f, 1f)))
+        val far = relevanceMargin(message, floatArrayOf(0.2f, 0.8f), listOf(floatArrayOf(0f, 1f)))
+        assertTrue(close > MIN_RELEVANCE_MARGIN)
+        assertTrue(far < MIN_RELEVANCE_MARGIN)
         assertTrue(prompt.user.contains("Do not copy the message."))
         assertTrue(prompt.user.contains("Write in German."))
         assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"<deutsche Zeile>\""))

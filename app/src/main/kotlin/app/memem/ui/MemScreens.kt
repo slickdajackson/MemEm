@@ -71,6 +71,7 @@ data class SetupUi(
     val a11y: String = "",
     val overlay: Boolean = false,
     val qwertz: Boolean = false,
+    val qualityE4b: Boolean = false,
     val insert: InsertPreference = InsertPreference.CLIPBOARD,
     val models: String = "",
     val download: String = "",
@@ -92,6 +93,7 @@ fun SettingsScreen(
     onOverlayPermission: () -> Unit,
     onOverlay: (Boolean) -> Unit,
     onQwertz: (Boolean) -> Unit,
+    onQuality: (Boolean) -> Unit = {},
     onInsert: (InsertPreference) -> Unit,
     onDownload: () -> Unit,
     onHarness: () -> Unit,
@@ -133,7 +135,7 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.2.1   SIDELOAD")
+                MonoLabel("0.2.2   SIDELOAD")
             }
         }
         androidx.compose.material3.Text(
@@ -269,7 +271,9 @@ fun SettingsScreen(
             MonoLabel("MODELLE")
             Headline("Auf dem Gerät, CPU")
             StickerButton("Modelle laden", Yellow, onClick = onDownload)
-            MonoLabel("Embedding etwa 157 MB, Gemma etwa 2,6 GB. Immer CPU.")
+            StickerToggle("Qualität (E4B)", state.qualityE4b, onQuality)
+            MonoLabel("Aus: Gemma E2B. An: E4B, witziger, etwa doppelt so langsam.")
+            MonoLabel("Embedding etwa 157 MB, E2B etwa 2,6 GB, E4B etwa 3,7 GB. Immer CPU.")
             MonoLabel(state.models)
             if (state.download.isNotBlank()) MonoLabel(state.download)
         }

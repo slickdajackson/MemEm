@@ -33,6 +33,7 @@ private const val SYSTEM =
         "A template's own catchphrase may stay in its original language. Do not borrow a catchphrase from a different template. " +
         "Short and pointed. For each template, fields z1, z2, and so on, one line per field, each line different and not empty. " +
         "No line ends on an article, a preposition, or a conjunction. " +
+        "End each field at a sentence break. Do not stop in the middle of a sentence. " +
         "Do not put a slash in a field. One field is one line. " +
         "Reply with JSON only. Keys are the template ids. Values are objects with z1, z2, ..."
 
@@ -99,9 +100,14 @@ fun reasonText(reason: String, language: String): String {
             "The template was missing. Reply with its lines."
         }
         "name" -> if (german) {
-            "Der Vorlagenname steht in der Caption. Schreib eine eigene Zeile."
+            "Der Name einer anderen Vorlage steht in der Caption. Schreib eine eigene Zeile."
         } else {
-            "The template name is in the caption. Write a new line."
+            "Another template's name is in the caption. Write a new line."
+        }
+        "ersatz" -> if (german) {
+            "Die Karte fehlte. Eine andere Vorlage springt ein."
+        } else {
+            "That card was missing. Another template fills the slot."
         }
         else -> if (german) {
             "Die Zeilen wurden verworfen. Schreibe auf ${languageNameDe(language)}."

@@ -27,6 +27,13 @@ class Prefs(context: Context) {
             prefs.edit().putBoolean(KEY_QWERTZ, value).apply()
         }
 
+    /** Off by default. E2B stays the model until this is on and the E4B file is on disk. */
+    var qualityE4b: Boolean
+        get() = prefs.getBoolean(KEY_QUALITY, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_QUALITY, value).apply()
+        }
+
     var overlay: Boolean
         get() = prefs.getBoolean(KEY_OVERLAY, false)
         set(value) {
@@ -55,6 +62,7 @@ class Prefs(context: Context) {
     private companion object {
         const val KEY_INSERT = "insert"
         const val KEY_QWERTZ = "qwertz"
+        const val KEY_QUALITY = "quality_e4b"
         const val KEY_OVERLAY = "overlay"
         const val KEY_WIZARD = "wizard_done"
         const val KEY_WIZARD_CLOSED = "wizard_closed"
