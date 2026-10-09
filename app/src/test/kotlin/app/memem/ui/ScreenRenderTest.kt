@@ -113,9 +113,9 @@ class ScreenRenderTest {
     fun docsImages() {
         val context = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         val renderer = MemeRenderer(context)
-        val drake = renderer.render(template(context, "drake"), listOf("Meeting heute", "Meeting am Freitag"))
-        val fine = renderer.render(template(context, "fine"), listOf("Der Server brennt", "Alles gut"))
-        val cmm = renderer.render(template(context, "cmm"), listOf("Die Frist war gestern"))
+        val drake = renderer.render(template(context, "drake"), listOf("Another meeting today", "Friday, I'm free"))
+        val fine = renderer.render(template(context, "fine"), listOf("The server is on fire", "All good"))
+        val cmm = renderer.render(template(context, "cmm"), listOf("The deadline was yesterday"))
         check(drawn(drake) && drawn(fine) && drawn(cmm)) { "meme template rendered blank" }
         save(drake, "meme-drake.png", docs = true)
         save(fine, "meme-fine.png", docs = true)
@@ -130,7 +130,7 @@ class ScreenRenderTest {
             override fun meme() = Unit
             override fun pick(index: Int) = Unit
         })
-        panel.setStatus("Meeting am Freitag")
+        panel.setStatus("The server is on fire")
         panel.showPreviews(listOf(drake, fine, cmm), listOf("KI", "wörtlich", "KI"))
         val width = 1080
         panel.measure(
@@ -172,7 +172,7 @@ class ScreenRenderTest {
                     keyboardEnabled = true,
                     a11yOn = false,
                 ),
-                tryDraft = "Meeting am Freitag",
+                tryDraft = "The server is on fire",
                 tryStatus = "3 Vorschläge",
                 tryPreviews = previews,
                 tryMarks = listOf("KI", "wörtlich", "KI"),

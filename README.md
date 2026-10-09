@@ -46,14 +46,12 @@ SHA-256:
 5. The cards render on the phone.
 6. A tap inserts the PNG. Share is the last resort. Send is never pressed.
 
-```mermaid
-flowchart LR
-    typed[Typed message] --> search[Embedding search]
-    search --> gemma[Gemma rewrite]
-    gemma --> checks[Checks]
-    checks --> render[Render]
-    render --> insert[Insert]
-```
+<p align="center">
+<picture>
+<source srcset="docs/images/how-it-works.svg" type="image/svg+xml" />
+<img src="docs/images/how-it-works.png" alt="How MemEm works, top to bottom: typed message, embedding search, Gemma rewrite, checks, render three cards, tap to insert." width="640" />
+</picture>
+</p>
 
 Gemma 4 E2B and EmbeddingGemma run on the CPU, in a separate process. The keyboard talks to that process on the device. While the model is still writing, the cards show your words marked `wörtlich`. A caption that passes is marked `KI`. If fewer than three cards pass, MemEm tries once more in the background and adds those cards when they are ready.
 
@@ -64,14 +62,14 @@ The on-screen UI is German. The default keyboard is English QWERTY (space bar `E
 | | |
 | --- | --- |
 | Keyboard with three suggestions | Setup wizard, step 1 |
-| <img src="docs/images/tastatur.png" alt="Keyboard with three meme suggestions" width="360" /> | <img src="docs/images/einrichtung.png" alt="Setup wizard" width="280" /> |
+| <img src="docs/images/tastatur.png" alt="Keyboard with three suggestions for The server is on fire" width="360" /> | <img src="docs/images/einrichtung.png" alt="Setup wizard" width="280" /> |
 | Main screen | Settings |
-| <img src="docs/images/hauptansicht.png" alt="Main screen with three cards" width="280" /> | <img src="docs/images/einstellungen.png" alt="Settings" width="280" /> |
+| <img src="docs/images/hauptansicht.png" alt="Main screen, try field set to The server is on fire, three cards" width="280" /> | <img src="docs/images/einstellungen.png" alt="Settings" width="280" /> |
 
 <p>
-<img src="docs/images/meme-drake.png" alt="Drake: Meeting heute, Meeting am Freitag" width="220" />
-<img src="docs/images/meme-fine.png" alt="This is fine: Der Server brennt, Alles gut" width="240" />
-<img src="docs/images/meme-cmm.png" alt="Change my mind: Die Frist war gestern" width="240" />
+<img src="docs/images/meme-drake.png" alt="Drake: Another meeting today, Friday, I'm free" width="220" />
+<img src="docs/images/meme-fine.png" alt="This is fine: The server is on fire, All good" width="240" />
+<img src="docs/images/meme-cmm.png" alt="Change my mind: The deadline was yesterday" width="240" />
 </p>
 
 ## Setup
