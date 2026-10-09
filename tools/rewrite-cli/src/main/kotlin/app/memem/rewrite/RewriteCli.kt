@@ -1,19 +1,21 @@
 package app.memem.rewrite
 
-import app.memem.engine.Brief
-import app.memem.engine.Candidate
 import app.memem.engine.CatalogEntry
+import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
 import app.memem.engine.HashEmbedder
 import app.memem.engine.IndexPoint
 import app.memem.engine.Kind
 import app.memem.engine.MemIndex
 import app.memem.engine.buildPrompt
-import app.memem.engine.fieldRoles
 import app.memem.engine.halfToFloat
+import app.memem.engine.memeBrief
+import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.parseCatalog
 import app.memem.engine.parseSuggestions
+import app.memem.engine.retryHint
 import app.memem.engine.searchTemplates
+import app.memem.engine.shouldRetry
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.ConversationConfig
@@ -54,9 +56,9 @@ fun main(args: Array<String>) {
         File(assets, "caption-examples.json").takeIf { it.isFile }?.readText().orEmpty(),
     )
     val byId = catalog.associateBy { it.id }
-    val search = Searcher(assets, options["embed"], catalog)
     val cache = File(System.getProperty("java.io.tmpdir"), "memem-rewrite")
     cache.mkdirs()
+    val search = Searcher(assets, options["embed"], catalog, cache)
     val engine = Engine(
         EngineConfig(
             modelPath = gemma.absolutePath,
@@ -75,17 +77,53 @@ fun main(args: Array<String>) {
             val picked = search.top(sentence, 8).take(3).mapNotNull { byId[it] }
             val chosen = if (picked.size >= 3) picked else search.fallback(sentence).take(3)
             val briefs = chosen.map { entry ->
-                Brief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examples, fieldRoles(entry.id, entry.boxes))
+                memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examples)
             }
             val prompt = buildPrompt(sentence, briefs)
-            val schema = memeSchema(chosen.map { it.id })
+            val schema = memeSchema(chosen.map { it.id to it.boxes })
             val raw = generate(engine, prompt.system, prompt.user, schema)
-            val candidates = chosen.map { Candidate(it.id, it.boxes, it.style, name = it.name) }
-            val suggestions = parseSuggestions(raw.text.orEmpty(), candidates, sentence, wanted = 3, failure = raw.error ?: "keine antwort")
+            val score = search.scorer(sentence)
+            val suggestions = parseSuggestions(
+                raw.text.orEmpty(),
+                chosen.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examples) },
+                sentence,
+                wanted = 3,
+                failure = raw.error ?: "keine antwort",
+                similarity = score,
+            ).toMutableList()
+            val rawParts = ArrayList<String>()
+            raw.text?.let { rawParts += it }
+            for (index in suggestions.indices) {
+                val item = suggestions[index]
+                if (!shouldRetry(item)) continue
+                val entry = chosen.firstOrNull { it.id == item.templateId } ?: continue
+                val againPrompt = buildPrompt(
+                    sentence,
+                    listOf(memeBrief(entry.id, entry.name, entry.boxes, entry.meaning, entry.examples)),
+                    hint = retryHint(item.reason),
+                )
+                val again = generate(
+                    engine,
+                    againPrompt.system,
+                    againPrompt.user,
+                    memeSchema(listOf(entry.id to entry.boxes)),
+                )
+                again.text?.let { rawParts += it }
+                val one = parseSuggestions(
+                    again.text.orEmpty(),
+                    listOf(memeCandidate(entry.id, entry.boxes, entry.style, entry.name, entry.examples)),
+                    sentence,
+                    wanted = 1,
+                    failure = again.error ?: item.reason,
+                    similarity = score,
+                ).firstOrNull() ?: continue
+                suggestions[index] = one
+            }
+            val combined = ModelText(rawParts.joinToString("\n---\n").ifBlank { null }, raw.error)
             val latency = (System.nanoTime() - started) / 1_000_000
-            val report = reportJson(sentence, latency, search.mode, raw, suggestions)
+            val report = reportJson(sentence, latency, search.mode, combined, suggestions)
             reports.put(report)
-            markdown.append(reportMarkdown(sentence, latency, search.mode, raw, suggestions))
+            markdown.append(reportMarkdown(sentence, latency, search.mode, combined, suggestions))
         }
     } finally {
         engine.close()
@@ -119,14 +157,14 @@ private fun generateOnce(engine: Engine, system: String, user: String, schema: S
         val config = ConversationConfig(
             systemInstruction = Contents.of(system),
             samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = 0.4),
-            maxOutputToken = 400,
+            maxOutputToken = GEMMA_MAX_OUTPUT_TOKENS,
             thinkingConfig = ThinkingConfig(enableThinking = false),
             enableResponseFormat = useSchema,
         )
         engine.createConversation(config).use { conversation ->
             val response = conversation.sendMessage(
                 com.google.ai.edge.litertlm.Message.user(user),
-                maxOutputToken = 400,
+                maxOutputToken = GEMMA_MAX_OUTPUT_TOKENS,
                 responseFormat = if (useSchema) ResponseFormat.json(schema) else null,
             )
             val text = response.toString()
@@ -185,7 +223,12 @@ private fun reportMarkdown(
     return body.toString()
 }
 
-private class Searcher(assets: File, embedPath: String?, private val catalog: List<CatalogEntry>) {
+private class Searcher(
+    assets: File,
+    embedPath: String?,
+    private val catalog: List<CatalogEntry>,
+    cache: File,
+) {
     var mode: String = "stichworte"
         private set
     private var embedder: EmbeddingEngine? = null
@@ -226,11 +269,18 @@ private class Searcher(assets: File, embedPath: String?, private val catalog: Li
                         EmbeddingEngineConfig(
                             modelPath = File(embedPath).absolutePath,
                             backend = Backend.CPU(threadCount = 4),
-                            cacheDir = File(System.getProperty("java.io.tmpdir"), "memem-rewrite").absolutePath,
+                            cacheDir = cache.absolutePath,
                             maxInputLength = 256,
                         ),
                     )
                     engine.initialize()
+                    try {
+                        engine.computeEmbedding(
+                            listOf(InputData.Text("MemEm")),
+                            EmbeddingOptions(normalize = true, outputSize = 768),
+                        )
+                    } catch (_: Exception) {
+                    }
                     embedder = engine
                     litert = MemIndex(
                         meta.optInt("dim", 768),
@@ -259,15 +309,6 @@ private class Searcher(assets: File, embedPath: String?, private val catalog: Li
                     EmbeddingOptions(normalize = true, outputSize = index.dim),
                 ).embedding
             } else {
-                val idfJson = JSONObject(File("app/src/main/assets/index/idf.json").readText())
-                val table = idfJson.getJSONObject("idf")
-                val idf = buildMap {
-                    val keys = table.keys()
-                    while (keys.hasNext()) {
-                        val key = keys.next()
-                        put(key, table.getDouble(key).toFloat())
-                    }
-                }
                 HashEmbedder.embed(sentence, idf, idfDocs)
             }
             if (vector.size == index.dim) {
@@ -276,6 +317,11 @@ private class Searcher(assets: File, embedPath: String?, private val catalog: Li
         }
         mode = "stichworte"
         return fallback(sentence).take(limit).map { it.id }
+    }
+
+    fun scorer(message: String): ((String) -> Float)? {
+        if (idf.isEmpty()) return null
+        return { caption -> HashEmbedder.similarity(message, caption, idf, idfDocs) }
     }
 
     fun fallback(sentence: String): List<CatalogEntry> {

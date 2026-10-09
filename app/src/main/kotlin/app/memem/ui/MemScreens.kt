@@ -133,7 +133,7 @@ fun SettingsScreen(
                     fontSize = 42.sp,
                     color = Ink,
                 )
-                MonoLabel("0.1.7   SIDELOAD")
+                MonoLabel("0.1.8   SIDELOAD")
             }
         }
         androidx.compose.material3.Text(

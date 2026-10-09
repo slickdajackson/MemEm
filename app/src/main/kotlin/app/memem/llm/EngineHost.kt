@@ -14,6 +14,7 @@ import com.google.ai.edge.litertlm.InputData
 import com.google.ai.edge.litertlm.ResponseFormat
 import com.google.ai.edge.litertlm.SamplerConfig
 import com.google.ai.edge.litertlm.ThinkingConfig
+import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
 import java.io.File
 
 /**
@@ -47,7 +48,7 @@ class EngineHost(private val cacheDir: File) {
                             user = msg.data.getString("user").orEmpty(),
                             schema = msg.data.getString("schema"),
                             temperature = msg.data.getDouble("temperature", 0.4),
-                            maxTokens = msg.data.getInt("maxTokens", 220),
+                            maxTokens = msg.data.getInt("maxTokens", GEMMA_MAX_OUTPUT_TOKENS),
                         ),
                     )
                     reply.putBoolean("ok", true)
@@ -116,7 +117,19 @@ class EngineHost(private val cacheDir: File) {
                 ),
             )
             emb.initialize()
+            warmupEmbed(emb)
             embedder = emb
+        }
+    }
+
+    /** The first embedding of a fresh engine drifts. Discard it before any real query. */
+    private fun warmupEmbed(engine: EmbeddingEngine) {
+        try {
+            engine.computeEmbedding(
+                listOf(InputData.Text("MemEm")),
+                EmbeddingOptions(normalize = true, outputSize = 768),
+            )
+        } catch (_: Exception) {
         }
     }
 

@@ -1,5 +1,6 @@
 package app.memem.engine
 
+import java.io.File
 import java.nio.charset.StandardCharsets
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
@@ -214,18 +215,68 @@ class GemmaResponseTest {
     }
 
     @Test
-    fun identicalLinesStayWhenTheyAreARewrite() {
+    fun identicalLinesFallBack() {
         val message = "ihr werdet am ende alles verlieren"
         val raw = """{"memes":[{"template":"fine","lines":["Alles vorbei","Alles vorbei"]}]}"""
         val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), message).single()
-        assertEquals(listOf("Alles vorbei", "Alles vorbei"), out.lines)
+        assertEquals(listOf("IHR WERDET AM ENDE", "ALLES VERLIEREN"), out.lines)
+        assertFalse(out.fromModel)
+        assertEquals("doppelt", out.reason)
+    }
+
+    @Test
+    fun rejectsEnglishCopiesAndExampleCopies() {
+        val message = "ihr werdet am ende alles verlieren"
+        val english = """{"fine":{"z1":"I SHOULD SELL","z2":"EPIPENS"}}"""
+        val sold = parseSuggestions(english, listOf(Candidate("fine", 2, "upper")), message).single()
+        assertFalse(sold.fromModel)
+        assertEquals("sprache", sold.reason)
+        val copied = parseSuggestions(
+            """{"boat":{"z1":"Ich sollte ein Boot kaufen","z2":"Morgen reicht"}}""",
+            listOf(
+                Candidate(
+                    "boat",
+                    2,
+                    "upper",
+                    examples = listOf(listOf("Ich sollte ein Boot kaufen", "Morgen reicht")),
+                ),
+            ),
+            message,
+        ).single()
+        assertFalse(copied.fromModel)
+        assertEquals("kopie", copied.reason)
+    }
+
+    @Test
+    fun splitsSlashSeparatedEntries() {
+        val raw = """{"fine":{"z1":"Der Server brennt / Alles gut"}}"""
+        val out = parseSuggestions(raw, listOf(Candidate("fine", 2, "upper")), "Der Server brennt und niemand merkt es").single()
+        assertEquals(listOf("Der Server brennt", "Alles gut"), out.lines)
         assertTrue(out.fromModel)
     }
 
     @Test
-    fun schemaHasEnumWithoutItemCounts() {
-        val schema = memeSchema(listOf("drake", "fry"))
-        assertTrue(schema.contains("drake"))
+    fun negativeSimilarityFallsBack() {
+        val raw = """{"memes":[{"template":"b","lines":["Pizza ist da","Hunger"]}]}"""
+        val message = "ihr werdet am ende alles verlieren"
+        val out = parseSuggestions(
+            raw,
+            listOf(Candidate("b", 2, "upper")),
+            message,
+            similarity = { -0.2f },
+        ).single()
+        assertFalse(out.fromModel)
+        assertEquals("fremd", out.reason)
+    }
+
+    @Test
+    fun schemaRequiresIdsAndNamedLines() {
+        val schema = memeSchema(listOf("drake" to 2, "fry" to 2))
+        assertTrue(schema.contains("\"drake\""))
+        assertTrue(schema.contains("\"z1\""))
+        assertTrue(schema.contains("\"z2\""))
+        assertTrue(schema.contains("minLength"))
+        assertTrue(schema.contains("\"required\""))
         assertTrue(schemaAvoidsCountConstraints(schema))
     }
 
@@ -287,6 +338,37 @@ class GemmaResponseTest {
         lines.joinToString(" ") { it.trim() }.replace(Regex("\\s+"), " ").trim().lowercase()
 }
 
+class CaptionExampleTest {
+    @Test
+    fun everyTemplateHasTwoOrThreeGermanCaptions() {
+        val root = listOf(File("app/src/main/assets"), File("../app/src/main/assets"))
+            .first { File(it, "catalog.json").isFile }
+        val catalog = JSONObject(File(root, "catalog.json").readText())
+        val examples = JSONObject(File(root, "caption-examples.json").readText())
+        val templates = catalog.getJSONArray("templates")
+        val banned = listOf("biden", "obama", "hitler", "imgflip", "upvote")
+        assertEquals(templates.length(), examples.length())
+        for (index in 0 until templates.length()) {
+            val obj = templates.getJSONObject(index)
+            val id = obj.getString("id")
+            val boxes = obj.getInt("boxes")
+            val groups = examples.getJSONArray(id)
+            assertTrue(id, groups.length() in 2..3)
+            for (group in 0 until groups.length()) {
+                val lines = groups.getJSONArray(group)
+                assertEquals(id, boxes, lines.length())
+                for (lineIndex in 0 until lines.length()) {
+                    val line = lines.getString(lineIndex)
+                    assertTrue(id, line.isNotBlank())
+                    val lower = line.lowercase()
+                    assertTrue(id + " " + line, banned.none { it in lower })
+                    if (dominantLang(line) == "en") assertTrue(id + " " + line, isFixedPhrase(line))
+                }
+            }
+        }
+    }
+}
+
 class PromptBuilderTest {
     @Test
     fun oneCallKeepsThreeTemplatesAndFiveExamples() {
@@ -313,7 +395,8 @@ class PromptBuilderTest {
         assertTrue(prompt.system.contains("JSON"))
         assertTrue(prompt.system.contains("NICHT wörtlich"))
         assertTrue(prompt.user.contains("Formuliere NICHT wörtlich, schreibe im Stil der Beispiele um."))
-        assertTrue(prompt.user.contains("\"template\":\"id1\""))
+        assertTrue(prompt.user.contains("\"id1\":{\"z1\":\"...\""))
+        assertTrue(prompt.system.contains("Sprache der Nachricht"))
         assertFalse(prompt.system.contains("Wortreihenfolge"))
     }
 
@@ -340,6 +423,15 @@ class PromptBuilderTest {
         assertFalse(tight.user.contains("wort ".repeat(40)))
         assertTrue(tight.user.contains("id1"))
         assertFalse(tight.user.contains("id4"))
+    }
+
+    @Test
+    fun clipsMeaningAtSentenceEnd() {
+        val meaning = "Dieser erste Satz bleibt vollständig. " + "mittenimwort ".repeat(30)
+        val brief = Brief("drake", "Drake", 2, meaning, listOf(listOf("oben", "unten")), roles = fieldRoles("drake", 2))
+        val prompt = buildPrompt("Hallo", listOf(brief))
+        assertTrue(prompt.user.contains("Dieser erste Satz bleibt vollständig."))
+        assertFalse(prompt.user.contains("mittenimwort"))
     }
 }
 

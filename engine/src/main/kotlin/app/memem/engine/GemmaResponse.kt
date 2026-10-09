@@ -1,5 +1,6 @@
 package app.memem.engine
 
+import java.util.Locale
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -10,7 +11,13 @@ data class Candidate(
     val style: String,
     val example: List<String> = emptyList(),
     val name: String = "",
-)
+    val examples: List<List<String>> = emptyList(),
+) {
+    fun knownExamples(): List<List<String>> {
+        if (examples.isNotEmpty()) return examples
+        return if (example.any { it.isNotBlank() }) listOf(example) else emptyList()
+    }
+}
 
 data class Suggestion(
     val templateId: String,
@@ -30,6 +37,7 @@ fun parseSuggestions(
     message: String,
     wanted: Int = 3,
     failure: String = "",
+    similarity: ((String) -> Float)? = null,
 ): List<Suggestion> {
     val byId = candidates.associateBy { it.id }
     val used = linkedSetOf<String>()
@@ -39,7 +47,7 @@ fun parseSuggestions(
         if (out.size >= wanted) break
         val candidate = byId[item.first] ?: continue
         if (!used.add(candidate.id)) continue
-        val resolved = resolveLines(item.second, candidate, message)
+        val resolved = resolveLines(item.second, candidate, message, similarity)
         out.add(Suggestion(candidate.id, resolved.lines, resolved.fromModel, resolved.reason))
     }
     val missingReason = if (raw.isBlank()) failure.ifBlank { "keine antwort" } else "fehlt"
@@ -61,27 +69,82 @@ fun parseSuggestions(
 data class ResolvedLines(val lines: List<String>, val fromModel: Boolean, val reason: String = "")
 
 /**
- * Keeps a filled rewrite, including a paraphrase that shares no word with the message.
- * Only an empty or letterless caption falls back to the literal split.
+ * Keeps a rewrite that is filled, not a copy, not a duplicate, and in the message language.
+ * Anything else falls back to the literal split. The caller retries that one template once.
  */
-fun resolveLines(rawLines: List<String>, candidate: Candidate, message: String): ResolvedLines {
-    val cleaned = rawLines.map { cleanLine(it) }
+fun resolveLines(
+    rawLines: List<String>,
+    candidate: Candidate,
+    message: String,
+    similarity: ((String) -> Float)? = null,
+): ResolvedLines {
+    val cleaned = rawLines.map { preclean(it) }
     val sized = (cleaned + List(candidate.boxes) { "" }).take(candidate.boxes)
     val repaired = repairPhraseEndings(sized)
-    val chosen = when {
-        repaired != null && usableRewrite(message, repaired, candidate.boxes) -> repaired
-        usableRewrite(message, sized, candidate.boxes) -> sized
-        else -> null
-    }
+    val chosen = repaired ?: sized
     val literal = fallbackLines(message, candidate.boxes, candidate.style)
-    if (chosen == null) {
-        val reason = if (sized.all { it.isBlank() }) "leer" else "sinnlos"
-        return ResolvedLines(literal, fromModel = false, reason = reason)
+    val problem = rejectReason(message, chosen, candidate, similarity)
+    if (problem != null) return ResolvedLines(literal, fromModel = false, reason = problem)
+    if (sameCaption(chosen, literal)) return ResolvedLines(literal, fromModel = false, reason = "woertlich")
+    return ResolvedLines(chosen.map { capWords(it) }, fromModel = true, reason = "")
+}
+
+/** Below zero the hashed caption points away from the message. Paraphrases stay. */
+const val MIN_CAPTION_SIMILARITY = 0.0f
+
+fun rejectReason(
+    message: String,
+    lines: List<String>,
+    candidate: Candidate,
+    similarity: ((String) -> Float)? = null,
+): String? {
+    if (lines.size != candidate.boxes) return "sinnlos"
+    if (lines.all { it.isBlank() }) return "leer"
+    if (lines.any { line -> line.count { it.isLetter() } < 2 }) return "sinnlos"
+    if (lines.any { line -> !hasVowel(line) }) return "sinnlos"
+    if (duplicateLines(lines)) return "doppelt"
+    if (copiesExample(lines, candidate)) return "kopie"
+    if (foreignLanguage(message, lines)) return "sprache"
+    if (lines.withIndex().any { (index, line) -> truncatedLine(line, index == lines.lastIndex) }) return "abgebrochen"
+    if (similarity != null && similarity(lines.joinToString(" ")) < MIN_CAPTION_SIMILARITY) return "fremd"
+    return null
+}
+
+fun shouldRetry(suggestion: Suggestion): Boolean = !suggestion.fromModel
+
+private fun preclean(raw: String): String {
+    var line = raw.replace(Regex("\\s+"), " ").trim().trim('"', '“', '”')
+    line = line.replace(" - ", ", ")
+    return line.trim()
+}
+
+private fun hasVowel(line: String): Boolean = line.any { it.lowercaseChar() in "aeiouäöüy" }
+
+private fun duplicateLines(lines: List<String>): Boolean {
+    val norms = lines.map { normCaptionLine(it) }.filter { it.isNotEmpty() }
+    return norms.size >= 2 && norms.toSet().size != norms.size
+}
+
+private fun copiesExample(lines: List<String>, candidate: Candidate): Boolean {
+    val produced = lines.map { normCaptionLine(it) }.filter { it.isNotEmpty() }
+    if (produced.isEmpty()) return false
+    val groups = candidate.knownExamples()
+    for (group in groups) {
+        val example = group.map { normCaptionLine(it) }.filter { it.isNotEmpty() }
+        if (example.isNotEmpty() && example == produced) return true
     }
-    if (sameCaption(chosen, literal)) {
-        return ResolvedLines(literal, fromModel = false, reason = "woertlich")
-    }
-    return ResolvedLines(chosen, fromModel = true, reason = "")
+    val singles = groups.flatten().map { normCaptionLine(it) }.filter { it.isNotEmpty() }.toSet()
+    return produced.any { line -> line in singles && !isFixedPhrase(line) }
+}
+
+private fun truncatedLine(line: String, isFinal: Boolean): Boolean {
+    val trimmed = line.trim()
+    if (isFixedPhrase(trimmed)) return false
+    if (trimmed.endsWith("...") || trimmed.endsWith("…") || trimmed.endsWith("-")) return true
+    val words = messageWords(trimmed)
+    if (words.size > 8) return true
+    if (words.joinToString(" ").length > 80) return true
+    return phraseEndingBroken(trimmed, isFinal)
 }
 
 fun sameCaption(left: List<String>, right: List<String>): Boolean {
@@ -93,26 +156,32 @@ fun sameCaption(left: List<String>, right: List<String>): Boolean {
 fun fitLines(rawLines: List<String>, candidate: Candidate, message: String): List<String> =
     resolveLines(rawLines, candidate, message).lines
 
-fun memeSchema(ids: List<String>): String {
-    val enums = JSONArray()
-    ids.forEach { enums.put(it) }
-    val template = JSONObject()
-        .put("type", "string")
-        .put("enum", enums)
-    val lines = JSONObject()
-        .put("type", "array")
-        .put("items", JSONObject().put("type", "string"))
-    val meme = JSONObject()
-        .put("type", "object")
-        .put("properties", JSONObject().put("template", template).put("lines", lines))
-        .put("required", JSONArray().put("template").put("lines"))
-    val memes = JSONObject()
-        .put("type", "array")
-        .put("items", meme)
+/** Ids are required keys. Each box is z1, z2, ... with minLength 1. No minItems or maxItems. */
+fun memeSchema(templates: List<Pair<String, Int>>): String {
+    val properties = JSONObject()
+    val required = JSONArray()
+    templates.forEach { (id, boxes) ->
+        required.put(id)
+        val fields = JSONObject()
+        val fieldRequired = JSONArray()
+        val count = boxes.coerceIn(1, 8)
+        for (number in 1..count) {
+            val key = "z$number"
+            fieldRequired.put(key)
+            fields.put(key, JSONObject().put("type", "string").put("minLength", 1))
+        }
+        properties.put(
+            id,
+            JSONObject()
+                .put("type", "object")
+                .put("properties", fields)
+                .put("required", fieldRequired),
+        )
+    }
     return JSONObject()
         .put("type", "object")
-        .put("properties", JSONObject().put("memes", memes))
-        .put("required", JSONArray().put("memes"))
+        .put("properties", properties)
+        .put("required", required)
         .toString()
 }
 
@@ -192,6 +261,8 @@ private fun collectMemes(value: Any?, candidates: List<Candidate>): List<FoundMe
             for (i in 0 until value.length()) addAll(collectMemes(value.opt(i), candidates))
         }
         is JSONObject -> {
+            val keyed = keyedMemes(value, candidates)
+            if (keyed.isNotEmpty()) return keyed
             val nested = ArrayList<FoundMeme>()
             val keys = value.keys()
             while (keys.hasNext()) {
@@ -241,18 +312,55 @@ private fun memeFrom(obj: JSONObject, candidates: List<Candidate>): FoundMeme? {
     return FoundMeme(id, lines, index)
 }
 
+private fun keyedMemes(obj: JSONObject, candidates: List<Candidate>): List<FoundMeme> {
+    val out = ArrayList<FoundMeme>()
+    val keys = obj.keys()
+    while (keys.hasNext()) {
+        val key = keys.next()
+        val candidate = candidates.firstOrNull { matchesCandidate(key, it) } ?: continue
+        val lines = readLineValue(obj.opt(key))
+        if (lines.isNotEmpty()) out += FoundMeme(candidate.id, lines, -1)
+    }
+    return out
+}
+
 private fun readLineValue(value: Any?): List<String> {
     return when (value) {
         is JSONArray -> buildList {
             for (i in 0 until value.length()) {
                 val child = value.opt(i)
-                if (child is String) add(child)
-                else if (child is JSONObject) addAll(readLineValue(child.opt("text") ?: child.opt("line")))
+                if (child is String) {
+                    val parts = splitCaption(child)
+                    if (parts.isEmpty()) add("") else addAll(parts)
+                } else {
+                    addAll(readLineValue(child))
+                }
+            }
+        }
+        is JSONObject -> {
+            val zed = readZFields(value)
+            if (zed.isNotEmpty()) {
+                zed
+            } else {
+                val keys = value.keys().asSequence().toList()
+                keys.firstNotNullOfOrNull { key ->
+                    if (key.lowercase() in LINE_KEYS) readLineValue(value.opt(key)).takeIf { it.isNotEmpty() } else null
+                }.orEmpty()
             }
         }
         is String -> splitCaption(value)
         else -> emptyList()
     }
+}
+
+private fun readZFields(obj: JSONObject): List<String> {
+    val out = ArrayList<String>()
+    val keys = obj.keys().asSequence().toList()
+    for (number in 1..8) {
+        val key = keys.firstOrNull { it.equals("z$number", ignoreCase = true) } ?: continue
+        out += readLineValue(obj.opt(key))
+    }
+    return out
 }
 
 private fun splitCaption(text: String): List<String> {
@@ -330,4 +438,106 @@ private fun extractTextMemes(raw: String, candidates: List<Candidate>): List<Pai
 private fun lineNames(line: String, candidate: Candidate): Boolean {
     val head = line.substringBefore(":").trim().trimStart('#', '-', '*', ' ').trim()
     return matchesCandidate(head, candidate) || matchesCandidate(line, candidate)
+}
+
+fun normCaptionLine(raw: String): String {
+    val lowered = raw.lowercase(Locale.GERMAN).replace("ß", "ss")
+    val sb = StringBuilder(lowered.length)
+    for (ch in lowered) {
+        if (ch.isLetterOrDigit() || ch == '\'') sb.append(ch) else sb.append(' ')
+    }
+    return sb.toString().replace(Regex("\\s+"), " ").trim()
+}
+
+private val FIXED_PHRASES = setOf(
+    "it's a trap",
+    "its a trap",
+    "this is fine",
+    "alles gut",
+    "one does not simply",
+    "shut up and take my money",
+    "all your base are belong to us",
+    "why not both",
+    "you sit on a throne of lies",
+    "i immediately regret this decision",
+    "you're gonna have a bad time",
+    "youre gonna have a bad time",
+    "it's happening",
+    "its happening",
+    "feels good",
+    "stonks",
+    "do it live",
+    "i feel like i'm taking crazy pills",
+    "i feel like im taking crazy pills",
+    "what's in the box",
+    "whats in the box",
+    "our memes",
+    "worst thing ever",
+    "baby you've got a stew going",
+    "first try",
+    "yo dawg",
+    "y u no",
+    "ain't nobody got time for that",
+    "aint nobody got time for that",
+    "too damn high",
+    "this is sparta",
+    "winter is coming",
+    "what year is it",
+    "we don't do that here",
+    "we dont do that here",
+    "at least you tried",
+    "i should not have said that",
+    "you were the chosen one",
+    "but that's none of my business",
+    "that would be great",
+    "i guarantee it",
+    "so i got that goin' for me which is nice",
+    "i was told there would be cake",
+    "probably not a good idea",
+).map { normCaptionLine(it) }.toSet()
+
+fun isFixedPhrase(line: String): Boolean {
+    val norm = normCaptionLine(line)
+    if (norm.isEmpty()) return false
+    if (norm in FIXED_PHRASES) return true
+    return FIXED_PHRASES.any { phrase -> norm.startsWith("$phrase ") }
+}
+
+private val DE_MARKERS = setOf(
+    "der", "die", "das", "den", "dem", "des", "und", "nicht", "ich", "ein", "eine", "einer",
+    "ist", "sind", "mit", "auf", "fuer", "für", "wir", "du", "am", "im", "zum", "zur", "vom",
+    "beim", "ins", "zu", "aber", "oder", "wenn", "dass", "mein", "dein", "sie", "von", "nach",
+    "bei", "aus", "wie", "auch", "nur", "noch", "schon", "heute", "morgen", "kein", "keine",
+    "doch", "mal", "jetzt", "hier", "dort", "dann", "hat", "haben", "wird", "uns", "euch",
+    "ihr", "man", "was", "wer", "wo", "bin", "bist", "seid", "nicht", "mir", "dir", "ihm",
+)
+
+private val EN_MARKERS = setOf(
+    "the", "and", "you", "this", "that", "with", "for", "not", "what", "have", "just", "your",
+    "are", "was", "were", "from", "they", "them", "about", "would", "could", "should", "because",
+    "when", "where", "who", "how", "all", "any", "more", "dont", "its", "but", "got", "get",
+    "make", "take", "want", "need", "right", "left", "people", "time", "into", "over", "than",
+    "then", "there", "been", "shall", "can", "why", "yes", "yeah", "gonna", "wanna",
+    "sell", "buy", "boat", "should", "epipens",
+)
+
+fun dominantLang(text: String): String {
+    if (text.any { it in "äöüÄÖÜß" }) return "de"
+    val words = normCaptionLine(text).split(' ').filter { it.length >= 2 }
+    if (words.isEmpty()) return "?"
+    val german = words.count { it in DE_MARKERS }
+    val english = words.count { it in EN_MARKERS }
+    if (german > english && german > 0) return "de"
+    if (english > german && english > 0) return "en"
+    return "?"
+}
+
+private fun foreignLanguage(message: String, lines: List<String>): Boolean {
+    val messageLang = dominantLang(message)
+    if (messageLang == "?") return false
+    val rest = lines.filter { !isFixedPhrase(it) }.joinToString(" ")
+    if (rest.count { it.isLetter() } < 2) return false
+    val captionLang = dominantLang(rest)
+    if (captionLang == "?") return false
+    return captionLang != messageLang
 }

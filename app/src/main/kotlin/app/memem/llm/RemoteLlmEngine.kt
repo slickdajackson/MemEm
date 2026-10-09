@@ -10,6 +10,7 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
+import app.memem.engine.GEMMA_MAX_OUTPUT_TOKENS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -139,7 +140,7 @@ class RemoteLlmEngine(context: Context) {
             putString("user", user)
             if (schema != null) putString("schema", schema)
             putDouble("temperature", 0.4)
-            putInt("maxTokens", 400)
+            putInt("maxTokens", GEMMA_MAX_OUTPUT_TOKENS)
         }
         val reply = try {
             request(EngineProto.GENERATE, data, 90_000)

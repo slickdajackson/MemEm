@@ -44,6 +44,10 @@ def pick(groups: list[list[str]], box_count: int, limit: int = 5) -> list[list[s
 
 
 def main() -> None:
+    raise SystemExit(
+        "caption-examples.json ist kuratiert (deutsche Sprüche, 2 bis 3 je Vorlage). "
+        "Nicht aus payloads-6491.json neu schreiben."
+    )
     payloads = json.loads(PAYLOADS.read_text())
     catalog = json.loads(CATALOG.read_text())
     boxes = {item["id"]: item["boxes"] for item in catalog["templates"]}

@@ -213,8 +213,7 @@ fun repairPhraseEndings(lines: List<String>): List<String>? {
 }
 
 fun usableRewrite(message: String, lines: List<String>, boxes: Int): Boolean {
-    if (lines.size != boxes) return false
-    return lines.none { line -> line.count { it.isLetter() } < 2 }
+    return rejectReason(message, lines, Candidate("_", boxes, "none")) == null
 }
 
 fun messageWords(text: String): List<String> =
@@ -324,7 +323,10 @@ private fun stemHits(word: String, stem: String): Boolean {
 
 fun capWords(line: String, maxWords: Int = 8, maxChars: Int = 80): String {
     val words = line.trim().split(Regex("\\s+")).filter { it.isNotBlank() }.take(maxWords)
-    return words.joinToString(" ").take(maxChars).trim()
+    val joined = words.joinToString(" ")
+    if (joined.length <= maxChars) return joined
+    val cut = joined.lastIndexOf(' ', maxChars.coerceAtMost(joined.length))
+    return if (cut > 0) joined.substring(0, cut).trim() else joined.take(maxChars).trim()
 }
 
 fun cleanLine(raw: String): String {

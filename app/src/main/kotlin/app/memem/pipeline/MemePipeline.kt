@@ -5,17 +5,18 @@ import android.graphics.Bitmap
 import app.memem.data.MemAssets
 import app.memem.data.MemeTemplate
 import app.memem.debug.DebugLog
-import app.memem.engine.Brief
-import app.memem.engine.Candidate
 import app.memem.engine.HashEmbedder
 import app.memem.engine.MemIndex
 import app.memem.engine.buildPrompt
 import app.memem.engine.fallbackLines
-import app.memem.engine.fieldRoles
+import app.memem.engine.memeBrief
+import app.memem.engine.memeCandidate
 import app.memem.engine.memeSchema
 import app.memem.engine.parseSuggestions
+import app.memem.engine.retryHint
 import app.memem.engine.searchTemplates
 import app.memem.engine.searchText
+import app.memem.engine.shouldRetry
 import app.memem.llm.GenerateOutcome
 import app.memem.llm.RemoteLlmEngine
 import app.memem.models.ModelCatalog
@@ -81,12 +82,10 @@ class MemePipeline(context: Context) {
         val gemmaStarted = System.nanoTime()
         val outcome = generate(message, picked, context)
         val gemmaMs = ms(gemmaStarted)
-        val renderStarted = System.nanoTime()
-        val candidates = picked.map {
-            Candidate(it.id, it.boxes, it.style, it.examples.firstOrNull().orEmpty(), it.name)
-        }
+        val candidates = picked.map { memeCandidate(it.id, it.boxes, it.style, it.name, it.examples) }
+        val score = similarity(message)
         val suggestions = if (candidates.isEmpty()) {
-            emptyList()
+            mutableListOf()
         } else {
             parseSuggestions(
                 outcome.text.orEmpty(),
@@ -94,8 +93,28 @@ class MemePipeline(context: Context) {
                 message,
                 wanted = 3,
                 failure = outcome.error ?: "keine antwort",
-            )
+                similarity = score,
+            ).toMutableList()
         }
+        val retries = ArrayList<String>()
+        for (index in suggestions.indices) {
+            val item = suggestions[index]
+            if (!shouldRetry(item)) continue
+            val template = picked.firstOrNull { it.id == item.templateId } ?: continue
+            val again = generate(message, listOf(template), context, retryHint(item.reason))
+            val one = parseSuggestions(
+                again.text.orEmpty(),
+                listOf(memeCandidate(template.id, template.boxes, template.style, template.name, template.examples)),
+                message,
+                wanted = 1,
+                failure = again.error ?: "keine antwort",
+                similarity = score,
+            ).firstOrNull() ?: continue
+            suggestions[index] = one
+            val mark = if (one.fromModel) "KI" else one.reason.ifBlank { "woertlich" }
+            retries += "${item.templateId}:${item.reason}->$mark"
+        }
+        val renderStarted = System.nanoTime()
         val rendered = suggestions.mapNotNull { suggestion ->
             val template = assets.templates[suggestion.templateId] ?: return@mapNotNull null
             renderOne(template, suggestion.lines, suggestion.fromModel)
@@ -116,6 +135,7 @@ class MemePipeline(context: Context) {
                 "gemmaLoaded" to outcome.loaded,
                 "gemmaError" to outcome.error,
                 "raw" to outcome.text?.take(500),
+                "retries" to retries.joinToString(" | "),
                 "reasons" to suggestions.joinToString(" | ") { item ->
                     val mark = if (item.fromModel) "KI" else item.reason.ifBlank { "woertlich" }
                     "${item.templateId}:$mark"
@@ -144,7 +164,16 @@ class MemePipeline(context: Context) {
         return Triple(vec, index, false)
     }
 
-    private suspend fun generate(message: String, templates: List<MemeTemplate>, context: List<String>): GenerateOutcome {
+    private fun similarity(message: String): (String) -> Float = { caption ->
+        HashEmbedder.similarity(message, caption, assets.idf(), assets.idfDocs())
+    }
+
+    private suspend fun generate(
+        message: String,
+        templates: List<MemeTemplate>,
+        context: List<String>,
+        hint: String = "",
+    ): GenerateOutcome {
         if (templates.isEmpty()) return GenerateOutcome(null, "keine vorlage", remote.modelReady, false)
         val model = ModelCatalog.file(app, ModelCatalog.gemmaCpu)
         if (!ModelCatalog.ready(app, ModelCatalog.gemmaCpu)) {
@@ -158,17 +187,10 @@ class MemePipeline(context: Context) {
         if (loadError != null) return GenerateOutcome(null, loadError, false, false)
         val chosen = templates.take(3)
         val briefs = chosen.map { template ->
-            Brief(
-                id = template.id,
-                name = template.name,
-                boxes = template.boxes,
-                meaning = template.meaning,
-                examples = template.examples.take(5),
-                roles = fieldRoles(template.id, template.boxes),
-            )
+            memeBrief(template.id, template.name, template.boxes, template.meaning, template.examples)
         }
-        val prompt = buildPrompt(message, briefs, context)
-        val schema = memeSchema(chosen.map { it.id })
+        val prompt = buildPrompt(message, briefs, context, hint)
+        val schema = memeSchema(chosen.map { it.id to it.boxes })
         return remote.generate(prompt.system, prompt.user, schema)
     }
 

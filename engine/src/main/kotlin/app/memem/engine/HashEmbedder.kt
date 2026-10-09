@@ -31,6 +31,15 @@ object HashEmbedder {
         return vec
     }
 
+    /** Cosine of two hashed captions. Negative means the lines point away from the message. */
+    fun similarity(message: String, caption: String, idf: Map<String, Float>, nDocs: Int): Float {
+        val left = embed(message, idf, nDocs)
+        val right = embed(caption, idf, nDocs)
+        var dot = 0.0
+        for (index in left.indices) dot += left[index] * right[index]
+        return dot.toFloat()
+    }
+
     fun features(text: String): List<String> {
         val words = normalize(text).split(' ').filter { it.length >= 2 }
         val joined = words.joinToString(" ")
