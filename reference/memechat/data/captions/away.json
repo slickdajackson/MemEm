@@ -1,0 +1,32 @@
+{
+ "template": "away",
+ "name": "Life... Finds a Way",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "life...",
+    "finds a way"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a shot of a character looking shocked and awestruck to express amazement at how something impossible or highly unlikely actually happened. The text boxes are used to set up a seemingly insurmountable obstacle or failure in the first box, followed by the triumphant or ironic resolution in the second box.",
+  "meaning_de": "Dieser Meme nutzt einen Ausdruck des Staunens, um Erstaunen darüber auszudrücken, dass etwas Unmögliches oder Unwahrscheinliches tatsächlich passiert ist. Die Textfelder werden verwendet, um im ersten Feld ein scheinbar unüberwindbares Hindernis oder einen Misserfolg zu beschreiben, gefolgt von der triumphalen oder ironischen Lösung im zweiten Feld.",
+  "situations_en": [
+   "I forgot to save my thesis but it auto-saved",
+   "My code had a bug but it still works",
+   "I missed the bus but the train was empty",
+   "The printer jammed but the paper came out perfect",
+   "I was 1 second late but still got in"
+  ],
+  "situations_de": [
+   "Ich hab die Arbeit vergessen, aber sie hat sich gespeichert",
+   "Mein Code hatte einen Bug, aber es funktioniert trotzdem",
+   "Ich hab den Bus verpasst, aber der Zug war leer",
+   "Der Drucker ist klemmend, aber das Papier kam perfekt raus",
+   "Ich war 1 Sekunde zu spät, aber es hat trotzdem geklappt"
+  ]
+ }
+}

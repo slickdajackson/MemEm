@@ -1,0 +1,32 @@
+{
+ "template": "cryingfloor",
+ "name": "Crying on Floor",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "it's okay",
+    "lets just reschedule drinking"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a feeling of deep sadness, defeat, or exhaustion, often in response to a minor inconvenience or a bad situation. The top text usually presents the bad news or a failed attempt at comfort, while the bottom text shows the character's dramatic, tearful reaction of giving up or crying on the floor.",
+  "meaning_de": "Dieser Meme drückt ein Gefühl von tiefer Traurigkeit, Niederlage oder Erschöpfung aus, oft als Reaktion auf eine kleine Unannehmlichkeit oder eine schlechte Situation. Der obere Text präsentiert die schlechte Nachricht oder einen gescheiterten Trostversuch, während der untere Text die dramatische, weinende Reaktion der Figur zeigt, die auf dem Boden liegt und aufgibt.",
+  "situations_en": [
+   "I tried to fix the bug and now the server is down",
+   "My plant died while I was on vacation",
+   "I forgot to save my document for 3 hours of work",
+   "The wifi is down and I have a deadline",
+   "I just realized I left the stove on"
+  ],
+  "situations_de": [
+   "Ich habe versucht, den Bug zu fixen, und jetzt ist der Server down",
+   "Meine Pflanze ist gestorben, während ich im Urlaub war",
+   "Ich habe vergessen, mein Dokument nach 3 Stunden Arbeit zu speichern",
+   "Das WLAN ist down und ich habe eine Deadline",
+   "Ich habe gerade bemerkt, dass ich den Herd an habe"
+  ]
+ }
+}

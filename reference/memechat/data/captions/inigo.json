@@ -1,0 +1,125 @@
+{
+ "template": "inigo",
+ "name": "Inigo Montoya",
+ "matched": [
+  "loc:inigo montoya"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "you keep using that word",
+    "i do not think it means what you think it means"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Что чупа-чупс?",
+    "хочешь такие же волосы как у меня..."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Молодой",
+    "Dj woo187"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "",
+    "молодой dj woo187"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "",
+    "как выглядел woo с волосами!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "IRONY",
+    "You keep using that word. I do not think it means what you think it means"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "SOCIALIST",
+    "You Keep Using That Word, I Do Not Think It Means What You Think It Means"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "You keep using that word.",
+    "I do not think it means what you think it means"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "i do not think it memes",
+    "what you think it memes"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "You keep using that word",
+    "i do not think it means what you think it means."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Separation of church and state",
+    "I do not think it means what you think it means"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "I keep looking at your code",
+    "I do not think it does what you think it does"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "my name is inigo montoya you shut down hostess",
+    "prepare to die"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ninja",
+    "i do not think it means what you think it means"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a still of Inigo Montoya to deliver the famous line 'You keep using that word, I do not think it means what you think it means.' It is used to mock someone who is misusing a word or concept, or to point out a fundamental misunderstanding of a term's definition.",
+  "meaning_de": "Dieses Meme verwendet einen Stille von Inigo Montoya, um die berühmte Zeile 'Du benutzt dieses Wort immer wieder. Ich glaube nicht, dass es das bedeutet, was du denkst' zu liefern. Es wird verwendet, um jemanden zu verspotten, der ein Wort oder Konzept missbraucht, oder um ein grundlegendes Missverständnis einer Definition aufzuzeigen.",
+  "situations_en": [
+   "You keep calling it a bug, but it's clearly a feature.",
+   "He thinks 'irony' just means anything that is funny.",
+   "You keep using that word, I do not think it means what you think it means.",
+   "Stop calling it a 'cringe' just because you don't like it.",
+   "You think 'literally' means 'figuratively'?"
+  ],
+  "situations_de": [
+   "Du nennst es immer Bug, aber es ist eindeutig ein Feature.",
+   "Er denkt, 'Ironie' bedeutet einfach alles, was lustig ist.",
+   "Du benutzt dieses Wort immer, ich glaube nicht, dass es das bedeutet, was du denkst.",
+   "Hör auf, es 'cringe' zu nennen, nur weil es dir nicht gefällt.",
+   "Du denkst, 'wörtlich' bedeutet 'bildlich'?"
+  ]
+ }
+}

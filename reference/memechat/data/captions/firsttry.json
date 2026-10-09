@@ -1,0 +1,32 @@
+{
+ "template": "firsttry",
+ "name": "First Try!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "first try!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the idea of achieving a difficult or complex goal with the ease and confidence of a first-time attempt. It is used to mock someone's arrogance or to highlight a situation where a task that should be hard was done effortlessly. The first text box usually describes the difficult task or the 'impossible' situation, while the second box (often 'first try!') delivers the punchline.",
+  "meaning_de": "Dieses Meme drückt die Idee aus, ein schwieriges oder komplexes Ziel mit der Leichtigkeit und dem Selbstbewusstsein eines ersten Versuchs zu erreichen. Es wird verwendet, um die Arroganz eines anderen zu verspotten oder eine Situation hervorzuheben, in der eine Aufgabe mühelos erledigt wurde. Der erste Textkasten beschreibt in der Regel die schwierige Aufgabe, während der zweite Kasten (oft 'first try!') den Punchline liefert.",
+  "situations_en": [
+   "I finally fixed the bug after 3 days of work.",
+   "You beat the boss on hard mode in 5 minutes?",
+   "I passed the driving test on my very first attempt.",
+   "You learned to play guitar in a weekend?",
+   "I solved the math problem in 10 seconds."
+  ],
+  "situations_de": [
+   "Ich habe den Bug endlich nach 3 Tagen Arbeit gefixt.",
+   "Du hast den Boss im Hard-Modus in 5 Minuten besiegt?",
+   "Ich habe die Fahrschule beim ersten Versuch bestanden.",
+   "Du hast in einem Wochenende Gitarre spielen gelernt?",
+   "Ich habe das Matheproblem in 10 Sekunden gelöst."
+  ]
+ }
+}

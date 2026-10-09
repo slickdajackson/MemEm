@@ -1,0 +1,187 @@
+{
+ "template": "pigeon",
+ "name": "Is This a Pigeon?",
+ "matched": [
+  "imgflip:is this a pigeon"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "Engineer",
+    "PowerPoint",
+    "Is this Photoshop?"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "KID",
+    "PLAYDOUGH",
+    "IS THIS FOOD?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "TODDLERS",
+    "THINGS ON THE FLOOR",
+    "CAN I PUT THIS IN MY MOUTH?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "AIRPORT SECURITY",
+    "TOOTHPASTE",
+    "IS THIS A BOMB?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "BAT",
+    "CHINA",
+    "IS THIS A CHICKEN"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "YOUTUBE",
+    "ANYTHING THAT HAS A CHILD IN IT",
+    "IS THIS CHILD ABUSE?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "ONLINE BEST FRIEND",
+    "PARENT",
+    "IS THIS A CRIMINAL?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "FEMINISTS",
+    "SAYING HI",
+    "IS THIS SEXUAL HARASSMENT"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "KIDS TALKING BACK RESPECTFULLY AFTER ADULTS TALKED TO THEM STERNLY",
+    "ADULTS",
+    "IS THIS RUDELY TALKING BACK?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "MULTIPLAYER GAMES",
+    "PARENTS",
+    "\"CAN WE PAUSE THIS\""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "LIBERAL",
+    "ANY HUMAN INTERACTION",
+    "IS THIS RACISM?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "LIBERAL SNOWFLAKES",
+    "ANY MENTAL DISORDER",
+    "IS THIS A GENDER?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "LOTS OF DEODORANT AND COLOGNE",
+    "LAZY PEOPLE",
+    "IS THIS BATHING?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "PARENTS",
+    "THEIR UGLY NEWBORN",
+    "ISN'T THIS THE CUTEST BABY YOU'VE EVER SEEN?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "10 YEAR OLD",
+    "THE BEATLES",
+    "IS THIS 90'S ROCK?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "ME AFTER CREATING A MEME ON IMGFLIP",
+    "4 UPVOTES IN ONE DAY",
+    "IS THIS WHAT FAME FEELS LIKE?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "laughing at memes",
+    "my depressed ass",
+    "is this happiness?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "MY TODDLER",
+    "PRETTY MUCH EVERYTHING",
+    "IS THIS EDIBLE?"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "EVERYONE IN SCHOOL",
+    "SOMEONE COUGHS",
+    "IS THIS CORONAVIRUS"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "MY CAT",
+    "3 AM",
+    "IS THIS WHEN YOU WANTED TO WAKE UP?"
+   ],
+   "source": "imgflip575k"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the absurdity of a specific group or person applying a strict, paranoid, or overly literal rule to a completely innocent situation. The first two boxes identify the entity and the harmless object or action, while the third box presents the ridiculous accusation or question they are making. It is used to mock overreaction, hypocrisy, or misplaced suspicion.",
+  "meaning_de": "Dieses Meme drückt die Absurdität aus, dass eine bestimmte Gruppe oder Person eine strenge, paranoide oder übertrieben wörtliche Regel auf eine völlig harmlose Situation anwendet. Die ersten beiden Kästchen identifizieren die Entität und den harmlosen Gegenstand oder die Handlung, während das dritte Kästchen die lächerliche Anschuldigung oder Frage darstellt, die sie stellt. Es wird verwendet, um Überreaktionen, Heuchelei oder unbegründeten Verdacht zu verspotten.",
+  "situations_en": [
+   "My mom asked if my headphones were a bomb.",
+   "The teacher said my drawing was a hate crime.",
+   "My boss asked if my lunch was a virus.",
+   "My dad asked if my video game was a weapon.",
+   "The vet asked if my cat was a terrorist."
+  ],
+  "situations_de": [
+   "Meine Mutter hat gefragt, ob meine Kopfhörer eine Bombe sind.",
+   "Der Lehrer sagte, meine Zeichnung sei ein Hassverbrechen.",
+   "Mein Chef fragte, ob mein Mittagessen ein Virus ist.",
+   "Mein Vater fragte, ob mein Videospiel eine Waffe ist.",
+   "Der Tierarzt fragte, ob meine Katze ein Terrorist ist."
+  ]
+ }
+}

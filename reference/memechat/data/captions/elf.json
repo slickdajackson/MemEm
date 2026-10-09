@@ -1,0 +1,32 @@
+{
+ "template": "elf",
+ "name": "You Sit on a Throne of Lies",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "you sit on a throne of lies"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Will Ferrell as Buddy the Elf looking stern and unamused, used to express a cold, deadpan realization that someone is being dishonest or full of excuses. The text boxes are typically used to set up a specific lie or excuse in the first box, followed by the iconic phrase 'you sit on a throne of lies' in the second box to deliver the punchline.",
+  "meaning_de": "Dieses Meme zeigt Will Ferrell als Buddy den Elf mit einem strengen, unbeeindruckten Gesichtsausdruck und wird verwendet, um eine kalte, trockene Erkenntnis auszudrücken, dass jemand lügt oder Ausreden erfindet. Die Textfelder werden typischerweise so verwendet, dass das erste eine spezifische Lüge oder Ausrede aufstellt und das zweite den ikonischen Satz 'you sit on a throne of lies' als Pointe liefert.",
+  "situations_en": [
+   "I told you I was busy, but I was just playing video games.",
+   "My car broke down, so I couldn't make it to the party.",
+   "I didn't eat the last slice of pizza, I just forgot about it.",
+   "I'm sure I sent you that email, check your spam folder.",
+   "I was working late, I promise I wasn't at the bar."
+  ],
+  "situations_de": [
+   "Ich war beschäftigt, aber ich habe nur Videospielen gespielt.",
+   "Mein Auto ist kaputt, deshalb konnte ich nicht zur Party kommen.",
+   "Ich habe die letzte Pizza-Scheibe nicht gegessen, ich habe sie nur vergessen.",
+   "Ich habe dir die E-Mail sicher geschickt, schau in deinen Spam-Ordner.",
+   "Ich habe spät gearbeitet, ich versichere, dass ich nicht in der Bar war."
+  ]
+ }
+}

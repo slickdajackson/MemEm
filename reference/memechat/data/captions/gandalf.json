@@ -1,0 +1,62 @@
+{
+ "template": "gandalf",
+ "name": "Confused Gandalf",
+ "matched": [
+  "loc:confused gandalf"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "I have no memory of this place"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "-",
+    "I have no memory of this place"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "checking the facebook feed",
+    "who are these people???"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "Where the hell am I?"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "where's my wallet?"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses sudden, disoriented confusion or a feeling of being completely lost in a situation. The first text box sets up a context, while the second box delivers the punchline of bewildered ignorance or a lack of memory, mimicking the character's shocked expression.",
+  "meaning_de": "Dieser Meme drückt plötzliche Verwirrung oder das Gefühl aus, in einer Situation völlig orientierungslos zu sein. Der erste Textbereich setzt den Kontext, während der zweite die Verwirrung oder das Fehlen von Erinnerungen als Pointe liefert.",
+  "situations_en": [
+   "I opened my inbox and saw 500 new emails",
+   "I have no idea what this group chat is about",
+   "I walked into the wrong classroom",
+   "I forgot what I was doing in the kitchen",
+   "I don't remember how I got to this page"
+  ],
+  "situations_de": [
+   "Ich habe mein Postfach geöffnet und 500 neue Mails gesehen",
+   "Ich hab keine Ahnung, worum es in diesem Chat geht",
+   "Ich bin in den falschen Hörsaal gelaufen",
+   "Ich hab vergessen, was ich in der Küche wollte",
+   "Ich weiß nicht, wie ich auf diese Seite gekommen bin"
+  ]
+ }
+}

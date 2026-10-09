@@ -1,0 +1,139 @@
+{
+ "template": "trump",
+ "name": "Donald Trump",
+ "matched": [
+  "loc:donald trump"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "this is the best meme in the history of memes",
+    "maybe ever"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "nos ganamos el concurso del nacional",
+    "estas despedido"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "nos ganamos el concurso del nacional",
+    "estas contratado"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Remember!",
+    "Qualidad mejor que cantidad"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "te acuerdas",
+    "qualidad mejor que cantidad"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "recuerde",
+    "qualidad mejor que cantidad"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Hoy compré a los New York Yankees, y por tanto decidí lo siguiente:",
+    "¡Alex Rodríguez, estás despedido!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "¡Alex Rodríguez, estás despedido!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Stupid...",
+    "mexican people"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "o contratas a lounge factor",
+    "o estas despedido!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "to much pork in power"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "pick up the legos or you're fired"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "next time i step on a lego you're fired"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Gutless",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "YOU ASSHOLES, I'M THE ONE WITH THE MONEY"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "На флопе пришли 3, 7, Туз",
+    "Он знает, что на тёрне придёт пиковая дама"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Donald Trump shouting emphatically with both index fingers raised, capturing his signature aggressive and authoritative speaking style. It is used to express a strong, often dramatic declaration, a sudden decision, or a emphatic correction. The first text box usually sets up the context or the 'Remember!' prompt, while the second box delivers the punchline, the specific rule, or the final verdict.",
+  "meaning_de": "Dieses Meme zeigt Donald Trump, der mit erhobenen Zeigefingern emphatisch schreit und seinen aggressiven, autoritären Sprechstil einfängt. Es wird verwendet, um eine starke, oft dramatische Erklärung, eine plötzliche Entscheidung oder eine emphatische Korrektur auszudrücken. Die erste Textbox stellt meist den Kontext oder die 'Denk daran!'-Einleitung dar, während die zweite Box den Punchline, die spezifische Regel oder das finale Urteil liefert.",
+  "situations_en": [
+   "I just decided we are only eating pizza for the rest of the year",
+   "Remember, the deadline is tomorrow, not next week",
+   "I bought the team and I'm making some changes",
+   "You think you can just leave? You're fired",
+   "Let me tell you something about how we do things here"
+  ],
+  "situations_de": [
+   "Ich habe gerade entschieden, dass wir nur noch Pizza essen",
+   "Denk daran, die Deadline ist morgen, nicht nächste Woche",
+   "Ich habe das Team gekauft und mache jetzt Änderungen",
+   "Du denkst, du kannst einfach gehen? Du bist entlassen",
+   "Lass mich dir sagen, wie wir hier Dinge machen"
+  ]
+ }
+}

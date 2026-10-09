@@ -1,0 +1,32 @@
+{
+ "template": "worst",
+ "name": "The Worst Day Of Your Life So Far",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "This is the worst day of my life.",
+    "This is the worst day of your life so far."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a situation where a person is having a terrible day, and a friend or family member comforts them by reframing it as merely the worst day they have had *so far*, implying things will get better. The first text box is used for the person's complaint about their bad day, and the second is for the comforting, slightly dismissive reassurance.",
+  "meaning_de": "Dieses Meme drückt eine Situation aus, in der eine Person einen schrecklichen Tag hat und ein Freund oder Familienmitglied sie tröstet, indem es den Tag als den schlechtesten Tag, den sie *bisher* hatte, umdeutet, was andeutet, dass es besser werden wird. Das erste Textfeld wird für die Beschwerde der Person über ihren schlechten Tag verwendet und das zweite für den tröstenden, leicht abwertenden Trost.",
+  "situations_en": [
+   "I failed my exam today.",
+   "My car broke down on the highway.",
+   "I got fired from my job.",
+   "I broke up with my girlfriend.",
+   "I lost all my money in the stock market."
+  ],
+  "situations_de": [
+   "Ich habe heute meine Prüfung nicht bestanden.",
+   "Mein Auto ist auf der Autobahn kaputtgegangen.",
+   "Ich wurde von meiner Stelle entlassen.",
+   "Ich habe mich von meiner Freundin getrennt.",
+   "Ich habe mein gesamtes Geld auf dem Aktienmarkt verloren."
+  ]
+ }
+}

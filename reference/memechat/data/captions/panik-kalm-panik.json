@@ -1,0 +1,53 @@
+{
+ "template": "panik-kalm-panik",
+ "name": "Panik Kalm Panik",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "You hear a sound downstairs",
+    "It's just a cat",
+    "You don't have a cat"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a cycle of sudden panic, temporary relief, and a return to panic, often triggered by a new piece of information or a twist in a situation. The first box describes the initial cause for alarm, the second box offers a reassuring or logical explanation that calms the person down, and the third box reveals a new, often more disturbing fact that reignites the panic. It is used to humorously depict the rollercoaster of emotions in a stressful or confusing scenario.",
+  "meaning_de": "Dieses Meme drückt einen Zyklus aus plötzlicher Panik, vorübergehender Erleichterung und erneuter Panik aus, der oft durch neue Informationen oder eine Wendung in einer Situation ausgelöst wird. Die erste Box beschreibt die ursprüngliche Ursache für die Besorgnis, die zweite Box bietet eine beruhigende oder logische Erklärung, die die Person wieder beruhigt, und die dritte Box offenbart eine neue, oft noch beunruhigendere Tatsache, die die Panik wieder auslöst. Es wird verwendet, um humorvoll die Achterbahn der Emotionen in einer stressigen oder verwirrenden Situation darzustellen.",
+  "situations_en": [
+   "I forgot my passport",
+   "It's in your other bag",
+   "I only have one bag",
+   "My code has 10 errors",
+   "It's just a warning",
+   "The warning is a critical error",
+   "I'm so hungry",
+   "There's food in the fridge",
+   "The fridge is empty",
+   "My phone is at 1%",
+   "I just plugged it in",
+   "It's not charging",
+   "I have a big presentation tomorrow",
+   "You've done it before",
+   "I failed the last one"
+  ],
+  "situations_de": [
+   "Ich habe meinen Reisepass vergessen",
+   "Er ist in deiner anderen Tasche",
+   "Ich habe nur eine Tasche",
+   "Mein Code hat 10 Fehler",
+   "Es ist nur eine Warnung",
+   "Die Warnung ist ein kritischer Fehler",
+   "Ich hab so einen Hunger",
+   "Im Kühlschrank ist noch Essen",
+   "Der Kühlschrank ist leer",
+   "Mein Handy ist bei 1%",
+   "Ich hab es gerade eingesteckt",
+   "Es lädt nicht",
+   "Morgen hab ich eine große Präsentation",
+   "Das hast du schon mal gemacht",
+   "Das letzte Mal bist du durchgefallen"
+  ]
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "template": "reveal",
+ "name": "Scooby Doo Reveal",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Villain",
+    "Let's see who you really are...",
+    "Protagonist",
+    "I knew it!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the moment of unmasking a deceiver, revealing that a seemingly innocent or mysterious figure is actually a known villain. It conveys a sense of triumph, vindication, or the satisfaction of seeing through a disguise. The text boxes are used to label the disguised character, the action of unmasking, the revealed identity, and the protagonist's reaction.",
+  "meaning_de": "Dieses Meme drückt den Moment aus, in dem ein Betrüger entlarvt wird und sich zeigt, dass eine scheinbar unschuldige oder mysteriöse Figur tatsächlich ein bekannter Bösewicht ist. Es vermittelt ein Gefühl von Triumph, Genugtuung oder der Befriedigung, eine Verkleidung durchschaut zu haben. Die Textfelder werden verwendet, um die verkleidete Figur, die Handlung des Entlarvens, die enthüllte Identität und die Reaktion des Protagonisten zu beschriften.",
+  "situations_en": [
+   "I finally found out who was stealing my snacks.",
+   "Your 'mystery' hacker was just your dad.",
+   "The 'anonymous' tipster was actually the CEO.",
+   "I knew the 'ghost' was just my roommate.",
+   "The 'mysterious' new employee is the ex-CEO."
+  ],
+  "situations_de": [
+   "Ich habe endlich herausgefunden, wer meine Snacks klaut.",
+   "Dein 'mysteriöser' Hacker war einfach nur dein Dad.",
+   "Der 'anonyme' Tippgeber war tatsächlich der CEO.",
+   "Ich wusste, der 'Geist' war nur mein Mitbewohner.",
+   "Der 'mysteriöse' neue Mitarbeiter ist der Ex-CEO."
+  ]
+ }
+}

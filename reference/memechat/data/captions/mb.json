@@ -1,0 +1,32 @@
+{
+ "template": "mb",
+ "name": "Member Berries",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "'member",
+    "star wars?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a bunch of purple berries with cute faces to express a sudden, often humorous realization or recognition of a connection between two things. The text boxes are used to complete the sentence: the first box contains the prompt or question, and the second box contains the surprising or absurd answer that the 'berries' are 'remembering'.",
+  "meaning_de": "Dieser Meme verwendet eine Traube lila Beeren mit niedlichen Gesichtern, um eine plötzliche, oft humorvolle Erkenntnis oder das Erkennen einer Verbindung zwischen zwei Dingen auszudrücken. Die Textfelder werden verwendet, um den Satz zu vervollständigen: Das erste Feld enthält die Frage oder den Kontext, das zweite das überraschende oder absurde Ergebnis, das die 'Beeren' sich 'erinnern'.",
+  "situations_en": [
+   "Wait, I just realized my cat is actually a wizard",
+   "Do you remember that song from 2012?",
+   "I just remembered I left the stove on",
+   "Does this look familiar to you?",
+   "I just remembered I have a test tomorrow"
+  ],
+  "situations_de": [
+   "Warte, ich merke gerade, dass meine Katze ein Zauberer ist",
+   "Erinnerst du dich an diesen Song aus 2012?",
+   "Ich habe gerade gemerkt, dass ich den Herd an habe",
+   "Sieht dir das bekannt vor?",
+   "Ich habe gerade gemerkt, dass ich morgen eine Prüfung habe"
+  ]
+ }
+}

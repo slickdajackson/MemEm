@@ -1,0 +1,32 @@
+{
+ "template": "sad-biden",
+ "name": "Sad Joe Biden",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "sad joe biden",
+    "doesn't think you'll vote"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a photo of Joe Biden looking somber and disappointed to express feelings of sadness, letdown, or quiet resignation about a specific situation. The text boxes are typically used to describe the event causing the sadness in the top box and the specific consequence or feeling in the bottom box.",
+  "meaning_de": "Dieses Meme verwendet ein Foto von Joe Biden, das traurig und enttäuscht aussieht, um Gefühle der Traurigkeit, Enttäuschung oder stillen Resignation über eine bestimmte Situation auszudrücken. Die Textfelder werden typischerweise verwendet, um das Ereignis, das die Traurigkeit verursacht, im oberen Feld und die spezifische Konsequenz oder das Gefühl im unteren Feld zu beschreiben.",
+  "situations_en": [
+   "I just found out my favorite show is cancelled",
+   "My dog just looked at me with those eyes",
+   "I forgot to save my document before the crash",
+   "The group chat is silent after my joke",
+   "I just realized I left the stove on"
+  ],
+  "situations_de": [
+   "Ich habe gerade erfahren, dass meine Lieblingsserie eingestellt wird",
+   "Mein Hund hat mich gerade mit diesen Augen angeschaut",
+   "Ich habe vergessen, mein Dokument vor dem Absturz zu speichern",
+   "Der Gruppenchat ist nach meinem Witz still",
+   "Ich habe gerade gemerkt, dass ich den Herd an habe"
+  ]
+ }
+}

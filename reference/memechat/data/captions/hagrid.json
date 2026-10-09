@@ -1,0 +1,48 @@
+{
+ "template": "hagrid",
+ "name": "I Should Not Have Said That",
+ "matched": [
+  "loc:hagrid"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "i should not have said that"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "never insult",
+    "dan howell in front of me"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "mi padre siempre decía que eso de las pociones no sirve para nada",
+    "que la única poción que funciona es un buen copazo después de currar"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the image of a bearded man with a guilty, sheepish expression to represent someone who has just realized they said something inappropriate, offensive, or socially awkward. The humor comes from the self-awareness of the mistake and the awkward silence that follows. The text boxes are typically used to describe the specific statement that was made in the first box and the realization or consequence in the second.",
+  "meaning_de": "Dieses Meme nutzt das Bild eines bärtigen Mannes mit einem schuldigen, unsicheren Gesichtsausdruck, um jemanden darzustellen, der gerade realisiert hat, dass er etwas Unangemessenes, Beleidigendes oder Socially Awkwardes gesagt hat. Der Humor entsteht durch das Selbstbewusstsein über den Fehler und das darauffolgende unangenehme Schweigen. Die Textfelder werden typischerweise verwendet, um die spezifische Aussage im ersten Feld und die Erkenntnis oder Konsequenz im zweiten zu beschreiben.",
+  "situations_en": [
+   "I just called my boss 'dude' in the meeting",
+   "I accidentally liked my ex's photo from 2014",
+   "I said 'you look great' to my friend's new partner",
+   "I accidentally replied all to the company email",
+   "I just told my mom I don't want to see her for a while"
+  ],
+  "situations_de": [
+   "Ich habe meinen Chef gerade im Meeting 'Kumpel' genannt",
+   "Ich habe versehentlich das Foto meiner Ex von 2014 geliked",
+   "Ich habe dem neuen Partner meiner Freundin gesagt, sie sieht toll aus",
+   "Ich habe gerade versehentlich an alle im Unternehmen geantwortet",
+   "Ich habe gerade meiner Mutter gesagt, ich will sie eine Weile nicht sehen"
+  ]
+ }
+}

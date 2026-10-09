@@ -1,0 +1,169 @@
+{
+ "template": "facepalm",
+ "name": "Facepalm",
+ "matched": [
+  "imgflip:captain picard facepalm",
+  "loc:picard facepalm",
+  "loc:picardfacepalm"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "I can't even"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "I HATE MEMES THAT SAY \"UPVOTE IF YOU AGREE\"",
+    "UPVOTE IF YOU AGREE"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "CAN'T CONNECT TO INTERNET WINDOWS: \"CHECK FOR SOLUTIONS ONLINE.\"",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN YOU MAKE AN INTELLIGENT MEME WITH A DEEP MEANING",
+    "NO UPVOTES, ONE COMMENT POINTING OUT YOUR ONE MISSPELLED WORD BY THE NEWEST IMGFLIP USER"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "365 DAYS UNTIL CHRISTMAS",
+    "AND PEOPLE ALREADY HAVE THEIR LIGHTS UP"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN THE AD IS LONGER THAN THE VIDEO",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN SOMEONE COMPLAINS HOW POOR THEY ARE ON THEIR NEW IPHONE",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "NOTHING SCREWS UP YOUR FRIDAY",
+    "LIKE REALIZING IT'S ONLY TUESDAY"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN A MEME THAT ASKS FOR UPVOTES GETS ON THE FRONT PAGE",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "THE FLAT EARTH SOCIETY",
+    "..HAS MEMBERS ALL AROUND THE GLOBE"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "A GUY IN MY CLASS SAID.... I DONT HAVE TO LEARN MATH BECAUSE IM GOING TO BE AN ARCHITECT",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN YOUR MOM SEES AN OLD FRIEND AT THE GROCERY STORE",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "TO CELEBRATE MY 1 YEAR ANNIVERSARY ON IMGFLIP",
+    "I MADE A MEME THAT GOT ZERO UPVOTES, TO PROVE I STILL CAN DO IT A YEAR LATER"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WITH SO MANY THINGS COMING BACK IN STYLE",
+    "I CAN'T WAIT UNTIL MORALS AND RESPECT BECOME A TREND AGAIN"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "I HEARD THAT IN SOME COUNTRIES, SUICIDE WAS A CRIME THAT WAS PUNISHABLE BY DEATH",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "THIS THANKSGIVING, MY THOUGHTS AND PRAYERS GO OUT TO EVERYONE",
+    "WHO HAS TO DO THE DISHES"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN SOMEONE REPOSTS YOUR MEME AND YOU GET ACCUSED OF REPOSTING THEIRS",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WHEN THE TEACHER PICKS THE SLOWEST READER",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "MY WIFE WANTED A CAT",
+    "I DIDN'T WANT A CAT, SO WE COMPROMISED AND GOT A CAT"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "DEMOCRAT TIM KAINE BLAMES ‘GUN VIOLENCE’ FOR OHIO STATE CAR-AND-KNIFE ATTACK",
+    "CAR. AND. KNIFE."
+   ],
+   "source": "imgflip575k"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses deep frustration, exhaustion, or secondhand embarrassment in response to a specific situation or statement. The text boxes are used to set up the context or the annoying event in the first box, and the punchline or the speaker's reaction (like 'I can't even') in the second box.",
+  "meaning_de": "Dieses Meme drückt tiefe Frustration, Erschöpfung oder peinliches Mitgefühl auf eine bestimmte Situation oder Aussage aus. Die Textfelder werden verwendet, um im ersten Feld den Kontext oder das nervige Ereignis zu beschreiben und im zweiten Feld die Pointe oder die Reaktion des Sprechers (z. B. 'Ich schlag die Hände hoch') zu liefern.",
+  "situations_en": [
+   "My boss just assigned me a task due tomorrow",
+   "I forgot to save my document for 3 hours of work",
+   "He literally said 'it's not a bug, it's a feature'",
+   "I just realized I left the stove on",
+   "My friend is explaining a joke for the 5th time"
+  ],
+  "situations_de": [
+   "Mein Chef hat mir gerade eine Aufgabe für morgen zugewiesen",
+   "Ich habe mein Dokument nach 3 Stunden Arbeit vergessen zu speichern",
+   "Er hat buchstäblich gesagt: 'Das ist kein Bug, das ist ein Feature'",
+   "Ich habe gerade gemerkt, dass ich den Herd an hatte",
+   "Mein Freund erklärt mir den Witz zum 5. Mal"
+  ]
+ }
+}

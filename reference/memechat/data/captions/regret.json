@@ -1,0 +1,32 @@
+{
+ "template": "regret",
+ "name": "I Immediately Regret This Decision!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "i immediately regret this decision"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the sudden and intense regret of having made a poor choice. The top text box describes the specific action taken, while the bottom text usually repeats the phrase 'I immediately regret this decision' to emphasize the immediate realization of the mistake.",
+  "meaning_de": "Dieses Meme drückt den plötzlichen und intensiven Reue aus, eine schlechte Entscheidung getroffen zu haben. Das obere Textfeld beschreibt die spezifische Handlung, während das untere Textfeld oft den Satz 'Ich bereue diese Entscheidung sofort' wiederholt, um die sofortige Erkenntnis des Fehlers zu betonen.",
+  "situations_en": [
+   "I just replied to that email with a double exclamation mark",
+   "I hit 'reply all' to the company-wide announcement",
+   "I just bought the most expensive coffee in the city",
+   "I just said 'you too' to the waiter who said 'enjoy your meal'",
+   "I just posted a meme about my boss on the work group chat"
+  ],
+  "situations_de": [
+   "Ich habe gerade auf die E-Mail mit zwei Ausrufezeichen geantwortet",
+   "Ich habe gerade 'an alle antworten' auf die Firmenmail gedrückt",
+   "Ich habe mir gerade den teuersten Kaffee der Stadt gekauft",
+   "Ich habe gerade zum Kellner gesagt: 'Dir auch'",
+   "Ich habe gerade einen Meme über meinen Chef in den Arbeitschat gepostet"
+  ]
+ }
+}

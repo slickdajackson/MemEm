@@ -1,0 +1,32 @@
+{
+ "template": "cbg",
+ "name": "Comic Book Guy",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "worst thing ever!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses extreme, exaggerated disgust or disappointment, often used to mock something that is objectively bad or a specific person's poor taste. The character's scrunched face and pointing gesture serve as a visual anchor for the text boxes, which typically contrast a specific subject with a harsh, dismissive verdict.",
+  "meaning_de": "Dieses Meme drückt extremen, übertriebenen Ekel oder Enttäuschung aus und wird oft verwendet, um etwas zu verspotten, das objektiv schlecht ist, oder den schlechten Geschmack einer Person. Das verzerrte Gesicht und die zeigende Geste des Charakters dienen als visueller Anker für die Textfelder, die in der Regel ein bestimmtes Thema mit einem harten, abwertenden Urteil kontrastieren.",
+  "situations_en": [
+   "I just watched that new movie and I'm so disappointed.",
+   "Look at this terrible design they chose for the logo.",
+   "My friend just said the most cringe-worthy thing ever.",
+   "I can't believe they released this update with so many bugs.",
+   "That song is the absolute worst thing I've heard all year."
+  ],
+  "situations_de": [
+   "Ich habe gerade diesen neuen Film gesehen und bin so enttäuscht.",
+   "Schau dir dieses schreckliche Design an, das sie für das Logo gewählt haben.",
+   "Mein Freund hat gerade das Cringigste gesagt, was ich je gehört habe.",
+   "Ich kann nicht glauben, dass sie dieses Update mit so vielen Bugs veröffentlicht haben.",
+   "Dieser Song ist das absolute Schlimmste, was ich dieses Jahr gehört habe."
+  ]
+ }
+}

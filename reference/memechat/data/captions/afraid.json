@@ -1,0 +1,32 @@
+{
+ "template": "afraid",
+ "name": "Afraid to Ask Andy",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "i don't know what this meme is for",
+    "and at this point i'm too afraid to ask"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a sense of awkwardness or confusion where someone is unsure about a situation or a previous statement but is too polite or afraid to ask for clarification. The top text box is used to describe the confusing context or the question the person is hesitating to ask, while the bottom text box is used to express the fear or reluctance to actually voice that question.",
+  "meaning_de": "Dieses Meme drückt ein Gefühl der Verlegenheit oder Verwirrung aus, wenn jemand eine Situation oder eine Aussage nicht versteht, aber zu höflich oder ängstlich ist, um nachzufragen. Das obere Textfeld beschreibt den verwirrenden Kontext oder die Frage, während das untere Textfeld die Angst oder das Zögern ausdrückt, diese Frage tatsächlich zu stellen.",
+  "situations_en": [
+   "I don't understand why you sent that link, but I'm too scared to ask",
+   "You said 'we' but I don't know who 'we' is, too afraid to ask",
+   "I have no idea what that acronym means but I'm afraid to ask",
+   "I don't know what that joke was, but I'm too afraid to ask",
+   "I don't know why you're mad, but I'm too afraid to ask"
+  ],
+  "situations_de": [
+   "Ich verstehe nicht, warum du den Link geschickt hast, aber ich traue mich nicht zu fragen",
+   "Du hast 'wir' gesagt, aber ich weiß nicht, wer 'wir' sind, zu ängstlich zum Fragen",
+   "Ich habe keine Ahnung, was diese Abkürzung bedeutet, aber ich traue mich nicht zu fragen",
+   "Ich weiß nicht, was der Witz war, aber ich traue mich nicht zu fragen",
+   "Ich weiß nicht, warum du sauer bist, aber ich traue mich nicht zu fragen"
+  ]
+ }
+}

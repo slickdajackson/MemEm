@@ -1,0 +1,35 @@
+{
+ "template": "right",
+ "name": "Anakin and Padme Change the World For the Better",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Senior Developer",
+    "Junior Developer",
+    "Put it in the backlog.",
+    "So we can fix it later, right?",
+    "So we can fix it later, right?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a scene from Star Wars to humorously depict a situation where a confident or optimistic suggestion is met with a skeptical or disappointed reaction. It is typically used to mock a plan or idea that is presented as a solution but is actually flawed or ineffective.",
+  "meaning_de": "Dieses Meme nutzt eine Szene aus Star Wars, um humorvoll eine Situation darzustellen, in der ein selbstbewusster oder optimistischer Vorschlag auf eine skeptische oder enttäuschte Reaktion stößt. Es wird typischerweise verwendet, um einen Plan oder eine Idee zu verspotten, die als Lösung präsentiert wird, aber tatsächlich fehlerhaft oder wirkungslos ist.",
+  "situations_en": [
+   "We should just use Excel for the database.",
+   "I fixed the bug by restarting the server.",
+   "Let's skip the code review to save time.",
+   "The new feature is just a button that does nothing.",
+   "We can just copy-paste the code from the other project."
+  ],
+  "situations_de": [
+   "Wir sollten einfach Excel für die Datenbank nutzen.",
+   "Ich habe den Bug behoben, indem ich den Server neu gestartet habe.",
+   "Lass uns die Code-Review überspringen, um Zeit zu sparen.",
+   "Die neue Funktion ist nur ein Button, der nichts tut.",
+   "Wir können den Code einfach aus dem anderen Projekt kopieren."
+  ]
+ }
+}

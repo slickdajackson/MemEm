@@ -1,0 +1,32 @@
+{
+ "template": "bs",
+ "name": "This is Bull, Shark",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "what a surprise...",
+    "you caught me again"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the image of a person holding a shark by the gills, captioned 'This is Bull, Shark', to express a situation where someone is caught in a trap, a lie, or a difficult predicament. The top text usually describes the trap or the accusation, while the bottom text is the victim's resigned or defeated reaction to being exposed.",
+  "meaning_de": "Dieses Meme nutzt das Bild einer Person, die einen Hai am Kiemendeckel hält, mit der Bildunterschrift 'This is Bull, Shark', um eine Situation auszudrücken, in der jemand in eine Falle, eine Lüge oder eine schwierige Lage gerät. Der obere Text beschreibt die Falle oder den Vorwurf, während der untere Text die resignierte oder unterlegene Reaktion des Opfers auf die Entlarvung ist.",
+  "situations_en": [
+   "I thought I could cheat on the test",
+   "I tried to hide the evidence",
+   "I lied about my location",
+   "I tried to sneak past the boss",
+   "I forgot to turn off the lights"
+  ],
+  "situations_de": [
+   "Ich dachte, ich kann bei der Prüfung schummeln",
+   "Ich habe versucht, die Beweise zu verstecken",
+   "Ich habe über meinen Aufenthaltsort gelogen",
+   "Ich habe versucht, am Chef vorbeizuschleichen",
+   "Ich habe vergessen, das Licht auszuschalten"
+  ]
+ }
+}

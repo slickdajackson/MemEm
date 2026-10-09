@@ -1,0 +1,32 @@
+{
+ "template": "apcr",
+ "name": "Almost Politically Correct Redneck",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "I supported my sister's abortion",
+    "Still would have been cool to be a dad"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a 'screw you' attitude where the person admits to a progressive or socially acceptable action but immediately undermines it with a crude, unapologetic, or stereotypical redneck behavior. The first text box describes the 'polite' or 'correct' action, while the second box delivers the contradictory, often offensive punchline that reveals the person's true, unfiltered character.",
+  "meaning_de": "Dieser Meme drückt eine 'Scheiß-darauf'-Haltung aus, bei der die Person eine progressive oder gesellschaftlich akzeptierte Handlung zugibt, diese aber sofort durch ein grobes, unentschuldigtes oder stereotypes Redneck-Verhalten untergräbt. Der erste Textkasten beschreibt die 'höfliche' oder 'korrekte' Handlung, während der zweite Kasten den widersprüchlichen, oft beleidigenden Punchline liefert, der den wahren, ungefilterten Charakter der Person offenbart.",
+  "situations_en": [
+   "I voted for the green party but still hunt deer",
+   "I recycle everything but I also hoard guns",
+   "I support gay rights but I still call them fags",
+   "I use 'they/them' pronouns but I also own a chainsaw",
+   "I love the environment but I also burn tires for fun"
+  ],
+  "situations_de": [
+   "Ich habe für die Grünen gewählt, aber ich jage trotzdem Hirsche",
+   "Ich recycle alles, aber ich sammle auch Waffen",
+   "Ich unterstütze Homosexuelle, aber ich nenne sie trotzdem Schwuchteln",
+   "Ich benutze 'sie' Pronomen, aber ich besitze auch eine Motorsäge",
+   "Ich liebe die Umwelt, aber ich verbrannte trotzdem Reifen zum Spaß"
+  ]
+ }
+}

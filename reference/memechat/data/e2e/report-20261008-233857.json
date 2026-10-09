@@ -1,0 +1,6446 @@
+[
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 0,
+  "author": "Lena",
+  "text": "Wer hat schon wieder das dreckige Geschirr stehen lassen?",
+  "template_id": "gears",
+  "template_name": "You Know What Really Grinds My Gears?",
+  "lines": [
+   "Weißt du was mich wirklich auf die Nerven geht?",
+   "Wenn Leute das dreckige Geschirr einfach stehen lassen!"
+  ],
+  "image": "b14d1ea69570.png",
+  "latency": 9.3,
+  "candidates": [
+   [
+    "red",
+    0.0395
+   ],
+   [
+    "badchoice",
+    0.0375
+   ],
+   [
+    "soup-nazi",
+    0.0371
+   ],
+   [
+    "mmm",
+    0.0351
+   ],
+   [
+    "patrick",
+    0.0337
+   ],
+   [
+    "lrv",
+    0.0327
+   ],
+   [
+    "fbf",
+    0.0325
+   ],
+   [
+    "cake",
+    0.0311
+   ],
+   [
+    "gears",
+    0.0304
+   ],
+   [
+    "bilbo",
+    0.0294
+   ],
+   [
+    "ggg",
+    0.0285
+   ],
+   [
+    "sparta",
+    0.0284
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a statement about a general annoyance ('What really gets on my nerves?') rather than the specific, accusatory question in the original message ('Who left the dirty dishes again?').",
+    "The original message is a direct question directed at a specific person or group ('Wer' - Who), whereas the meme is a rhetorical statement about a general habit.",
+    "The meme adds a layer of 'I am about to explain my biggest pet peeve' which is not present in the original message, changing the tone from a specific complaint to a general rant."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 1,
+  "author": "Tom",
+  "text": "Ich war's nicht, ich hab seit Tagen nicht gekocht",
+  "template_id": "woman-cat",
+  "template_name": "Woman Yelling at a Cat",
+  "lines": [
+   "Wer hat schon wieder das dreckige Geschirr stehen lassen?",
+   "Ich war's nicht, ich hab seit Tagen nicht gekocht"
+  ],
+  "image": "305b1a24f250.png",
+  "latency": 7.6,
+  "candidates": [
+   [
+    "red",
+    0.0377
+   ],
+   [
+    "mmm",
+    0.0351
+   ],
+   [
+    "woman-cat",
+    0.0351
+   ],
+   [
+    "lrv",
+    0.0348
+   ],
+   [
+    "home",
+    0.0339
+   ],
+   [
+    "soup-nazi",
+    0.0332
+   ],
+   [
+    "sadfrog",
+    0.0326
+   ],
+   [
+    "sk",
+    0.0312
+   ],
+   [
+    "kermit",
+    0.0309
+   ],
+   [
+    "both",
+    0.0295
+   ],
+   [
+    "disastergirl",
+    0.0289
+   ],
+   [
+    "ggg",
+    0.0289
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a direct copy of the original message, which is a flaw in a meme-based chat where the image should convey the meaning.",
+    "The template (the 'judgemental cat' or 'I didn't do it' cat) is a generic reaction image that does not specifically illustrate the excuse of 'not having cooked for days'.",
+    "The joke structure of the template is not utilized; the image just shows a cat looking guilty, which is a weak visual representation of the specific excuse provided in the text."
+   ],
+   "meaning": 5,
+   "fit": 3,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 2,
+  "author": "Lena",
+  "text": "Komisch, deine Pfanne steht aber da drin",
+  "template_id": "fbf",
+  "template_name": "Foul Bachelor Frog",
+  "lines": [
+   "ich hab seit Tagen nicht gekocht",
+   "deine Pfanne steht aber da drin"
+  ],
+  "image": "eefe90658262.png",
+  "latency": 6.5,
+  "candidates": [
+   [
+    "lrv",
+    0.0368
+   ],
+   [
+    "red",
+    0.0361
+   ],
+   [
+    "soup-nazi",
+    0.0358
+   ],
+   [
+    "home",
+    0.0343
+   ],
+   [
+    "mmm",
+    0.0335
+   ],
+   [
+    "kermit",
+    0.0316
+   ],
+   [
+    "ggg",
+    0.0311
+   ],
+   [
+    "fbf",
+    0.0308
+   ],
+   [
+    "patrick",
+    0.0303
+   ],
+   [
+    "millers",
+    0.0297
+   ],
+   [
+    "sadfrog",
+    0.0292
+   ],
+   [
+    "sparta",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the meme text is a direct copy of the original message, which is not a problem in itself, but the template (a frog) does not match the emotion or context of the message. The message is a casual, slightly annoyed observation about a dirty pan, and the frog meme is a generic, often used for absurd or deadpan humor, which doesn't fit the tone of the conversation. The joke structure of the template (a single image with text) is not used effectively here; it's just a static image with text, which doesn't add any humor or context. The wording is awkward because it's a direct quote from the conversation, which makes it feel like a copy-paste rather than a natural part of the meme. The addressee is correct (Tom), but the template does not convey the intended emotion or humor.",
+    "The meme text is a direct copy of the original message, which is not a problem in itself, but the template (a frog) does not match the emotion or context of the message. The message is a casual, slightly annoyed observation about a dirty pan, and the frog meme is a generic, often used for absurd or deadpan humor, which doesn't fit the tone of the conversation. The joke structure of the template (a single image with text) is not used effectively here; it's just a static image with text, which doesn't add any humor or context. The wording is awkward because it's a direct quote from the conversation, which makes it feel like a copy-paste rather than a natural part of the meme. The addressee is correct (Tom), but the template does not convey the intended emotion or humor."
+   ],
+   "meaning": 5,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 3,
+  "author": "Tom",
+  "text": "Okay okay, ich mach's heute Abend",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "okay, ist das, was wir heute machen?",
+   "ich wasche das Geschirr"
+  ],
+  "image": "b5bfa5917672.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "red",
+    0.0406
+   ],
+   [
+    "ds",
+    0.0342
+   ],
+   [
+    "ggg",
+    0.034
+   ],
+   [
+    "soup-nazi",
+    0.0327
+   ],
+   [
+    "home",
+    0.0326
+   ],
+   [
+    "tenguy",
+    0.0314
+   ],
+   [
+    "lrv",
+    0.0296
+   ],
+   [
+    "chair",
+    0.0296
+   ],
+   [
+    "fmr",
+    0.0291
+   ],
+   [
+    "sadfrog",
+    0.0287
+   ],
+   [
+    "both",
+    0.0281
+   ],
+   [
+    "oag",
+    0.0279
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Ich wasche das Geschirr' (I wash the dishes) is a direct contradiction to the original message 'Ich mach's heute Abend' (I'll do it tonight). The original message is a promise of future action, while the meme text is a statement of present action.",
+    "The meme text 'Okay, ist das, was wir heute machen?' (Okay, is that what we're doing today?) is a nonsensical addition that does not appear in the original message and changes the tone to one of confusion or negotiation, which is not present in the source.",
+    "The template (a man looking skeptical or asking for clarification) does not match the emotion of the original message, which is a simple, slightly annoyed but compliant promise to do a chore.",
+    "The joke structure of the template (a question followed by a specific, often absurd answer) is not used correctly. The answer provided in the meme text is a literal statement of the chore, not a punchline or a twist."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 4,
+  "author": "Lena",
+  "text": "Das sagst du jede Woche",
+  "template_id": "facepalm",
+  "template_name": "Facepalm",
+  "lines": [
+   "Du sagst das jede Woche",
+   ""
+  ],
+  "image": "4784033f2371.png",
+  "latency": 8.6,
+  "candidates": [
+   [
+    "sadfrog",
+    0.0341
+   ],
+   [
+    "lrv",
+    0.0335
+   ],
+   [
+    "soup-nazi",
+    0.0329
+   ],
+   [
+    "ds",
+    0.0314
+   ],
+   [
+    "home",
+    0.0312
+   ],
+   [
+    "gears",
+    0.0303
+   ],
+   [
+    "kermit",
+    0.0299
+   ],
+   [
+    "chair",
+    0.0294
+   ],
+   [
+    "tenguy",
+    0.0294
+   ],
+   [
+    "facepalm",
+    0.0283
+   ],
+   [
+    "millers",
+    0.0279
+   ],
+   [
+    "ggg",
+    0.0278
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the template (Star Trek's Picard facepalm) is a generic 'exasperation' meme that doesn't specifically match the context of a recurring domestic argument about dishes. The joke structure of the template (a character reacting to a repeated, annoying statement) is not fully utilized; the meme just shows a facepalm, which is a generic reaction, not a specific joke. The meaning is slightly off because the original message is a direct accusation ('You say that every week'), while the meme is a passive reaction to being told something repeatedly. The fit is weak because the template is too generic for this specific situation. The funny score is low because it's a very common, overused meme that doesn't add any new humor to the conversation."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "wg-putzplan",
+  "source": "fake",
+  "lang": "de",
+  "turn": 5,
+  "author": "Tom",
+  "text": "Diesmal wirklich, versprochen!",
+  "template_id": "home",
+  "template_name": "We Have Food at Home",
+  "lines": [
+   "Das sagst du jede Woche",
+   "Diesmal wirklich, versprochen!",
+   "Mein sauberes Geschirreglück:"
+  ],
+  "image": "3ae8496d9a2a.png",
+  "latency": 8.7,
+  "candidates": [
+   [
+    "woman-cat",
+    0.0365
+   ],
+   [
+    "soup-nazi",
+    0.0333
+   ],
+   [
+    "ds",
+    0.0329
+   ],
+   [
+    "lrv",
+    0.0309
+   ],
+   [
+    "home",
+    0.0308
+   ],
+   [
+    "millers",
+    0.0301
+   ],
+   [
+    "tenguy",
+    0.0295
+   ],
+   [
+    "ggg",
+    0.0291
+   ],
+   [
+    "sadfrog",
+    0.0285
+   ],
+   [
+    "chair",
+    0.0278
+   ],
+   [
+    "fmr",
+    0.0276
+   ],
+   [
+    "badchoice",
+    0.0276
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a direct copy of the conversation history and the current message, rather than a creative or visual representation of the sentiment. It fails to function as a meme.",
+    "The image (a banana in a dirty pan) is completely unrelated to the text, creating a confusing and nonsensical visual that does not support the message.",
+    "The text on the image is redundant, repeating what was just said in the chat, which makes the message feel lazy and unengaging.",
+    "The template (a random photo of food) does not match the emotion of frustration or skepticism implied by the conversation."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "montag-buero",
+  "source": "fake",
+  "lang": "de",
+  "turn": 0,
+  "author": "Sarah",
+  "text": "Guten Morgen, wer hat Bock auf Montag?",
+  "template_id": "ackbar",
+  "template_name": "It's A Trap!",
+  "lines": [
+   "Montag",
+   "ist eine Falle!"
+  ],
+  "image": "b5b9b6b778e6.png",
+  "latency": 6.0,
+  "candidates": [
+   [
+    "ackbar",
+    0.0385
+   ],
+   [
+    "slap",
+    0.033
+   ],
+   [
+    "oprah",
+    0.0323
+   ],
+   [
+    "red",
+    0.0319
+   ],
+   [
+    "officespace",
+    0.03
+   ],
+   [
+    "waygd",
+    0.0299
+   ],
+   [
+    "rollsafe",
+    0.0297
+   ],
+   [
+    "ggg",
+    0.0288
+   ],
+   [
+    "ams",
+    0.0287
+   ],
+   [
+    "ants",
+    0.0281
+   ],
+   [
+    "fa",
+    0.0275
+   ],
+   [
+    "doge",
+    0.0267
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Montag ist eine Falle' (Monday is a trap) is a statement of a specific opinion or a joke, whereas the original message is a question asking for participation ('Who is up for Monday?'). The meme fails to ask the question.",
+    "The meme does not convey the 'Guten Morgen' (Good morning) part of the original message.",
+    "The template (a sad-looking alien) implies a negative or depressive reaction to Monday, which contradicts the original message's intent of asking who is 'up for' it (implying a plan or activity)."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "montag-buero",
+  "source": "fake",
+  "lang": "de",
+  "turn": 1,
+  "author": "Jonas",
+  "text": "Niemand. Der Server ist übers Wochenende abgestürzt",
+  "template_id": "grumpycat",
+  "template_name": "Grumpy Cat",
+  "lines": [
+   "niemand hat bock auf montag",
+   "der server ist übers wochenende abgestürzt"
+  ],
+  "image": "2e9f6164a50e.png",
+  "latency": 7.3,
+  "candidates": [
+   [
+    "woman-cat",
+    0.0382
+   ],
+   [
+    "fa",
+    0.0347
+   ],
+   [
+    "drunk",
+    0.0337
+   ],
+   [
+    "sadfrog",
+    0.0322
+   ],
+   [
+    "ams",
+    0.0316
+   ],
+   [
+    "waygd",
+    0.0291
+   ],
+   [
+    "crowd",
+    0.0288
+   ],
+   [
+    "fmr",
+    0.0287
+   ],
+   [
+    "jw",
+    0.0285
+   ],
+   [
+    "soup-nazi",
+    0.028
+   ],
+   [
+    "fwp",
+    0.0271
+   ],
+   [
+    "grumpycat",
+    0.0267
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the phrasing 'Niemand hat Bock auf Montag' is a direct translation of the meme's standard English text, which is a bit awkward in this specific context.",
+    "The meme template (Grumpy Cat) is used to express frustration or annoyance. While the server crashing is a negative event, the Grumpy Cat template is often associated with a specific kind of 'unimpressed' or 'disgusted' reaction, which might be slightly too strong or specific for a simple report of a server crash.",
+    "The joke structure of the Grumpy Cat template is usually a setup (top text) and a punchline (bottom text). Here, the top text is a general statement about Monday, and the bottom text is the specific reason for the grumpiness. This works, but it's a bit of a stretch to connect 'no one likes Monday' directly to 'the server crashed' as a single coherent joke. It feels more like two separate statements.",
+    "The original message is a simple statement of fact ('The server crashed over the weekend'). The meme adds a layer of emotional commentary ('No one likes Monday') that wasn't in the original message, which changes the tone from informative to emotional/complaining."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "montag-buero",
+  "source": "fake",
+  "lang": "de",
+  "turn": 2,
+  "author": "Sarah",
+  "text": "Na super, und das Meeting um 9 findet trotzdem statt",
+  "template_id": "officespace",
+  "template_name": "That Would Be Great",
+  "lines": [
+   "der server ist übers wochenende abgestürzt",
+   "und das meeting um 9 findet trotzdem statt, das wäre super"
+  ],
+  "image": "6c9141073594.png",
+  "latency": 7.9,
+  "candidates": [
+   [
+    "soup-nazi",
+    0.0364
+   ],
+   [
+    "mouth",
+    0.0361
+   ],
+   [
+    "woman-cat",
+    0.0354
+   ],
+   [
+    "cake",
+    0.0346
+   ],
+   [
+    "drunk",
+    0.0335
+   ],
+   [
+    "sohappy",
+    0.0312
+   ],
+   [
+    "fa",
+    0.0301
+   ],
+   [
+    "ams",
+    0.0296
+   ],
+   [
+    "officespace",
+    0.0295
+   ],
+   [
+    "fmr",
+    0.0289
+   ],
+   [
+    "red",
+    0.0288
+   ],
+   [
+    "crowd",
+    0.0286
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text adds a sarcastic comment ('das wäre super') that is not present in the original message, changing the tone from a simple statement to a sarcastic one.",
+    "The meme text includes the previous message from Jonas ('Der Server ist übers Wochenende abgestürzt'), which is redundant and not part of the current message to be sent.",
+    "The template (Bill Lumbergh from Office Space) is a generic 'annoyed office worker' meme. While it fits the general theme of IT failure, it is not the most specific or obvious choice for a message that is just stating a fact about a meeting."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "montag-buero",
+  "source": "fake",
+  "lang": "de",
+  "turn": 3,
+  "author": "Jonas",
+  "text": "Das Meeting hätte auch eine Mail sein können",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "Oh, ist das, was wir heute machen?",
+   "ein Meeting, das eine Mail hätte sein können?"
+  ],
+  "image": "2518a54645c5.png",
+  "latency": 6.6,
+  "candidates": [
+   [
+    "cake",
+    0.039
+   ],
+   [
+    "mouth",
+    0.0361
+   ],
+   [
+    "woman-cat",
+    0.0361
+   ],
+   [
+    "ams",
+    0.0356
+   ],
+   [
+    "millers",
+    0.0339
+   ],
+   [
+    "soup-nazi",
+    0.031
+   ],
+   [
+    "oag",
+    0.0309
+   ],
+   [
+    "sohappy",
+    0.0301
+   ],
+   [
+    "red",
+    0.03
+   ],
+   [
+    "seagull",
+    0.0288
+   ],
+   [
+    "badchoice",
+    0.0286
+   ],
+   [
+    "pigeon",
+    0.0276
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is phrased as a question ('...hätte sein können?'), whereas the original message is a statement ('...hätte ... sein können'). This changes the tone from a definitive complaint to a rhetorical or genuine inquiry.",
+    "The meme text is extremely long and wraps to three lines, making it visually cluttered and harder to read quickly in a chat context.",
+    "The template (a man asking a question) is a generic 'question' meme. While the sentiment matches, the specific image of a man in a kitchen doesn't strongly evoke the specific frustration of a corporate meeting that could have been an email, making the 'fit' somewhat generic."
+   ],
+   "meaning": 4,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "montag-buero",
+  "source": "fake",
+  "lang": "de",
+  "turn": 4,
+  "author": "Sarah",
+  "text": "Ich hol erstmal Kaffee, sonst überlebe ich das nicht",
+  "template_id": "harold",
+  "template_name": "Hide the Pain Harold",
+  "lines": [
+   "Ich hol mir erst mal Kaffee",
+   "sonst überlebe ich das nicht"
+  ],
+  "image": "ba167d5007b4.png",
+  "latency": 14.4,
+  "candidates": [
+   [
+    "woman-cat",
+    0.0375
+   ],
+   [
+    "soup-nazi",
+    0.037
+   ],
+   [
+    "fine",
+    0.0355
+   ],
+   [
+    "hipster",
+    0.0347
+   ],
+   [
+    "boat",
+    0.0331
+   ],
+   [
+    "mouth",
+    0.033
+   ],
+   [
+    "ams",
+    0.0326
+   ],
+   [
+    "cake",
+    0.0315
+   ],
+   [
+    "chair",
+    0.031
+   ],
+   [
+    "millers",
+    0.0295
+   ],
+   [
+    "harold",
+    0.0295
+   ],
+   [
+    "fa",
+    0.0295
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text uses the formal 'ich' (I) instead of the informal 'ich' (I) or the colloquial 'hol' (get) which is standard in the original message, making it sound stiff and unnatural for a chat app.",
+    "The template image shows a man who looks happy, relaxed, and professional, which contradicts the original message's tone of desperation and exhaustion ('sonst überlebe ich das nicht' / otherwise I won't survive this).",
+    "The joke structure of the template (a person doing a mundane task with a caption) is not utilized; the captions are just a direct transcription of the message, missing the opportunity for a visual punchline or irony.",
+    "The original message implies a need for a break due to stress, but the image shows the person actively working on a laptop while holding coffee, which visually contradicts the idea of stepping away to get coffee."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pizza-abend",
+  "source": "fake",
+  "lang": "de",
+  "turn": 0,
+  "author": "Max",
+  "text": "Pizza heute Abend?",
+  "template_id": "yallgot",
+  "template_name": "Y'all Got Any More of Them",
+  "lines": [
+   "Habt ihr noch mehr von dieser Pizza?",
+   "Heute Abend?"
+  ],
+  "image": "3e9c30fce825.png",
+  "latency": 6.5,
+  "candidates": [
+   [
+    "soup-nazi",
+    0.0366
+   ],
+   [
+    "tenguy",
+    0.0346
+   ],
+   [
+    "both",
+    0.033
+   ],
+   [
+    "ss",
+    0.0314
+   ],
+   [
+    "sohot",
+    0.0311
+   ],
+   [
+    "yallgot",
+    0.031
+   ],
+   [
+    "red",
+    0.0309
+   ],
+   [
+    "scc",
+    0.0304
+   ],
+   [
+    "pigeon",
+    0.0297
+   ],
+   [
+    "dodgson",
+    0.0294
+   ],
+   [
+    "philosoraptor",
+    0.0283
+   ],
+   [
+    "home",
+    0.0269
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a full question ('Habt ihr noch mehr von dieser Pizza?') whereas the original message is a short, casual suggestion or question ('Pizza heute Abend?').",
+    "The meme adds specific details not present in the original message, such as asking for 'more' of a specific pizza ('noch mehr von dieser Pizza').",
+    "The template (the 'No, I didn't' guy) is typically used for denial or confusion, which doesn't fit the simple, direct question of the original message.",
+    "The wording is overly verbose and unnatural for a casual text message about dinner plans."
+   ],
+   "meaning": 2,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pizza-abend",
+  "source": "fake",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ali",
+  "text": "Klar, aber diesmal ohne Ananas bitte",
+  "template_id": "soup-nazi",
+  "template_name": "No Soup for You",
+  "lines": [
+   "klar",
+   "aber ohne Ananas für dich!"
+  ],
+  "image": "ebfe4dc929ae.png",
+  "latency": 5.8,
+  "candidates": [
+   [
+    "both",
+    0.0378
+   ],
+   [
+    "soup-nazi",
+    0.0342
+   ],
+   [
+    "woman-cat",
+    0.0325
+   ],
+   [
+    "cmm",
+    0.0323
+   ],
+   [
+    "red",
+    0.0321
+   ],
+   [
+    "tenguy",
+    0.0318
+   ],
+   [
+    "dragon",
+    0.0312
+   ],
+   [
+    "home",
+    0.0303
+   ],
+   [
+    "badchoice",
+    0.0302
+   ],
+   [
+    "sadfrog",
+    0.0285
+   ],
+   [
+    "fry",
+    0.0277
+   ],
+   [
+    "scc",
+    0.0273
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in English, violating the language constraint.",
+    "The template (Gordon Ramsay yelling) is overly aggressive and confrontational for a casual request to remove pineapple from a pizza, making the tone completely mismatched.",
+    "The phrasing 'KLAR ABER OHNE ANANAS FÜR DICH!' is unnatural and awkward in German; it sounds like a bad translation or a scolding rather than a polite request.",
+    "The meme implies the sender is angry or correcting the recipient, whereas the original message is a simple, friendly suggestion for a dinner plan."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "pizza-abend",
+  "source": "fake",
+  "lang": "de",
+  "turn": 2,
+  "author": "Max",
+  "text": "Ananas gehört auf Pizza, ändere meine Meinung",
+  "template_id": "cmm",
+  "template_name": "cmm",
+  "lines": [
+   "Ananas gehört auf Pizza",
+   "Ändere meine Meinung"
+  ],
+  "image": "18ccf10df509.png",
+  "latency": 9.0,
+  "candidates": [
+   [
+    "both",
+    0.0368
+   ],
+   [
+    "cmm",
+    0.0323
+   ],
+   [
+    "woman-cat",
+    0.0318
+   ],
+   [
+    "chair",
+    0.0317
+   ],
+   [
+    "dragon",
+    0.0301
+   ],
+   [
+    "drake",
+    0.0293
+   ],
+   [
+    "aint-got-time",
+    0.0291
+   ],
+   [
+    "tenguy",
+    0.029
+   ],
+   [
+    "sohot",
+    0.029
+   ],
+   [
+    "badchoice",
+    0.0288
+   ],
+   [
+    "ants",
+    0.0288
+   ],
+   [
+    "home",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the meme template is a 'Change My Mind' setup, which implies a debate or a challenge to others, whereas the original message is a direct statement to a specific person (Ali) in a conversation about dinner. The template does not fit the conversational context of a casual dinner plan.",
+    "The meme adds a visual element (a person sitting at a table with a sign) that is not present in the original text message. This changes the tone from a simple statement to a public declaration or a challenge, which is not what the original message intended.",
+    "The meme text 'ANANAS GEHÖRT AUF PIZZA' is a direct translation of the first part of the message, but the second part 'ÄNDERE MEINE MEINUNG' is a direct translation of 'change my mind', which is a common English phrase. In German, 'ändere meine Meinung' is grammatically correct but sounds a bit awkward in this context. A more natural German phrasing might be 'Überzeuge mich, dass ich falsch liege' or simply 'Ich bin sicher, dass Ananas auf Pizza gehört'.",
+    "The meme does not convey the specific context of the conversation (Max and Ali discussing pizza for dinner). It is a generic meme that could be used in any context where someone wants to defend their opinion about pineapple on pizza, but it does not fit the specific, personal nature of the original message."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pizza-abend",
+  "source": "fake",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ali",
+  "text": "Ich bestell dann einfach Sushi für mich",
+  "template_id": "ss",
+  "template_name": "Scumbag Steve",
+  "lines": [
+   "bestellt einfach sushi für sich",
+   "weil ananas auf pizza gehört"
+  ],
+  "image": "5df2b3766e49.png",
+  "latency": 7.2,
+  "candidates": [
+   [
+    "both",
+    0.0359
+   ],
+   [
+    "tenguy",
+    0.0349
+   ],
+   [
+    "woman-cat",
+    0.0337
+   ],
+   [
+    "money",
+    0.0321
+   ],
+   [
+    "ggg",
+    0.0309
+   ],
+   [
+    "fry",
+    0.0308
+   ],
+   [
+    "ants",
+    0.0302
+   ],
+   [
+    "dragon",
+    0.0301
+   ],
+   [
+    "ss",
+    0.0288
+   ],
+   [
+    "spongebob",
+    0.0287
+   ],
+   [
+    "home",
+    0.0284
+   ],
+   [
+    "dodgson",
+    0.0282
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the meme text is not a direct translation or representation of the original message. The original message is 'Ich bestell dann einfach Sushi für mich' (I'll just order sushi for myself), but the meme text says 'BESTELLT EINFACH SUSHI FÜR SICH' (Order sushi for yourself) and 'WEIL ANANAS AUF PIZZA GEHÖRT' (Because pineapple belongs on pizza). The meme text is not a direct representation of the original message and adds a new element (pineapple on pizza) that is not in the original message.",
+    "The meme template (a person looking confused or unimpressed) does not match the emotion of the original message. The original message is a simple statement about ordering sushi, not a reaction to a controversial opinion about pineapple on pizza.",
+    "The joke structure of the meme template is not used. The meme is meant to be a reaction to a controversial or absurd statement, but the original message is a simple statement about ordering food."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pizza-abend",
+  "source": "fake",
+  "lang": "de",
+  "turn": 4,
+  "author": "Max",
+  "text": "Verräter",
+  "template_id": "woman-cat",
+  "template_name": "Woman Yelling at a Cat",
+  "lines": [
+   "Du hast mich verraten",
+   "Ich hab nur Sushi bestellt"
+  ],
+  "image": "e4c20a543697.png",
+  "latency": 6.7,
+  "candidates": [
+   [
+    "woman-cat",
+    0.0366
+   ],
+   [
+    "ants",
+    0.0349
+   ],
+   [
+    "fry",
+    0.0313
+   ],
+   [
+    "chair",
+    0.0313
+   ],
+   [
+    "both",
+    0.0303
+   ],
+   [
+    "yallgot",
+    0.0301
+   ],
+   [
+    "fmr",
+    0.03
+   ],
+   [
+    "tenguy",
+    0.0296
+   ],
+   [
+    "morpheus",
+    0.0296
+   ],
+   [
+    "money",
+    0.0294
+   ],
+   [
+    "ggg",
+    0.0292
+   ],
+   [
+    "spongebob",
+    0.0292
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Du hast mich verraten' (You betrayed me) is a dramatic accusation that does not match the original message 'Verräter' (Traitor). While related, the meme changes the meaning from a label to a specific accusation of betrayal, which is not in the original message.",
+    "The right panel text 'Ich hab nur Sushi bestellt' (I only ordered sushi) is a non-sequitur that does not logically follow the accusation of betrayal in the context of the conversation. The conversation is about pizza toppings, not a betrayal over sushi.",
+    "The template (a woman screaming and pointing at a cat) is a generic 'accusation' or 'shaming' template. It does not specifically fit the context of a friend ordering sushi instead of pizza. The cat's expression is unimpressed, which doesn't match the 'traitor' accusation well.",
+    "The joke structure of the template (accusation + innocent defense) is not used effectively. The defense 'I only ordered sushi' is not a valid defense against being called a 'traitor' in the context of the pizza debate."
+   ],
+   "meaning": 2,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 0,
+  "author": "Dev",
+  "text": "Should we deploy the new release today?",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "oh, is that what we're going to do today?",
+   "deploy the new release?"
+  ],
+  "image": "4b30f4f1ab9e.png",
+  "latency": 6.1,
+  "candidates": [
+   [
+    "ds",
+    0.0395
+   ],
+   [
+    "buzz",
+    0.0349
+   ],
+   [
+    "officespace",
+    0.0323
+   ],
+   [
+    "red",
+    0.0315
+   ],
+   [
+    "ch",
+    0.0311
+   ],
+   [
+    "pigeon",
+    0.0308
+   ],
+   [
+    "rollsafe",
+    0.0305
+   ],
+   [
+    "philosoraptor",
+    0.0301
+   ],
+   [
+    "jw",
+    0.0298
+   ],
+   [
+    "mouth",
+    0.0296
+   ],
+   [
+    "captain",
+    0.029
+   ],
+   [
+    "awesome-awkward",
+    0.0283
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'OH, IS THAT WHAT WE'RE GOING TO DO TODAY?' adds a tone of surprise, skepticism, or sarcasm that is not present in the neutral, direct question of the original message.",
+    "The template (a character looking confused or questioning) implies the sender is reacting to a plan they didn't know about, whereas the original message is a simple inquiry or proposal to initiate a task.",
+    "The meme text is significantly more verbose and dramatic than the concise original message, changing the communication style from professional/direct to informal/reactive."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 1,
+  "author": "Ops",
+  "text": "It's Friday 5pm, absolutely not",
+  "template_id": "ackbar",
+  "template_name": "It's A Trap!",
+  "lines": [
+   "deploying on friday 5pm",
+   "it's a trap!"
+  ],
+  "image": "be53e9056ce6.png",
+  "latency": 6.0,
+  "candidates": [
+   [
+    "ds",
+    0.0368
+   ],
+   [
+    "rollsafe",
+    0.0338
+   ],
+   [
+    "officespace",
+    0.0333
+   ],
+   [
+    "ackbar",
+    0.033
+   ],
+   [
+    "jetpack",
+    0.0328
+   ],
+   [
+    "facepalm",
+    0.031
+   ],
+   [
+    "mouth",
+    0.0308
+   ],
+   [
+    "fry",
+    0.0297
+   ],
+   [
+    "drake",
+    0.0292
+   ],
+   [
+    "noidea",
+    0.0288
+   ],
+   [
+    "wddth",
+    0.0287
+   ],
+   [
+    "fa",
+    0.0287
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'DEPLOYING ON FRIDAY 5PM' is a statement of fact, whereas the original message 'absolutely not' is a strong refusal. The meme fails to convey the refusal itself, only the context of the refusal.",
+    "The meme text 'IT'S A TRAP!' is a generic Star Wars quote. While it implies a negative outcome, it is a cliché and does not capture the specific, emphatic tone of 'absolutely not'.",
+    "The meme is a 'setup and punchline' format, but the punchline ('It's a trap') is a prediction of a future event, not a direct expression of the current feeling of refusal. It's a step removed from the original message's intent."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 2,
+  "author": "Dev",
+  "text": "But all tests are green!",
+  "template_id": "snek",
+  "template_name": "Skeptical Snake",
+  "lines": [
+   "all your tests are green",
+   "but it is still friday 5pm"
+  ],
+  "image": "92ab863e2b63.png",
+  "latency": 6.3,
+  "candidates": [
+   [
+    "crowd",
+    0.0378
+   ],
+   [
+    "firsttry",
+    0.0368
+   ],
+   [
+    "officespace",
+    0.0343
+   ],
+   [
+    "ds",
+    0.0342
+   ],
+   [
+    "xy",
+    0.0341
+   ],
+   [
+    "snek",
+    0.031
+   ],
+   [
+    "sohappy",
+    0.0309
+   ],
+   [
+    "captain",
+    0.0306
+   ],
+   [
+    "mouth",
+    0.0293
+   ],
+   [
+    "soa",
+    0.0284
+   ],
+   [
+    "iw",
+    0.0282
+   ],
+   [
+    "rollsafe",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text adds a specific detail ('Friday 5pm') that is not in the original message, although it is in the context. This is a minor addition, but the original message was a simple statement of success.",
+    "The template (the smug green snake) is a 'smug' or 'unbothered' face. While it fits the developer's confidence, the text 'But it is still Friday 5pm' is a counter-argument to the developer, not a statement of the developer's state. The meme is written from the perspective of the person *rejecting* the deployment, not the person *proposing* it. The original message was from the Dev, but the meme is a response to the Dev.",
+    "The meme text is a complete sentence that includes the context, whereas the original message was a fragment. This is a slight mismatch in tone."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 4,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 3,
+  "author": "Ops",
+  "text": "That's what you said last time and production burned down",
+  "template_id": "ch",
+  "template_name": "Captain Hindsight",
+  "lines": [
+   "if you wanted to deploy on a Friday",
+   "you should have trusted me when I said no"
+  ],
+  "image": "7a05b661eeef.png",
+  "latency": 7.2,
+  "candidates": [
+   [
+    "officespace",
+    0.034
+   ],
+   [
+    "jw",
+    0.0328
+   ],
+   [
+    "ds",
+    0.0325
+   ],
+   [
+    "philosoraptor",
+    0.03
+   ],
+   [
+    "cake",
+    0.0297
+   ],
+   [
+    "jetpack",
+    0.0295
+   ],
+   [
+    "crowd",
+    0.0288
+   ],
+   [
+    "woman-cat",
+    0.0284
+   ],
+   [
+    "iw",
+    0.0279
+   ],
+   [
+    "ch",
+    0.0274
+   ],
+   [
+    "firsttry",
+    0.0274
+   ],
+   [
+    "gone",
+    0.0267
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a generic, forward-looking warning ('If you wanted to deploy... you should have trusted me'), whereas the original message is a specific, backward-looking reference to a past event ('That's what you said last time and production burned down').",
+    "The meme fails to capture the specific detail of the 'production burned down' incident, which is the core of the original message's impact.",
+    "The template (Butters pointing) implies a current or future event, which contradicts the original message's focus on a past failure."
+   ],
+   "meaning": 2,
+   "fit": 3,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 4,
+  "author": "Dev",
+  "text": "Fine, Monday morning then",
+  "template_id": "cake",
+  "template_name": "Office Space Milton",
+  "lines": [
+   "Fine, Monday morning then",
+   "It's a good day for... Monday"
+  ],
+  "image": "b477d40fcfbe.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "ds",
+    0.0352
+   ],
+   [
+    "officespace",
+    0.0347
+   ],
+   [
+    "red",
+    0.0338
+   ],
+   [
+    "jetpack",
+    0.0312
+   ],
+   [
+    "jw",
+    0.0307
+   ],
+   [
+    "facepalm",
+    0.0306
+   ],
+   [
+    "cake",
+    0.029
+   ],
+   [
+    "awesome-awkward",
+    0.0273
+   ],
+   [
+    "noidea",
+    0.0271
+   ],
+   [
+    "rollsafe",
+    0.027
+   ],
+   [
+    "firsttry",
+    0.0269
+   ],
+   [
+    "iw",
+    0.0264
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The bottom text 'IT'S A GOOD DAY FOR... MONDAY' is a nonsensical tautology that adds no value and breaks the joke structure.",
+    "The template (a grumpy office worker) is a generic 'I hate work' meme that fails to capture the specific context of the conversation (a developer being told 'no' to a Friday deployment).",
+    "The meme text is redundant, repeating the word 'Monday' in both the top and bottom text, which makes the message feel lazy and unpolished.",
+    "The original message is a resigned acceptance of a delay, but the meme's bottom text attempts to make a positive statement about the day, which contradicts the grumpy tone of the image and the frustration of the situation."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "deploy-friday",
+  "source": "fake",
+  "lang": "en",
+  "turn": 5,
+  "author": "Ops",
+  "text": "Thank you, my weekend thanks you",
+  "template_id": "soa",
+  "template_name": "Seal of Approval",
+  "lines": [
+   "thank you",
+   "my weekend thanks you"
+  ],
+  "image": "912184c184fc.png",
+  "latency": 5.8,
+  "candidates": [
+   [
+    "officespace",
+    0.0363
+   ],
+   [
+    "red",
+    0.0306
+   ],
+   [
+    "ds",
+    0.03
+   ],
+   [
+    "jw",
+    0.0299
+   ],
+   [
+    "jetpack",
+    0.0299
+   ],
+   [
+    "fa",
+    0.0297
+   ],
+   [
+    "rollsafe",
+    0.0295
+   ],
+   [
+    "drake",
+    0.0279
+   ],
+   [
+    "soa",
+    0.0271
+   ],
+   [
+    "firsttry",
+    0.0264
+   ],
+   [
+    "agnes",
+    0.0261
+   ],
+   [
+    "woman-cat",
+    0.026
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a direct transcription of the original message, which is a grammatically awkward and nonsensical phrase ('my weekend thanks you').",
+    "The template (a smiling seal) is a generic 'happy' or 'grateful' image that does not convey the specific context of the conversation, which is a professional disagreement about a deployment schedule.",
+    "The meme fails to capture the underlying emotion of the conversation, which is likely frustration or resignation, rather than genuine gratitude.",
+    "The joke structure of the template is not utilized; it is just a picture of a happy animal with text pasted on it, making it a very weak and unoriginal meme."
+   ],
+   "meaning": 5,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "gym-motivation",
+  "source": "fake",
+  "lang": "en",
+  "turn": 0,
+  "author": "Kim",
+  "text": "I'm going to the gym every day starting tomorrow",
+  "template_id": "bender",
+  "template_name": "I'm Going to Build My Own Theme Park",
+  "lines": [
+   "i'm going to the gym every day",
+   "starting tomorrow"
+  ],
+  "image": "f86a77499bf8.png",
+  "latency": 6.4,
+  "candidates": [
+   [
+    "ds",
+    0.0405
+   ],
+   [
+    "bd",
+    0.0345
+   ],
+   [
+    "ants",
+    0.0343
+   ],
+   [
+    "oag",
+    0.0313
+   ],
+   [
+    "gone",
+    0.031
+   ],
+   [
+    "success",
+    0.031
+   ],
+   [
+    "dsm",
+    0.0309
+   ],
+   [
+    "blb",
+    0.0308
+   ],
+   [
+    "fa",
+    0.0306
+   ],
+   [
+    "bender",
+    0.0305
+   ],
+   [
+    "sk",
+    0.0303
+   ],
+   [
+    "tenguy",
+    0.0302
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The template (Bender from Futurama) is a 'villain' or 'smug' character, which implies the speaker is being sarcastic, untrustworthy, or is making a joke about their own laziness. The original message is a straightforward statement of intent, not a joke or a lie.",
+    "The meme implies the speaker is a 'bad guy' or is being deceptive, which contradicts the sincere tone of the original message.",
+    "The visual of the robot smoking a cigar adds a layer of 'villainy' that is completely absent from the original text."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "gym-motivation",
+  "source": "fake",
+  "lang": "en",
+  "turn": 1,
+  "author": "Sam",
+  "text": "You said that last January",
+  "template_id": "sk",
+  "template_name": "Skeptical Third World Kid",
+  "lines": [
+   "So you are going to the gym every day",
+   "You said that last January"
+  ],
+  "image": "6edfe6dae140.png",
+  "latency": 13.3,
+  "candidates": [
+   [
+    "ds",
+    0.0353
+   ],
+   [
+    "oag",
+    0.0341
+   ],
+   [
+    "keanu",
+    0.0326
+   ],
+   [
+    "red",
+    0.0319
+   ],
+   [
+    "fmr",
+    0.0319
+   ],
+   [
+    "morpheus",
+    0.0318
+   ],
+   [
+    "sk",
+    0.031
+   ],
+   [
+    "bd",
+    0.0293
+   ],
+   [
+    "ants",
+    0.0293
+   ],
+   [
+    "agnes",
+    0.0287
+   ],
+   [
+    "blb",
+    0.0284
+   ],
+   [
+    "sohappy",
+    0.028
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SO YOU ARE GOING TO THE GYM EVERY DAY' is a direct contradiction of the original message 'You said that last January'. The original message is a statement of fact about a past event, whereas the meme text is a question or a statement of current action.",
+    "The meme template (the 'skeptical child' or 'disbelieving kid' meme) is used to express doubt or disbelief about a claim. While the original message implies skepticism, the text on the meme completely changes the meaning to a direct challenge about current actions, which is not what the original message says.",
+    "The joke structure of the template is not used correctly. The template is meant to have a setup (the claim) and a punchline (the doubt). Here, the text is split into two parts that don't form a coherent joke with the image. The top text is a question, and the bottom text is a statement, but they don't logically connect to the image's expression of doubt in a way that matches the original message."
+   ],
+   "meaning": 1,
+   "fit": 3,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "gym-motivation",
+  "source": "fake",
+  "lang": "en",
+  "turn": 2,
+  "author": "Kim",
+  "text": "This time I already bought the membership",
+  "template_id": "success",
+  "template_name": "Success Kid",
+  "lines": [
+   "I actually bought the gym membership",
+   ""
+  ],
+  "image": "da5a2e62a829.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "ds",
+    0.0368
+   ],
+   [
+    "agnes",
+    0.0357
+   ],
+   [
+    "oag",
+    0.0329
+   ],
+   [
+    "fmr",
+    0.0322
+   ],
+   [
+    "jw",
+    0.0314
+   ],
+   [
+    "success",
+    0.0313
+   ],
+   [
+    "morpheus",
+    0.0308
+   ],
+   [
+    "rollsafe",
+    0.0306
+   ],
+   [
+    "ants",
+    0.03
+   ],
+   [
+    "ski",
+    0.0288
+   ],
+   [
+    "millers",
+    0.0286
+   ],
+   [
+    "mb",
+    0.0285
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text uses the word 'actually' which is redundant and slightly awkward in this context, though it emphasizes the point.",
+    "The 'Success Kid' template is typically used for celebrating a victory or a moment of triumph. While buying the membership is a step forward, the context of the conversation (Sam's skepticism) makes the triumphant pose feel a bit out of place or overly dramatic for a simple confirmation of a purchase.",
+    "The original message says 'This time I already bought the membership', implying a contrast with past failures. The meme text 'I ACTUALLY BOUGHT THE GYM MEMBERSHIP' captures the action but loses the specific nuance of 'this time' vs 'last time' that the conversation setup relies on."
+   ],
+   "meaning": 4,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "gym-motivation",
+  "source": "fake",
+  "lang": "en",
+  "turn": 3,
+  "author": "Sam",
+  "text": "So did half the city, see you in February",
+  "template_id": "morpheus",
+  "template_name": "Matrix Morpheus",
+  "lines": [
+   "what if I told you",
+   "half the city bought a membership?"
+  ],
+  "image": "abbe7809524c.png",
+  "latency": 6.6,
+  "candidates": [
+   [
+    "rollsafe",
+    0.035
+   ],
+   [
+    "ds",
+    0.035
+   ],
+   [
+    "morpheus",
+    0.0343
+   ],
+   [
+    "oag",
+    0.032
+   ],
+   [
+    "handshake",
+    0.0319
+   ],
+   [
+    "fmr",
+    0.0316
+   ],
+   [
+    "gears",
+    0.0302
+   ],
+   [
+    "winter",
+    0.0292
+   ],
+   [
+    "ski",
+    0.029
+   ],
+   [
+    "ams",
+    0.0289
+   ],
+   [
+    "bus",
+    0.0284
+   ],
+   [
+    "sohappy",
+    0.0284
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'What if I told you' is a rhetorical setup that implies a shocking secret or a plot twist, which is a tonal mismatch for the original message's casual, matter-of-fact tone.",
+    "The original message includes a specific time reference ('see you in February') which is completely lost in the meme.",
+    "The meme text 'Half the city bought a membership' is a direct quote of the first half of the message, but the template forces it into a dramatic 'reveal' format that makes the statement sound like a conspiracy theory rather than a simple observation.",
+    "The template (Agent Smith) is typically used for 'I have a secret' or 'I know something you don't' scenarios, which is a stretch for simply confirming a shared experience."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "gym-motivation",
+  "source": "fake",
+  "lang": "en",
+  "turn": 4,
+  "author": "Kim",
+  "text": "Wow, thanks for the support",
+  "template_id": "agnes",
+  "template_name": "Agnes Harkness Winking",
+  "lines": [
+   "thanks for the support",
+   "wow, that was comforting"
+  ],
+  "image": "4633672de567.png",
+  "latency": 5.9,
+  "candidates": [
+   [
+    "ds",
+    0.0343
+   ],
+   [
+    "oag",
+    0.0338
+   ],
+   [
+    "gears",
+    0.0333
+   ],
+   [
+    "oprah",
+    0.0314
+   ],
+   [
+    "rollsafe",
+    0.0308
+   ],
+   [
+    "handshake",
+    0.0304
+   ],
+   [
+    "agnes",
+    0.0303
+   ],
+   [
+    "millers",
+    0.0298
+   ],
+   [
+    "xy",
+    0.0296
+   ],
+   [
+    "crowd",
+    0.0283
+   ],
+   [
+    "sohappy",
+    0.0273
+   ],
+   [
+    "ermg",
+    0.027
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The template's facial expression is one of extreme distress, screaming, or horror, which directly contradicts the polite and grateful tone of the original message.",
+    "The bottom text 'WOW, THAT WAS COMFORTING' is sarcastic and implies the support was bad or unhelpful, which is the opposite of the intended meaning of 'thanks for the support'.",
+    "The meme is used to insult the recipient (Sam) rather than thank them, completely inverting the intent of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 0,
+  "author": "Mia",
+  "text": "Morgen ist die Matheklausur und ich hab noch nichts gelernt",
+  "template_id": "noidea",
+  "template_name": "I Have No Idea What I'm Doing",
+  "lines": [
+   "morgen matheklausur",
+   "hab noch nichts gelernt"
+  ],
+  "image": "cbaf4f7219d8.png",
+  "latency": 6.9,
+  "candidates": [
+   [
+    "blb",
+    0.0318
+   ],
+   [
+    "noidea",
+    0.0316
+   ],
+   [
+    "tenguy",
+    0.031
+   ],
+   [
+    "gandalf",
+    0.0293
+   ],
+   [
+    "red",
+    0.0288
+   ],
+   [
+    "fa",
+    0.0285
+   ],
+   [
+    "ds",
+    0.0285
+   ],
+   [
+    "gears",
+    0.0278
+   ],
+   [
+    "ggg",
+    0.0277
+   ],
+   [
+    "keanu",
+    0.0273
+   ],
+   [
+    "facepalm",
+    0.0273
+   ],
+   [
+    "chair",
+    0.0265
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in the imperative mood ('Morgen Matheklausur' and 'Hab noch nichts gelernt' as a command/statement of fact), whereas the original message is a statement of a future event and a personal state ('Morgen ist die Matheklausur und ich hab noch nichts gelernt'). The meme text is grammatically incomplete and unnatural as a standalone sentence.",
+    "The meme text is a direct, literal transcription of the original message, which is a common flaw in generated memes. It fails to capture the *emotion* or *context* of the original message (panic, stress, procrastination) and instead just states the facts. A good meme would use the template to *express* the feeling, not just repeat the words.",
+    "The 'Business Dog' template is a generic 'I am doing something' or 'I am in a situation' meme. It does not inherently convey panic or the specific stress of an upcoming exam. The dog looks content and professional, which contradicts the implied stress of the original message. The template is a poor fit for the emotion."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Ich auch nicht, aber ich hab einen Plan",
+  "template_id": "tenguy",
+  "template_name": "10 Guy",
+  "lines": [
+   "ich hab auch nichts gelernt",
+   "aber ich hab einen plan"
+  ],
+  "image": "d161c95e0cc8.png",
+  "latency": 6.7,
+  "candidates": [
+   [
+    "jw",
+    0.0324
+   ],
+   [
+    "ds",
+    0.0319
+   ],
+   [
+    "red",
+    0.0312
+   ],
+   [
+    "tenguy",
+    0.0291
+   ],
+   [
+    "sk",
+    0.0288
+   ],
+   [
+    "fmr",
+    0.0286
+   ],
+   [
+    "ants",
+    0.028
+   ],
+   [
+    "disastergirl",
+    0.0273
+   ],
+   [
+    "boat",
+    0.0266
+   ],
+   [
+    "both",
+    0.0263
+   ],
+   [
+    "ackbar",
+    0.0262
+   ],
+   [
+    "exit",
+    0.0261
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a direct, literal transcription of the message with no added humor, wordplay, or context.",
+    "The template (a smug-looking person) is a generic 'I have a plan' meme that does not specifically fit the context of a math exam or the specific situation described.",
+    "The joke structure of the template (usually a setup and a punchline) is not utilized; it just states the text.",
+    "The result is flat and unoriginal, failing to convey the specific emotion or humor of the original message."
+   ],
+   "meaning": 5,
+   "fit": 3,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 2,
+  "author": "Mia",
+  "text": "Was für einen Plan?",
+  "template_id": "jw",
+  "template_name": "Probably Not a Good Idea",
+  "lines": [
+   "dein Plan, nichts gelernt zu haben",
+   "wahrscheinlich keine gute Idee"
+  ],
+  "image": "a304604ec541.png",
+  "latency": 26.2,
+  "candidates": [
+   [
+    "red",
+    0.0349
+   ],
+   [
+    "millers",
+    0.0331
+   ],
+   [
+    "jw",
+    0.0317
+   ],
+   [
+    "ants",
+    0.0315
+   ],
+   [
+    "keanu",
+    0.031
+   ],
+   [
+    "ackbar",
+    0.0306
+   ],
+   [
+    "ds",
+    0.03
+   ],
+   [
+    "fmr",
+    0.0298
+   ],
+   [
+    "exit",
+    0.0296
+   ],
+   [
+    "center",
+    0.0286
+   ],
+   [
+    "wishes",
+    0.0273
+   ],
+   [
+    "noah",
+    0.0262
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'DEIN PLAN, NICHTS GELERNT ZU HABEN' (Your plan, having learned nothing) is a sarcastic statement or a description of the situation, not a question. It completely fails to convey the original message 'Was für einen Plan?' (What kind of plan?).",
+    "The meme text 'WAHRSCHEINLICH KEINE GUTE IDEE' (Probably not a good idea) is a judgment, not a question. It contradicts the intent of the original message, which is to ask for clarification.",
+    "The template (a man looking skeptical at a woman) is used to express doubt or judgment, but the original message is a simple inquiry. The meme answers the question with sarcasm instead of asking it.",
+    "The meme does not function as a question at all, breaking the conversational flow where Ben is asking Mia to explain her plan."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Heute Nacht alles auf einmal lernen",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "oh, ist das, was wir heute machen werden?",
+   "heute nacht alles auf einmal lernen?"
+  ],
+  "image": "467839c33a55.png",
+  "latency": 9.5,
+  "candidates": [
+   [
+    "ds",
+    0.0359
+   ],
+   [
+    "red",
+    0.0335
+   ],
+   [
+    "blb",
+    0.0306
+   ],
+   [
+    "oag",
+    0.0295
+   ],
+   [
+    "millers",
+    0.029
+   ],
+   [
+    "chair",
+    0.0287
+   ],
+   [
+    "ants",
+    0.0285
+   ],
+   [
+    "woman-cat",
+    0.0283
+   ],
+   [
+    "fmr",
+    0.0282
+   ],
+   [
+    "exit",
+    0.027
+   ],
+   [
+    "ackbar",
+    0.0269
+   ],
+   [
+    "say",
+    0.0265
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in German, so the language is correct. However, the meme text is a question, while the original message is a statement. This changes the meaning and intent of the message.",
+    "The meme text asks 'Oh, ist das, was wir heute machen werden? Heute Nacht alles auf einmal lernen?' which implies a shared plan or agreement, but the original message is a personal statement about the user's own plan. This misrepresents the context and addressee.",
+    "The template (a man looking skeptical or questioning) does not match the emotion of the original message, which is a confident or determined statement about a plan. The meme's tone is more of a surprised or disbelieving question, which contradicts the original intent.",
+    "The joke structure of the template is not used effectively. The meme is meant to be a reaction to something surprising or absurd, but the original message is a straightforward statement of intent. The meme's question format doesn't align with the declarative nature of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 4,
+  "author": "Mia",
+  "text": "Das klappt doch nie",
+  "template_id": "fetch",
+  "template_name": "Stop Trying to Make Fetch Happen",
+  "lines": [
+   "hör auf, das alles in einer Nacht lernen zu wollen",
+   "es wird nicht klappen"
+  ],
+  "image": "900ab0f441c2.png",
+  "latency": 9.9,
+  "candidates": [
+   [
+    "ds",
+    0.0358
+   ],
+   [
+    "facepalm",
+    0.0315
+   ],
+   [
+    "fetch",
+    0.0306
+   ],
+   [
+    "fmr",
+    0.0298
+   ],
+   [
+    "ackbar",
+    0.0297
+   ],
+   [
+    "noidea",
+    0.0296
+   ],
+   [
+    "blb",
+    0.0292
+   ],
+   [
+    "wishes",
+    0.0291
+   ],
+   [
+    "millers",
+    0.0289
+   ],
+   [
+    "keanu",
+    0.0289
+   ],
+   [
+    "ants",
+    0.0286
+   ],
+   [
+    "rollsafe",
+    0.0279
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is extremely long and clunky ('Hör auf, das alles in einer Nacht lernen zu wollen'), whereas the original message is a short, punchy statement of disbelief ('Das klappt doch nie').",
+    "The meme adds a specific command ('Hör auf' / 'Stop') that is not present in the original message, which is a passive observation rather than an active instruction.",
+    "The template (a woman looking skeptical while holding a Christmas hat) is a generic 'skeptical face' meme. It does not specifically convey the 'hopelessness' or 'impossibility' of the original message, nor does it fit the specific context of studying for a math exam."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "pruefung",
+  "source": "fake",
+  "lang": "de",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Hab ich bestanden! 2,3!",
+  "template_id": "success",
+  "template_name": "Success Kid",
+  "lines": [
+   "heute nacht alles auf einmal gelernt",
+   "bestanden mit 2,3"
+  ],
+  "image": "50d51255ab5a.png",
+  "latency": 7.0,
+  "candidates": [
+   [
+    "ds",
+    0.0363
+   ],
+   [
+    "xy",
+    0.0348
+   ],
+   [
+    "tenguy",
+    0.0339
+   ],
+   [
+    "oag",
+    0.033
+   ],
+   [
+    "fmr",
+    0.0322
+   ],
+   [
+    "blb",
+    0.0303
+   ],
+   [
+    "millers",
+    0.0301
+   ],
+   [
+    "ermg",
+    0.0299
+   ],
+   [
+    "keanu",
+    0.0293
+   ],
+   [
+    "pooh",
+    0.0292
+   ],
+   [
+    "success",
+    0.029
+   ],
+   [
+    "ackbar",
+    0.0283
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Heute Nacht alles auf einmal gelernt' (Learned everything at once last night) is a direct copy of Ben's previous message, not the original message 'Hab ich bestanden! 2,3!' (I passed! 2.3!).",
+    "The meme text 'Bestanden mit 2,3' is redundant and unnatural in this context, as the top text already establishes the premise of studying, making the bottom text feel like a caption rather than a punchline.",
+    "The 'Success Kid' template is a generic 'I did it' meme, but the text on the image is a full sentence that doesn't fit the typical 'short phrase' structure of the template, making it look like a poorly formatted text message rather than a joke.",
+    "The meme fails to convey the specific emotion of relief or surprise associated with passing a test one was unprepared for, instead just stating the facts of the previous conversation."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Warst du letzte Nacht bei Michael?",
+  "template_id": "oag",
+  "template_name": "Overly Attached Girlfriend",
+  "lines": [
+   "warst du letzte nacht bei micha?",
+   "ich habe eure ganze konversation gelesen"
+  ],
+  "image": "e1411493f6f2.png",
+  "latency": 6.4,
+  "candidates": [
+   [
+    "fmr",
+    0.0384
+   ],
+   [
+    "woman-cat",
+    0.0352
+   ],
+   [
+    "badchoice",
+    0.0325
+   ],
+   [
+    "chosen",
+    0.0311
+   ],
+   [
+    "kramer",
+    0.0308
+   ],
+   [
+    "soup-nazi",
+    0.0305
+   ],
+   [
+    "oag",
+    0.0304
+   ],
+   [
+    "winter",
+    0.0299
+   ],
+   [
+    "millers",
+    0.0293
+   ],
+   [
+    "ggg",
+    0.0292
+   ],
+   [
+    "blb",
+    0.0288
+   ],
+   [
+    "yallgot",
+    0.0277
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in English, violating the language constraint.",
+    "The meme adds a specific detail ('bei Micha') that is not in the original message ('bei Michael'), which is a minor but concrete change in the name.",
+    "The template (a woman with a wide-eyed, manic smile) implies a sense of shock, creepiness, or glee, which does not fit the neutral, simple question of the original message.",
+    "The joke structure of the template (a setup question followed by a shocking revelation) is not used; the bottom text is just a statement of action, not a punchline that subverts the top text."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Ja, er hatte gerade ein neues Motorrad gekauft.",
+  "template_id": "boat",
+  "template_name": "I Should Buy a Boat Cat",
+  "lines": [
+   "ich sollte mir ein motorrad kaufen",
+   ""
+  ],
+  "image": "5af7ed656b44.png",
+  "latency": 5.9,
+  "candidates": [
+   [
+    "millers",
+    0.0403
+   ],
+   [
+    "fmr",
+    0.0402
+   ],
+   [
+    "jw",
+    0.0348
+   ],
+   [
+    "badchoice",
+    0.0333
+   ],
+   [
+    "keanu",
+    0.0324
+   ],
+   [
+    "boat",
+    0.0323
+   ],
+   [
+    "money",
+    0.0321
+   ],
+   [
+    "soup-nazi",
+    0.0307
+   ],
+   [
+    "ants",
+    0.0301
+   ],
+   [
+    "pigeon",
+    0.0289
+   ],
+   [
+    "sk",
+    0.0277
+   ],
+   [
+    "yallgot",
+    0.0274
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Ich sollte mir ein Motorrad kaufen' (I should buy myself a motorcycle) completely contradicts the original message 'Ja, er hatte gerade ein neues Motorrad gekauft' (Yes, he had just bought a new motorcycle).",
+    "The meme text is in the first person ('I'), whereas the original message is in the third person ('he').",
+    "The meme text expresses a future intention or a wish, while the original message states a completed past action.",
+    "The template (a cat in a suit looking bored) does not match the emotion of a simple confirmation or statement of fact."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Hat er dich fahren lassen?",
+  "template_id": "soup-nazi",
+  "template_name": "No Soup for You",
+  "lines": [
+   "nein, kein Fahren",
+   "für dich!"
+  ],
+  "image": "0447e31246e4.png",
+  "latency": 5.8,
+  "candidates": [
+   [
+    "millers",
+    0.0406
+   ],
+   [
+    "fmr",
+    0.0402
+   ],
+   [
+    "jw",
+    0.0351
+   ],
+   [
+    "woman-cat",
+    0.0337
+   ],
+   [
+    "keanu",
+    0.0311
+   ],
+   [
+    "chair",
+    0.0299
+   ],
+   [
+    "apcr",
+    0.0298
+   ],
+   [
+    "tenguy",
+    0.0297
+   ],
+   [
+    "bus",
+    0.0283
+   ],
+   [
+    "soup-nazi",
+    0.0281
+   ],
+   [
+    "badchoice",
+    0.028
+   ],
+   [
+    "ants",
+    0.0271
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'NEIN, KEIN FAHREN FÜR DICH!' (No, no driving for you!) is a direct contradiction to the original message 'Hat er dich fahren lassen?' (Did he let you drive?).",
+    "The original message is a question seeking information, while the meme is a declarative statement of prohibition.",
+    "The meme implies the speaker (Ben) is forbidding someone else from driving, which does not fit the context of Ben answering Anna's question about his own experience.",
+    "The template (Gordon Ramsay scolding a chef) is aggressive and confrontational, which is a tonal mismatch for a casual question about a motorcycle ride."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Ja, ich habe es ausprobiert und es hat mir sehr gut gefallen.",
+  "template_id": "firsttry",
+  "template_name": "First Try!",
+  "lines": [
+   "das Motorrad ausprobiert",
+   "erster Versuch!"
+  ],
+  "image": "2f45de819249.png",
+  "latency": 6.1,
+  "candidates": [
+   [
+    "fmr",
+    0.0387
+   ],
+   [
+    "firsttry",
+    0.036
+   ],
+   [
+    "jw",
+    0.0357
+   ],
+   [
+    "millers",
+    0.0335
+   ],
+   [
+    "woman-cat",
+    0.0325
+   ],
+   [
+    "keanu",
+    0.0294
+   ],
+   [
+    "kombucha",
+    0.0284
+   ],
+   [
+    "badchoice",
+    0.0283
+   ],
+   [
+    "interesting",
+    0.0279
+   ],
+   [
+    "ggg",
+    0.0277
+   ],
+   [
+    "officespace",
+    0.0277
+   ],
+   [
+    "oprah",
+    0.0274
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'DAS MOTORRAD AUSPROBIERT' is a fragment and lacks a verb or subject, making it grammatically incomplete and awkward compared to the full sentence in the original message.",
+    "The phrase 'ERSTER VERSUCH!' (First attempt!) is completely out of context. The original message says the user tried it and liked it, implying a successful or at least completed action, not necessarily a 'first attempt' that implies failure or a need for a second try.",
+    "The template (Batman looking angry/disappointed at a smiling person) contradicts the positive sentiment of the original message ('es hat mir sehr gut gefallen' - I really liked it). Batman's expression suggests a negative outcome or a failed test, which is the opposite of the intended meaning.",
+    "The joke structure of the template (usually a setup of a problem and a punchline of a failure) is not used correctly here. The text doesn't form a coherent joke that matches the conversation."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Hatten Sie keine Angst?",
+  "template_id": "jw",
+  "template_name": "Probably Not a Good Idea",
+  "lines": [
+   "auf seinem neuen Motorrad?",
+   "wahrscheinlich keine gute Idee"
+  ],
+  "image": "cfb5933864a2.png",
+  "latency": 9.5,
+  "candidates": [
+   [
+    "millers",
+    0.0403
+   ],
+   [
+    "fmr",
+    0.0387
+   ],
+   [
+    "jw",
+    0.035
+   ],
+   [
+    "keanu",
+    0.0344
+   ],
+   [
+    "woman-cat",
+    0.0334
+   ],
+   [
+    "panik-kalm-panik",
+    0.0326
+   ],
+   [
+    "friends",
+    0.0296
+   ],
+   [
+    "oag",
+    0.0286
+   ],
+   [
+    "both",
+    0.0281
+   ],
+   [
+    "rollsafe",
+    0.0273
+   ],
+   [
+    "afraid",
+    0.0271
+   ],
+   [
+    "chair",
+    0.0271
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text asks a question about a motorcycle ('Auf seinem neuen Motorrad?') which is a detail from the previous message, not the current message.",
+    "The original message is a question ('Hatten Sie keine Angst?' - Weren't you afraid?), but the meme presents a statement ('Wahrscheinlich keine gute Idee' - Probably not a good idea).",
+    "The meme implies the action was a bad idea, whereas the original conversation states the user 'enjoyed it very much' ('hat mir sehr gut gefallen').",
+    "The meme text is a non-sequitur that does not answer the specific question asked by Anna.",
+    "The template (a man looking skeptical/worried) is a generic reaction image that doesn't specifically convey the sentiment of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_314_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Sicher. Aber ich mochte es trotzdem.",
+  "template_id": "fmr",
+  "template_name": "Fuck Me, Right?",
+  "lines": [
+   "sicher.",
+   "ass mich, oder?"
+  ],
+  "image": "6062562e98b8.png",
+  "latency": 6.0,
+  "candidates": [
+   [
+    "boat",
+    0.036
+   ],
+   [
+    "fmr",
+    0.0343
+   ],
+   [
+    "badchoice",
+    0.0337
+   ],
+   [
+    "ds",
+    0.0319
+   ],
+   [
+    "both",
+    0.0311
+   ],
+   [
+    "millers",
+    0.0308
+   ],
+   [
+    "woman-cat",
+    0.0301
+   ],
+   [
+    "apcr",
+    0.0298
+   ],
+   [
+    "officespace",
+    0.0294
+   ],
+   [
+    "disastergirl",
+    0.0291
+   ],
+   [
+    "ggg",
+    0.029
+   ],
+   [
+    "db",
+    0.0283
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SICHER. ASS MICH, ODER?' (Sure. KISS ME, OR?) completely contradicts the original message 'Sicher. Aber ich mochte es trotzdem.' (Sure. But I liked it anyway.).",
+    "The original message is a statement of preference/affection regarding a motorcycle ride, while the meme text is a bizarre, sexually charged question about kissing.",
+    "The template (a man screaming aggressively) does not match the casual, positive sentiment of the original message.",
+    "The meme text is in German, but the phrasing is nonsensical in this context and does not convey the intended meaning of the original text."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_65_1",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 0,
+  "author": "Anna",
+  "text": "John geht sieben Mal die Woche mit ihr aus.",
+  "template_id": "gears",
+  "template_name": "You Know What Really Grinds My Gears?",
+  "lines": [
+   "weißt du was mich wirklich nervt?",
+   "Johann geht siebenmal die Woche mit ihr aus."
+  ],
+  "image": "b81449a106c5.png",
+  "latency": 7.1,
+  "candidates": [
+   [
+    "sad-boehner",
+    0.0352
+   ],
+   [
+    "sadfrog",
+    0.0344
+   ],
+   [
+    "gears",
+    0.0333
+   ],
+   [
+    "badchoice",
+    0.0318
+   ],
+   [
+    "jw",
+    0.0314
+   ],
+   [
+    "mini-keanu",
+    0.0306
+   ],
+   [
+    "happening",
+    0.0305
+   ],
+   [
+    "fa",
+    0.0302
+   ],
+   [
+    "cake",
+    0.0301
+   ],
+   [
+    "fmr",
+    0.0294
+   ],
+   [
+    "ackbar",
+    0.0293
+   ],
+   [
+    "blb",
+    0.0287
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in English, violating the language constraint.",
+    "The meme text is a direct translation of the original message, but the template (Peter Griffin with 'Grinds my gears') implies a strong negative emotion or complaint, which is not present in the neutral statement of the original message.",
+    "The joke structure of the template is not used; the meme is just a literal translation of the message, not a humorous adaptation of it."
+   ],
+   "meaning": 5,
+   "fit": 1,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_65_1",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Wirklich? Das ist ein Strohhalm im Wind.",
+  "template_id": "puffin",
+  "template_name": "Unpopular opinion puffin",
+  "lines": [
+   "Meine unpopuläre Meinung",
+   "7 Dates die Woche ist ein Strohhalm im Wind"
+  ],
+  "image": "8b38d9e4689c.png",
+  "latency": 9.7,
+  "candidates": [
+   [
+    "winter",
+    0.037
+   ],
+   [
+    "millers",
+    0.0351
+   ],
+   [
+    "drunk",
+    0.0325
+   ],
+   [
+    "keanu",
+    0.0321
+   ],
+   [
+    "whatyear",
+    0.032
+   ],
+   [
+    "puffin",
+    0.0305
+   ],
+   [
+    "box",
+    0.0305
+   ],
+   [
+    "woman-cat",
+    0.0301
+   ],
+   [
+    "jd",
+    0.0299
+   ],
+   [
+    "seagull",
+    0.0293
+   ],
+   [
+    "happening",
+    0.0289
+   ],
+   [
+    "noah",
+    0.0283
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text adds the specific detail '7 Dates die Woche' which, while contextually accurate, makes the sentence clunky and overly specific for a casual chat response.",
+    "The template (a penguin walking away) is a generic 'unpopular opinion' or 'I'm leaving' meme. It does not visually represent the idiom 'Strohhalm im Wind' (straw in the wind), which is the core of the original message.",
+    "The original message is a short, dismissive reaction ('Really? That's a straw in the wind'). The meme turns it into a full declarative statement, losing the conversational flow and the rhetorical question 'Wirklich?'",
+    "The tone of the meme is overly dramatic and formal ('Meine unpopuläre Meinung') for a simple, sarcastic reply to a friend's gossip."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_65_1",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Ich denke schon. Vielleicht ist er ihr verfallen.",
+  "template_id": "sad-boehner",
+  "template_name": "Sad John Boehner",
+  "lines": [
+   "sad john boehner",
+   "denkt, er ist ihr verfallen"
+  ],
+  "image": "f1cec80c3c6c.png",
+  "latency": 14.1,
+  "candidates": [
+   [
+    "touch",
+    0.0375
+   ],
+   [
+    "tenguy",
+    0.0361
+   ],
+   [
+    "millers",
+    0.0334
+   ],
+   [
+    "winter",
+    0.0328
+   ],
+   [
+    "drunk",
+    0.0314
+   ],
+   [
+    "sad-boehner",
+    0.0312
+   ],
+   [
+    "boat",
+    0.0304
+   ],
+   [
+    "officespace",
+    0.0296
+   ],
+   [
+    "woman-cat",
+    0.0295
+   ],
+   [
+    "apcr",
+    0.0285
+   ],
+   [
+    "fmr",
+    0.0285
+   ],
+   [
+    "red",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The top text 'SAD JOHN BOEHNER' is in English, while the original message and the bottom text are in German, creating a jarring language mismatch.",
+    "The bottom text 'DENKT, ER IST IHR VERFALLEN' is grammatically incorrect and awkward. It is missing the subject 'Er' (He) at the beginning, making it read like a broken sentence fragment rather than a complete thought.",
+    "The original message 'Ich denke schon' (I think so) is a direct response to a question. The meme text 'DENKT, ER IST IHR VERFALLEN' (Thinks, he is fallen for her) changes the subject from the speaker ('I') to a third person ('he/thinks'), which contradicts the original intent of the speaker expressing their own opinion.",
+    "The template (Sad John Boehner) implies a feeling of sadness or disappointment. The original message is a statement of belief/agreement ('I think so'), which is neutral or positive, not sad. The emotion of the template does not match the emotion of the message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_65_1",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Ja. Sie passen zueinander. Eine perfekte Übereinstimmung zwischen einem Mann und einem Mädchen.",
+  "template_id": "handshake",
+  "template_name": "Epic Handshake",
+  "lines": [
+   "ein Mann",
+   "ein Mädchen",
+   "perfekte Übereinstimmung"
+  ],
+  "image": "c318a1c73293.png",
+  "latency": 7.5,
+  "candidates": [
+   [
+    "millers",
+    0.0361
+   ],
+   [
+    "tenguy",
+    0.036
+   ],
+   [
+    "woman-cat",
+    0.0334
+   ],
+   [
+    "sadfrog",
+    0.0329
+   ],
+   [
+    "db",
+    0.0329
+   ],
+   [
+    "ants",
+    0.0317
+   ],
+   [
+    "ggg",
+    0.0311
+   ],
+   [
+    "handshake",
+    0.0307
+   ],
+   [
+    "jw",
+    0.0304
+   ],
+   [
+    "interesting",
+    0.0295
+   ],
+   [
+    "fmr",
+    0.0294
+   ],
+   [
+    "awesome-awkward",
+    0.0287
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The template (arm wrestling) implies a contest, struggle, or competition, which contradicts the original message's tone of harmony and agreement ('perfekte Übereinstimmung').",
+    "The meme text is extremely awkward and unnatural in German. 'Ein Mann' and 'Ein Mädchen' are not how people refer to a specific couple in a relationship context; it sounds like a generic description of a man and a girl.",
+    "The phrase 'Perfekte Übereinstimmung' is overly formal and stiff for a casual chat about a relationship, making the meme feel like a bad translation or a corporate slogan rather than a natural reaction."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Okay, wir brauchen hier einen Plan. Zunächst einmal, welches Bett möchten Sie?",
+  "template_id": "dragon",
+  "template_name": "What Color Do You Want Your Dragon",
+  "lines": [
+   "Okay, wir brauchen einen Plan: welches Bett möchten Sie?"
+  ],
+  "image": "830da41647f7.png",
+  "latency": 6.4,
+  "candidates": [
+   [
+    "red",
+    0.0353
+   ],
+   [
+    "dragon",
+    0.0352
+   ],
+   [
+    "ds",
+    0.0348
+   ],
+   [
+    "ackbar",
+    0.0335
+   ],
+   [
+    "boat",
+    0.0325
+   ],
+   [
+    "badchoice",
+    0.0305
+   ],
+   [
+    "patrick",
+    0.0303
+   ],
+   [
+    "fmr",
+    0.0302
+   ],
+   [
+    "chair",
+    0.0291
+   ],
+   [
+    "pigeon",
+    0.0287
+   ],
+   [
+    "rollsafe",
+    0.0285
+   ],
+   [
+    "icanhas",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the original message is in English, violating the language requirement.",
+    "The meme's joke structure (Santa and a child discussing a dragon) is completely unrelated to the original message about choosing a bed.",
+    "The meaning of the original message (a business or service interaction about beds) is entirely lost and replaced by a nonsensical holiday fantasy.",
+    "The template does not match the emotion or context of the original message at all."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Nun, alle wollen das unterste Bett. Warum werfen wir nicht eine Münze dafür?",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "Nun, ist das, was wir heute machen?",
+   "Wir werfen eine Münze?"
+  ],
+  "image": "66608b2b8b35.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "money",
+    0.0384
+   ],
+   [
+    "millers",
+    0.0374
+   ],
+   [
+    "ds",
+    0.034
+   ],
+   [
+    "patrick",
+    0.0322
+   ],
+   [
+    "both",
+    0.0314
+   ],
+   [
+    "ants",
+    0.0301
+   ],
+   [
+    "bilbo",
+    0.0292
+   ],
+   [
+    "fmr",
+    0.029
+   ],
+   [
+    "ackbar",
+    0.0284
+   ],
+   [
+    "say",
+    0.0282
+   ],
+   [
+    "badchoice",
+    0.0275
+   ],
+   [
+    "red",
+    0.027
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Nun, ist das, was wir heute machen?' (Now, is that what we are doing today?) is a rhetorical question that implies a plan has already been decided or is being questioned, which contradicts the original message's intent of proposing a solution (a coin toss) to a problem (everyone wanting the bottom bed).",
+    "The original message explains the context ('everyone wants the bottom bed') which is completely missing from the meme, making the proposal to toss a coin seem random or out of context.",
+    "The template (a man looking skeptical or asking for confirmation) does not match the emotion of the original message, which is a constructive suggestion to resolve a conflict, not a skeptical inquiry about a plan."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 2,
+  "author": "Anna",
+  "text": "In Ordnung. Hast du eine Münze?",
+  "template_id": "icanhas",
+  "template_name": "I Can Has Cheezburger?",
+  "lines": [
+   "ich kann has",
+   "eine Münze?"
+  ],
+  "image": "420ef45f267f.png",
+  "latency": 5.6,
+  "candidates": [
+   [
+    "millers",
+    0.0385
+   ],
+   [
+    "money",
+    0.0377
+   ],
+   [
+    "fmr",
+    0.0367
+   ],
+   [
+    "friends",
+    0.0348
+   ],
+   [
+    "jw",
+    0.0341
+   ],
+   [
+    "ds",
+    0.031
+   ],
+   [
+    "tenguy",
+    0.031
+   ],
+   [
+    "icanhas",
+    0.0304
+   ],
+   [
+    "chair",
+    0.03
+   ],
+   [
+    "boat",
+    0.0293
+   ],
+   [
+    "ants",
+    0.0288
+   ],
+   [
+    "doge",
+    0.0285
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'ICH KANN HAS' is grammatically incorrect and nonsensical German. It is a broken attempt at 'Ich kann hasen' (I can have) or a typo for 'Ich kann das' (I can do that), but it makes no sense in the context of the conversation.",
+    "The original message is a question ('Hast du eine Münze?' - Do you have a coin?), but the meme text is a statement ('Ich kann has' - I can [have?]). The meaning is completely lost and contradicts the intent of the original message.",
+    "The template (a cat looking confused/annoyed) does not match the emotion of the original message, which is a simple, neutral question.",
+    "The joke structure of the template (a setup and a punchline) is not used correctly. The top text is broken, and the bottom text is a question, which doesn't form a coherent joke or statement."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Ja. Hier ist ein Viertel. Ich drehe es um, du nennst es in der Luft.",
+  "template_id": "tenguy",
+  "template_name": "10 Guy",
+  "lines": [
+   "hier ist ein viertel",
+   "ich drehe es um, du nennst es in der luft"
+  ],
+  "image": "5e5cdfd1e65a.png",
+  "latency": 7.4,
+  "candidates": [
+   [
+    "millers",
+    0.0372
+   ],
+   [
+    "fmr",
+    0.0347
+   ],
+   [
+    "tenguy",
+    0.0338
+   ],
+   [
+    "ants",
+    0.0337
+   ],
+   [
+    "money",
+    0.0318
+   ],
+   [
+    "friends",
+    0.0308
+   ],
+   [
+    "both",
+    0.0301
+   ],
+   [
+    "astronaut",
+    0.03
+   ],
+   [
+    "chair",
+    0.0293
+   ],
+   [
+    "gears",
+    0.0291
+   ],
+   [
+    "pigeon",
+    0.029
+   ],
+   [
+    "dwight",
+    0.0289
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme template (a man with a smug, slightly deranged expression) does not match the casual, cooperative tone of the original message, which is a simple agreement to a coin toss.",
+    "The meme text is a direct, verbatim copy of the message, which is a common flaw in generated memes that fail to adapt the text to the humor of the template.",
+    "The combination of the intense, 'crazy' face with the mundane text about a coin toss creates a jarring and confusing effect, making the meme feel out of place in the conversation."
+   ],
+   "meaning": 5,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Köpfe.",
+  "template_id": "dwight",
+  "template_name": "Schrute Facts",
+  "lines": [
+   "Köpfe?",
+   "Falsch. Es ist Zahl."
+  ],
+  "image": "71ad39e8b65f.png",
+  "latency": 6.5,
+  "candidates": [
+   [
+    "millers",
+    0.0391
+   ],
+   [
+    "fmr",
+    0.0341
+   ],
+   [
+    "money",
+    0.0341
+   ],
+   [
+    "ants",
+    0.0333
+   ],
+   [
+    "chair",
+    0.0327
+   ],
+   [
+    "friends",
+    0.0315
+   ],
+   [
+    "both",
+    0.0304
+   ],
+   [
+    "dragon",
+    0.03
+   ],
+   [
+    "gears",
+    0.0294
+   ],
+   [
+    "dwight",
+    0.0281
+   ],
+   [
+    "ds",
+    0.028
+   ],
+   [
+    "balloon",
+    0.0277
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'KÖPFE?' (Heads?) is a direct contradiction to the original message 'Köpfe.' (Heads). The original message is a declarative statement (the result of the coin flip), whereas the meme text is a question asking for the result.",
+    "The bottom text 'FALSCH. ES IST ZAHL.' (Wrong. It is Tails.) is completely nonsensical in this context. It implies the speaker is correcting someone who guessed wrong, but the original message was the speaker *announcing* the result. It creates a confusing and contradictory narrative where the speaker says 'Heads' and then immediately says 'Wrong, it's Tails'.",
+    "The meme template (a confused/disappointed face) does not match the emotion of the original message, which is a simple, neutral statement of a fact.",
+    "The joke structure of the template (Question -> Correction) is not used correctly to convey the original message, which is a single statement."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_481_2",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Tut mir leid, es ist Zahl. Du verlierst.",
+  "template_id": "badchoice",
+  "template_name": "Milk Was a Bad Choice",
+  "lines": [
+   "Köpfe",
+   "war eine schlechte Wahl"
+  ],
+  "image": "7b51bc4a21f5.png",
+  "latency": 5.9,
+  "candidates": [
+   [
+    "money",
+    0.0383
+   ],
+   [
+    "millers",
+    0.0348
+   ],
+   [
+    "fmr",
+    0.0339
+   ],
+   [
+    "red",
+    0.0319
+   ],
+   [
+    "woman-cat",
+    0.0317
+   ],
+   [
+    "chair",
+    0.0301
+   ],
+   [
+    "sadfrog",
+    0.03
+   ],
+   [
+    "wishes",
+    0.028
+   ],
+   [
+    "ggg",
+    0.0276
+   ],
+   [
+    "ackbar",
+    0.0273
+   ],
+   [
+    "badchoice",
+    0.026
+   ],
+   [
+    "ants",
+    0.0258
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'KÖPFE WAR EINE SCHLECHTE WAHL' (Heads was a bad choice) directly contradicts the original message 'Du verlierst' (You lose). In the context of the conversation, Anna called 'Heads' and won the coin toss, so it was a *good* choice for her. The meme implies the choice was a mistake, which is the opposite of the intended meaning.",
+    "The meme template (a man looking disappointed at a carton of milk) is a 'disappointment' or 'failure' template. It does not match the emotion of the original message, which is a polite but firm declaration of victory ('I'm sorry, you lose').",
+    "The meme text is a statement of regret or failure, whereas the original message is a statement of the other person's defeat. The addressee and the sentiment are completely misaligned."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Hallo Tony, ich fühle mich so müde.",
+  "template_id": "sadfrog",
+  "template_name": "Feels Bad Man",
+  "lines": [
+   "Hallo Tony, ich fühle mich so müde",
+   "feels bad man"
+  ],
+  "image": "2656e9616895.png",
+  "latency": 6.7,
+  "candidates": [
+   [
+    "fry",
+    0.0405
+   ],
+   [
+    "sadfrog",
+    0.04
+   ],
+   [
+    "gears",
+    0.0334
+   ],
+   [
+    "sad-clinton",
+    0.0327
+   ],
+   [
+    "ds",
+    0.0317
+   ],
+   [
+    "yallgot",
+    0.0315
+   ],
+   [
+    "sad-bush",
+    0.0306
+   ],
+   [
+    "ggg",
+    0.0306
+   ],
+   [
+    "fa",
+    0.0297
+   ],
+   [
+    "gone",
+    0.0296
+   ],
+   [
+    "aag",
+    0.0292
+   ],
+   [
+    "sad-boehner",
+    0.0292
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the bottom text 'FEELS BAD MAN' is in English, creating a jarring language mismatch that breaks the immersion of the conversation.",
+    "The 'Feels Bad Man' template is a specific meme format that implies a sense of existential dread, sadness, or disappointment. While the user is tired, the template is often used for more dramatic or negative emotional states, making it a slightly exaggerated or 'cringe' choice for just being sleepy.",
+    "The top text is a direct translation of the message, but the bottom text is a standard meme caption that doesn't actually add to the meaning of the specific message 'I am so tired'. It's a generic addition that doesn't fit the specific context of addressing 'Tony'.",
+    "The template (Pepe) is often associated with a specific 'sad' or 'depressed' vibe, which might be too strong for a simple statement of fatigue."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 2,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Oh, tut mir leid, stimmt etwas nicht?",
+  "template_id": "sad-boehner",
+  "template_name": "Sad John Boehner",
+  "lines": [
+   "Wie sich fühlt, wenn dir jemand sagt",
+   "dass er müde ist, aber alles okay ist"
+  ],
+  "image": "bda3e9e0f51b.png",
+  "latency": 6.3,
+  "candidates": [
+   [
+    "millers",
+    0.0358
+   ],
+   [
+    "gears",
+    0.0355
+   ],
+   [
+    "sarcasticbear",
+    0.0336
+   ],
+   [
+    "red",
+    0.0333
+   ],
+   [
+    "fry",
+    0.0327
+   ],
+   [
+    "sad-boehner",
+    0.032
+   ],
+   [
+    "imsorry",
+    0.0311
+   ],
+   [
+    "fmr",
+    0.03
+   ],
+   [
+    "dragon",
+    0.0293
+   ],
+   [
+    "sad-clinton",
+    0.0292
+   ],
+   [
+    "friends",
+    0.0286
+   ],
+   [
+    "yallgot",
+    0.0286
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is a statement of a feeling ('How it feels when...'), whereas the original message is a question ('Is something wrong?'). The core intent of the message is lost.",
+    "The meme text is a complete sentence that does not fit the context of a reply to 'I feel so tired.' It reads like a caption for a picture, not a conversational response.",
+    "The template (a politician looking sad/disappointed) does not match the emotion of the original message, which is a polite inquiry or expression of concern, not a statement of disappointment.",
+    "The meme text is awkward and unnatural as a reply to someone saying they are tired. It is a non-sequitur."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Ja, Weihnachten steht vor der Tür und in letzter Zeit scheint alles schief gelaufen zu sein.",
+  "template_id": "winter",
+  "template_name": "Winter is coming",
+  "lines": [
+   "Brace yourselves, Weihnachten steht vor der Tür und",
+   "alles scheint schiefzulaufen"
+  ],
+  "image": "aa8bdd19c7e4.png",
+  "latency": 7.8,
+  "candidates": [
+   [
+    "winter",
+    0.0348
+   ],
+   [
+    "ski",
+    0.0348
+   ],
+   [
+    "dragon",
+    0.0343
+   ],
+   [
+    "fetch",
+    0.0329
+   ],
+   [
+    "red",
+    0.0326
+   ],
+   [
+    "millers",
+    0.0325
+   ],
+   [
+    "woman-cat",
+    0.032
+   ],
+   [
+    "elf",
+    0.0318
+   ],
+   [
+    "fmr",
+    0.0313
+   ],
+   [
+    "sad-clinton",
+    0.0306
+   ],
+   [
+    "jw",
+    0.0302
+   ],
+   [
+    "grumpycat",
+    0.03
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is in German, but the first line is in English ('BRACE YOURSELVES'), creating a jarring and unprofessional language mix that doesn't match the original message's language.",
+    "The phrase 'BRACE YOURSELVES' is an English idiom that doesn't fit the context of a German conversation about Christmas and feeling tired. It's a direct translation of a meme format, not a natural part of the message.",
+    "The meme text 'STEHT VOR DER TÜR UND ALLES SCHEINT SCHIEFZULAUFEN' is grammatically awkward and incomplete. It's a direct, unedited copy of the meme's text, which is not how a person would naturally write a message.",
+    "The template (Ned Stark looking grim) is a generic 'bad news' or 'things are going wrong' meme. While it matches the 'schief gelaufen' part, it's a very common and overused template that doesn't add any specific humor or nuance to the situation of being tired and having a bad week.",
+    "The meme's tone is overly dramatic and serious for a casual chat about feeling tired. It makes the message sound like a major crisis rather than a personal complaint."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 1,
+   "language": 0
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Hier, setz dich hin und erzähl mir davon.",
+  "template_id": "ds",
+  "template_name": "Daily Struggle",
+  "lines": [
+   "hier, setz dich hin",
+   "und erzähl mir davon",
+   ""
+  ],
+  "image": "76aa5b399417.png",
+  "latency": 7.6,
+  "candidates": [
+   [
+    "dragon",
+    0.0397
+   ],
+   [
+    "woman-cat",
+    0.0353
+   ],
+   [
+    "ski",
+    0.0335
+   ],
+   [
+    "elf",
+    0.0325
+   ],
+   [
+    "fetch",
+    0.0324
+   ],
+   [
+    "ds",
+    0.0295
+   ],
+   [
+    "gears",
+    0.0289
+   ],
+   [
+    "fmr",
+    0.0288
+   ],
+   [
+    "ggg",
+    0.0281
+   ],
+   [
+    "fa",
+    0.0277
+   ],
+   [
+    "disastergirl",
+    0.0268
+   ],
+   [
+    "yallgot",
+    0.0267
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is split into two separate buttons ('hier, setz dich hin' and 'und erzähl mir davon'), which is a clumsy way to present a single sentence.",
+    "The template (a sweating man wiping his forehead in front of a control panel) depicts extreme stress, panic, or a high-stakes situation. This does not match the original message, which is a calm, caring, and conversational request to sit down and talk.",
+    "The visual context of a 'control panel' or 'machine' is completely irrelevant to the social context of a conversation between friends.",
+    "The joke structure of the template (facing a difficult choice or a stressful task) is not utilized; the text is just pasted onto the buttons without a punchline or logical connection to the character's distress."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Nun, in letzter Zeit musste ich um 8:00 Uhr bei der Arbeit sein. Weißt du, ich arbeite in der Spielwarenabteilung im Einkaufszentrum.",
+  "template_id": "cake",
+  "template_name": "Office Space Milton",
+  "lines": [
+   "Muss um 8 in der Spielwarenabteilung",
+   "Weihnachten steht vor der Tür"
+  ],
+  "image": "02ccaf73637c.png",
+  "latency": 6.8,
+  "candidates": [
+   [
+    "sadfrog",
+    0.0322
+   ],
+   [
+    "gone",
+    0.0322
+   ],
+   [
+    "woman-cat",
+    0.0311
+   ],
+   [
+    "elf",
+    0.031
+   ],
+   [
+    "ants",
+    0.0307
+   ],
+   [
+    "blb",
+    0.0302
+   ],
+   [
+    "cake",
+    0.03
+   ],
+   [
+    "dragon",
+    0.0298
+   ],
+   [
+    "officespace",
+    0.0298
+   ],
+   [
+    "red",
+    0.0295
+   ],
+   [
+    "boat",
+    0.0291
+   ],
+   [
+    "millers",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is grammatically broken and nonsensical. It reads 'Muss um 8 in der Spielwarenabteilung' (Must at 8 in the toy department) and 'Weihnachten steht vor der Tür' (Christmas is at the door). It fails to form a coherent sentence or convey the specific action of 'having to be at work'.",
+    "The meme text is a disjointed mashup of the original message and the previous context (Anna's message about Christmas), rather than a faithful representation of the current message.",
+    "The template (a stern-looking man in an office) does not match the casual, conversational tone of the original message, which is a simple statement about a work schedule.",
+    "The meme text is in German, which matches the original message, but the phrasing is awkward and ungrammatical."
+   ],
+   "meaning": 2,
+   "fit": 2,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-de-test_247_3",
+  "source": "dialogsum",
+  "lang": "de",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Ah, ja, natürlich ist es viel geschäftiger als sonst. Alle kaufen Weihnachtsgeschenke ein.",
+  "template_id": "gears",
+  "template_name": "You Know What Really Grinds My Gears?",
+  "lines": [
+   "du weißt, was mich wirklich",
+   "nervt?"
+  ],
+  "image": "e01ec50e620d.png",
+  "latency": 6.8,
+  "candidates": [
+   [
+    "red",
+    0.0344
+   ],
+   [
+    "millers",
+    0.0329
+   ],
+   [
+    "sohappy",
+    0.0325
+   ],
+   [
+    "fetch",
+    0.0315
+   ],
+   [
+    "woman-cat",
+    0.0314
+   ],
+   [
+    "dragon",
+    0.0312
+   ],
+   [
+    "gone",
+    0.0308
+   ],
+   [
+    "gears",
+    0.0298
+   ],
+   [
+    "boat",
+    0.0297
+   ],
+   [
+    "money",
+    0.0292
+   ],
+   [
+    "bus",
+    0.0283
+   ],
+   [
+    "ants",
+    0.0282
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'DU WEISST, WAS MICH WIRKLICH NERVT?' (You know what really annoys me?) is a question, whereas the original message is a statement ('Ah, yes, of course it is much busier than usual...').",
+    "The original message is a casual, conversational observation about the busy holiday season. The meme template (Peter Griffin looking angry/frustrated) implies a strong negative emotion or a rant, which is a tonal mismatch for a simple statement of fact.",
+    "The meme text is a generic setup for a joke that is never delivered (the punchline is missing), making the message feel incomplete and awkward in a chat context.",
+    "The meme does not convey the specific details of the original message (buying Christmas presents, being busier than usual)."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Did you go to see Michael last night?",
+  "template_id": "oag",
+  "template_name": "Overly Attached Girlfriend",
+  "lines": [
+   "did you go see Michael?",
+   "why was he more important than me?"
+  ],
+  "image": "313c85dd369a.png",
+  "latency": 7.1,
+  "candidates": [
+   [
+    "fmr",
+    0.0371
+   ],
+   [
+    "tenguy",
+    0.0363
+   ],
+   [
+    "oag",
+    0.0351
+   ],
+   [
+    "woman-cat",
+    0.0346
+   ],
+   [
+    "ss",
+    0.032
+   ],
+   [
+    "jw",
+    0.031
+   ],
+   [
+    "badchoice",
+    0.0297
+   ],
+   [
+    "winter",
+    0.0289
+   ],
+   [
+    "ggg",
+    0.0273
+   ],
+   [
+    "keanu",
+    0.0267
+   ],
+   [
+    "handshake",
+    0.0265
+   ],
+   [
+    "millers",
+    0.0256
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text adds a completely new, aggressive, and accusatory question ('WHY WAS HE MORE IMPORTANT THAN ME?') that was not in the original message.",
+    "The original message is a simple, neutral inquiry about a past event. The meme transforms it into a dramatic, jealous, or confrontational outburst.",
+    "The 'Unhinged' template is a poor fit for a casual question, as it implies extreme emotional instability or anger, which contradicts the likely tone of the original text.",
+    "The meaning of the message has been fundamentally changed from a simple question to a multi-part emotional rant."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Yes, He had just bought a new motorcycle.",
+  "template_id": "boat",
+  "template_name": "I Should Buy a Boat Cat",
+  "lines": [
+   "I SHOULD BUY A MOTORCYCLE.",
+   ""
+  ],
+  "image": "607ba1820890.png",
+  "latency": 6.0,
+  "candidates": [
+   [
+    "millers",
+    0.0403
+   ],
+   [
+    "boat",
+    0.0385
+   ],
+   [
+    "jw",
+    0.0381
+   ],
+   [
+    "ants",
+    0.0352
+   ],
+   [
+    "rollsafe",
+    0.0332
+   ],
+   [
+    "keanu",
+    0.0328
+   ],
+   [
+    "fmr",
+    0.0322
+   ],
+   [
+    "tenguy",
+    0.0309
+   ],
+   [
+    "sk",
+    0.0305
+   ],
+   [
+    "interesting",
+    0.0284
+   ],
+   [
+    "money",
+    0.0271
+   ],
+   [
+    "ss",
+    0.0265
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'I SHOULD BUY A MOTORCYCLE' is a statement of desire or intention, whereas the original message 'Yes, He had just bought a new motorcycle' is a confirmation of a past action by a third party. The meaning is completely different.",
+    "The meme text uses the first person ('I'), but the original message is about a third person ('He').",
+    "The meme text is a future-oriented desire ('should buy'), while the original message is a past-tense fact ('had just bought').",
+    "The template (a cat in a suit looking pensive) is a generic 'thinking' or 'contemplating' meme, which does not match the simple, factual confirmation of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Did he let you ride it?",
+  "template_id": "jw",
+  "template_name": "Probably Not a Good Idea",
+  "lines": [
+   "did he let you ride it?",
+   "probably not a good idea"
+  ],
+  "image": "2a1bea7172f1.png",
+  "latency": 9.3,
+  "candidates": [
+   [
+    "millers",
+    0.041
+   ],
+   [
+    "jw",
+    0.0386
+   ],
+   [
+    "fmr",
+    0.0363
+   ],
+   [
+    "keanu",
+    0.035
+   ],
+   [
+    "chair",
+    0.0344
+   ],
+   [
+    "tenguy",
+    0.0343
+   ],
+   [
+    "firsttry",
+    0.0329
+   ],
+   [
+    "rollsafe",
+    0.0318
+   ],
+   [
+    "ants",
+    0.0306
+   ],
+   [
+    "sk",
+    0.0288
+   ],
+   [
+    "ch",
+    0.0286
+   ],
+   [
+    "interesting",
+    0.0283
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme adds a second line of text ('PROBABLY NOT A GOOD IDEA') that was not in the original message, changing the meaning from a simple question to a judgmental statement.",
+    "The template (a man looking suspiciously at a woman) implies a specific context of infidelity or a secret, which is not present in the original conversation about a motorcycle.",
+    "The added text makes the message sound accusatory and judgmental, whereas the original message was a neutral inquiry."
+   ],
+   "meaning": 2,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Yes, I tried it and I quite liked it.",
+  "template_id": "firsttry",
+  "template_name": "First Try!",
+  "lines": [
+   "he let me ride his motorcycle",
+   "first try!"
+  ],
+  "image": "7e898598ce55.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "firsttry",
+    0.0366
+   ],
+   [
+    "fmr",
+    0.0338
+   ],
+   [
+    "millers",
+    0.0337
+   ],
+   [
+    "rollsafe",
+    0.0305
+   ],
+   [
+    "tenguy",
+    0.0302
+   ],
+   [
+    "kombucha",
+    0.0296
+   ],
+   [
+    "gears",
+    0.0292
+   ],
+   [
+    "badchoice",
+    0.0288
+   ],
+   [
+    "keanu",
+    0.0288
+   ],
+   [
+    "agnes",
+    0.0283
+   ],
+   [
+    "noidea",
+    0.0276
+   ],
+   [
+    "interesting",
+    0.0264
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'HE LET ME RIDE HIS MOTORCYCLE' is a statement of fact, whereas the original message 'Yes, I tried it and I quite liked it' is a subjective opinion about the experience. The meme fails to convey the 'liked it' part of the message.",
+    "The phrase 'FIRST TRY!' is completely out of context. The original message does not mention the difficulty of the task or that it was a first attempt, adding a detail that wasn't there.",
+    "The template (Batman and a happy Lego figure) implies a specific dynamic (a grumpy authority figure and a happy subordinate) that doesn't fit the casual conversation between friends about a motorcycle ride.",
+    "The meme is a non-sequitur; it answers the question 'Did he let you ride it?' but ignores the second half of the user's intent ('I quite liked it')."
+   ],
+   "meaning": 2,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Weren't you frightened?",
+  "template_id": "sk",
+  "template_name": "Skeptical Third World Kid",
+  "lines": [
+   "so you let him ride a motorcycle",
+   "weren't you frightened?"
+  ],
+  "image": "71fb870fbf5c.png",
+  "latency": 5.1,
+  "candidates": [
+   [
+    "keanu",
+    0.0372
+   ],
+   [
+    "millers",
+    0.0358
+   ],
+   [
+    "oag",
+    0.034
+   ],
+   [
+    "fmr",
+    0.0326
+   ],
+   [
+    "sk",
+    0.0324
+   ],
+   [
+    "woman-cat",
+    0.0318
+   ],
+   [
+    "friends",
+    0.0308
+   ],
+   [
+    "both",
+    0.0299
+   ],
+   [
+    "chair",
+    0.0298
+   ],
+   [
+    "philosoraptor",
+    0.028
+   ],
+   [
+    "disastergirl",
+    0.0269
+   ],
+   [
+    "ants",
+    0.0265
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SO YOU LET HIM RIDE A MOTORCYCLE' contradicts the conversation context. In the conversation, Ben is the one who rode the motorcycle, not Michael letting someone else ride it. The meme implies the woman let the child ride it, which is a complete misinterpretation of the dialogue.",
+    "The addressee is wrong. The original message is from Anna to Ben, asking if Ben was frightened. The meme depicts a woman talking to a child, implying the question is directed at the child, not Ben.",
+    "The template's emotion (accusation/shock) does not match the original message's tone (concerned inquiry). The meme is aggressive and accusatory, while the original message is a simple question about safety.",
+    "The visual context (a child in a developing country) is completely unrelated to the conversation about a new motorcycle and a friend's visit, making the meme nonsensical in this context."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_314_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Sure. But I still liked it.",
+  "template_id": "both",
+  "template_name": "Why Not Both?",
+  "lines": [
+   "sure, I was frightened",
+   "why not both?"
+  ],
+  "image": "5948a1f80df5.png",
+  "latency": 5.8,
+  "candidates": [
+   [
+    "boat",
+    0.0352
+   ],
+   [
+    "both",
+    0.0325
+   ],
+   [
+    "fmr",
+    0.0324
+   ],
+   [
+    "millers",
+    0.0304
+   ],
+   [
+    "keanu",
+    0.0304
+   ],
+   [
+    "ds",
+    0.0303
+   ],
+   [
+    "badchoice",
+    0.0302
+   ],
+   [
+    "gears",
+    0.0294
+   ],
+   [
+    "friends",
+    0.0293
+   ],
+   [
+    "bilbo",
+    0.0279
+   ],
+   [
+    "balloon",
+    0.0277
+   ],
+   [
+    "afraid",
+    0.0276
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SURE, I WAS FRIGHTENED' is a direct contradiction of the original message 'Sure. But I still liked it.'",
+    "The original message is a concession (admitting fear but emphasizing enjoyment), whereas the meme text is a simple confirmation of fear, completely losing the 'but I still liked it' part of the sentiment.",
+    "The second line of the meme, 'WHY NOT BOTH?', is a non-sequitur that does not appear in the original message and changes the tone to a rhetorical question rather than a statement of preference.",
+    "The template (the 'unhinged child' or 'suspicious kid' meme) implies a tone of suspicion or unhinged logic, which does not match the casual, conversational tone of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_65_1",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 0,
+  "author": "Anna",
+  "text": "John dates her seven times a week.",
+  "template_id": "oag",
+  "template_name": "Overly Attached Girlfriend",
+  "lines": [
+   "he dates her",
+   "seven times a week?"
+  ],
+  "image": "4305e4b9cace.png",
+  "latency": 5.9,
+  "candidates": [
+   [
+    "interesting",
+    0.0348
+   ],
+   [
+    "oag",
+    0.0338
+   ],
+   [
+    "tenguy",
+    0.0332
+   ],
+   [
+    "ds",
+    0.0332
+   ],
+   [
+    "ants",
+    0.0326
+   ],
+   [
+    "fry",
+    0.0321
+   ],
+   [
+    "sadfrog",
+    0.0312
+   ],
+   [
+    "aag",
+    0.0308
+   ],
+   [
+    "ams",
+    0.0305
+   ],
+   [
+    "spongebob",
+    0.0295
+   ],
+   [
+    "db",
+    0.0295
+   ],
+   [
+    "grumpycat",
+    0.0294
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text is phrased as a question ('Seven times a week?') which implies the sender is asking for confirmation or expressing disbelief, whereas the original message is a declarative statement of fact.",
+    "The template (the 'Unhinged' girl) conveys a tone of shock or mania that is not present in the neutral original message.",
+    "The meme text is split into two parts ('He dates her' / 'Seven times a week?') which is a standard meme format, but the question mark at the end makes it a query rather than a statement."
+   ],
+   "meaning": 3,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_65_1",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Really? That's a straws in the wind.",
+  "template_id": "spongebob",
+  "template_name": "Mocking Spongebob",
+  "lines": [
+   "John dates her seven times a week",
+   "Really? That's a straws in the wind."
+  ],
+  "image": "9232899f6427.png",
+  "latency": 6.9,
+  "candidates": [
+   [
+    "millers",
+    0.0386
+   ],
+   [
+    "gears",
+    0.0369
+   ],
+   [
+    "red",
+    0.0345
+   ],
+   [
+    "fry",
+    0.0338
+   ],
+   [
+    "fmr",
+    0.0311
+   ],
+   [
+    "keanu",
+    0.0306
+   ],
+   [
+    "aag",
+    0.0302
+   ],
+   [
+    "woman-cat",
+    0.0299
+   ],
+   [
+    "winter",
+    0.0299
+   ],
+   [
+    "spongebob",
+    0.0288
+   ],
+   [
+    "interesting",
+    0.0279
+   ],
+   [
+    "whatyear",
+    0.0277
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text uses the 'Straw in the Wind' meme format, which is typically used to express skepticism or disbelief about a specific claim, but the original message is a statement of fact or a rhetorical question about a specific situation (John dating her 7 times a week). The meme's text 'ReAllly? ThAt's A sTrAWS in The WiNd.' is a direct transcription of the meme's standard text, not the original message.",
+    "The original message 'Really? That's a straws in the wind.' is grammatically incorrect ('straws' should be 'straw') and semantically nonsensical in this context. The meme text repeats this error, but the core issue is that the meme's meaning (skepticism) does not align with the original message's intent (a statement of fact or a rhetorical question).",
+    "The template (Spongebob looking shocked) is a generic 'shock' or 'disbelief' template. While it matches the 'Really?' part, it fails to capture the specific, somewhat absurd nature of the original message's content (dating 7 times a week). The meme's text is a cliché that doesn't add to the joke; it just replaces the original message with a different, unrelated meme phrase."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_65_1",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 2,
+  "author": "Anna",
+  "text": "I think so. Maybe he's fallen for her.",
+  "template_id": "db",
+  "template_name": "Distracted Boyfriend",
+  "lines": [
+   "Dating her",
+   "Falling for her",
+   "His girlfriend"
+  ],
+  "image": "d1479ef6f84c.png",
+  "latency": 7.5,
+  "candidates": [
+   [
+    "tenguy",
+    0.0368
+   ],
+   [
+    "millers",
+    0.0362
+   ],
+   [
+    "red",
+    0.034
+   ],
+   [
+    "db",
+    0.0324
+   ],
+   [
+    "fmr",
+    0.0321
+   ],
+   [
+    "touch",
+    0.0317
+   ],
+   [
+    "fry",
+    0.031
+   ],
+   [
+    "officespace",
+    0.0297
+   ],
+   [
+    "sad-boehner",
+    0.0296
+   ],
+   [
+    "boat",
+    0.0289
+   ],
+   [
+    "badchoice",
+    0.0282
+   ],
+   [
+    "inigo",
+    0.0278
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Falling for her' is a present continuous action, whereas the original message 'Maybe he's fallen for her' uses the present perfect to indicate a completed state or a sudden realization. The meme implies an ongoing process rather than the specific realization of falling in love.",
+    "The meme depicts a man looking at a woman who is *not* his girlfriend (labeled 'Dating her'), while his girlfriend looks on. This implies the man is currently in the act of cheating or flirting, which is a stronger and more specific accusation than the original message's tentative 'I think so' and 'Maybe'.",
+    "The original message is a tentative observation ('I think so', 'Maybe'). The meme presents the situation as a definitive, visual fact, removing the uncertainty and speculation present in the text.",
+    "The meme implies the man is actively 'dating' the other woman (as per the label), which contradicts the context of the previous message where 'John dates her' (the girlfriend) seven times a week. The meme suggests a new relationship or affair, which is a significant addition not in the original text."
+   ],
+   "meaning": 2,
+   "fit": 3,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_65_1",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Yeah. They suit each other. A perfect match between a man and a girl.",
+  "template_id": "handshake",
+  "template_name": "Epic Handshake",
+  "lines": [
+   "A man",
+   "A girl",
+   "A perfect match"
+  ],
+  "image": "c84c76a89cdc.png",
+  "latency": 6.9,
+  "candidates": [
+   [
+    "tenguy",
+    0.0361
+   ],
+   [
+    "ds",
+    0.0344
+   ],
+   [
+    "dragon",
+    0.0336
+   ],
+   [
+    "fmr",
+    0.0332
+   ],
+   [
+    "aag",
+    0.0331
+   ],
+   [
+    "handshake",
+    0.0318
+   ],
+   [
+    "millers",
+    0.0313
+   ],
+   [
+    "ants",
+    0.0297
+   ],
+   [
+    "friends",
+    0.0293
+   ],
+   [
+    "interesting",
+    0.0291
+   ],
+   [
+    "agnes",
+    0.0284
+   ],
+   [
+    "oprah",
+    0.0282
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'A MAN' and 'A GIRL' is awkward and unnatural; the original message uses 'a man and a girl' but the meme splits it into two separate labels, which feels redundant and clunky.",
+    "The template (arm wrestling) implies competition or conflict, which contradicts the original message’s tone of romantic compatibility ('perfect match', 'suit each other'). Arm wrestling is not a metaphor for romantic harmony.",
+    "The joke structure of the template is not used — the image doesn’t set up a punchline or contrast that makes 'a perfect match' funny; it just states it plainly over a competitive scene.",
+    "The emotional tone of the original message is warm and affirming, but the meme’s visual (tense, muscular arms, dark background) feels aggressive or confrontational, creating a tonal mismatch."
+   ],
+   "meaning": 3,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Alright, we need to have a plan here. First of all, which bed do you want?",
+  "template_id": "ds",
+  "template_name": "Daily Struggle",
+  "lines": [
+   "pick the left bed",
+   "pick the right bed",
+   ""
+  ],
+  "image": "b6272ae84970.png",
+  "latency": 7.2,
+  "candidates": [
+   [
+    "dragon",
+    0.0365
+   ],
+   [
+    "ds",
+    0.0364
+   ],
+   [
+    "patrick",
+    0.0349
+   ],
+   [
+    "boat",
+    0.0347
+   ],
+   [
+    "red",
+    0.0336
+   ],
+   [
+    "fmr",
+    0.0326
+   ],
+   [
+    "handshake",
+    0.0313
+   ],
+   [
+    "chair",
+    0.0313
+   ],
+   [
+    "both",
+    0.0302
+   ],
+   [
+    "tenguy",
+    0.03
+   ],
+   [
+    "pigeon",
+    0.0279
+   ],
+   [
+    "dsm",
+    0.0271
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme depicts a character in a state of extreme panic and distress (sweating, wiping forehead), which contradicts the casual, planning-oriented tone of the original message ('Alright, we need to have a plan here').",
+    "The meme text ('pick the left bed' / 'pick the right bed') implies a high-stakes or forced choice, whereas the original message is a simple, open-ended question ('which bed do you want?').",
+    "The template (a 'distracted boyfriend' or 'choice' meme variant) is typically used for humor regarding indecision or bad options, not for initiating a logistical plan.",
+    "The visual context of a control panel with buttons suggests a mechanical or game-like scenario, which is a weird fit for a casual conversation about sleeping arrangements."
+   ],
+   "meaning": 2,
+   "fit": 1,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Well, everybody wants the bottom bunk. Why don't we flip a coin for it?",
+  "template_id": "say",
+  "template_name": "Say the Line, Bart!",
+  "lines": [
+   "Say the line, Anna!",
+   "I want the bottom bunk, obviously."
+  ],
+  "image": "017f0e3b2ad0.png",
+  "latency": 6.7,
+  "candidates": [
+   [
+    "say",
+    0.0369
+   ],
+   [
+    "both",
+    0.0367
+   ],
+   [
+    "patrick",
+    0.0364
+   ],
+   [
+    "millers",
+    0.0348
+   ],
+   [
+    "money",
+    0.0348
+   ],
+   [
+    "dragon",
+    0.0345
+   ],
+   [
+    "chair",
+    0.032
+   ],
+   [
+    "tenguy",
+    0.0298
+   ],
+   [
+    "boat",
+    0.0284
+   ],
+   [
+    "oag",
+    0.0284
+   ],
+   [
+    "ch",
+    0.0281
+   ],
+   [
+    "mordor",
+    0.0278
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'I want the bottom bunk, obviously' contradicts the original message, which proposes a coin flip because *everybody* wants it. The meme implies a singular, unambiguous desire, which undermines the premise of the original message.",
+    "The original message is a suggestion for a fair resolution (coin flip), but the meme is a statement of preference. It does not convey the action or proposal of the original message at all.",
+    "The template (a classroom scene where everyone is excitedly shouting) is a poor fit for a casual conversation about choosing a bed. It over-dramatizes a simple preference into a chaotic, public declaration.",
+    "The meme text is a direct contradiction of the original message's intent. The original says 'everybody wants it,' while the meme says 'I want it, obviously,' which implies the speaker is the only one who cares or is the only one who wants it."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Alright. Do you have a coin?",
+  "template_id": "dragon",
+  "template_name": "What Color Do You Want Your Dragon",
+  "lines": [
+   "do you have a coin?"
+  ],
+  "image": "de6b5cb75cd9.png",
+  "latency": 5.8,
+  "candidates": [
+   [
+    "millers",
+    0.0387
+   ],
+   [
+    "tenguy",
+    0.035
+   ],
+   [
+    "dragon",
+    0.0333
+   ],
+   [
+    "ants",
+    0.0332
+   ],
+   [
+    "chair",
+    0.0328
+   ],
+   [
+    "both",
+    0.0327
+   ],
+   [
+    "money",
+    0.0317
+   ],
+   [
+    "jw",
+    0.0317
+   ],
+   [
+    "boat",
+    0.0311
+   ],
+   [
+    "doge",
+    0.0299
+   ],
+   [
+    "patrick",
+    0.0298
+   ],
+   [
+    "fmr",
+    0.0295
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme depicts a conversation about a Christmas wish (a dragon), which is completely unrelated to the original message about flipping a coin for a bed.",
+    "The context of the meme (Santa Claus and a child) does not match the conversation between two people (Anna and Ben) deciding on a bed.",
+    "The punchline of the meme (the color of the dragon) is irrelevant to the original intent of the message (a coin toss)."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Yes. Here's a quarter. I flip it, you call it in the air.",
+  "template_id": "red",
+  "template_name": "Oh, Is That What We're Going to Do Today?",
+  "lines": [
+   "oh, is that what we're going to do today?",
+   "a coin flip?"
+  ],
+  "image": "00f48506d6c5.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "millers",
+    0.0379
+   ],
+   [
+    "chair",
+    0.0358
+   ],
+   [
+    "money",
+    0.0333
+   ],
+   [
+    "tenguy",
+    0.0319
+   ],
+   [
+    "red",
+    0.031
+   ],
+   [
+    "both",
+    0.0309
+   ],
+   [
+    "ants",
+    0.0304
+   ],
+   [
+    "fmr",
+    0.0299
+   ],
+   [
+    "jw",
+    0.0297
+   ],
+   [
+    "keanu",
+    0.0295
+   ],
+   [
+    "spongebob",
+    0.0293
+   ],
+   [
+    "boat",
+    0.0287
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'OH, IS THAT WHAT WE'RE GOING TO DO TODAY?' implies a sarcastic or shocked reaction to a plan, whereas the original message is a direct, affirmative confirmation ('Yes') and an instruction to proceed.",
+    "The original message contains specific instructions ('I flip it, you call it in the air') which are completely missing from the meme.",
+    "The meme text 'A COIN FLIP?' is a question, whereas the original message is a statement of action. The character in the image is asking for confirmation, not stating the rules of the game.",
+    "The tone of the meme is skeptical or incredulous, which contradicts the cooperative and decisive tone of the original message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Heads.",
+  "template_id": "spongebob",
+  "template_name": "Mocking Spongebob",
+  "lines": [
+   "I flip it, you call it in the air",
+   "heads"
+  ],
+  "image": "dedbd18ee7e5.png",
+  "latency": 6.9,
+  "candidates": [
+   [
+    "millers",
+    0.0383
+   ],
+   [
+    "ds",
+    0.0373
+   ],
+   [
+    "chair",
+    0.0358
+   ],
+   [
+    "wkh",
+    0.0339
+   ],
+   [
+    "patrick",
+    0.0328
+   ],
+   [
+    "tenguy",
+    0.0315
+   ],
+   [
+    "keanu",
+    0.0308
+   ],
+   [
+    "money",
+    0.0301
+   ],
+   [
+    "oag",
+    0.03
+   ],
+   [
+    "both",
+    0.0299
+   ],
+   [
+    "spongebob",
+    0.0298
+   ],
+   [
+    "atis",
+    0.0291
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'I flip it, you call it in the air' is a direct quote from the previous message, not the current message 'Heads.'",
+    "The meme fails to convey the specific choice of 'Heads' as the primary action, instead focusing on the mechanics of the coin flip.",
+    "The template (Spongebob looking confused/panicked) does not match the emotion of a simple, decisive statement like 'Heads.'",
+    "The joke structure of the template (a reaction to a situation) is not utilized to make a point about the word 'Heads'."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_481_2",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Sorry, it's tails. You lose.",
+  "template_id": "tenguy",
+  "template_name": "10 Guy",
+  "lines": [
+   "you called heads",
+   "but it's tails, you lose"
+  ],
+  "image": "b91aa8c95f11.png",
+  "latency": 6.9,
+  "candidates": [
+   [
+    "say",
+    0.0363
+   ],
+   [
+    "millers",
+    0.0361
+   ],
+   [
+    "ds",
+    0.0352
+   ],
+   [
+    "chair",
+    0.0333
+   ],
+   [
+    "woman-cat",
+    0.0329
+   ],
+   [
+    "boat",
+    0.0325
+   ],
+   [
+    "tenguy",
+    0.0316
+   ],
+   [
+    "money",
+    0.0292
+   ],
+   [
+    "pooh",
+    0.0283
+   ],
+   [
+    "patrick",
+    0.0281
+   ],
+   [
+    "atis",
+    0.0278
+   ],
+   [
+    "wkh",
+    0.0277
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text adds the phrase 'You called heads', which is unnecessary context and not part of the original message.",
+    "The meme text uses the phrasing 'But it's tails', which is slightly more conversational than the direct 'it's tails' in the original message, though the meaning is preserved.",
+    "The 'Disappointed Guy' template is a generic expression of mild annoyance or defeat. While it fits the 'you lose' part, it doesn't capture the specific context of a coin flip or the social dynamic of the conversation (Ben is the one who flipped, Anna is the one who lost).",
+    "The meme is a bit 'flat' because the joke is just stating the obvious outcome of the coin flip, which was already implied by the conversation."
+   ],
+   "meaning": 4,
+   "fit": 3,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 0,
+  "author": "Anna",
+  "text": "Hi Tony, I feel so tired.",
+  "template_id": "sadfrog",
+  "template_name": "Feels Bad Man",
+  "lines": [
+   "I just want to sleep",
+   "feels bad man"
+  ],
+  "image": "f7d2b161b1a4.png",
+  "latency": 6.2,
+  "candidates": [
+   [
+    "sadfrog",
+    0.0381
+   ],
+   [
+    "fry",
+    0.0378
+   ],
+   [
+    "fwp",
+    0.0369
+   ],
+   [
+    "ds",
+    0.0357
+   ],
+   [
+    "sad-boehner",
+    0.0338
+   ],
+   [
+    "sad-bush",
+    0.0336
+   ],
+   [
+    "fa",
+    0.0324
+   ],
+   [
+    "cryingfloor",
+    0.032
+   ],
+   [
+    "sad-obama",
+    0.0314
+   ],
+   [
+    "sad-clinton",
+    0.0313
+   ],
+   [
+    "dsm",
+    0.0312
+   ],
+   [
+    "facepalm",
+    0.0309
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'I JUST WANT TO SLEEP' is a direct paraphrase of the original message, but the addition of 'FEELS BAD MAN' changes the tone from a simple statement of tiredness to a dramatic expression of suffering or depression, which is an exaggeration not present in the original.",
+    "The original message is a greeting ('Hi Tony') followed by a statement. The meme completely omits the greeting and the specific addressee, failing to convey the social context of the message.",
+    "The 'Feels Bad Man' template is typically used for expressing sadness, disappointment, or frustration. While being tired can be unpleasant, it is not inherently a 'bad' feeling in the same way as losing a game or failing a test. The template overstates the emotion.",
+    "The meme is a generic reaction image and does not feel like a natural way to say 'I'm tired' in a casual conversation. It's a bit of a stretch."
+   ],
+   "meaning": 3,
+   "fit": 3,
+   "funny": 3,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 1,
+  "author": "Ben",
+  "text": "Oh, I'm sorry, is there something wrong?",
+  "template_id": "sad-boehner",
+  "template_name": "Sad John Boehner",
+  "lines": [
+   "sad john boehner",
+   "hears you are tired"
+  ],
+  "image": "f907ef526533.png",
+  "latency": 5.6,
+  "candidates": [
+   [
+    "fwp",
+    0.036
+   ],
+   [
+    "sarcasticbear",
+    0.0341
+   ],
+   [
+    "ch",
+    0.0318
+   ],
+   [
+    "sad-boehner",
+    0.0311
+   ],
+   [
+    "bad",
+    0.0309
+   ],
+   [
+    "sad-obama",
+    0.0294
+   ],
+   [
+    "yallgot",
+    0.0294
+   ],
+   [
+    "red",
+    0.0287
+   ],
+   [
+    "ams",
+    0.0286
+   ],
+   [
+    "gone",
+    0.0284
+   ],
+   [
+    "imsorry",
+    0.0283
+   ],
+   [
+    "ds",
+    0.0281
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SAD JOHN BOEHNER HEARS YOU ARE TIRED' is a statement of a reaction, not a question. It completely fails to convey the original message's intent of asking 'is there something wrong?'",
+    "The meme implies the sender is sad *because* the recipient is tired, which is a different meaning than the original message which is a polite inquiry about the recipient's well-being.",
+    "The template (Sad John Boehner) is a specific political meme. Using it to express a generic, polite concern about someone being tired is a massive tonal mismatch and likely to be confusing or cringe-worthy in a casual chat.",
+    "The meme text is awkward and unnatural. 'Hears you are tired' is not how a person would naturally phrase a concern in a text message."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 2,
+  "author": "Anna",
+  "text": "Yes, Christmas is coming, and it seems everything has been going wrong lately.",
+  "template_id": "winter",
+  "template_name": "Winter is coming",
+  "lines": [
+   "brace yourselves",
+   "christmas is coming"
+  ],
+  "image": "89ca3a56e29f.png",
+  "latency": 6.3,
+  "candidates": [
+   [
+    "boat",
+    0.035
+   ],
+   [
+    "ski",
+    0.0342
+   ],
+   [
+    "fetch",
+    0.0331
+   ],
+   [
+    "winter",
+    0.0331
+   ],
+   [
+    "red",
+    0.0311
+   ],
+   [
+    "facepalm",
+    0.031
+   ],
+   [
+    "dragon",
+    0.0308
+   ],
+   [
+    "yallgot",
+    0.0308
+   ],
+   [
+    "woman-cat",
+    0.0303
+   ],
+   [
+    "jw",
+    0.0293
+   ],
+   [
+    "whatyear",
+    0.029
+   ],
+   [
+    "elf",
+    0.0289
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'Brace yourselves' implies a warning about an impending disaster or a chaotic event, which contradicts the original message's tone of personal exhaustion and a general sense of things going wrong.",
+    "The original message is a personal statement about the sender's state ('I feel so tired', 'everything has been going wrong'), whereas the meme is a public, ominous announcement directed at a group ('yourselves').",
+    "The template (Ned Stark) is associated with a specific dramatic, almost apocalyptic warning, which is a massive tonal mismatch for a casual chat about being tired and having a bad week.",
+    "The meme adds a sense of dramatic, external threat that was not present in the original message, changing the meaning from 'I'm struggling' to 'Something bad is about to happen to everyone'."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 3,
+  "author": "Ben",
+  "text": "Here, sit down and tell me about it.",
+  "template_id": "fine",
+  "template_name": "This is Fine",
+  "lines": [
+   "sit down, tell me about it",
+   "this is fine"
+  ],
+  "image": "cafbdf2d578c.png",
+  "latency": 6.6,
+  "candidates": [
+   [
+    "yallgot",
+    0.0347
+   ],
+   [
+    "red",
+    0.0315
+   ],
+   [
+    "ski",
+    0.0314
+   ],
+   [
+    "gone",
+    0.0313
+   ],
+   [
+    "dragon",
+    0.0311
+   ],
+   [
+    "elf",
+    0.031
+   ],
+   [
+    "ants",
+    0.0294
+   ],
+   [
+    "hipster",
+    0.0293
+   ],
+   [
+    "jw",
+    0.0291
+   ],
+   [
+    "fine",
+    0.0291
+   ],
+   [
+    "boat",
+    0.0286
+   ],
+   [
+    "fetch",
+    0.0282
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'SIT DOWN, TELL ME ABOUT IT' is a direct command, whereas the original message 'Here, sit down and tell me about it' is a gentle invitation. The meme's tone is too aggressive and bossy for a conversation about someone feeling tired and stressed.",
+    "The 'This is fine' dog template is used to represent a character in denial about a catastrophic situation (the fire). Using this to represent a friend who is simply tired and having a bad time is a massive tonal mismatch. It implies the friend is in a state of delusional denial about a literal disaster, which is not what the original message conveys.",
+    "The joke structure of the template (a character calmly denying a disaster) is completely lost. The text on the meme is just a command, and the bottom text is a non-sequitur that doesn't relate to the conversation about Christmas stress.",
+    "The meme is confusing and cringe-worthy in this context. It makes the sender (Ben) look like a deranged person who is commanding a friend to sit down in a burning room and then calmly denying the fire."
+   ],
+   "meaning": 1,
+   "fit": 1,
+   "funny": 1,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 4,
+  "author": "Anna",
+  "text": "Well recently, I've had to be at work by 8:00 AM. You know, I work in the toy department at the shopping center.",
+  "template_id": "gears",
+  "template_name": "You Know What Really Grinds My Gears?",
+  "lines": [
+   "you know what really grinds my gears?",
+   "having to be at work by 8:00 AM"
+  ],
+  "image": "537382eba284.png",
+  "latency": 7.3,
+  "candidates": [
+   [
+    "gone",
+    0.0336
+   ],
+   [
+    "red",
+    0.0328
+   ],
+   [
+    "elf",
+    0.0328
+   ],
+   [
+    "buzz",
+    0.0315
+   ],
+   [
+    "ants",
+    0.0314
+   ],
+   [
+    "gears",
+    0.0306
+   ],
+   [
+    "chair",
+    0.0302
+   ],
+   [
+    "dsm",
+    0.0302
+   ],
+   [
+    "oag",
+    0.0297
+   ],
+   [
+    "grumpycat",
+    0.0292
+   ],
+   [
+    "ch",
+    0.0292
+   ],
+   [
+    "cake",
+    0.0292
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'HAVING TO BE AT WORK BY 8:00 AM' is a generic complaint about early starts, whereas the original message is a specific statement of fact about a new schedule in a specific department (toy department at a shopping center). The meme turns a neutral update into a complaint, changing the tone.",
+    "The original message provides context ('toy department', 'shopping center') which is completely lost in the meme. The meme implies a general hatred of 8 AM starts, which is a different sentiment than simply stating a new requirement.",
+    "The template (Peter Griffin explaining 'grinds my gears') implies a level of frustration or anger that is not present in the original message, which is a simple explanation of why she is tired (the new schedule).",
+    "The meme is a 'reaction' meme, but the original message is a 'statement' of information. It doesn't convey the information about the job location or department at all."
+   ],
+   "meaning": 2,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ },
+ {
+  "chat": "dialogsum-en-test_247_3",
+  "source": "dialogsum",
+  "lang": "en",
+  "turn": 5,
+  "author": "Ben",
+  "text": "Ah, yes, of course, it's much busier than usual. Everyone's shopping for Christmas presents.",
+  "template_id": "buzz",
+  "template_name": "X, X Everywhere",
+  "lines": [
+   "it's the toy department",
+   "toys everywhere"
+  ],
+  "image": "f186e3682dd5.png",
+  "latency": 6.5,
+  "candidates": [
+   [
+    "woman-cat",
+    0.033
+   ],
+   [
+    "red",
+    0.0326
+   ],
+   [
+    "sohappy",
+    0.0322
+   ],
+   [
+    "chair",
+    0.0314
+   ],
+   [
+    "buzz",
+    0.0313
+   ],
+   [
+    "ants",
+    0.0303
+   ],
+   [
+    "oag",
+    0.0303
+   ],
+   [
+    "dragon",
+    0.0297
+   ],
+   [
+    "disastergirl",
+    0.0295
+   ],
+   [
+    "gone",
+    0.0292
+   ],
+   [
+    "imsorry",
+    0.0291
+   ],
+   [
+    "boat",
+    0.0287
+   ]
+  ],
+  "checks": {
+   "box_count_ok": true,
+   "non_empty": true,
+   "png_ok": true,
+   "lang_ok": true
+  },
+  "judge": {
+   "problems": [
+    "The meme text 'IT'S THE TOY DEPARTMENT' is a declarative statement, whereas the original message is a conversational explanation ('Ah, yes, of course, it's much busier than usual'). The meme fails to convey the specific reason for the busyness (Christmas shopping) or the tone of resignation.",
+    "The template (Buzz Lightyear and Woody) is a 'Two Buttons' or 'Explanatory' meme format usually used to contrast two options or explain a situation with a visual punchline. Here, the text is just a statement of fact, making the visual of the characters pointing and looking confused/annoyed feel disconnected from the text.",
+    "The original message implies a cause-and-effect relationship (Christmas -> busy). The meme text 'TOYS EVERYWHERE' is a vague observation that doesn't clearly link back to the 'Christmas presents' mentioned in the prompt, losing the specific context of the holiday season.",
+    "The tone of the original message is tired and explanatory ('Ah, yes, of course'). The meme characters look more confused or exasperated, which doesn't perfectly match the resigned acceptance of the original text."
+   ],
+   "meaning": 2,
+   "fit": 2,
+   "funny": 2,
+   "language": 1
+  }
+ }
+]

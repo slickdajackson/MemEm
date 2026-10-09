@@ -1,0 +1,33 @@
+{
+ "template": "ntot",
+ "name": "No Take, Only Throw",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Pls throw??",
+    "NO TAKE!!",
+    "ONLY THROW"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a strict boundary regarding physical affection, specifically rejecting hugs or being held in favor of throwing or tossing. The first box usually asks for affection, the second rejects the 'taking' or holding aspect, and the third emphasizes the desire to be thrown. It is used humorously to express a preference for chaotic or aggressive physical interaction over gentle cuddling.",
+  "meaning_de": "Dieses Meme drückt eine strenge Grenze bezüglich körperlicher Zuneigung aus, insbesondere die Ablehnung von Umarmungen oder dem Festgehaltenwerden zugunsten des Wegwerfens. Der erste Kasten bittet meist um Zuneigung, der zweite lehnt das 'Nehmen' oder Halten ab, und der dritte betont das Verlangen, geworfen zu werden. Es wird humorvoll verwendet, um eine Präferenz für chaotische oder aggressive körperliche Interaktion gegenüber sanftem Kuscheln auszudrücken.",
+  "situations_en": [
+   "Can I have a hug?",
+   "I just want to be held for a second",
+   "Do you want to cuddle?",
+   "I'm feeling clingy today",
+   "Can I sit on your lap?"
+  ],
+  "situations_de": [
+   "Kann ich eine Umarmung haben?",
+   "Ich will nur kurz festgehalten werden",
+   "Möchtest du kuscheln?",
+   "Ich bin heute anhänglich",
+   "Kann ich auf deinem Schoß sitzen?"
+  ]
+ }
+}

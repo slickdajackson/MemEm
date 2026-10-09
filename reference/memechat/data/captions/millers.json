@@ -1,0 +1,34 @@
+{
+ "template": "millers",
+ "name": "You Guys Are Getting Paid?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "You are making 500 thousand dollars and you were only gonna pay me 30?",
+    "You're getting 30 grand? I'm getting a thousand!",
+    "You guys are getting paid?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses outrage and disbelief at a perceived unfair distribution of rewards or money, where the speaker is significantly underpaid compared to others. The text boxes are used to list the high salaries or benefits of the other people first, building up to the final box where the speaker reveals their own paltry compensation or lack thereof.",
+  "meaning_de": "Dieser Meme drückt Empörung und Unglauben über eine als unfair empfundene Verteilung von Belohnungen oder Geld aus, bei der der Sprecher deutlich unterbezahlt wird. Die Textfelder werden verwendet, um zuerst die hohen Gehälter oder Vorteile der anderen aufzulisten, bis zum letzten Feld, in dem der Sprecher seine eigene mickrige Bezahlung oder deren Fehlen offenlegt.",
+  "situations_en": [
+   "My boss got a bonus but I got a 'thank you' email.",
+   "They gave the interns free food but we have to bring our own lunch.",
+   "He got a new car for the project, I got a coffee mug.",
+   "The CEO's salary went up 10% while mine stayed the same.",
+   "You got a promotion? I'm still waiting for my unpaid internship to end."
+  ],
+  "situations_de": [
+   "Mein Chef hat eine Prämie bekommen, ich nur eine 'Danke'-Mail.",
+   "Die Praktikanten kriegen Gratisessen, wir müssen uns selbst was mitbringen.",
+   "Er hat ein neues Auto fürs Projekt bekommen, ich eine Tasse.",
+   "Das Gehalt des CEOs ist um 10% gestiegen, meins bleibt gleich.",
+   "Du hast eine Beförderung? Ich warte immer noch auf mein unbezahltes Praktikum."
+  ]
+ }
+}

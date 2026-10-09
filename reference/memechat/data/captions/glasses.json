@@ -1,0 +1,32 @@
+{
+ "template": "glasses",
+ "name": "Peter Parker's Glasses",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Virginity is cool, stay pure",
+    "I am utterly incapable of getting laid"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the image of Peter Parker putting on his glasses to represent a sudden, dramatic shift in perspective or a change in self-image. The top text usually describes a positive or confident state, while the bottom text reveals a harsh, often self-deprecating reality or a sudden realization of a negative truth.",
+  "meaning_de": "Dieses Meme nutzt das Bild von Peter Parker, der seine Brille aufsetzt, um einen plötzlichen, dramatischen Perspektivwechsel oder eine Veränderung des Selbstbildes darzustellen. Der obere Text beschreibt meist einen positiven oder selbstbewussten Zustand, während der untere Text eine harte, oft selbstabwertende Realität oder eine plötzliche Erkenntnis einer negativen Wahrheit offenbart.",
+  "situations_en": [
+   "I thought I was the main character",
+   "I feel like a god",
+   "I am so smart",
+   "I'm totally going to get a promotion",
+   "I finally feel confident"
+  ],
+  "situations_de": [
+   "Ich dachte, ich wäre der Hauptcharakter",
+   "Ich fühle mich wie ein Gott",
+   "Ich bin so klug",
+   "Ich bekomme sicher eine Beförderung",
+   "Ich fühle mich endlich selbstbewusst"
+  ]
+ }
+}

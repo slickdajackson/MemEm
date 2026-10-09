@@ -1,0 +1,32 @@
+{
+ "template": "ski",
+ "name": "Super Cool Ski Instructor",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "you're gonna have a bad time"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a stern-looking ski instructor from South Park, often used to represent an authority figure or a 'cool' mentor who is about to deliver a harsh judgment or a reality check. The text boxes are typically used to set up a scenario or a question in the first box, followed by a blunt, threatening, or dismissive response in the second box.",
+  "meaning_de": "Dieses Meme zeigt einen streng wirkenden Skilehrer aus South Park und wird oft verwendet, um eine Autoritätsperson oder einen 'coolen' Mentor darzustellen, der ein hartes Urteil oder eine Realitätscheck-Lektion erteilt. Die Textfelder werden typischerweise verwendet, um im ersten Feld ein Szenario oder eine Frage aufzubauen, gefolgt von einer harten, bedrohlichen oder abweisenden Antwort im zweiten Feld.",
+  "situations_en": [
+   "You think you can beat me in chess? You're gonna have a bad time.",
+   "I'm ready to learn how to code. You're gonna have a bad time.",
+   "I'm bringing my own food to the potluck. You're gonna have a bad time.",
+   "I'm wearing flip flops to the ski resort. You're gonna have a bad time.",
+   "I'm trying to explain quantum physics. You're gonna have a bad time."
+  ],
+  "situations_de": [
+   "Du denkst, du kannst mich im Schach schlagen? Du wirst eine schlechte Zeit haben.",
+   "Ich bin bereit, das Programmieren zu lernen. Du wirst eine schlechte Zeit haben.",
+   "Ich bringe mein eigenes Essen zum Potluck mit. Du wirst eine schlechte Zeit haben.",
+   "Ich trage Flip-Flops zum Skigebiet. Du wirst eine schlechte Zeit haben.",
+   "Ich versuche, Quantenphysik zu erklären. Du wirst eine schlechte Zeit haben."
+  ]
+ }
+}

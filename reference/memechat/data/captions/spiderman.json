@@ -1,0 +1,32 @@
+{
+ "template": "spiderman",
+ "name": "Spider-Man Pointing at Spider-Man",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "me pointing at you",
+    "you pointing at me"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a mutual accusation or a shared responsibility, where two parties are pointing at each other to blame the other for a situation. It is used to express a standoff, a cycle of blame, or a situation where everyone is pointing fingers at someone else. The text boxes are placed above each Spider-Man to describe who is being blamed or what action is being taken by each side.",
+  "meaning_de": "Dieses Meme stellt eine gegenseitige Anschuldigung oder eine geteilte Verantwortung dar, bei der zwei Parteien aufeinander zeigen, um den anderen für eine Situation verantwortlich zu machen. Es wird verwendet, um ein Patt, einen Kreislauf der Schuldzuweisung oder eine Situation auszudrücken, in der alle auf jemand anderen zeigen. Die Textfelder werden über jedem Spider-Man platziert, um zu beschreiben, wer beschuldigt wird oder welche Aktion von jeder Seite ausgeht.",
+  "situations_en": [
+   "It's not my fault, it's yours",
+   "We are both to blame for this",
+   "You started it, I'm just defending myself",
+   "Blame game in progress",
+   "Who is actually responsible here?"
+  ],
+  "situations_de": [
+   "Nicht meine Schuld, sondern deine",
+   "Wir sind beide schuld daran",
+   "Du hast angefangen, ich wehre mich nur",
+   "Schuldzuweisung im Gange",
+   "Wer ist hier eigentlich verantwortlich?"
+  ]
+ }
+}

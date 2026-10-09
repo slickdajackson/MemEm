@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MemEm</string>
+    <string name="subtype_de">Deutsch</string>
+    <string name="meme">Meme</string>
+    <string name="clipboard_hint">Meme liegt in der Zwischenablage, lange tippen und Einfügen</string>
+    <string name="need_text">Erst einen Text tippen</string>
+    <string name="searching">Suche Vorlagen</string>
+    <string name="writing">Schreibe Sprüche</string>
+    <string name="inserted">Eingefügt</string>
+    <string name="shared">Teilen geöffnet</string>
+    <string name="insert_failed">Einfügen hat nicht geklappt</string>
+    <string name="models_missing">Modelle fehlen, Beispielzeilen. Download in den Einstellungen.</string>
+    <string name="hyperos_hint">Auf HyperOS unter Einstellungen, Apps, MemEm, Akku die Option „Keine Einschränkungen“ wählen. Sonst beendet das System den Modell-Download und den Sprachmodell-Prozess.</string>
+</resources>

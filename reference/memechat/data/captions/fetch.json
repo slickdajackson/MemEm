@@ -1,0 +1,48 @@
+{
+ "template": "fetch",
+ "name": "Stop Trying to Make Fetch Happen",
+ "matched": [
+  "loc:trying to make fetch happen"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "stop trying to make fetch happen",
+    "it's not going to happen"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "stop trying to make college admission essays happen,",
+    "ITS NOT GONNA HAPPEN!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Stop trying to make Google+ happen",
+    "it's not going to happen"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a tone of exasperated finality and refusal to waste energy on futile efforts. The first text box describes a specific, often frustrating task or goal that someone is persistently trying to achieve, while the second box delivers the blunt, harsh truth that it is impossible or will not work. It is used to shut down unrealistic expectations or to mock someone for trying to force a result that is destined to fail.",
+  "meaning_de": "Dieses Meme drückt eine Haltung der verzweifelten Endgültigkeit und die Verweigerung, Energie in nutzlose Bemühungen zu stecken, aus. Der erste Textbereich beschreibt eine spezifische, oft frustrierende Aufgabe, die jemand hartnäckig zu erreichen versucht, während der zweite Textbereich die schroffe, harte Wahrheit liefert, dass dies unmöglich ist oder nicht funktionieren wird. Es wird verwendet, um unrealistische Erwartungen zu beenden oder jemanden dafür zu verspotten, dass er ein Ergebnis erzwingt, das zum Scheitern verurteilt ist.",
+  "situations_en": [
+   "I've been debugging this for 6 hours and I'm so close to a fix.",
+   "I'm going to try to get a refund from that shady vendor again.",
+   "I'm really hoping this project gets approved by the management team.",
+   "I'm trying to make the new software update work on my old laptop.",
+   "I'm going to try to get my ex to come back to me."
+  ],
+  "situations_de": [
+   "Ich habe 6 Stunden an dem Bug gefeilt und bin so nah an einer Lösung.",
+   "Ich versuche es nochmal, eine Rückerstattung von dem dubiosen Händler zu bekommen.",
+   "Ich hoffe wirklich, dass das Management das Projekt genehmigt.",
+   "Ich versuche, das neue Software-Update auf meinem alten Laptop zum Laufen zu bringen.",
+   "Ich versuche, meinen Ex zurück zu bekommen."
+  ]
+ }
+}

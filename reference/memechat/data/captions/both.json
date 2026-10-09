@@ -1,0 +1,32 @@
+{
+ "template": "both",
+ "name": "Why Not Both?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "hard or soft tacos",
+    "why not both?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the attitude that you do not have to choose between two seemingly opposing options, but can have both. The image of the smiling child represents a cheerful, innocent, and slightly cheeky refusal to accept a binary choice. The text boxes are used to list the two conflicting options in the first box and the phrase 'why not both?' in the second.",
+  "meaning_de": "Dieser Meme drückt die Haltung aus, dass man zwischen zwei scheinbar gegensätzlichen Optionen nicht wählen muss, sondern beides haben kann. Das Bild des lächelnden Kindes verkörpert eine fröhliche, unschuldige und leicht freche Verweigerung einer binären Wahl. Die Textfelder werden verwendet, um die beiden Optionen im ersten Feld und die Phrase 'warum nicht beides?' im zweiten Feld zu nennen.",
+  "situations_en": [
+   "You have to pick between pizza or pasta for dinner?",
+   "Are you a morning person or a night owl?",
+   "Do you prefer coffee or tea in the morning?",
+   "Should we watch a comedy or a drama tonight?",
+   "Are you a cat person or a dog person?"
+  ],
+  "situations_de": [
+   "Muss ich zwischen Pizza oder Pasta zum Abendessen wählen?",
+   "Bist du eher ein Morgen- oder ein Nachtmensch?",
+   "Magst du morgens lieber Kaffee oder Tee?",
+   "Soll wir heute Abend eine Komödie oder ein Drama schauen?",
+   "Bist du eher ein Katzen- oder ein Hundemensch?"
+  ]
+ }
+}

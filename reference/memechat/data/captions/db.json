@@ -1,0 +1,33 @@
+{
+ "template": "db",
+ "name": "Distracted Boyfriend",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Socialism",
+    "The Youth",
+    "Capitalism"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the act of being tempted by a new, attractive option while ignoring a long-term commitment or partner. The text boxes are used to label the current commitment (left), the person or context (center), and the tempting distraction (right).",
+  "meaning_de": "Dieses Meme drückt aus, wie man von einer neuen, attraktiven Option verführt wird, während man eine langfristige Verpflichtung oder einen Partner ignoriert. Die Textfelder werden verwendet, um die aktuelle Verpflichtung (links), die Person oder den Kontext (Mitte) und die verlockende Ablenkung (rechts) zu kennzeichnen.",
+  "situations_en": [
+   "I've been using this code for years but I just found a better library.",
+   "My partner is here but I keep looking at that new phone.",
+   "I'm in a stable job but I'm tempted by that startup offer.",
+   "I'm on a diet but I just saw a slice of pizza.",
+   "I'm loyal to this brand but I'm eyeing that competitor's product."
+  ],
+  "situations_de": [
+   "Ich benutze diesen Code seit Jahren, aber ich habe gerade eine bessere Bibliothek gefunden.",
+   "Mein Partner ist hier, aber ich schaue ständig auf dieses neue Handy.",
+   "Ich habe einen sicheren Job, aber dieses Startup-Angebot lockt mich.",
+   "Ich bin auf Diät, aber ich habe gerade eine Pizza gesehen.",
+   "Ich bin dieser Marke treu, aber ich betrachte das Produkt des Konkurrenten."
+  ]
+ }
+}

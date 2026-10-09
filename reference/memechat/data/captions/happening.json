@@ -1,0 +1,32 @@
+{
+ "template": "happening",
+ "name": "It's Happening",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "it's happening"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses extreme excitement, triumph, or euphoria about a specific event finally taking place or a long-awaited outcome being realized. The top text box is used to describe the specific event or situation, while the bottom text box typically contains the phrase 'it's happening' to emphasize the realization.",
+  "meaning_de": "Dieses Meme drückt extreme Begeisterung, Triumph oder Euphorie über ein bestimmtes Ereignis aus, das gerade stattfindet oder sich erfüllt. Das obere Textfeld beschreibt die Situation, während das untere Feld meist den Satz 'es passiert' enthält, um die Erfüllung zu betonen.",
+  "situations_en": [
+   "I just got the job offer I applied for 3 months ago.",
+   "The server is finally back online after the crash.",
+   "My crush just texted me back after a week.",
+   "The train is actually on time today.",
+   "I finally beat the boss in the game."
+  ],
+  "situations_de": [
+   "Ich habe gerade die Stelle bekommen, auf die ich beworben habe.",
+   "Der Server ist endlich wieder online nach dem Crash.",
+   "Mein Schwarm hat mir nach einer Woche geantwortet.",
+   "Der Zug ist heute tatsächlich pünktlich.",
+   "Ich habe endlich den Boss im Spiel besiegt."
+  ]
+ }
+}

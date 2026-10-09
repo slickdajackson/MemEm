@@ -1,0 +1,111 @@
+{
+ "template": "ackbar",
+ "name": "It's A Trap!",
+ "matched": [
+  "loc:its a trap"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "it's a trap!"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "llego a las 3:55 y no hay lista",
+    "it's a trap"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "rollo en la comida del domingo",
+    "it's a trap"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "felipe izquierdo te pide aydua",
+    "it's a trap!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Rodrigo invite us?",
+    "ITs a trap!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "¿ comisión de expertos ?",
+    "It's a trap"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "maturana revisando los exámenes??",
+    "IT'S A TRAP!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "IT'S A TRAP!",
+    "SEGUNDO SEMESTRE"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Segundo semestre",
+    "Its a trap"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "el plan online",
+    "was a trap"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "*Watches Kony 2012 video*",
+    "“It’s a trap!”"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Bought by disney??",
+    "It's a crap!!"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a sense of dread, skepticism, or sudden realization that a seemingly good opportunity is actually a hidden danger or a painful obligation. The first text box describes the specific event or offer, while the second box delivers the punchline 'it's a trap!', highlighting the character's fear that things are not what they seem.",
+  "meaning_de": "Dieses Meme drückt Angst, Skepsis oder die plötzliche Erkenntnis aus, dass eine scheinbar gute Gelegenheit in Wirklichkeit eine versteckte Gefahr oder eine schmerzhafte Pflicht ist. Das erste Textfeld beschreibt das Ereignis oder das Angebot, während das zweite Feld den Witz mit 'it's a trap!' (es ist eine Falle!) liefert und die Angst des Charakters hervorhebt, dass die Dinge nicht dem Anschein entsprechen.",
+  "situations_en": [
+   "My boss just asked me to work on the weekend",
+   "The free food at the office meeting is suspicious",
+   "My phone battery is at 1% and I have no charger",
+   "The group chat is suddenly very quiet",
+   "I finally found a parking spot right in front of the entrance"
+  ],
+  "situations_de": [
+   "Mein Chef hat mich gerade gefragt, ob ich am Wochenende arbeiten kann",
+   "Das kostenlose Essen bei der Besprechung ist sehr verdächtig",
+   "Mein Handy hat noch 1% Akku und ich habe kein Kabel dabei",
+   "Der Gruppenchat ist plötzlich komplett still",
+   "Ich habe endlich einen Parkplatz direkt vor dem Eingang gefunden"
+  ]
+ }
+}

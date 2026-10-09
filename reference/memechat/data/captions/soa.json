@@ -1,0 +1,104 @@
+{
+ "template": "soa",
+ "name": "Seal of Approval",
+ "matched": [
+  "loc:seal of approval"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "first wipe",
+    "clean toiletpaper"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "daniel dinh",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "boards of",
+    "canada"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "You Did",
+    "Aitte!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "TEST",
+    "TEST"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Aymeric",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "AICSM",
+    "KOTA"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ITRC",
+    "EDUCATION"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "colorina seal of approval",
+    "me gusta...."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "International Alliance Jewelry Exchange",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "international",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a close-up of a seal with its eyes closed and a slight smile, looking like it is savoring a pleasant moment. It is used to express strong approval, satisfaction, or agreement with a statement or action. The two text boxes are typically used to split a phrase or sentence that the seal is 'approving' of, or to describe the specific thing being endorsed.",
+  "meaning_de": "Dieses Meme zeigt eine Nahaufnahme eines Robbens mit geschlossenen Augen und einem leichten Lächeln, der einen angenehmen Moment zu genießen scheint. Es wird verwendet, um starke Zustimmung, Zufriedenheit oder Einverständnis mit einer Aussage oder Handlung auszudrücken. Die beiden Textfelder werden in der Regel verwendet, um einen Satz zu teilen, den der Robber 'billigt', oder um die spezifische Sache zu beschreiben, die befürwortet wird.",
+  "situations_en": [
+   "That new feature is actually working",
+   "I finally fixed the bug",
+   "The food was absolutely delicious",
+   "You nailed that presentation",
+   "This song is a masterpiece"
+  ],
+  "situations_de": [
+   "Diese neue Funktion funktioniert wirklich",
+   "Ich habe den Fehler endlich behoben",
+   "Das Essen war absolut lecker",
+   "Du hast den Vortrag perfekt gemacht",
+   "Dieses Lied ist ein Meisterwerk"
+  ]
+ }
+}

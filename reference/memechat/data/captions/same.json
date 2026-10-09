@@ -1,0 +1,33 @@
+{
+ "template": "same",
+ "name": "They're The Same Picture",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "π",
+    "3",
+    "The Bible"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the absurdity of being asked to find differences between two identical things, often used to mock pointless or redundant tasks. The top two boxes display the 'different' items (which are actually the same), the middle box explains the ridiculous task, and the bottom box delivers the deadpan punchline that they are identical. It highlights the frustration of dealing with illogical or useless demands.",
+  "meaning_de": "Dieses Meme drückt die Absurdität aus, nach Unterschieden zwischen zwei identischen Dingen gefragt zu werden, und wird oft genutzt, um sinnlose oder redundante Aufgaben zu verspotten. Die oberen beiden Boxen zeigen die vermeintlich 'unterschiedlichen' Elemente, die mittlere Box erklärt die absurde Aufgabe und die untere Box liefert die trockene Pointe, dass sie identisch sind. Es verdeutlicht die Frustration über illogische oder nutzlose Anforderungen.",
+  "situations_en": [
+   "I asked you to check the two files, they are identical.",
+   "You want me to compare these two copies of the same PDF?",
+   "Why did you send me the same image twice?",
+   "Find the difference between these two identical screenshots.",
+   "I was asked to debug two identical lines of code."
+  ],
+  "situations_de": [
+   "Ich habe die beiden Dateien geprüft, sie sind identisch.",
+   "Du willst, dass ich diese zwei Kopien des gleichen PDFs vergleiche?",
+   "Warum hast du mir das gleiche Bild zweimal geschickt?",
+   "Finde den Unterschied zwischen diesen zwei identischen Screenshots.",
+   "Ich wurde gebeten, zwei identische Codezeilen zu debuggen."
+  ]
+ }
+}

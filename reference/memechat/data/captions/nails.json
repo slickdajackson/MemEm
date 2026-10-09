@@ -1,0 +1,33 @@
+{
+ "template": "nails",
+ "name": "Guy Hammering Nails Into Sand",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Humanity",
+    "Language",
+    "The inherently indescribably nature of the universe"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a futile and absurd attempt to impose order or permanence on something inherently unstable or unfixable. It expresses a sense of irony, futility, or the absurdity of trying to control the uncontrollable. The text boxes are typically used to list the specific actions or concepts (e.g., 'Me', 'Trying to fix my life', 'The universe') that highlight this mismatch.",
+  "meaning_de": "Dieses Meme zeigt einen vergeblichen und absurden Versuch, Ordnung oder Beständigkeit in etwas zu bringen, das von Natur aus instabil oder nicht fixierbar ist. Es drückt Ironie, Vergeblichkeit oder die Absurdität des Versuchs aus, das Unkontrollierbare zu kontrollieren. Die Textfelder werden verwendet, um die spezifischen Handlungen oder Konzepte zu listen, die diesen Widerspruch hervorheben.",
+  "situations_en": [
+   "I tried to fix my sleep schedule but I'm still up at 3am.",
+   "Me trying to organize my messy room for the 5th time.",
+   "Trying to explain quantum physics to my 5-year-old nephew.",
+   "I set 10 alarms to wake up early and still hit snooze.",
+   "Trying to keep my house clean with a toddler and a dog."
+  ],
+  "situations_de": [
+   "Ich habe versucht, meinen Schlafrhythmus zu fixieren, bin aber immer noch um 3 Uhr wach.",
+   "Ich versuche zum 5. Mal, mein chaotisches Zimmer aufzuräumen.",
+   "Ich versuche, Quantenphysik meinem 5-jährigen Neffen zu erklären.",
+   "Ich habe 10 Wecker gestellt, um früh aufzustehen, und habe trotzdem geschlummert.",
+   "Ich versuche, das Haus sauber zu halten, mit einem Kleinkind und einem Hund."
+  ]
+ }
+}

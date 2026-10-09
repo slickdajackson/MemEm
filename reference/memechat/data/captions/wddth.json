@@ -1,0 +1,32 @@
+{
+ "template": "wddth",
+ "name": "We Don't Do That Here",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "when someone calls your phone without warning",
+    "We don't do that here."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a firm, authoritative rejection of a specific behavior or social norm, often with a tone of 'that is not acceptable in my circle.' The first text box describes the offending action or situation, while the second box delivers the stern, dismissive response 'We don't do that here.'",
+  "meaning_de": "Dieses Meme drückt eine feste, autoritative Ablehnung eines bestimmten Verhaltens oder einer sozialen Norm aus, oft mit dem Tonfall 'das ist in meinem Kreis nicht akzeptabel'. Das erste Textfeld beschreibt die beleidigende Handlung oder Situation, während das zweite Feld die strenge, abweisende Antwort 'Das machen wir hier nicht' liefert.",
+  "situations_en": [
+   "You're asking me to share my private data?",
+   "I'm not going to that party, I have work.",
+   "Why are you sending me memes at 3am?",
+   "I don't want to discuss politics right now.",
+   "You can't just borrow my car like that."
+  ],
+  "situations_de": [
+   "Du willst, dass ich meine privaten Daten teile?",
+   "Ich gehe nicht zu dieser Party, ich habe Arbeit.",
+   "Warum schickst du mir um 3 Uhr morgens Memes?",
+   "Ich möchte gerade nicht über Politik sprechen.",
+   "Du kannst mein Auto nicht einfach ausleihen."
+  ]
+ }
+}

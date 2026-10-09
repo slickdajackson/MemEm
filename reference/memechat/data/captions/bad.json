@@ -1,0 +1,55 @@
+{
+ "template": "bad",
+ "name": "You Should Feel Bad",
+ "matched": [
+  "loc:you should feel bad"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "your meme is bad",
+    "and you should feel bad"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Your cookies taste bad",
+    "you should feel bad."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "your photo is bad",
+    "and you should feel bad"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "your security is bad",
+    "and you should feel bad"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is used to mock someone for a perceived failure or bad decision, expressing a smug, judgmental attitude. The first text box describes the specific mistake or bad quality, while the second box delivers the harsh verdict that the person should feel guilty about it.",
+  "meaning_de": "Dieser Meme wird verwendet, um jemanden für einen wahrgenommenen Fehler oder eine schlechte Entscheidung zu verspotten und drückt eine selbstgefällige, urteilende Haltung aus. Das erste Textfeld beschreibt den spezifischen Fehler, während das zweite das harte Urteil liefert, dass man sich dafür schämen sollte.",
+  "situations_en": [
+   "You forgot to save the file, you should feel bad",
+   "Your code has 100 errors, you should feel bad",
+   "You missed the bus, you should feel bad",
+   "Your joke was terrible, you should feel bad",
+   "You broke the game, you should feel bad"
+  ],
+  "situations_de": [
+   "Du hast die Datei nicht gespeichert, du solltest dich schämen",
+   "Dein Code hat 100 Fehler, du solltest dich schämen",
+   "Du hast den Bus verpasst, du solltest dich schämen",
+   "Dein Witz war furchtbar, du solltest dich schämen",
+   "Du hast das Spiel kaputt gemacht, du solltest dich schämen"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "feelsgood",
+ "name": "Feels Good",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "feels good"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a bald man with a blissful expression, hands on his cheeks, representing a moment of pure satisfaction or relief. The text boxes are used to describe a specific event or feeling that is 'feels good,' with the bottom box usually confirming the positive reaction. It is used to express that something is incredibly satisfying, comfortable, or a pleasant surprise.",
+  "meaning_de": "Dieses Meme zeigt einen kahlköpfigen Mann mit einem seligen Gesichtsausdruck und den Händen an den Wangen, der einen Moment reinster Zufriedenheit oder Erleichterung darstellt. Die Textfelder werden verwendet, um ein bestimmtes Ereignis oder Gefühl zu beschreiben, das sich 'gut anfühlt', wobei das untere Feld die positive Reaktion bestätigt. Es wird verwendet, auszudrücken, dass etwas unglaublich befriedigend, bequem oder eine angenehme Überraschung ist.",
+  "situations_en": [
+   "I finally fixed the bug after 3 hours",
+   "The pizza arrived exactly when I was starving",
+   "I got a 5-star rating on my review",
+   "My code compiled on the first try",
+   "I found a free parking spot in the city center"
+  ],
+  "situations_de": [
+   "Ich habe den Bug endlich nach 3 Stunden behoben",
+   "Die Pizza kam genau dann an, als ich verhungerte",
+   "Ich habe 5 Sterne für meine Bewertung bekommen",
+   "Mein Code kompilierte beim ersten Versuch",
+   "Ich habe einen kostenlosen Parkplatz in der Innenstadt gefunden"
+  ]
+ }
+}

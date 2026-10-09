@@ -1,0 +1,32 @@
+{
+ "template": "tried",
+ "name": "At Least You Tried",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "at least",
+    "you tried"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a tone of gentle consolation and acceptance, often used to acknowledge a failure or a bad outcome while praising the effort that was put in. The text boxes are typically used to split the phrase 'at least' and 'you tried' to emphasize the comfort given to the person who failed.",
+  "meaning_de": "Dieses Meme drückt eine sanfte Tröstung und Akzeptanz aus und wird oft verwendet, um ein Scheitern oder ein schlechtes Ergebnis anzuerkennen, während der Aufwand gelobt wird. Die Textfelder werden typischerweise verwendet, um den Satz 'zumindest' und 'hast du es versucht' zu teilen, um den Trost zu betonen, der der Person gegeben wird, die gescheitert ist.",
+  "situations_en": [
+   "I failed the exam but I studied for 10 hours",
+   "My code has 50 bugs but it finally runs",
+   "I burned the dinner but I followed the recipe",
+   "I missed the bus but I ran really fast",
+   "The project failed but I did my best"
+  ],
+  "situations_de": [
+   "Ich habe die Prüfung nicht bestanden, aber ich habe 10 Stunden gelernt",
+   "Mein Code hat 50 Bugs, aber er läuft endlich",
+   "Ich habe das Essen verbrannt, aber ich habe das Rezept befolgt",
+   "Ich habe den Bus verpasst, aber ich bin sehr schnell gelaufen",
+   "Das Projekt ist gescheitert, aber ich habe mein Bestes gegeben"
+  ]
+ }
+}

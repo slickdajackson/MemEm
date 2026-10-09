@@ -1,0 +1,32 @@
+{
+ "template": "say",
+ "name": "Say the Line, Bart!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Say the line, Senior Engineer!",
+    "It depends."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a chaotic classroom scene where a teacher asks a student to answer a question, and the entire class shouts back in unison. The first text box is used to state a specific question or prompt, while the second box provides the expected, often humorous or cynical, collective response.",
+  "meaning_de": "Dieses Meme zeigt eine chaotische Klassenszene, in der ein Lehrer einen Schüler auffordert, eine Frage zu beantworten, und die gesamte Klasse im Chor zurückruft. Das erste Textfeld dient dazu, eine bestimmte Frage oder ein Thema zu benennen, während das zweite Feld die erwartete, oft humorvolle oder zynische, kollektive Antwort liefert.",
+  "situations_en": [
+   "What is your favorite programming language?",
+   "How do you feel about the new update?",
+   "What is the meaning of life?",
+   "What is your opinion on the new boss?",
+   "How is the weather in your city?"
+  ],
+  "situations_de": [
+   "Was ist deine Lieblingsprogrammiersprache?",
+   "Wie findest du das neue Update?",
+   "Was ist der Sinn des Lebens?",
+   "Wie findest du den neuen Chef?",
+   "Wie ist das Wetter in deiner Stadt?"
+  ]
+ }
+}

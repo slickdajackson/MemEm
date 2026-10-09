@@ -1,0 +1,33 @@
+{
+ "template": "3hd",
+ "name": "Three-Headed Dragon",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Pepperoni",
+    "Mushroom",
+    "Pineapple"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features three dragon heads with distinct personalities: the left one is angry, the middle one is menacing, and the right one is goofy and silly. It is used to represent a list of three items, where the first two are serious or 'cool' and the third is a humorous, unexpected, or 'cringe' contrast to the others.",
+  "meaning_de": "Dieses Meme zeigt drei Drachenköpfe mit unterschiedlichen Persönlichkeiten: Der linke ist wütend, der mittlere bedrohlich und der rechte albern. Es wird verwendet, um eine Liste von drei Dingen darzustellen, wobei die ersten beiden ernst oder 'cool' sind und das dritte ein humorvoller, unerwarteter oder 'cringe' Kontrast zu den anderen ist.",
+  "situations_en": [
+   "My hobbies: Rock climbing, coding, and watching cat videos",
+   "My ex's types: Tall, dark, and weird",
+   "My diet: Protein, veggies, and emotional damage",
+   "My skills: Leadership, strategy, and being a menace",
+   "My personality: Charming, intelligent, and a total idiot"
+  ],
+  "situations_de": [
+   "Meine Hobbys: Klettern, Coden und Katzenvideos schauen",
+   "Typen meiner Ex: Groß, dunkel und seltsam",
+   "Meine Ernährung: Protein, Gemüse und emotionale Schäden",
+   "Meine Fähigkeiten: Führung, Strategie und ein Ärgernis",
+   "Meine Persönlichkeit: Charmant, intelligent und ein totaler Idiot"
+  ]
+ }
+}

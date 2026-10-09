@@ -1,0 +1,42 @@
+{
+ "template": "sohappy",
+ "name": "I Would Be So Happy",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "if i could use this meme",
+    "i would be so happy"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a state of pure, childlike joy and excitement, often in response to a specific wish or desire being fulfilled. The text boxes are typically used to set up a condition or a hypothetical scenario in the first box, followed by the character's enthusiastic reaction or the resulting happiness in the second box.",
+  "meaning_de": "Dieses Meme drückt einen Zustand von reiner, kindlicher Freude und Begeisterung aus, oft als Reaktion darauf, dass ein bestimmter Wunsch oder eine Sehnsucht erfüllt wird. Die Textfelder werden typischerweise verwendet, um im ersten Feld eine Bedingung oder ein hypothetisches Szenario aufzubauen, gefolgt von der enthusiastischen Reaktion des Charakters oder der resultierenden Glückseligkeit im zweiten Feld.",
+  "situations_en": [
+   "If I could have unlimited pizza",
+   "I would be so happy",
+   "When the boss says no meetings on Friday",
+   "I would be so happy",
+   "If I won the lottery",
+   "I would be so happy",
+   "When the rain finally stops",
+   "I would be so happy",
+   "If I could sleep in tomorrow",
+   "I would be so happy"
+  ],
+  "situations_de": [
+   "Wenn ich unbegrenzt Pizza hätte",
+   "wäre ich so glücklich",
+   "Wenn der Chef sagt, am Freitag keine Meetings",
+   "wäre ich so glücklich",
+   "Wenn ich im Lotto gewonnen hätte",
+   "wäre ich so glücklich",
+   "Wenn der Regen endlich aufhört",
+   "wäre ich so glücklich",
+   "Wenn ich morgen ausschlafen könnte",
+   "wäre ich so glücklich"
+  ]
+ }
+}

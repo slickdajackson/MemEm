@@ -1,0 +1,32 @@
+{
+ "template": "sad-clinton",
+ "name": "Sad Bill Clinton",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "sad bill clinton",
+    "doesn't think you'll vote"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a close-up of Bill Clinton with a deeply disappointed, frowning expression, often used to express silent disapproval, sadness, or a feeling of letdown. The two text boxes are typically used to describe a specific situation or a person's action that has caused this reaction, creating a humorous or dramatic narrative of disappointment.",
+  "meaning_de": "Dieses Meme zeigt eine Nahaufnahme von Bill Clinton mit einem tief enttäuschten, runzeligen Gesichtsausdruck und wird oft verwendet, um stille Missbilligung, Traurigkeit oder ein Gefühl der Enttäuschung auszudrücken. Die zwei Textfelder werden in der Regel verwendet, um eine bestimmte Situation oder eine Handlung einer Person zu beschreiben, die diese Reaktion ausgelöst hat, und so eine humorvolle oder dramatische Erzählung von Enttäuschung zu schaffen.",
+  "situations_en": [
+   "I can't believe you forgot our anniversary",
+   "The pizza arrived cold again",
+   "He actually said that in the meeting",
+   "My dog destroyed my new shoes",
+   "You left me on read for 3 days"
+  ],
+  "situations_de": [
+   "Ich kann nicht glauben, dass du unseren Jahrestag vergessen hast",
+   "Die Pizza ist wieder kalt angekommen",
+   "Er hat das wirklich im Meeting gesagt",
+   "Mein Hund hat meine neuen Schuhe zerstört",
+   "Du hast mich 3 Tage lang auf Read gelassen"
+  ]
+ }
+}

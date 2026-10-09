@@ -1,0 +1,111 @@
+{
+ "template": "scc",
+ "name": "Sudden Clarity Clarence",
+ "matched": [
+  "loc:sudden clarity clarence"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "oh my god",
+    "those weren't listerine breath strips"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "LINUX IS THE KERNEL",
+    "NOT THE OPERATING SYSTEM"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "AT THE END OF the MATRIX,",
+    "neo entered kernel mode"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "OMG!! I don't really have a diverse musical taste",
+    "I just like one-hit wonders"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "chocholate rain",
+    "it's about diarrhea"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "gladdos is a copy",
+    "of hal 9000 and ultrahouse 3000"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "pizza dough",
+    "is also bread dough"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "superman is man of steel",
+    "so he is 96% iron man"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "The lion king",
+    "is just hamlet with lions"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "What if hurricane sandy",
+    "is actually god cleansing us of jersey shore"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "HEADERS PARSING",
+    "¿BAJO DEMANDA?"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Young Peyton manning was a colt",
+    "And old Peyton is a bronco"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a character having a sudden, jarring realization or 'epiphany' about a fact they previously misunderstood. The first text box usually states a common misconception or a statement the character believed to be true, while the second box reveals the shocking, often absurd, or literal truth that causes the sudden clarity.",
+  "meaning_de": "Dieses Meme zeigt eine Figur, die eine plötzliche, schockierende Erkenntnis oder 'Epiphanie' über eine Tatsache hat, die sie zuvor falsch verstanden hat. Der erste Textbereich enthält meist ein verbreitetes Missverständnis oder eine Annahme, während der zweite Bereich die schockierende, oft absurde oder wörtliche Wahrheit enthüllt, die zu dieser plötzlichen Klarheit führt.",
+  "situations_en": [
+   "I thought the movie was about a robot, but it was actually about a toaster.",
+   "I always thought 'cloud' meant the sky, but it's just a storage server.",
+   "I thought 'the cloud' was a place, but it's just other people's computers.",
+   "I assumed the song was about love, but it's actually about a car crash.",
+   "I thought 'kernel' was a type of food, but it's the core of the OS."
+  ],
+  "situations_de": [
+   "Ich dachte, der Film handelt von einem Roboter, aber es ging um einen Toaster.",
+   "Ich dachte immer, 'Cloud' meint den Himmel, aber es ist nur ein Speicher-Server.",
+   "Ich dachte, 'die Cloud' wäre ein Ort, aber es sind nur Rechner anderer Leute.",
+   "Ich nahm an, das Lied handelt von Liebe, aber es geht um einen Autounfall.",
+   "Ich dachte, 'Kernel' wäre eine Art Essen, aber es ist der Kern des Betriebssystems."
+  ]
+ }
+}

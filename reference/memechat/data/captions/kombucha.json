@@ -1,0 +1,32 @@
+{
+ "template": "kombucha",
+ "name": "Kombucha Girl",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Trying a thing.",
+    "Trying a thing again."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a transition from intense skepticism, confusion, or disgust to sudden, wide-eyed realization or shock. The first text box describes the initial negative reaction or doubt, while the second box reveals the surprising truth or the moment of understanding that changed the person's mind.",
+  "meaning_de": "Dieses Meme drückt den Übergang von intensiver Skepsis, Verwirrung oder Ekel zu plötzlicher, weit aufgerissener Erkenntnis oder Schock aus. Der erste Textbereich beschreibt die anfängliche negative Reaktion oder den Zweifel, während der zweite den überraschenden Wahrheitsgehalt oder den Moment des Verstehens offenbart, der die Meinung der Person geändert hat.",
+  "situations_en": [
+   "I thought the recipe was a joke until I tasted it.",
+   "I didn't believe the news, but here is the proof.",
+   "I was sure it was a scam, then I checked the reviews.",
+   "I thought the movie was bad, but the plot twist was amazing.",
+   "I was skeptical about the product, but it actually works."
+  ],
+  "situations_de": [
+   "Ich dachte, das Rezept wäre ein Witz, bis ich es probiert habe.",
+   "Ich glaubte die Nachricht nicht, aber hier ist der Beweis.",
+   "Ich war sicher, dass es ein Betrug ist, dann habe ich die Bewertungen geprüft.",
+   "Ich dachte, der Film wäre schlecht, aber der Plot Twist war genial.",
+   "Ich war skeptisch gegenüber dem Produkt, aber es funktioniert tatsächlich."
+  ]
+ }
+}

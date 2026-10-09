@@ -1,0 +1,32 @@
+{
+ "template": "agnes",
+ "name": "Agnes Harkness Winking",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "i have read and agree to the terms and conditions"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a woman winking with an exaggerated, open-mouthed expression, conveying a mix of smugness, playful defiance, and unapologetic enthusiasm. It is used to express that the user is fully on board with a situation, often something questionable or chaotic, while maintaining a confident and slightly unhinged attitude. The text boxes are typically used to set up a scenario in the first box and the enthusiastic or sarcastic agreement in the second.",
+  "meaning_de": "Dieses Meme zeigt eine Frau, die mit übertriebener, offenmundiger Miene zwinkert und eine Mischung aus Selbstgefälligkeit, verspielter Anfeindungslosigkeit und unentschuldigtem Enthusiasmus ausdrückt. Es wird verwendet, um auszudrücken, dass der Nutzer voll und ganz mit einer Situation einverstanden ist, oft mit etwas Fragwürdigem oder Chaotischem, während er eine selbstbewusste und leicht verrückte Haltung beibehält. Die Textfelder werden typischerweise verwendet, um im ersten Feld ein Szenario aufzubauen und im zweiten die begeisterte oder sarkastische Zustimmung zu formulieren.",
+  "situations_en": [
+   "I'm not sorry for what I did",
+   "I'm in for the chaos",
+   "I accept the consequences",
+   "I'm ready for this disaster",
+   "I'm fully committed to this"
+  ],
+  "situations_de": [
+   "Ich bereue nichts von dem, was ich getan habe",
+   "Ich bin dabei beim Chaos",
+   "Ich akzeptiere die Konsequenzen",
+   "Ich bin bereit für dieses Desaster",
+   "Ich stehe voll dahinter"
+  ]
+ }
+}

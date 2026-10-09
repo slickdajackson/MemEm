@@ -1,0 +1,32 @@
+{
+ "template": "country",
+ "name": "What a Country",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Inflammable means flammable?",
+    "What a country!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a chaotic scene from The Simpsons to express disbelief or frustration at a situation that is absurd, ironic, or poorly managed. The first text box describes the specific incident or 'mistake' (like a confusing label or a failed plan), and the second box delivers the punchline 'What a country!' to sarcastically criticize the incompetence or the state of the world.",
+  "meaning_de": "Dieser Meme nutzt eine chaotische Szene aus den Simpsons, um Unfassbarkeit oder Frustration über eine absurde, ironische oder schlecht gemanagte Situation auszudrücken. Das erste Textfeld beschreibt den Vorfall oder den 'Fehler' (wie ein verwirrendes Etikett), und das zweite Feld liefert den Pointe 'Was für ein Land!' als sarkastische Kritik an der Inkompetenz oder dem Zustand der Welt.",
+  "situations_en": [
+   "The government released a report with a typo that changed the meaning entirely.",
+   "My boss said 'no overtime' but then assigned a 12-hour task.",
+   "The new software update deleted all my files.",
+   "They labeled the emergency exit as 'Do Not Enter'.",
+   "The recipe said 'add salt to taste' but the food was already inedible."
+  ],
+  "situations_de": [
+   "Die Regierung hat einen Bericht mit einem Tippfehler veröffentlicht, der die Bedeutung komplett veränderte.",
+   "Mein Chef sagte 'keine Überstunden', gab dann aber eine 12-Stunden-Aufgabe.",
+   "Das neue Software-Update hat alle meine Dateien gelöscht.",
+   "Sie haben den Notausgang als 'Nicht betreten' beschriftet.",
+   "Das Rezept sagte 'nach Geschmack salzen', aber das Essen war schon ungenießbar."
+  ]
+ }
+}

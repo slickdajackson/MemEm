@@ -1,0 +1,167 @@
+{
+ "template": "hipster",
+ "name": "Hipster Barista",
+ "matched": [
+  "loc:hipster barista"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "puts coffee deal on Groupon",
+    "rolls eyes when you actually use it"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "I want my sari back",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "my neck gets cold",
+    "but not my chest"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Reblog inspirational quotes on my tumblr",
+    "After working a double and drinking three Beers"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "I'm Jens",
+    "and i listened to metal before it was cool"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "THAT'LL BE 20 MINUTES FOR YOUR CAFE AU LAIT",
+    "*CAFE IS EMPTY*"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "gets job as barista",
+    "power trip"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "goes to occupy wallstreet protest",
+    "doesn't vote"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "iphone?",
+    "photographer."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "STAY FOOLISH. STAY HUNGRY.",
+    "ba IN MEDIEVAL SCIENCE. SPENDS ALL MONEY ON COCAINE AND TATTOOS."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "I liked Avatar before it was Avatar",
+    "It was called Pocahontas"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "eat",
+    "waht"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "que hipster",
+    "mas culero"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "gILEAR EN LA MARCHA DE LAS PUTAS",
+    "CON FLORO DE JUDITH BUTLER"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ну вообще да",
+    "но в данный момент нет"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "дайте денег на",
+    "маршрутку"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "че так",
+    "мало?"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "сам ты",
+    "бариста"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "it's called fashion",
+    "PLUS IT PROTECTS ME FROM SPARKLY VAMPIRES"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "давай",
+    "700"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a stereotypical hipster barista with a beard, glasses, and a scarf, often looking smug or self-important. The two text boxes are used to describe a contradiction in the character's behavior or a specific ironic situation, highlighting the gap between their pretentious 'cool' image and their actual, often mundane or hypocritical, actions.",
+  "meaning_de": "Dieser Meme zeigt einen stereotypen Hipster-Barista mit Bart, Brille und Schal, der oft selbstgefällig oder wichtigtuerisch aussieht. Die beiden Textfelder werden verwendet, um einen Widerspruch im Verhalten der Figur oder eine spezifische ironische Situation zu beschreiben und den Unterschied zwischen ihrem prätentiösen 'coolen' Image und ihren tatsächlichen, oft banalen oder heuchlerischen Handlungen hervorzuheben.",
+  "situations_en": [
+   "I'm too cool for social media but I check my likes every 5 mins",
+   "I only drink oat milk lattes",
+   "I judge your music taste but I listen to Spotify playlists",
+   "I'm a local foodie but I order delivery",
+   "I'm an artisan baker but I eat gas station donuts"
+  ],
+  "situations_de": [
+   "Ich bin zu cool für Social Media, aber ich checke alle 5 Min. meine Likes",
+   "Ich trinke nur Hafermilch-Lattes",
+   "Ich urteile über deinen Musikgeschmack, höre aber Spotify-Playlists",
+   "Ich bin Foodie, bestelle aber Lieferando",
+   "Ich bin Handwerksbäcker, esse aber Tankstellen-Donuts"
+  ]
+ }
+}

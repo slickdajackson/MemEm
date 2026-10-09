@@ -1,0 +1,32 @@
+{
+ "template": "jim",
+ "name": "Jim Halpert Pointing to Whiteboard",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "It's OK to like trashy shows and movies",
+    "If it makes you happy then it's not a waste of time"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the character Jim Halpert to deliver a calm, reasonable, and slightly smug defense of a specific choice or opinion. The first text box states a controversial or 'trashy' premise, while the second box provides the logical or emotional justification for it, effectively shutting down critics.",
+  "meaning_de": "Dieses Meme nutzt den Charakter Jim Halpert, um eine ruhige, vernünftige und leicht selbstbewusste Verteidigung einer bestimmten Wahl oder Meinung zu liefern. Der erste Textbereich stellt eine kontroverse oder 'trashige' Prämisse dar, während der zweite Bereich die logische oder emotionale Rechtfertigung dafür liefert und Kritiker effektiv zum Schweigen bringt.",
+  "situations_en": [
+   "You don't have to be a genius to enjoy reality TV",
+   "It's just a hobby, not a career path",
+   "I like bad movies because they are fun",
+   "Watching trashy shows is a valid form of relaxation",
+   "You don't need a reason to like something"
+  ],
+  "situations_de": [
+   "Man muss kein Genie sein, um Reality-TV zu mögen",
+   "Es ist nur ein Hobby, kein Karriereweg",
+   "Ich mag schlechte Filme, weil sie Spaß machen",
+   "Trashy Shows zu schauen ist eine gültige Form der Entspannung",
+   "Man braucht keinen Grund, etwas zu mögen"
+  ]
+ }
+}

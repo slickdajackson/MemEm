@@ -1,0 +1,33 @@
+{
+ "template": "grave",
+ "name": "Grant Gustin Next To Oliver Queen's Grave",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Here lies the last bit of human decency",
+    "Society",
+    "Social Media"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the ironic contrast of Grant Gustin smiling and making a peace sign next to a grave to mock the death of a concept or entity. The text boxes are used to list the 'victim' in the first box and the 'murderers' or causes in the subsequent boxes, expressing a sense of dark humor and cynical resignation about the loss of something valued.",
+  "meaning_de": "Dieses Meme nutzt den ironischen Kontrast von Grant Gustin, der neben einem Grab lächelt und ein Peace-Zeichen macht, um den 'Tod' eines Konzepts oder einer Entität zu verspotten. Die Textfelder werden verwendet, um das 'Opfer' im ersten Feld und die 'Mörder' oder Ursachen in den folgenden Feldern zu listen und drücken dabei dunklen Humor und zynische Resignation über den Verlust von etwas Wertschätztem aus.",
+  "situations_en": [
+   "My motivation died this morning",
+   "The last of my patience is gone",
+   "My battery died at 10%",
+   "The concept of sleep is dead",
+   "My will to live has expired"
+  ],
+  "situations_de": [
+   "Meine Motivation ist heute Morgen gestorben",
+   "Meine letzte Geduld ist weg",
+   "Mein Akku ist bei 10% gestorben",
+   "Das Konzept von Schlaf ist tot",
+   "Mein Lebenswille ist abgelaufen"
+  ]
+ }
+}

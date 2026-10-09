@@ -1,0 +1,32 @@
+{
+ "template": "stew",
+ "name": "Baby, You've Got a Stew Going",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "baby, you've got a stew going!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a playful, teasing, or slightly suspicious attitude, often implying that someone is up to something, is cooking up a plan, or is in a situation that is becoming intense or 'simmering'. The first text box is typically used to describe the specific situation or action, while the second box delivers the punchline or the observation that things are heating up.",
+  "meaning_de": "Dieses Meme drückt eine spielerische, spöttische oder leicht misstrauische Haltung aus und deutet oft an, dass jemand etwas im Schilde führt, einen Plan schmiedet oder sich in einer Situation befindet, die sich intensiviert oder 'kocht'. Das erste Textfeld wird in der Regel verwendet, um die spezifische Situation oder Handlung zu beschreiben, während das zweite Feld den Pointe oder die Beobachtung liefert, dass die Dinge heiß werden.",
+  "situations_en": [
+   "You've been typing for 20 minutes, what are you writing?",
+   "The group chat has been silent for an hour, is something up?",
+   "I can tell you are planning something, I can feel it.",
+   "Your mood has been off all day, what's going on?",
+   "The tension in the room is getting thicker by the minute."
+  ],
+  "situations_de": [
+   "Du tippst seit 20 Minuten, was schreibst du da?",
+   "Der Gruppenchat ist seit einer Stunde still, ist was los?",
+   "Ich merke, du planst etwas, ich spüre es förmlich.",
+   "Deine Stimmung ist den ganzen Tag schlecht, was ist los?",
+   "Die Spannung im Raum wird von Minute zu Minute dicker."
+  ]
+ }
+}

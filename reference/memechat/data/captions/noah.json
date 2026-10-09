@@ -1,0 +1,34 @@
+{
+ "template": "noah",
+ "name": "What the Hell is This?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Street",
+    "Road",
+    "Stroad",
+    "What the hell is this?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses deep confusion and disbelief at a nonsensical or absurd combination of elements. The text boxes are used to list the individual components of the situation, with the final box expressing the speaker's exasperated reaction to the whole thing.",
+  "meaning_de": "Dieses Meme drückt tiefe Verwirrung und Unglauben über eine sinnlose oder absurde Kombination von Elementen aus. Die Textfelder werden verwendet, um die einzelnen Bestandteile der Situation aufzulisten, wobei das letzte Feld die frustrierte Reaktion des Sprechers auf das Gesamtbild ausdrückt.",
+  "situations_en": [
+   "I just saw a penguin eating an elephant",
+   "My code has a snake, a bird, and a rock",
+   "Why is there a penguin in the elephant enclosure?",
+   "I bought a penguin, a road, and a street",
+   "The menu has a penguin, a road, and a street"
+  ],
+  "situations_de": [
+   "Ich habe gerade einen Pinguin gesehen, der einen Elefanten frisst",
+   "Mein Code hat eine Schlange, einen Vogel und einen Stein",
+   "Warum ist da ein Pinguin im Elefantengehege?",
+   "Ich habe einen Pinguin, eine Straße und eine Gasse gekauft",
+   "Das Menü hat einen Pinguin, eine Straße und eine Gasse"
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "template": "whatyear",
+ "name": "What Year Is It?",
+ "matched": [
+  "loc:what year"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "what year is it?"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Какая сейчас неделя?!",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "......................................................",
+    "................................................."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "",
+    "........................................................................................."
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a confused, disheveled man with a long beard looking up, expressing total disorientation and a complete loss of track of time. The text boxes are typically used to highlight a specific event or date in the first box, followed by the man asking 'what year is it?' in the second to emphasize how long or strange the situation has been.",
+  "meaning_de": "Dieses Meme zeigt einen verwirrten, zerzausten Mann mit langem Bart, der nach oben schaut und totale Orientierungslosigkeit sowie den totalen Verlust des Zeitgefühls ausdrückt. Die Textfelder werden typischerweise verwendet, um ein bestimmtes Ereignis oder Datum im ersten Feld hervorzuheben, gefolgt von der Frage 'Was ist das für ein Jahr?' im zweiten, um zu betonen, wie lang oder seltsam die Situation war.",
+  "situations_en": [
+   "I've been working on this bug for 3 weeks straight.",
+   "I just woke up and have no idea what day it is.",
+   "My phone battery died and I lost all my context.",
+   "I've been in this meeting since 9 AM.",
+   "I forgot what month it is because I was so busy."
+  ],
+  "situations_de": [
+   "Ich arbeite seit 3 Wochen nonstop an diesem Bug.",
+   "Ich bin gerade aufgewacht und habe keine Ahnung, welcher Tag heute ist.",
+   "Mein Handy-Akku ist leer und ich habe den Kontext verloren.",
+   "Ich bin seit 9 Uhr in diesem Meeting.",
+   "Ich habe vergessen, welcher Monat es ist, weil ich so beschäftigt war."
+  ]
+ }
+}

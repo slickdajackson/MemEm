@@ -1,0 +1,38 @@
+{
+ "template": "wallet",
+ "name": "Patrick Star's Wallet",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Aren't you Patrick Star?",
+    "Yup.",
+    "And this is your ID?",
+    "Yup.",
+    "I found the ID in this wallet so it must be yours.",
+    "That makes sense to me.",
+    "Then take it!",
+    "It's not my wallet."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a logical but ultimately flawed argument where someone claims ownership of an object based on a single piece of evidence (like an ID card) found inside it. The humor comes from the victim's gullibility in accepting the logic, only to be tricked out of the actual item. The text boxes are used to script this back-and-forth conversation between the con artist and the victim.",
+  "meaning_de": "Dieses Meme zeigt ein logisches, aber letztlich fehlerhaftes Argument, bei dem jemand aufgrund eines einzelnen Beweises (wie einer ID-Karte) in einem Gegenstand den Besitz beansprucht. Der Humor entsteht durch die Gutmütigkeit des Opfers, das die Logik akzeptiert, nur um dann um den eigentlichen Gegenstand betrogen zu werden. Die Textfelder werden verwendet, um dieses Hin-und-her-Gespräch zwischen dem Betrüger und dem Opfer zu skizzieren.",
+  "situations_en": [
+   "You can't just use a screenshot to claim my account.",
+   "Just because you have the key doesn't mean it's your house.",
+   "Stop using that one piece of evidence to justify your whole theory.",
+   "I'm not giving you the password just because you know my name.",
+   "That logic is a trap, I'm not falling for it."
+  ],
+  "situations_de": [
+   "Du kannst nicht einfach einen Screenshot nutzen, um mein Konto zu beanspruchen.",
+   "Nur weil du den Schlüssel hast, heißt das nicht, dass es dein Haus ist.",
+   "Hör auf, dieses eine Beweisstück zu nutzen, um deine ganze Theorie zu rechtfertigen.",
+   "Ich gebe dir das Passwort nicht, nur weil du meinen Namen kennst.",
+   "Diese Logik ist eine Falle, ich lasse mich nicht darauf ein."
+  ]
+ }
+}

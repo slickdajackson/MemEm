@@ -1,0 +1,33 @@
+{
+ "template": "vince",
+ "name": "Vince McMahon Reaction",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "2-Day Delivery",
+    "Overnight Shipping",
+    "Shopping at the Store"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a progression of escalating excitement and shock, moving from mild surprise to absolute euphoria. It is used to describe a sequence of events or options where each step is significantly better or more impressive than the last, culminating in a peak moment of joy.",
+  "meaning_de": "Dieser Meme zeigt eine Eskalation von Begeisterung und Schock, die von mildem Erstaunen bis zu absoluter Euphorie reicht. Er wird verwendet, um eine Abfolge von Ereignissen oder Optionen zu beschreiben, bei der jeder Schritt deutlich besser oder beeindruckender ist als der vorherige und in einem Höhepunkt der Freude gipfelt.",
+  "situations_en": [
+   "I got a 10% discount, then 20%, then 50% off!",
+   "My code works, then it's fast, then it's perfect.",
+   "I asked for a raise, got a bonus, then a promotion.",
+   "The food was good, then great, then it was a masterpiece.",
+   "I expected a B, got an A, then a perfect score."
+  ],
+  "situations_de": [
+   "Ich hab 10% Rabatt, dann 20%, dann 50% gespart!",
+   "Mein Code läuft, ist schnell und dann perfekt.",
+   "Ich wollte eine Erhöhung, bekam einen Bonus und dann eine Beförderung.",
+   "Das Essen war gut, dann großartig, dann ein Meisterwerk.",
+   "Ich dachte an eine 2, bekam eine 1, dann die volle Punktzahl."
+  ]
+ }
+}

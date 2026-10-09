@@ -1,0 +1,168 @@
+{
+ "template": "blb",
+ "name": "Bad Luck Brian",
+ "matched": [
+  "imgflip:bad luck brian",
+  "loc:bad luck brian"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "falls asleep in class",
+    "has a wet dream"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "MAKES A MEME ABOUT DRINKING SPRITE",
+    "ONLY GETS 7 UPS"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "WAITS IN LINE FOR 12 HOURS ON BLACK FRIDAY",
+    "FORGOT WALLET"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "FINALLY GETS COURAGE TO MAKE EYE CONTACT WITH GIRL",
+    "MEDUSA"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "ENTERS A BAD LUCK CONTEST. REJECTED FOR BEING A PROFESSIONAL!",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "GETS IGNORED SO MUCH",
+    "HIS NICKNAME IS \"TERMS AND CONDITIONS\""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "RUNS INTO DOCTOR'S AND SAYS \"DOC I ONLY HAVE 40 SECONDS TO LIVE\"",
+    "THE DOCTOR SAYS \"BE WITH YOU IN ON A MINUTE\""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "GETS A SAMSUNG GALAXY NOTE 7 FOR CHRISTMAS",
+    "FROM EVERY MEMBER OF HIS FAMILY"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "FINALLY BRAVE ENOUGH TO MAKE EYE CONTACT WITH A GIRL",
+    "MEDUSA"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "STARTS A BAND CALLED 999 MEGABYTES",
+    "NEVER GETS A GIG"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "SINGS \"HELLO DARKNESS MY OLD FRIEND.\"",
+    "DARKNESS SAYS I'M NOT YOUR FRIEND"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "ASKS SIRI TO TELL A JOKE TURNS ON FRONT CAMERA",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "TURNS AIRPLANE MODE ON PHONE FLIES AWAY",
+    ""
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "FALLS INTO THE GORILLA PIT AT THE ZOO",
+    "ZOOKEEPER SHOOTS HIM INSTEAD OF THE GORILLA"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "GETS NEW JOB IN CALENDAR FACTORY",
+    "STILL CAN'T GET A DATE"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "FINDS CURE FOR THE COMMON COLD",
+    "SIDE EFFECTS INCLUDE RUNNY NOSE, WATERY EYES, CONGESTION AND SNEEZING"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "CALLS SUICIDE HOTLINE",
+    "THEY GIVE HIM INSTRUCTIONS"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "DOES A FACE REVEAL",
+    "MARKED AS NSFW"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "CALLS NUMBER ON THE BATHROOM WALL",
+    "MOM ANSWERS"
+   ],
+   "source": "imgflip575k"
+  },
+  {
+   "lines": [
+    "GOES TO CARNIVAL DRESSED AS ROBIN",
+    "CONSTANTLY SLAPPED BY GUESTS DRESSED AS BATMAN"
+   ],
+   "source": "imgflip575k"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a boy with a painfully awkward, toothy grin, representing someone who is experiencing a series of unfortunate events or a complete failure. The first text box describes the initial action or expectation, while the second box reveals the ironic, disastrous, or humiliating outcome that makes the situation 'bad luck'.",
+  "meaning_de": "Dieses Meme zeigt einen Jungen mit einem peinlich-ungeschickten, zahnigen Grinsen und stellt jemanden dar, der eine Reihe unglücklicher Ereignisse oder ein komplettes Scheitern erlebt. Die erste Textbox beschreibt die anfängliche Handlung oder Erwartung, während die zweite Box das ironische, katastrophale oder demütigende Ergebnis offenlegt, das die Situation zum 'Pech' macht.",
+  "situations_en": [
+   "I tried to impress her with a joke and she just stared at me",
+   "My code compiled successfully but the app crashed immediately",
+   "I finally got the concert tickets but I have to work that night",
+   "I accidentally sent my boss a meme about quitting my job",
+   "I tried to parallel park and hit two cars"
+  ],
+  "situations_de": [
+   "Ich habe versucht, sie mit einem Witz zu beeindrucken, und sie hat nur gestarrt",
+   "Mein Code wurde erfolgreich kompiliert, aber die App ist sofort abgestürzt",
+   "Ich habe endlich die Konzertkarten bekommen, muss aber an dem Abend arbeiten",
+   "Ich habe meinem Chef versehentlich ein Meme über das Kündigen geschickt",
+   "Ich habe versucht, parallel zu parken, und zwei Autos angefahren"
+  ]
+ }
+}

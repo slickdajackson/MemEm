@@ -1,0 +1,32 @@
+{
+ "template": "live",
+ "name": "Do It Live!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "do it live!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a man shouting with intense passion, used to express a strong, often aggressive demand for immediate action or to challenge someone to prove their claims in real-time. The first text box usually states a specific challenge or claim, while the second box delivers the iconic 'do it live!' command.",
+  "meaning_de": "Dieses Meme zeigt einen Mann, der leidenschaftlich schreit, und wird verwendet, um eine starke, oft aggressive Forderung nach sofortigem Handeln auszudrücken oder jemanden herauszufordern, seine Behauptungen in Echtzeit zu beweisen. Das erste Textfeld enthält meist eine spezifische Herausforderung, während das zweite das ikonische 'do it live!' (mach es live!) liefert.",
+  "situations_en": [
+   "You say you can code faster than a bot, do it live!",
+   "You claim to be the best gamer, do it live!",
+   "You say you can beat me in chess, do it live!",
+   "You claim to know everything about history, do it live!",
+   "You say you can fix my car in 5 minutes, do it live!"
+  ],
+  "situations_de": [
+   "Du sagst, du kannst besser programmieren als ein Bot, mach es live!",
+   "Du behauptest, der beste Gamer zu sein, mach es live!",
+   "Du sagst, du kannst mich im Schach schlagen, mach es live!",
+   "Du behauptest, alles über Geschichte zu wissen, mach es live!",
+   "Du sagst, du kannst mein Auto in 5 Minuten reparieren, mach es live!"
+  ]
+ }
+}

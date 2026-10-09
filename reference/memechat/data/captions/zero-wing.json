@@ -1,0 +1,33 @@
+{
+ "template": "zero-wing",
+ "name": "All Your Base Are Belong to Us",
+ "matched": [
+  "loc:all your base are belong to us"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "all your base are belong to us"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a pixelated character from the game Zero Wing, originally a glitched translation of a cutscene. It is used to express a sense of total domination, victory, or a chaotic takeover, often with a humorous or ironic twist. The single text box is used to replace the original phrase with a new declaration of conquest or a statement of absolute control over a specific topic.",
+  "meaning_de": "Dieses Meme zeigt einen pixelierten Charakter aus dem Spiel Zero Wing, ursprünglich ein Übersetzungsfehler in einer Zwischensequenz. Es wird verwendet, um ein Gefühl der totalen Dominanz, des Sieges oder einer chaotischen Übernahme auszudrücken, oft mit einem humorvollen oder ironischen Twist. Das einzelne Textfeld wird verwendet, um den ursprünglichen Satz durch eine neue Erklärung der Eroberung oder eine Aussage der absoluten Kontrolle über ein bestimmtes Thema zu ersetzen.",
+  "situations_en": [
+   "I finally beat that boss, all your health are belong to us",
+   "You forgot to save the file? All your work are belong to me",
+   "I installed the new update, all your settings are belong to me",
+   "I took over the server, all your configs are belong to us",
+   "I cleaned the room, all your mess is belong to the trash"
+  ],
+  "situations_de": [
+   "Ich habe den Boss besiegt, all your health are belong to us",
+   "Du hast die Datei nicht gespeichert? All your work are belong to me",
+   "Ich habe das Update installiert, all your settings are belong to me",
+   "Ich habe den Server übernommen, all your configs are belong to us",
+   "Ich habe das Zimmer aufgeräumt, all your mess is belong to the trash"
+  ]
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "template": "home",
+ "name": "We Have Food at Home",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Me: Can we stop and get food?",
+    "Mom: We have food at home.",
+    "Food at home:"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is used to mock a situation where a solution or resource is claimed to exist, but is actually useless, broken, or of terrible quality. The first two boxes set up the expectation (e.g., 'I have a backup plan' or 'We have food at home'), while the third box reveals the disappointing reality (the rotten banana). It expresses frustration, irony, and the feeling of being let down.",
+  "meaning_de": "Dieses Meme wird verwendet, um eine Situation zu verspotten, in der eine Lösung oder ein Ressourcenbestand behauptet wird, dieser aber tatsächlich nutzlos, kaputt oder von schlechter Qualität ist. Die ersten beiden Boxen schaffen die Erwartung (z. B. 'Ich habe einen Plan B' oder 'Wir haben Essen zu Hause'), während die dritte Box die enttäuschende Realität enthüllt (die faule Banane). Es drückt Frustration, Ironie und das Gefühl aus, im Stich gelassen worden zu sein.",
+  "situations_en": [
+   "I have a backup plan.",
+   "We have plenty of batteries.",
+   "The server is running fine.",
+   "I have a clean shirt.",
+   "We have internet at home."
+  ],
+  "situations_de": [
+   "Ich habe einen Plan B.",
+   "Wir haben genug Batterien.",
+   "Der Server läuft einwandfrei.",
+   "Ich habe ein sauberes Hemd.",
+   "Wir haben Internet zu Hause."
+  ]
+ }
+}

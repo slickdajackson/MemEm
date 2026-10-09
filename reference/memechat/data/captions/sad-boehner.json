@@ -1,0 +1,32 @@
+{
+ "template": "sad-boehner",
+ "name": "Sad John Boehner",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "sad john boehner",
+    "doesn't think you'll vote"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a close-up of politician John Boehner with a deeply disappointed and sad expression. It is used to express extreme disappointment, letdown, or a feeling of hopelessness regarding a specific event or statement. The text boxes are typically used to describe the sad situation or the specific thing that caused the disappointment.",
+  "meaning_de": "Dieses Meme zeigt eine Nahaufnahme des Politikers John Boehner mit einem tief enttäuschten und traurigen Gesichtsausdruck. Es wird verwendet, um extreme Enttäuschung, Enttäuschung oder ein Gefühl der Hoffnungslosigkeit über ein bestimmtes Ereignis oder eine Aussage auszudrücken. Die Textfelder werden in der Regel verwendet, um die traurige Situation oder die bestimmte Sache zu beschreiben, die die Enttäuschung verursacht hat.",
+  "situations_en": [
+   "I just found out my favorite show is cancelled",
+   "The server is down again, I give up",
+   "My code works but I have no idea why",
+   "They raised the price of coffee again",
+   "I waited 2 hours for this delivery"
+  ],
+  "situations_de": [
+   "Ich habe gerade erfahren, dass meine Lieblingsserie eingestellt wird",
+   "Der Server ist wieder down, ich gebe auf",
+   "Mein Code funktioniert, aber ich habe keine Ahnung warum",
+   "Sie haben den Preis für Kaffee wieder erhöht",
+   "Ich habe 2 Stunden auf diese Lieferung gewartet"
+  ]
+ }
+}

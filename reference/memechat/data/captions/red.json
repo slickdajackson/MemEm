@@ -1,0 +1,32 @@
+{
+ "template": "red",
+ "name": "Oh, Is That What We're Going to Do Today?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "oh, is that what we're going to do today?",
+    "we're going to fight?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a tone of weary resignation or sarcastic disbelief at a sudden, often absurd or chaotic change in plans. The top text usually states the new, unexpected situation, while the bottom text delivers the punchline or the specific, often dramatic action being taken, highlighting the speaker's exasperation.",
+  "meaning_de": "Dieses Meme drückt eine Haltung der müden Resignation oder des sarkastischen Unglaubens gegenüber einer plötzlichen, oft absurden oder chaotischen Planänderung aus. Der obere Text beschreibt die neue, unerwartete Situation, während der untere Text die Pointe oder die konkrete, oft dramatische Handlung liefert und die Verärgerung des Sprechers hervorhebt.",
+  "situations_en": [
+   "I was going to sleep but now I'm doing taxes",
+   "We were chilling but now we're moving furniture",
+   "I was cooking but now I'm eating cereal",
+   "We were talking but now we're arguing",
+   "I was relaxing but now I'm cleaning the house"
+  ],
+  "situations_de": [
+   "Ich wollte schlafen, aber jetzt mache ich Steuererklärung",
+   "Wir haben entspannt, aber jetzt räumen wir um",
+   "Ich habe gekocht, aber jetzt esse ich Cornflakes",
+   "Wir haben geredet, aber jetzt streiten wir",
+   "Ich habe relaxt, aber jetzt putze ich die Wohnung"
+  ]
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "template": "captain-america",
+ "name": "Captain America Elevator Fight Dad Joke",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Have you ever eaten a clock?",
+    "No, why?",
+    "It's time consuming."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the tense standoff from 'Captain America: The Winter Soldier' to frame a conversation where a seemingly serious question is met with a groan-worthy pun. The final panel depicts the physical and social chaos that ensues when the joke is delivered. It is used to mock someone for making a terrible dad joke or to express the violent reaction to one.",
+  "meaning_de": "Dieses Meme nutzt die angespannte Konfrontation aus 'Captain America: The Winter Soldier', um ein Gespräch zu rahmen, in dem eine ernste Frage mit einem peinlichen Wortwitz beantwortet wird. Das letzte Bild zeigt den Chaos-Ausbruch, der durch den schlechten Witz ausgelöst wird. Es wird verwendet, um jemanden für einen schlechten 'Dad Joke' zu verspotten oder die heftige Reaktion darauf auszudrücken.",
+  "situations_en": [
+   "You just made the worst pun I've ever heard.",
+   "I'm going to have to end this friendship now.",
+   "That joke was so bad it hurt physically.",
+   "Please stop trying to be funny, it's painful.",
+   "I can't believe you actually said that out loud."
+  ],
+  "situations_de": [
+   "Du hast gerade den schlechtesten Witz erzählt.",
+   "Ich muss diese Freundschaft jetzt beenden.",
+   "Der Witz war so schlecht, dass es wehgetan hat.",
+   "Hör bitte auf, lustig sein zu wollen.",
+   "Ich kann nicht glauben, dass du das gesagt hast."
+  ]
+ }
+}

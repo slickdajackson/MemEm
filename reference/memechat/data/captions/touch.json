@@ -1,0 +1,32 @@
+{
+ "template": "touch",
+ "name": "Principal Skinner",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Am I so out of touch?",
+    "No, it's the children who are wrong."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses Principal Skinner's shift from a smug, self-assured pose to a shocked, wide-eyed stare to represent a sudden realization of one's own ignorance or error. The first text box usually poses a question or statement about a mistake, while the second box delivers the harsh, self-correcting answer or the truth the character didn't want to admit.",
+  "meaning_de": "Dieses Meme nutzt den Übergang von Principalskinner von einer selbstsicheren Pose zu einem schockierten Blick, um die plötzliche Erkenntnis der eigenen Unwissenheit oder eines Fehlers darzustellen. Der erste Textbereich stellt meist eine Frage oder Aussage über einen Fehler, während der zweite die harte, selbstkorrigierende Antwort oder die Wahrheit liefert, die der Charakter nicht einräumen wollte.",
+  "situations_en": [
+   "I thought I was right about the code, but it's actually broken.",
+   "I'm not bad at cooking, the recipe is just terrible.",
+   "I'm not out of touch, you guys are just weird.",
+   "I didn't make a mistake, the universe is against me.",
+   "I'm not tired, I'm just running on pure spite."
+  ],
+  "situations_de": [
+   "Ich dachte, ich habe recht mit dem Code, aber er ist kaputt.",
+   "Ich koche nicht schlecht, das Rezept ist einfach schrecklich.",
+   "Ich bin nicht out of touch, ihr seid einfach seltsam.",
+   "Ich habe keinen Fehler gemacht, das Universum ist gegen mich.",
+   "Ich bin nicht müde, ich laufe nur auf reinem Hass."
+  ]
+ }
+}

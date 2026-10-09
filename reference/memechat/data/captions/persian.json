@@ -1,0 +1,32 @@
+{
+ "template": "persian",
+ "name": "Persian Cat Room Guardian",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "when you wake up from a nap",
+    "and your mom starts yelling at you"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a white Persian cat with a wide-eyed, shocked expression, sitting in a defensive or startled posture. It is used to express sudden surprise, confusion, or a feeling of being caught off guard. The top text usually describes the unexpected event, while the bottom text explains the resulting reaction or the source of the shock.",
+  "meaning_de": "Dieses Meme zeigt einen weißen Perserkater mit einem schockierten, weit aufgerissenen Blick, der in einer defensiven Haltung sitzt. Es wird verwendet, um plötzliche Überraschung, Verwirrung oder das Gefühl zu ausdrücken, überrascht zu werden. Der obere Text beschreibt das unerwartete Ereignis, während der untere Text die daraus resultierende Reaktion erklärt.",
+  "situations_en": [
+   "I just opened my email and saw 500 new messages",
+   "My boss just asked for the project by tomorrow",
+   "I accidentally replied all to the entire company",
+   "My phone battery died right before the exam",
+   "I just realized I left the stove on for 3 hours"
+  ],
+  "situations_de": [
+   "Ich habe gerade meine E-Mail-App geöffnet und 500 neue Nachrichten gesehen",
+   "Mein Chef hat gerade verlangt, das Projekt bis morgen fertig zu haben",
+   "Ich habe versehentlich an das gesamte Unternehmen geantwortet",
+   "Mein Handy-Akku ist kurz vor der Prüfung leer gegangen",
+   "Ich habe gerade gemerkt, dass ich den Herd 3 Stunden lang an hatte"
+  ]
+ }
+}

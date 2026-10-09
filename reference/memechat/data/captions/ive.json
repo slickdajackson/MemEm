@@ -1,0 +1,32 @@
+{
+ "template": "ive",
+ "name": "Jony Ive Redesigns Things",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "we think",
+    "you'll love it"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Jony Ive, the famous Apple designer, looking smug and confident while explaining something. It is used to mock over-engineered, unnecessary, or pretentious changes to everyday objects, where the first text box describes the original, functional item and the second box describes the absurd 'improvement'.",
+  "meaning_de": "Dieses Meme zeigt Jony Ive, den berühmten Apple-Designer, der selbstbewusst und überheblich etwas erklärt. Es wird verwendet, um übertriebene, unnötige oder prätentiöse Änderungen an Alltagsdingen zu verspotten, wobei der erste Text das ursprüngliche, funktionale Objekt beschreibt und der zweite die absurde 'Verbesserung'.",
+  "situations_en": [
+   "I replaced my coffee mug with a 3D printed titanium cup",
+   "The new remote has 40 buttons instead of 4",
+   "I redesigned the door handle to be a touchscreen",
+   "Your new keyboard has no physical keys, just a laser",
+   "I turned the light switch into a voice-activated smart hub"
+  ],
+  "situations_de": [
+   "Ich habe meine Tasse durch eine 3D-gedruckte Titan-Tasse ersetzt",
+   "Die neue Fernbedienung hat 40 statt 4 Tasten",
+   "Ich habe den Türknauf in ein Touchscreen-Display umgewandelt",
+   "Deine neue Tastatur hat keine Tasten, nur einen Laser",
+   "Ich habe den Lichtschalter in einen Sprachassistenten umgewandelt"
+  ]
+ }
+}

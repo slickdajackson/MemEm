@@ -1,0 +1,32 @@
+{
+ "template": "mw",
+ "name": "I Guarantee It",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "you're gonna like the way you look",
+    "i guarantee it"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a confident, smiling older man (often identified as George Lucas) who is used to express absolute certainty and assurance. The top text usually presents a claim, prediction, or reassurance, while the bottom text is fixed to 'i guarantee it' to emphasize that the speaker is 100% sure about the statement.",
+  "meaning_de": "Dieses Meme zeigt einen selbstbewussten, lächelnden älteren Mann (oft als George Lucas identifiziert), der verwendet wird, um absolute Gewissheit und Sicherheit auszudrücken. Der obere Text präsentiert meist eine Behauptung, Vorhersage oder Zusicherung, während der untere Text auf 'ich garantiere es' festgelegt ist, um zu betonen, dass der Sprecher sich zu 100 % sicher ist.",
+  "situations_en": [
+   "I told you the code would work, i guarantee it",
+   "You will love this new restaurant, i guarantee it",
+   "The deadline is tomorrow, i guarantee it",
+   "This is the best pizza in town, i guarantee it",
+   "I will fix the bug by lunch, i guarantee it"
+  ],
+  "situations_de": [
+   "Ich habe dir gesagt, dass der Code funktioniert, ich garantiere es",
+   "Du wirst dieses neue Restaurant lieben, ich garantiere es",
+   "Die Deadline ist morgen, ich garantiere es",
+   "Das ist die beste Pizza in der Stadt, ich garantiere es",
+   "Ich werde den Bug bis Mittag beheben, ich garantiere es"
+  ]
+ }
+}

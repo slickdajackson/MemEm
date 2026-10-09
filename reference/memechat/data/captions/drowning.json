@@ -1,0 +1,33 @@
+{
+ "template": "drowning",
+ "name": "Drowning High Five",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Me Asking for Help",
+    "Online Commenter",
+    "I'm having that problem too."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a person asking for help or attention, only to be met with a dismissive or unhelpful response that leads to their failure or 'drowning'. It expresses frustration, betrayal, and the feeling of being let down by someone who should have supported you. The text boxes are used to describe the initial plea, the inadequate or sarcastic response, and the resulting negative outcome.",
+  "meaning_de": "Dieses Meme zeigt eine Person, die um Hilfe oder Aufmerksamkeit bittet, nur um auf eine abweisende oder unhilfsame Antwort zu stoßen, die zu ihrem Scheitern oder 'Ertrinken' führt. Es drückt Frustration, Verrat und das Gefühl aus, von jemandem im Stich gelassen zu werden, der einen hätte unterstützen sollen. Die Textfelder werden verwendet, um die anfängliche Bitte, die unzureichende oder sarkastische Antwort und das daraus resultierende negative Ergebnis zu beschreiben.",
+  "situations_en": [
+   "I asked for code help",
+   "You said 'google it'",
+   "My app crashed and I'm stuck",
+   "I needed a ride to the airport",
+   "You said 'good luck' and left me stranded"
+  ],
+  "situations_de": [
+   "Ich habe um Hilfe beim Code gebeten",
+   "Du hast gesagt 'Google es'",
+   "Meine App ist abgestürzt und ich stehe da",
+   "Ich brauchte eine Fahrt zum Flughafen",
+   "Du hast 'viel Glück' gesagt und mich stehen lassen"
+  ]
+ }
+}

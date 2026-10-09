@@ -1,0 +1,32 @@
+{
+ "template": "crazypills",
+ "name": "I Feel Like I'm Taking Crazy Pills",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "i feel like i'm taking crazy pills"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a man with an intense, manic expression, expressing a feeling of extreme confusion, chaos, or a sudden shift in mental state. The top text box is used to describe a specific event or situation, while the bottom text is typically fixed to the phrase 'i feel like i'm taking crazy pills' to emphasize the resulting disorientation.",
+  "meaning_de": "Dieses Meme zeigt einen Mann mit einem intensiven, manischen Gesichtsausdruck und drückt ein Gefühl von extremer Verwirrung, Chaos oder einem plötzlichen Wechsel im mentalen Zustand aus. Das obere Textfeld wird verwendet, um ein bestimmtes Ereignis oder eine Situation zu beschreiben, während der untere Text in der Regel auf 'i feel like i'm taking crazy pills' (ich fühle mich so, als würde ich verrückte Pillen nehmen) festgelegt ist, um die daraus resultierende Desorientierung zu betonen.",
+  "situations_en": [
+   "I just saw a cat riding a bicycle",
+   "My code works but I have no idea why",
+   "The plot twist was absolutely unhinged",
+   "I woke up and everything is upside down",
+   "My boss just said we're working on the weekend"
+  ],
+  "situations_de": [
+   "Ich habe gerade eine Katze auf einem Fahrrad gesehen",
+   "Mein Code funktioniert, aber ich weiß nicht warum",
+   "Der Plot Twist war absolut durchgeknallt",
+   "Ich bin aufgewacht und alles ist verkehrt herum",
+   "Mein Chef hat gerade gesagt, wir arbeiten am Wochenende"
+  ]
+ }
+}

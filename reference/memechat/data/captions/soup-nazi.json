@@ -1,0 +1,153 @@
+{
+ "template": "soup-nazi",
+ "name": "No Soup for You",
+ "matched": [
+  "loc:soup nazi"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "no soup for you!",
+    ""
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "¡Ninguna #SOPA",
+    "Para ti!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no next gen-xbox",
+    "on e3 for you"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no next gen",
+    "xbox for you"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no next-gen",
+    "xbox for you"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no gps",
+    "for you"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "....no gps...",
+    "...for you..."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "!!... no hot page...",
+    ".... for you.....!!!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "!!no hot page",
+    "......for you...!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "...no hot page",
+    "for you!!!!!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "AGRURAS CUANDO COMES SALSAS",
+    "No OMEPRAZOL FOR YOU!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "NO OMEPRAZOL FOR YOU"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "NO CUP",
+    "FOR YOU!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no",
+    "cup for you"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "NO SALE for you",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "dfgdgdfg",
+    "df"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "NO BREAKS",
+    "FOR YOU"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "no flex",
+    "for you!"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a stern chef pointing a finger, used to express a firm refusal, denial, or rejection of a request or idea. The text boxes are typically split to complete the phrase 'No [thing] for you,' where the first box contains the specific thing being denied and the second box contains the phrase 'for you.'",
+  "meaning_de": "Dieses Meme zeigt einen strengen Koch, der mit dem Finger zeigt, und wird verwendet, um eine feste Verweigerung oder Ablehnung auszudrücken. Die Textfelder werden verwendet, um den Satz 'Kein [Ding] für dich' zu vervollständigen, wobei das erste Feld das verweigerte Ding und das zweite 'für dich' enthält.",
+  "situations_en": [
+   "I really want to play that new game on my old console.",
+   "Can I just borrow your car for the weekend?",
+   "I think we should skip the meeting and just eat pizza.",
+   "Is there any chance you will pay for my dinner?",
+   "I want to go to the party, but I have to study."
+  ],
+  "situations_de": [
+   "Ich will unbedingt das neue Spiel auf meiner alten Konsole spielen.",
+   "Kann ich mir dein Auto am Wochenende ausleihen?",
+   "Ich denke, wir sollten das Meeting absagen und Pizza essen.",
+   "Gibt es eine Chance, dass du mein Abendessen bezahlst?",
+   "Ich will zur Party, aber ich muss lernen."
+  ]
+ }
+}

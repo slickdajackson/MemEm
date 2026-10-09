@@ -1,0 +1,33 @@
+{
+ "template": "mouth",
+ "name": "Woman Holding Dog's Mouth",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Sales Team presenting the solution in PowerPoint",
+    "Excited Customer",
+    "Engineering Team knowing the solution is not technically possible"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a situation where one party is excitedly pushing forward an idea while another party is silently suppressing the truth that it is impossible or a bad idea. The humor comes from the contrast between the enthusiastic 'customer' or 'manager' and the resigned, suppressed reality of the 'engineer' or 'expert'. The text boxes are used to label the three roles: the one forcing the issue, the one being forced to agree, and the one holding back the truth.",
+  "meaning_de": "Dieses Meme zeigt eine Situation, in der eine Partei eine Idee enthusiastisch vorantreibt, während eine andere Partei schweigend die Wahrheit unterdrückt, dass sie unmöglich oder eine schlechte Idee ist. Der Humor entsteht durch den Kontrast zwischen dem begeisterten 'Kunden' oder 'Manager' und dem resignierten, unterdrückten Realitätssinn des 'Ingenieurs' oder 'Experten'. Die Textfelder werden verwendet, um die drei Rollen zu benennen: den, der das Thema erzwingt, den, der gezwungen wird zuzustimmen, und den, der die Wahrheit zurückhält.",
+  "situations_en": [
+   "Boss wants to launch the app before testing is done",
+   "Client asks for a feature that breaks the entire backend",
+   "Marketing promises a feature that Engineering says is impossible",
+   "PM is excited about a deadline that is physically impossible",
+   "CEO wants to rewrite the codebase in a weekend"
+  ],
+  "situations_de": [
+   "Chef will die App vor dem Testen veröffentlichen",
+   "Kunde will ein Feature, das den ganzen Backend kaputt macht",
+   "Marketing verspricht ein Feature, das Engineering unmöglich nennt",
+   "PM ist begeistert von einem unrealistischen Deadline",
+   "CEO will den Codebase in einem Wochenende neu schreiben"
+  ]
+ }
+}

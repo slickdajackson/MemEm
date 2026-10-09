@@ -1,0 +1,32 @@
+{
+ "template": "leo",
+ "name": "Leo Strutting",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "I have no idea",
+    "what I am doing"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Leonardo DiCaprio walking with a confident, slightly confused, or oblivious expression, often looking up or away while gesturing. It is used to express a feeling of being completely lost, clueless, or out of one's depth while still trying to act cool or composed. The text boxes typically contrast a confident action with a lack of understanding, such as 'I have no idea' and 'what I am doing'.",
+  "meaning_de": "Dieses Meme zeigt Leonardo DiCaprio, der mit einem selbstbewussten, aber leicht verwirrten oder ahnungslosen Gesichtsausdruck spaziert. Es wird verwendet, um das Gefühl auszudrücken, völlig orientierungslos oder überfordert zu sein, während man trotzdem versucht, cool oder gelassen zu wirken. Die Textfelder stellen oft ein selbstsicheres Handeln dem Fehlen von Verständnis gegenüber, z. B. 'Ich habe keine Ahnung' und 'was ich tue'.",
+  "situations_en": [
+   "I just deleted the entire project folder",
+   "I'm presenting to the board right now",
+   "I have no idea how I got here",
+   "I'm driving but I'm lost",
+   "I'm pretending to know what I'm doing"
+  ],
+  "situations_de": [
+   "Ich habe gerade den ganzen Projektordner gelöscht",
+   "Ich halte gerade einen Vortrag vor dem Vorstand",
+   "Ich habe keine Ahnung, wie ich hier gelandet bin",
+   "Ich fahre Auto, aber ich habe mich verfahren",
+   "Ich tue so, als wüsste ich, was ich tue"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "fine",
+ "name": "This is Fine",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "this is fine"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a dog sitting calmly in a burning room, expressing a sarcastic or delusional attitude of 'everything is okay' despite an obvious disaster. The text boxes are typically used to describe the catastrophic situation in the first box and the character's absurdly calm reaction in the second.",
+  "meaning_de": "Dieses Meme zeigt einen Hund, der ruhig in einem brennenden Raum sitzt und eine sarkastische oder delusionalistische Haltung von 'alles ist in Ordnung' trotz eines offensichtlichen Desasters ausdrückt. Die Textfelder werden typischerweise verwendet, um die katastrophale Situation im ersten Feld und die absurd ruhige Reaktion des Charakters im zweiten zu beschreiben.",
+  "situations_en": [
+   "My code is on fire and I have no idea why",
+   "The server crashed again and I'm just staring at the screen",
+   "I missed the deadline by 3 days but I'm still working on it",
+   "My house is literally on fire but I'm making coffee",
+   "I just deleted the production database and I'm chilling"
+  ],
+  "situations_de": [
+   "Mein Code brennt und ich habe keine Ahnung warum",
+   "Der Server ist wieder abgestürzt und ich starre nur auf den Bildschirm",
+   "Ich habe die Deadline um 3 Tage verpasst, arbeite aber weiter",
+   "Mein Haus brennt buchstäblich, aber ich mache mir Kaffee",
+   "Ich habe gerade die Produktions-Datenbank gelöscht und entspanne mich"
+  ]
+ }
+}

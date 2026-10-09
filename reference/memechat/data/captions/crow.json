@@ -1,0 +1,32 @@
+{
+ "template": "crow",
+ "name": "Get Better Material",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Caw Caw Caw",
+    "Caw Caw Caw Caw Caw Caw"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a bird performing a repetitive or low-effort joke that gets mocked by an audience. The punchline reveals that the bird is actually just reading from a stack of blank papers, implying that the 'material' is empty or that the performer is just going through the motions without substance. It is used to mock someone for being boring, repetitive, or lacking originality.",
+  "meaning_de": "Dieses Meme zeigt einen Vogel, der einen repetitiven oder faulen Witz vorträgt, der vom Publikum verspottet wird. Die Pointe enthüllt, dass der Vogel tatsächlich nur aus einem Stapel leerer Papiere liest, was andeutet, dass das 'Material' leer ist oder der Darsteller nur die Bewegungen macht, ohne Substanz zu haben. Es wird verwendet, um jemanden dafür zu verspotten, dass er langweilig, repetitiv oder ohne Originalität ist.",
+  "situations_en": [
+   "I tried to be funny but everyone ignored me",
+   "My stand-up special was just me saying 'um' for an hour",
+   "You posted the same meme for the 10th time today",
+   "My creative writing is just the word 'the' repeated",
+   "I have no new jokes, I'm just reading the script"
+  ],
+  "situations_de": [
+   "Ich habe versucht, lustig zu sein, aber alle haben mich ignoriert",
+   "Mein Stand-up-Special war nur ich, die eine Stunde lang 'äh' sagt",
+   "Du hast heute zum 10. Mal dasselbe Meme gepostet",
+   "Mein kreatives Schreiben ist nur das Wort 'der' wiederholt",
+   "Ich habe keine neuen Witze, ich lese nur das Skript"
+  ]
+ }
+}

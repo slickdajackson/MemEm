@@ -1,0 +1,34 @@
+{
+ "template": "astronaut",
+ "name": "Always Has Been",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Wait, it's round?",
+    "Always has been",
+    "Flat Earther",
+    "Science"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is used to mock someone for questioning a well-established fact or scientific consensus, implying that the truth has been obvious all along. It expresses a tone of smugness, condescension, or exasperation at the other person's ignorance. The text boxes typically follow the pattern: [The ignorant question] -> [The obvious truth] -> [The person asking] -> [The field of truth].",
+  "meaning_de": "Dieser Meme wird verwendet, um jemanden zu verspotten, der einen allgemein anerkannten Fakt oder wissenschaftlichen Konsens in Frage stellt, und impliziert, dass die Wahrheit seit jeher offensichtlich war. Er drückt eine Haltung von Überlegenheit, Herablassung oder Frust über die Unwissenheit des anderen aus. Die Textfelder folgen in der Regel dem Muster: [Die unwissende Frage] -> [Die offensichtliche Wahrheit] -> [Die Person, die fragt] -> [Das Fachgebiet der Wahrheit].",
+  "situations_en": [
+   "Is the internet actually real?",
+   "I think the moon is a hologram.",
+   "Does gravity actually exist?",
+   "I'm pretty sure we live on a cube.",
+   "Is the sun actually a star?"
+  ],
+  "situations_de": [
+   "Ist das Internet wirklich real?",
+   "Ich glaube, der Mond ist ein Hologramm.",
+   "Existiert Schwerkraft wirklich?",
+   "Ich bin mir ziemlich sicher, dass wir auf einem Würfel leben.",
+   "Ist die Sonne tatsächlich ein Stern?"
+  ]
+ }
+}

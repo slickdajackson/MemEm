@@ -1,0 +1,36 @@
+{
+ "template": "stop",
+ "name": "Stop It Patrick You're Scaring Him",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "I'm claustrophobic.",
+    "What does \"claustrophobic\" mean?",
+    "It means he's afraid of Santa Claus.",
+    "No, it doesn't.",
+    "HO-HO-HO",
+    "Stop it, Patrick, you're scaring him!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme template is used to mock a situation where someone is being confused or frightened by a simple, silly, or repetitive explanation. The first two boxes set up a misunderstanding, the middle boxes show the escalation of the confusion, and the final box delivers the punchline where the innocent bystander (SpongeBob) is overwhelmed by the absurdity of the situation.",
+  "meaning_de": "Dieses Meme-Template wird verwendet, um eine Situation zu verspotten, in der jemand durch eine simple, dumme oder wiederholte Erklärung verwirrt oder verängstigt wird. Die ersten beiden Kästchen führen zu einem Missverständnis, die mittleren zeigen die Eskalation der Verwirrung, und das letzte Kästchen liefert den Punchline, in dem der unschuldige Beobachter (SpongeBob) von der Absurdität der Situation überwältigt wird.",
+  "situations_en": [
+   "You keep asking me what a 'meme' is. I'm getting tired of explaining it.",
+   "I told you the password is 'password'. Why are you still typing '123456'?",
+   "I'm trying to explain the plot of the movie, but you keep asking about the cat.",
+   "You asked me to define 'define'. I don't know what to do anymore.",
+   "I said the Wi-Fi is down. I didn't say the internet is dead."
+  ],
+  "situations_de": [
+   "Du fragst mich immer noch, was ein 'Meme' ist. Ich hab keine Lust mehr zu erklären.",
+   "Ich hab dir gesagt, das Passwort ist 'Passwort'. Warum tippst du immer noch '123456'?",
+   "Ich versuche, die Handlung zu erklären, aber du fragst nur nach der Katze.",
+   "Du hast mich gebeten, 'definieren' zu definieren. Ich weiß nicht mehr, was ich tun soll.",
+   "Ich habe gesagt, das WLAN ist down. Ich habe nicht gesagt, das Internet ist tot."
+  ]
+ }
+}

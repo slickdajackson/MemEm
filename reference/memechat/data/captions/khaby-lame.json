@@ -1,0 +1,32 @@
+{
+ "template": "khaby-lame",
+ "name": "Khaby Lame Shrug",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Bad mood?",
+    "Laugh at memes"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Khaby Lame performing his signature shrug to express that a complex problem or situation is actually very simple and easy to handle. It is used to dismiss overthinking or to show that the solution is obvious. The text boxes are used to contrast a complicated or negative premise with a simple, logical solution or action.",
+  "meaning_de": "Dieses Meme zeigt Khaby Lame bei seiner typischen Schulterzuck-Geste, um auszudrücken, dass ein komplexes Problem oder eine Situation in Wirklichkeit sehr einfach und leicht zu handhaben ist. Es wird verwendet, um übermäßiges Nachdenken zu entwerten oder zu zeigen, dass die Lösung offensichtlich ist. Die Textfelder werden verwendet, um eine komplizierte oder negative Prämisse mit einer einfachen, logischen Lösung oder Handlung zu kontrastieren.",
+  "situations_en": [
+   "You're spending 3 hours on a 5-minute task",
+   "Why are you overcomplicating this?",
+   "The fix is just one click",
+   "Stop overthinking the obvious",
+   "It's not a mystery, just do it"
+  ],
+  "situations_de": [
+   "Du verbringst 3 Stunden mit einer 5-Minuten-Aufgabe",
+   "Warum komplizierst du das?",
+   "Die Lösung ist nur ein Klick",
+   "Hör auf, das Offensichtliche zu überdenken",
+   "Das ist kein Rätsel, mach es einfach"
+  ]
+ }
+}

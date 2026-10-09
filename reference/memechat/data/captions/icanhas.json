@@ -1,0 +1,32 @@
+{
+ "template": "icanhas",
+ "name": "I Can Has Cheezburger?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "i can has",
+    "this meme?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a grey cat with a wide-eyed, open-mouthed expression that conveys intense eagerness and innocent excitement. It is used to express a strong, almost childlike desire for something, often with a humorous or 'lolcat' tone. The text boxes are typically used to frame the request, with the first box stating the desire (often in broken English like 'i can has') and the second box specifying the object.",
+  "meaning_de": "Dieses Meme zeigt eine graue Katze mit einem großen, offenen Mund und aufgerissenen Augen, die intensive Euphorie und kindliche Begeisterung ausdrückt. Es wird verwendet, um einen starken Wunsch nach etwas zu zeigen, oft mit einem humorvollen oder 'lolcat'-Ton. Die Textfelder werden genutzt, um die Bitte zu formulieren, wobei das erste Feld den Wunsch (oft in gebrochenem Englisch) und das zweite das Objekt enthält.",
+  "situations_en": [
+   "I can has the last slice of pizza?",
+   "Can I have your seat for a minute?",
+   "I can has a hug right now?",
+   "Please let me have the last cookie.",
+   "I can has a day off work?"
+  ],
+  "situations_de": [
+   "Kann ich noch die letzte Pizza-Scheibe haben?",
+   "Darf ich kurz deinen Platz übernehmen?",
+   "Kann ich bitte ein Kuscheln haben?",
+   "Gib mir bitte das letzte Kekskrümel.",
+   "Kann ich mir einen freien Tag nehmen?"
+  ]
+ }
+}

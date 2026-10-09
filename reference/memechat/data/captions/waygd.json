@@ -1,0 +1,32 @@
+{
+ "template": "waygd",
+ "name": "What Are Ya Gonna Do?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "yeah...",
+    "what are ya gonna do?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a smug, resigned, or chaotic acceptance of a situation, often implying that the speaker has done something questionable or is in a bad spot but doesn't care. The first text box usually describes the problem or a dare, while the second box delivers the defiant or shrugging response, 'what are ya gonna do?'.",
+  "meaning_de": "Dieses Meme drückt eine selbstzufriedene, resignierte oder chaotische Akzeptanz einer Situation aus, oft mit der implizierten Bedeutung, dass der Sprecher etwas Fragwürdiges getan hat oder in einer schlechten Lage steckt, es ihm aber egal ist. Der erste Textfeld beschreibt in der Regel das Problem, während das zweite die abwehrhafte oder gleichgültige Antwort 'was soll ich denn machen?' liefert.",
+  "situations_en": [
+   "I just deleted the entire database",
+   "I told my boss I quit via text",
+   "I bought a boat I can't afford",
+   "I'm eating pizza for breakfast again",
+   "I replied all to a company email"
+  ],
+  "situations_de": [
+   "Ich habe gerade die ganze Datenbank gelöscht",
+   "Ich habe meinem Chef per SMS gekündigt",
+   "Ich habe ein Boot gekauft, das ich mir nicht leisten kann",
+   "Ich esse wieder Pizza zum Frühstück",
+   "Ich habe auf eine Firmenmail an alle geantwortet"
+  ]
+ }
+}

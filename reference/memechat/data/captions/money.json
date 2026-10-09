@@ -1,0 +1,32 @@
+{
+ "template": "money",
+ "name": "Shut Up and Take My Money!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "shut up and",
+    "take my money!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses an overwhelming desire to purchase something immediately, often in a humorous or exaggerated way. The character's intense expression conveys a mix of excitement and desperation to get their hands on a product. The text boxes are typically used to split the phrase 'shut up and take my money' or to insert a specific product name and the command to buy it.",
+  "meaning_de": "Dieser Meme drückt ein übermäßiges Verlangen aus, etwas sofort zu kaufen, oft auf humorvolle oder übertriebene Weise. Der intensive Gesichtsausdruck des Charakters vermittelt eine Mischung aus Begeisterung und Verzweiflung, an ein Produkt zu kommen. Die Textfelder werden typischerweise verwendet, um die Phrase 'Halt die Klappe und nimm mein Geld' zu teilen oder einen Produktnamen und den Kaufbefehl einzufügen.",
+  "situations_en": [
+   "I just saw the new iPhone and I need it now",
+   "This limited edition sneaker drop is insane",
+   "I can't believe they are selling this for only 50 bucks",
+   "My wallet is empty but I still want this",
+   "You have to let me buy this right now"
+  ],
+  "situations_de": [
+   "Ich hab das neue iPhone gesehen und brauche es sofort",
+   "Dieser Sneaker-Drop in limitierter Auflage ist der Wahnsinn",
+   "Ich kann nicht glauben, dass sie das für nur 50 Euro verkaufen",
+   "Mein Geldbeutel ist leer, aber ich will es trotzdem",
+   "Du musst mir das jetzt sofort verkaufen"
+  ]
+ }
+}

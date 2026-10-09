@@ -1,0 +1,32 @@
+{
+ "template": "bender",
+ "name": "I'm Going to Build My Own Theme Park",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "i'm going to build my own theme park",
+    "with blackjack and hookers"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the character Bender from Futurama to express a bold, often absurd, or over-the-top plan to do something. The first text box states the main idea or goal, while the second box provides a humorous, unexpected, or exaggerated twist to that plan.",
+  "meaning_de": "Dieser Meme nutzt den Charakter Bender aus Futurama, um einen kühnen, oft absurden oder übertriebenen Plan auszudrücken. Die erste Textbox formuliert die Hauptidee oder das Ziel, während die zweite Box einen humorvollen, unerwarteten oder übertriebenen Twist zu diesem Plan liefert.",
+  "situations_en": [
+   "I'm going to start a business",
+   "I'm going to learn how to code",
+   "I'm going to get fit this summer",
+   "I'm going to write a novel",
+   "I'm going to travel the world"
+  ],
+  "situations_de": [
+   "Ich gründe ein Unternehmen",
+   "Ich lerne Programmieren",
+   "Ich werde diesen Sommer fit",
+   "Ich schreibe einen Roman",
+   "Ich reise um die Welt"
+  ]
+ }
+}

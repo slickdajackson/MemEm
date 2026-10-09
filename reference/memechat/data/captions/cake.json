@@ -1,0 +1,32 @@
+{
+ "template": "cake",
+ "name": "Office Space Milton",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "I was told there would be cake"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features the character Milton from the movie 'Office Space', who is known for his obsessive, rigid, and soul-crushing dedication to his boring corporate job. The top text usually sets up a situation where someone is forced to do something tedious, unfair, or annoying, while the bottom text is the character's deadpan, unenthusiastic acceptance of the task. It is used to express a sense of defeated resignation, apathy, or the feeling of being a 'corporate drone' with no will of one's own.",
+  "meaning_de": "Dieses Meme zeigt den Charakter Milton aus dem Film 'Office Space', der für seine obsessive, starre und seelenzerstörende Hingabe zu seinem langweiligen Bürojob bekannt ist. Der obere Text beschreibt meist eine Situation, in der jemand gezwungen ist, etwas Langweiliges, Unfaires oder Ärgerliches zu tun, während der untere Text die ausdruckslose, unbegeisterte Akzeptanz der Aufgabe darstellt. Es wird verwendet, um ein Gefühl von resignierter Resignation, Apathie oder das Gefühl, ein 'Korporationsdrohne' ohne eigenen Willen zu sein, zum Ausdruck zu bringen.",
+  "situations_en": [
+   "I have to work on the weekend again",
+   "The boss just assigned me 10 new tasks",
+   "I have to attend this 3-hour meeting",
+   "I am so done with this project",
+   "I have to clean the office kitchen today"
+  ],
+  "situations_de": [
+   "Ich muss am Wochenende wieder arbeiten",
+   "Der Chef hat mir gerade 10 neue Aufgaben gegeben",
+   "Ich muss an diesem 3-Stunden-Meeting teilnehmen",
+   "Ich habe die Schnauze voll von diesem Projekt",
+   "Ich muss heute das Büro-Küchen reinigen"
+  ]
+ }
+}

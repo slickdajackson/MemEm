@@ -1,0 +1,42 @@
+{
+ "template": "snek",
+ "name": "Skeptical Snake",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "when you already checked that one leaf",
+    "and it starts moving"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a feeling of quiet suspicion, disbelief, or passive-aggressive judgment. The text boxes are used to set up a situation or an excuse in the first box, followed by a contradictory fact or a skeptical observation in the second box, mimicking the snake's unblinking stare.",
+  "meaning_de": "Dieses Meme drückt ein Gefühl von stiller Skepsis, Unglauben oder passiv-aggressiver Beurteilung aus. Die Textfelder werden verwendet, um im ersten Feld eine Situation oder eine Ausrede aufzubauen, gefolgt von einer widersprüchlichen Tatsache oder einer skeptischen Beobachtung im zweiten Feld, was den unblinzelnden Blick der Schlange nachahmt.",
+  "situations_en": [
+   "I didn't eat the last slice of pizza",
+   "it's in your stomach",
+   "I was just testing the new keyboard",
+   "you typed 400 words of gibberish",
+   "I'm 10 minutes late because of traffic",
+   "you were seen at the gym",
+   "I didn't read the group chat",
+   "you're quoting a message from 2019",
+   "I'm too tired to argue",
+   "you just sent 50 memes"
+  ],
+  "situations_de": [
+   "Ich habe die letzte Pizza-Scheibe nicht gegessen",
+   "sie ist in deinem Bauch",
+   "Ich habe nur die neue Tastatur getestet",
+   "du hast 400 Wörter Unsinn getippt",
+   "Ich bin 10 Minuten zu spät wegen Stau",
+   "du wurde im Fitnessstudio gesehen",
+   "Ich habe den Gruppenchat nicht gelesen",
+   "du zitierst eine Nachricht von 2019",
+   "Ich bin zu müde, um zu streiten",
+   "du hast gerade 50 Memes geschickt"
+  ]
+ }
+}

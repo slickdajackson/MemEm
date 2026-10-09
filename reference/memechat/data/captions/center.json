@@ -1,0 +1,32 @@
+{
+ "template": "center",
+ "name": "What is this, a Center for Ants?!",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "what is this",
+    "a center for ants"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses mock outrage and disbelief at a situation that is absurdly small, insignificant, or pathetic. The first box describes the context or the object in question, and the second box delivers the punchline by comparing it to a 'center for ants' (a grand title for something tiny), highlighting the ridiculous gap between expectation and reality.",
+  "meaning_de": "Dieser Meme drückt mockierende Empörung und Unglauben über eine Situation aus, die absurd klein, unwichtig oder lächerlich ist. Das erste Feld beschreibt den Kontext oder das Objekt, und das zweite Feld liefert den Witz, indem es dieses mit einem 'Zentrum für Ameisen' vergleicht und so die absurde Diskrepanz zwischen Erwartung und Realität hervorhebt.",
+  "situations_en": [
+   "You spent 4 hours building a tiny sandcastle?",
+   "The 'giant' pizza you ordered was 6 inches.",
+   "Your 'epic' gaming setup is just a phone.",
+   "The 'massive' update was 2 megabytes.",
+   "He called his 100-person party a 'crowd'."
+  ],
+  "situations_de": [
+   "Du hast 4 Stunden für einen Mini-Sandkasten gebraucht?",
+   "Die 'riesige' Pizza war nur 15 Zentimeter groß.",
+   "Dein 'episches' Gaming-Setup ist nur ein Handy.",
+   "Das 'massive' Update war nur 2 Megabyte groß.",
+   "Er nannte seine 100-Personen-Party eine 'Menge'."
+  ]
+ }
+}

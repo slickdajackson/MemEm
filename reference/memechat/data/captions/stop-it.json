@@ -1,0 +1,32 @@
+{
+ "template": "stop-it",
+ "name": "Stop It, Get Some Help",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "stop it",
+    "get some help"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features Michael Jordan in a serious, stern pose, typically used to express strong disapproval, frustration, or a demand for someone to stop their annoying or foolish behavior. The top text usually states the specific action or behavior to cease, while the bottom text delivers the blunt command to seek professional help. It conveys an attitude of exasperation and a desire to shut down a conversation or situation immediately.",
+  "meaning_de": "Dieses Meme zeigt Michael Jordan in einer ernsthaften, strengen Pose und wird verwendet, um starke Ablehnung, Frustration oder die Forderung zu äußern, dass jemand sein nerviges oder dummes Verhalten einstellt. Der obere Text beschreibt meist die konkrete Handlung, die aufhören soll, während der untere Text den direkten Befehl ausspricht, professionelle Hilfe zu suchen. Es vermittelt eine Haltung der Verzweiflung und den Wunsch, eine Unterhaltung oder Situation sofort zu beenden.",
+  "situations_en": [
+   "I am literally going to eat the entire pizza by myself",
+   "I just bought a third gaming PC this week",
+   "I am going to try to dunk on a basketball hoop",
+   "I am going to text my ex right now",
+   "I am going to start a new business with no plan"
+  ],
+  "situations_de": [
+   "Ich werde die ganze Pizza allein aufessen",
+   "Ich habe mir diese Woche einen dritten Gaming-PC gekauft",
+   "Ich werde versuchen, auf einen Basketballkorb zu dunken",
+   "Ich werde jetzt meine Ex anrufen",
+   "Ich gründe ein Unternehmen ohne Plan"
+  ]
+ }
+}

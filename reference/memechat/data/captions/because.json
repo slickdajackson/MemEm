@@ -1,0 +1,32 @@
+{
+ "template": "because",
+ "name": "Men in Black",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Just because you see a Black man driving in a nice car... does not mean it's stolen.",
+    "...I stole that one, but not 'cause I'm Black!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a scene from the movie 'Men in Black' to express a defensive or reactive attitude, often in response to an accusation or a specific situation. The top box usually presents a statement, question, or accusation, while the bottom box contains the character's emphatic, often exaggerated, denial or justification. It is used to humorously defend oneself against a claim or to express a strong, slightly panicked reaction to a specific event.",
+  "meaning_de": "Dieses Meme verwendet eine Szene aus dem Film 'Men in Black', um eine defensive oder reaktive Haltung auszudrücken, oft als Reaktion auf eine Anschuldigung oder eine bestimmte Situation. Die obere Box präsentiert in der Regel eine Aussage, eine Frage oder eine Anschuldigung, während die untere Box die emphatische, oft übertriebene Verleugnung oder Rechtfertigung des Charakters enthält. Es wird verwendet, um sich humorvoll gegen eine Behauptung zu verteidigen oder um eine starke, leicht panische Reaktion auf ein bestimmtes Ereignis auszudrücken.",
+  "situations_en": [
+   "You think I'm cheating? I'm just studying!",
+   "You say I'm lazy? I'm just resting my eyes!",
+   "You think I'm broke? I'm just saving money!",
+   "You think I'm angry? I'm just passionate!",
+   "You think I'm lost? I'm just exploring!"
+  ],
+  "situations_de": [
+   "Du denkst, ich betrüge? Ich lerne nur!",
+   "Du sagst, ich bin faul? Ich ruhe nur meine Augen aus!",
+   "Du denkst, ich bin pleite? Ich spare nur Geld!",
+   "Du denkst, ich bin wütend? Ich bin nur leidenschaftlich!",
+   "Du denkst, ich habe mich verlaufen? Ich erkunde nur!"
+  ]
+ }
+}

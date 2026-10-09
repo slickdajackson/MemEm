@@ -1,0 +1,32 @@
+{
+ "template": "saltbae",
+ "name": "Salt Bae",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "pours salt on it"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features the influencer 'Salt Bae' performing his signature dramatic, slow-motion gesture of sprinkling salt. It is used to mock someone for being overly dramatic, pretentious, or acting superior about a trivial action. The first text box describes a mundane or simple situation, while the second box describes the exaggerated, 'chef's kiss' reaction to it.",
+  "meaning_de": "Dieses Meme zeigt den Influencer 'Salt Bae' bei seiner dramatischen, langsamen Geste, Salz zu streuen. Es wird verwendet, um jemanden zu verspotten, der übertrieben dramatisch, prätentiös oder überlegen über eine banale Handlung tut. Der erste Textkasten beschreibt eine alltägliche Situation, der zweite die übertriebene, 'Koch-Kuss'-Reaktion darauf.",
+  "situations_en": [
+   "I just added a pinch of salt to my pasta",
+   "I finally fixed the printer",
+   "I made a perfect omelet",
+   "I finally beat that level",
+   "I watered my plants"
+  ],
+  "situations_de": [
+   "Ich habe nur eine Prise Salz in meine Pasta gegeben",
+   "Ich habe den Drucker endlich repariert",
+   "Ich habe ein perfektes Omelett gemacht",
+   "Ich habe das Level endlich geschafft",
+   "Ich habe meine Pflanzen gegossen"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "older",
+ "name": "An Older Code Sir, But It Checks Out",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "it's an older meme sir",
+    "but it checks out"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a grudging acceptance of something outdated or unconventional that still functions correctly. The top text usually identifies the subject as old, legacy, or 'wrong' by modern standards, while the bottom text confirms that it works or is valid. It conveys a 'don't fix what isn't broken' attitude towards legacy systems or old habits.",
+  "meaning_de": "Dieses Meme drückt eine widerwillige Akzeptanz von etwas Altem oder Ungewöhnlichem aus, das dennoch funktioniert. Der obere Text bezeichnet das Subjekt oft als veraltet oder 'falsch' nach modernen Standards, während der untere Text bestätigt, dass es gültig ist. Es vermittelt eine 'Nicht reparieren, was nicht kaputt ist'-Haltung.",
+  "situations_en": [
+   "You're using jQuery in 2024?",
+   "Why is this code written in COBOL?",
+   "I still use a flip phone.",
+   "The build takes 10 minutes but it works.",
+   "I'm still using Windows 7."
+  ],
+  "situations_de": [
+   "Du nutzt noch jQuery in 2024?",
+   "Warum ist dieser Code in COBOL?",
+   "Ich benutze noch ein Klapphandy.",
+   "Der Build dauert 10 Min, aber es geht.",
+   "Ich nutze immer noch Windows 7."
+  ]
+ }
+}

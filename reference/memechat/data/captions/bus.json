@@ -1,0 +1,32 @@
+{
+ "template": "bus",
+ "name": "Two Guys on a Bus",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Postseason",
+    "Preseason"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a stark contrast between two experiences, usually representing a decline in quality or mood. The left box describes a bad or disappointing situation (the guy in the dark tunnel), while the right box describes a good or ideal situation (the guy in the sunny landscape). It is used to express that something has gone from great to terrible.",
+  "meaning_de": "Dieses Meme zeigt einen deutlichen Kontrast zwischen zwei Erfahrungen, was normalerweise einen Rückgang in der Qualität oder Stimmung darstellt. Der linke Textfeld beschreibt eine schlechte oder enttäuschende Situation (der Mann im dunklen Tunnel), während das rechte Textfeld eine gute oder ideale Situation beschreibt (der Mann in der sonnigen Landschaft). Es wird verwendet, um auszudrücken, dass etwas von großartig zu schrecklich geworden ist.",
+  "situations_en": [
+   "My phone battery life now vs. when I bought it",
+   "My mood on a Monday vs. a Friday",
+   "The game in the first half vs. the second half",
+   "My sleep schedule before the semester started",
+   "The internet speed at home vs. at work"
+  ],
+  "situations_de": [
+   "Meine Akkulaufzeit jetzt vs. beim Kauf",
+   "Meine Stimmung am Montag vs. am Freitag",
+   "Das Spiel in der ersten vs. zweiten Halbzeit",
+   "Mein Schlafrhythmus vor Semesterbeginn",
+   "Internetgeschwindigkeit zuhause vs. in der Arbeit"
+  ]
+ }
+}

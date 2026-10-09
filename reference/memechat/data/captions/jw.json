@@ -1,0 +1,32 @@
+{
+ "template": "jw",
+ "name": "Probably Not a Good Idea",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "you just went and made a new dinosaur?",
+    "probably not a good idea"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a reaction of shock, disbelief, or concern to a reckless or ill-advised action. The first text box describes the specific bad decision or chaotic event, while the second box delivers the punchline 'probably not a good idea' to emphasize the negative consequences.",
+  "meaning_de": "Dieser Meme drückt Schock, Unglauben oder Besorgnis über eine fahrlässige oder unkluge Handlung aus. Der erste Textfeld beschreibt die spezifische schlechte Entscheidung, während das zweite Feld den Witz 'wahrscheinlich keine gute Idee' liefert, um die negativen Konsequenzen zu betonen.",
+  "situations_en": [
+   "You deleted the production database?",
+   "I just replied all to the entire company",
+   "You bought a pet tiger?",
+   "I tried to fix the server by restarting it",
+   "You just posted that on social media?"
+  ],
+  "situations_de": [
+   "Du hast die Produktionsdatenbank gelöscht?",
+   "Ich habe gerade an alle im Unternehmen geantwortet",
+   "Du hast einen Haustiger gekauft?",
+   "Ich habe versucht, den Server neu zu starten",
+   "Du hast das gerade in den sozialen Medien gepostet?"
+  ]
+ }
+}

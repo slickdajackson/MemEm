@@ -1,0 +1,32 @@
+{
+ "template": "bihw",
+ "name": "But It's Honest Work",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "it ain't much",
+    "but it's honest work"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a smiling farmer in a field, expressing a sense of quiet pride and contentment with a simple, humble lifestyle. The text boxes are used to set up a modest or unglamorous situation in the first box, followed by the punchline 'but it's honest work' in the second to justify it with dignity.",
+  "meaning_de": "Dieses Meme zeigt einen lächelnden Farmer auf dem Feld und drückt eine stille Zufriedenheit mit einem einfachen, bescheidenen Lebensstil aus. Die Textfelder werden verwendet, um im ersten Feld eine bescheidene oder unglamouröse Situation zu beschreiben, gefolgt von der Pointe 'aber es ist ehrliche Arbeit' im zweiten Feld, um sie mit Würde zu rechtfertigen.",
+  "situations_en": [
+   "I just got a job cleaning toilets",
+   "My side hustle is selling used socks",
+   "I'm working as a parking attendant",
+   "I'm a professional dog walker",
+   "I got a job picking strawberries"
+  ],
+  "situations_de": [
+   "Ich habe einen Job als Toilettenreiniger bekommen",
+   "Mein Nebenjob ist der Verkauf von gebrauchten Socken",
+   "Ich arbeite als Parkwächter",
+   "Ich bin professioneller Hundegassi-Gänger",
+   "Ich habe einen Job als Erdbeerpflücker bekommen"
+  ]
+ }
+}

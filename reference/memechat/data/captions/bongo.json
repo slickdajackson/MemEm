@@ -1,0 +1,34 @@
+{
+ "template": "bongo",
+ "name": "Bongo Cat",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Any sound when you're trying to sleep",
+    "Max volume alarm when you have to wake up"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the Bongo Cat template to humorously contrast two states of being, typically highlighting a dramatic or ironic difference in intensity. The top box describes a calm, quiet, or low-effort situation, while the bottom box describes a loud, chaotic, or high-effort version of the same scenario. The visual of the cat flexing its muscles in the top panel and slumping in the bottom panel reinforces this shift in energy and attitude.",
+  "meaning_de": "Dieses Meme nutzt die Bongo Cat-Vorlage, um humorvoll zwei Zustände zu kontrastieren, die typischerweise einen dramatischen oder ironischen Unterschied in der Intensität hervorheben. Das obere Feld beschreibt eine ruhige, leise oder wenig anstrengende Situation, während das untere Feld eine laute, chaotische oder sehr anstrengende Version desselben Szenarios beschreibt. Die visuelle Darstellung der Katze, die oben ihre Muskeln anspannt und unten schlapp macht, unterstreicht diesen Wechsel in der Energie und Haltung.",
+  "situations_en": [
+   "My sleep schedule on weekends",
+   "My sleep schedule on weekdays",
+   "Me before the deadline",
+   "Me 5 minutes before the deadline",
+   "My mood on a sunny day",
+   "My mood when it rains"
+  ],
+  "situations_de": [
+   "Mein Schlafrhythmus am Wochenende",
+   "Mein Schlafrhythmus unter der Woche",
+   "Ich vor der Abgabefrist",
+   "Ich 5 Minuten vor der Abgabefrist",
+   "Meine Laune an einem sonnigen Tag",
+   "Meine Laune, wenn es regnet"
+  ]
+ }
+}

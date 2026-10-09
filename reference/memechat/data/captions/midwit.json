@@ -1,0 +1,24 @@
+{
+ "template": "midwit",
+ "name": "Midwit",
+ "matched": [],
+ "captions": [],
+ "meaning": {
+  "meaning_en": "This meme uses a normal distribution curve to categorize people into three groups: the 'dumb' on the left, the 'geniuses' on the right, and the 'midwits' in the middle. It expresses the idea that the average person is unremarkable and often insecure about their average status, while the extremes are either oblivious or superior. The text boxes are used to describe the specific behaviors or traits of the left group, the middle group, and the right group.",
+  "meaning_de": "Dieses Meme nutzt eine Normalverteilungskurve, um Menschen in drei Gruppen einzuteilen: die 'Dummen' links, die 'Genies' rechts und die 'Mittelmäßigen' in der Mitte. Es drückt die Idee aus, dass der Durchschnittsmensch unbedeutend und oft unsicher über seinen Durchschnittsstatus ist, während die Extreme entweder ahnungslos oder überlegen sind. Die Textfelder werden verwendet, um die spezifischen Verhaltensweisen oder Merkmale der linken, mittleren und rechten Gruppe zu beschreiben.",
+  "situations_en": [
+   "Everyone thinks they're special but most are just average",
+   "The middle 68% of people are the most insecure",
+   "Geniuses don't care, dummies don't know, midwits cry",
+   "Being average is the most stressful place to be",
+   "Why is the middle of the bell curve so sad?"
+  ],
+  "situations_de": [
+   "Alle denken, sie seien besonders, aber die meisten sind nur Durchschnitt",
+   "Die mittleren 68% der Menschen sind die unsichersten",
+   "Genies kümmern sich nicht, Dumme wissen es nicht, Mittelmäßige weinen",
+   "Durchschnittlich zu sein ist der stressigste Platz",
+   "Warum ist die Mitte der Glockenkurve so traurig?"
+  ]
+ }
+}

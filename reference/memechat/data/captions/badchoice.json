@@ -1,0 +1,41 @@
+{
+ "template": "badchoice",
+ "name": "Milk Was a Bad Choice",
+ "matched": [
+  "loc:anchorman"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "milk",
+    "was a bad choice"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Спрашивают у БГ: Какие способы повышения репутации вы знаете?",
+    "ДАЙТЕ Я ПОдуМАЮ"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a sense of regret, confusion, or self-deprecation after making a poor decision or facing an awkward situation. The first text box describes the action or choice, and the second box delivers the punchline, usually confirming that it was a mistake or highlighting the resulting awkwardness.",
+  "meaning_de": "Dieses Meme drückt Reue, Verwirrung oder Selbstironie nach einer schlechten Entscheidung oder einer peinlichen Situation aus. Das erste Textfeld beschreibt die Handlung oder Wahl, und das zweite Feld liefert den Pointe, die oft bestätigt, dass es ein Fehler war oder die daraus resultierende Peinlichkeit hervorhebt.",
+  "situations_en": [
+   "I just sent that email to the whole company instead of one person.",
+   "I tried to fix the sink and now the whole bathroom is flooded.",
+   "I said 'you too' when the waiter said 'enjoy your meal'.",
+   "I bought a plane ticket to the wrong city and now I'm stuck here.",
+   "I accidentally liked my ex's photo from 2014."
+  ],
+  "situations_de": [
+   "Ich habe gerade die E-Mail an die ganze Firma statt an eine Person geschickt.",
+   "Ich habe versucht, die Spüle zu reparieren, und jetzt ist das ganze Bad überflutet.",
+   "Ich habe 'dir auch' gesagt, als der Kellner 'guten Appetit' sagte.",
+   "Ich habe ein Flugticket in die falsche Stadt gekauft und stecke jetzt hier fest.",
+   "Ich habe versehentlich das Foto meiner Ex aus 2014 geliked."
+  ]
+ }
+}

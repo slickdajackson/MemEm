@@ -1,0 +1,32 @@
+{
+ "template": "crowd",
+ "name": "Soccer Celebration In A Bar",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Push to CI",
+    "It turns green"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a sudden, overwhelming success or a 'holy shit' moment, represented by a packed bar erupting in celebration. The top text box usually sets up a mundane or tense situation (like a task or a test), while the bottom text box delivers the unexpected, euphoric result that triggers the massive party.",
+  "meaning_de": "Dieses Meme drückt einen plötzlichen, überwältigenden Erfolg oder einen 'Heiliger Scheiß'-Moment aus, dargestellt durch eine vollgepackte Bar, die in Feierstimmung ausbricht. Der obere Textbereich setzt meist eine banale oder angespannte Situation (wie eine Aufgabe oder einen Test), während der untere Textbereich das unerwartete, euphorische Ergebnis liefert, das die große Party auslöst.",
+  "situations_en": [
+   "I finally fixed the bug after 3 days",
+   "The client approved the design on the first try",
+   "My code passed all the tests",
+   "The server is finally back online",
+   "I got the job offer I wanted"
+  ],
+  "situations_de": [
+   "Ich habe den Bug endlich nach 3 Tagen gefixt",
+   "Der Kunde hat das Design beim ersten Mal genehmigt",
+   "Mein Code hat alle Tests bestanden",
+   "Der Server ist endlich wieder online",
+   "Ich habe den Job bekommen, den ich wollte"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "template": "prop3",
+ "name": "Too Confusing, Too Extreme",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Zipper Merging"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is a reaction to complex, controversial, or overly complicated topics that are too difficult to understand or too radical to support. The text box is used to insert the specific subject or concept that fits this description, expressing a feeling of exhaustion or dismissal. It is often used to shut down debates about niche or polarizing issues.",
+  "meaning_de": "Dieser Meme ist eine Reaktion auf komplexe, kontroverse oder übermäßig komplizierte Themen, die zu schwer zu verstehen oder zu radikal sind, um sie zu unterstützen. Das Textfeld wird verwendet, um das spezifische Thema oder Konzept einzufügen, das dieser Beschreibung entspricht, und drückt ein Gefühl von Erschöpfung oder Ablehnung aus. Er wird oft verwendet, um Debatten über Nischen- oder polarisierende Themen zu beenden.",
+  "situations_en": [
+   "I tried to explain the new tax law and I just gave up.",
+   "The new update to the game is a disaster.",
+   "Trying to understand the new crypto regulations.",
+   "The plot of that new movie made no sense.",
+   "My boss's new management strategy is a nightmare."
+  ],
+  "situations_de": [
+   "Ich habe versucht, das neue Steuergesetz zu erklären und aufgegeben.",
+   "Das neue Update zum Spiel ist eine Katastrophe.",
+   "Die neuen Krypto-Regulierungen sind unverständlich.",
+   "Die Handlung des neuen Films ergibt keinen Sinn.",
+   "Die neue Managementstrategie meines Chefs ist ein Albtraum."
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "cbb",
+ "name": "Communist Bugs Bunny",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "our memes!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts Bugs Bunny holding a hammer and sickle, symbolizing communist or socialist ideals. It is used to express a playful or ironic endorsement of left-wing politics, collective ownership, or solidarity. The text boxes typically frame a topic or resource as something that should be shared or owned by the people.",
+  "meaning_de": "Dieses Meme zeigt Bugs Bunny mit Hammer und Sichel, was kommunistische oder sozialistische Ideale symbolisiert. Es wird verwendet, um eine spielerische oder ironische Unterstützung für linke Politik, kollektives Eigentum oder Solidarität auszudrücken. Die Textfelder rahmen ein Thema oder eine Ressource als etwas ein, das vom Volk geteilt oder besessen werden sollte.",
+  "situations_en": [
+   "I found a great tutorial, it belongs to the people!",
+   "Let's share our notes with the whole class.",
+   "The internet is a public resource, let's use it.",
+   "We should pool our money for the group trip.",
+   "This song is too good to keep to myself."
+  ],
+  "situations_de": [
+   "Ich hab einen guten Tutorial gefunden, gehört dem Volk!",
+   "Lasst uns unsere Notizen mit der ganzen Klasse teilen.",
+   "Das Internet ist eine öffentliche Ressource, lasst uns sie nutzen.",
+   "Wir sollten unser Geld für die Gruppenreise zusammenlegen.",
+   "Dieser Song ist zu gut, um ihn für mich zu behalten."
+  ]
+ }
+}

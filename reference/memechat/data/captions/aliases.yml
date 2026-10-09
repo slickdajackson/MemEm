@@ -1,0 +1,29 @@
+# Manual overrides for memechat.captions template matching.
+# pin:   memegen template id -> source keys to always use (keys: "<source>:<normalized name>")
+# block: memegen template id -> auto-matched keys that are wrong (generic show/character, different meme)
+pin:
+  ackbar: ["loc:its a trap"]
+  captain: ["imgflip:i m the captain now"]
+  drunk: ["loc:drunk baby 1"]
+  dwight: ["loc:dwight schrute", "loc:dwight meme"]
+  facepalm: ["imgflip:captain picard facepalm", "loc:picard facepalm", "loc:picardfacepalm"]
+  gb: ["imgflip:expanding brain"]
+  gears: ["loc:grinds my gears peter griffin"]
+  jetpack: ["loc:nothing to do here draw"]
+  rollsafe: ["imgflip:roll safe think about it"]
+  sk: ["loc:sceptical third world kid", "loc:skeptical third world child"]
+  sohot: ["imgflip:mugatu so hot right now"]
+  sparta: ["imgflip:sparta leonidas"]
+  winter: ["imgflip:brace yourselves x is coming"]
+  wonka: ["imgflip:creepy condescending wonka"]
+  yodawg: ["imgflip:yo dawg heard you", "loc:yo dawg"]
+  yuno: ["imgflip:y u no", "loc:y u no"]
+block:
+  bender: ["loc:futurama"]
+  chair: ["loc:chairo"]
+  drunk: ["loc:drunk"]
+  friends: ["imgflip:startrek", "loc:friends"]
+  glasses: ["loc:spider man"]
+  money: ["loc:futurama"]
+  sk: ["loc:third world success"]
+  spiderman: ["loc:spiderman"]

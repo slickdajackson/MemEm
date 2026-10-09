@@ -1,0 +1,34 @@
+{
+ "template": "gru",
+ "name": "Gru's Plan",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Learn how to make memes.",
+    "Make a meme.",
+    "No one likes it.",
+    "No one likes it."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a character confidently presenting a plan that is immediately revealed to be flawed, stupid, or a complete failure. The text boxes are used to show the progression from a confident idea to the realization of its absurdity or the inevitable negative outcome.",
+  "meaning_de": "Dieser Meme zeigt einen Charakter, der selbstbewusst einen Plan vorstellt, der sich sofort als fehlerhaft, dumm oder ein totaler Fehlschlag herausstellt. Die Textfelder werden verwendet, um den Übergang von einer selbstbewussten Idee zur Erkenntnis ihrer Absurdität oder des unvermeidlichen negativen Ergebnisses darzustellen.",
+  "situations_en": [
+   "I'm going to invest all my money in crypto.",
+   "Let's just tell the boss we're quitting.",
+   "I'll try to fix the sink with duct tape.",
+   "We should start a business selling ice in the desert.",
+   "I'm going to ask her out in front of everyone."
+  ],
+  "situations_de": [
+   "Ich investiere mein ganzes Geld in Krypto.",
+   "Lass uns einfach dem Chef kündigen.",
+   "Ich versuche, die Spüle mit Klebeband zu reparieren.",
+   "Wir sollten ein Geschäft mit Eis in der Wüste gründen.",
+   "Ich werde sie vor allen Leuten um ein Date bitten."
+  ]
+ }
+}

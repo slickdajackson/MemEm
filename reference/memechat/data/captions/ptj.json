@@ -1,0 +1,38 @@
+{
+ "template": "ptj",
+ "name": "Phoebe Teaching Joey",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Cast it",
+    "Cast it",
+    "into",
+    "into",
+    "the fire",
+    "the fire",
+    "Cast it into the fire.",
+    "Keep the Ring of Power!"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a scene from 'Friends' where Phoebe is explaining something to Joey to represent a situation where someone is being taught a specific rule or solution. The first three boxes repeat a short phrase, the fourth box repeats it, and the fifth and sixth boxes complete the phrase. The final box provides the full, correct sentence, often with a humorous or emphatic conclusion.",
+  "meaning_de": "Dieses Meme nutzt eine Szene aus 'Friends', in der Phoebe Joey etwas erklärt, um eine Situation darzustellen, in der jemand eine bestimmte Regel oder Lösung beigebracht wird. Die ersten drei Boxen wiederholen eine kurze Phrase, die vierte Box wiederholt sie, und die fünfte und sechste Box vervollständigen die Phrase. Die letzte Box liefert den vollständigen, korrekten Satz, oft mit einem humorvollen oder emphatischen Schluss.",
+  "situations_en": [
+   "Stop saying 'I am' when you mean 'I am not'",
+   "You keep forgetting to add the period",
+   "Please stop using that slang word",
+   "It is spelled 'definitely', not 'definatly'",
+   "You are holding the controller upside down"
+  ],
+  "situations_de": [
+   "Hör auf, 'ich bin' zu sagen, wenn du 'ich bin nicht' meinst",
+   "Du vergisst ständig den Punkt",
+   "Bitte hör auf, dieses Slangwort zu verwenden",
+   "Es wird 'definitiv' geschrieben, nicht 'definat'",
+   "Du hältst den Controller kopfüber"
+  ]
+ }
+}

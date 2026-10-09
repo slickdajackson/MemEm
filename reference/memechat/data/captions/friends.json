@@ -1,0 +1,33 @@
+{
+ "template": "friends",
+ "name": "Are You Two Friends?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Progressives",
+    "Republicans",
+    "Libertarians"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a social interaction where a third party asks two people if they are friends, and they give contradictory answers (one says 'No', the other says 'Yes'). It is used to highlight a one-sided friendship, a toxic relationship, or a situation where two entities are closely linked but one of them denies or is unaware of the connection.",
+  "meaning_de": "Dieses Meme zeigt eine soziale Interaktion, in der eine dritte Person zwei Personen fragt, ob sie befreundet sind, und diese widersprüchliche Antworten geben (einer sagt 'Nein', der andere 'Ja'). Es wird verwendet, um eine einseitige Freundschaft, eine toxische Beziehung oder eine Situation hervorzuheben, in der zwei Entitäten eng verbunden sind, aber einer der beiden die Verbindung leugnet oder sich dessen nicht bewusst ist.",
+  "situations_en": [
+   "I love my job, but my job hates me.",
+   "My dog loves me, I think I'm just furniture.",
+   "I'm obsessed with this show, the show doesn't know I exist.",
+   "My wallet and I are not on speaking terms.",
+   "I love coffee, coffee is ruining my sleep."
+  ],
+  "situations_de": [
+   "Ich liebe meinen Job, aber mein Job hasst mich.",
+   "Mein Hund liebt mich, ich glaube, ich bin nur Möbel.",
+   "Ich bin von dieser Serie besessen, die Serie weiß nicht, dass ich existiere.",
+   "Mein Geldbeutel und ich reden nicht miteinander.",
+   "Ich liebe Kaffee, Kaffee ruiniert meinen Schlaf."
+  ]
+ }
+}

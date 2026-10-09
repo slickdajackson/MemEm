@@ -1,0 +1,32 @@
+{
+ "template": "imsorry",
+ "name": "Oh, I'm Sorry, I Thought This Was America",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "oh, i'm sorry",
+    "i thought this was america"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses shock, disgust, or disbelief at seeing something that is chaotic, inappropriate, or absurdly out of place. The text boxes are used to set up the expectation of a normal or civilized environment (like America) and then reveal the reality to be something completely different or worse.",
+  "meaning_de": "Dieses Meme drückt Schock, Ekel oder Unglauben über etwas aus, das chaotisch, unangebracht oder absurd fehl am Platz ist. Die Textfelder werden verwendet, um die Erwartung einer normalen oder zivilisierten Umgebung (wie Amerika) aufzubauen und dann die Realität als etwas völlig anderes oder Schlimmeres zu enthüllen.",
+  "situations_en": [
+   "I thought the server was chill but it's full of drama",
+   "My code looked clean but it's actually spaghetti",
+   "I expected a professional meeting but it's chaos",
+   "The tutorial said easy but it's impossible",
+   "I thought the game was balanced but it's broken"
+  ],
+  "situations_de": [
+   "Ich dachte der Server ist chillig, aber es ist voller Drama",
+   "Mein Code sah sauber aus, ist aber Spaghetti",
+   "Ich erwartete ein professionelles Meeting, aber es ist Chaos",
+   "Das Tutorial sagte einfach, aber es ist unmöglich",
+   "Ich dachte das Spiel ist ausbalanciert, aber es ist kaputt"
+  ]
+ }
+}

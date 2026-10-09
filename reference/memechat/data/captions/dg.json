@@ -1,0 +1,33 @@
+{
+ "template": "dg",
+ "name": "Distracted Girlfriend",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Socialism",
+    "The Youth",
+    "Capitalism"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a couple walking together, but the girlfriend is distracted by a stranger walking past, while the boyfriend looks on with suspicion or annoyance. It is used to humorously express betrayal, distraction, or choosing a new option over an established one, with the boxes representing the current situation, the distraction, and the rival option.",
+  "meaning_de": "Dieses Meme zeigt ein Paar, das zusammen spaziert, wobei die Freundin von einem vorbeigehenden Fremden abgelenkt ist, während der Freund misstrauisch oder genervt zuschaut. Es wird verwendet, um humorvoll Verrat, Ablenkung oder die Wahl einer neuen Option gegenüber einer etablierten auszudrücken, wobei die Boxen die aktuelle Situation, die Ablenkung und die konkurrierende Option darstellen.",
+  "situations_en": [
+   "I've been using Python for years, but I'm switching to Rust",
+   "My loyal friend is suddenly texting that new guy",
+   "I'm ignoring my stable job for this startup offer",
+   "The old car is fine, but I'm looking at the new model",
+   "I'm loyal to this brand, but that competitor is tempting me"
+  ],
+  "situations_de": [
+   "Ich benutze Python seit Jahren, aber ich weiche auf Rust aus",
+   "Mein treuer Freund textet plötzlich mit dem neuen Typen",
+   "Ich ignoriere meinen sicheren Job wegen diesem Startup-Angebot",
+   "Das alte Auto ist gut, aber ich schaue mir das neue Modell an",
+   "Ich bin dieser Marke treu, aber dieser Konkurrent lockt mich"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "nice",
+ "name": "So I Got That Goin' For Me, Which is Nice",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "so i got that goin' for me, which is nice"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a man looking slightly confused or unimpressed, often used to express a sense of resigned acceptance or self-deprecating humor about a specific, often unhelpful or ironic, trait or situation. The top text usually describes a negative or awkward circumstance, while the bottom text delivers the punchline 'so I got that goin' for me, which is nice,' highlighting the absurdity or futility of the 'advantage.'",
+  "meaning_de": "Dieser Meme zeigt einen Mann, der leicht verwirrt oder unbeeindruckt aussieht und wird oft verwendet, um eine resignierte Akzeptanz oder selbstironischen Humor über ein bestimmtes, oft unbrauchbares oder ironisches Merkmal oder eine Situation auszudrücken. Der obere Text beschreibt in der Regel eine negative oder peinliche Situation, während der untere Text den Witz 'so i got that goin' for me, which is nice' liefert und die Absurdität oder Nutzlosigkeit des 'Vorteils' hervorhebt.",
+  "situations_en": [
+   "I just tripped over my own feet in front of everyone",
+   "My car broke down right after I got a new one",
+   "I have the confidence of a lion but the skills of a hamster",
+   "I finally learned to cook but I burned the house down",
+   "I got a promotion but now I have to work weekends"
+  ],
+  "situations_de": [
+   "Ich bin gerade vor allen über meine eigenen Füße gestolpert",
+   "Mein Auto ist kaputtgegangen, direkt nachdem ich mir ein neues gekauft habe",
+   "Ich habe das Selbstbewusstsein eines Löwen, aber die Fähigkeiten eines Hamsters",
+   "Ich habe endlich gelernt zu kochen, aber ich habe das Haus in Brand gesteckt",
+   "Ich wurde befördert, muss aber jetzt am Wochenende arbeiten"
+  ]
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "template": "iw",
+ "name": "Insanity Wolf",
+ "matched": [
+  "loc:insanity wolf"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "does testing",
+    "in production"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Вступи в группу",
+    "блядь"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "MONO!",
+    "LOBO CTM LOBOO!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "tus amigos se vuelven wachiturros",
+    "hacerles bullyng hasta que se depriman y se maten"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "дрочи",
+    "НА СУХУЮ!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "3 cartas en la mano?!",
+    "mulligan!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "tu vecino escucha reggaeton?",
+    "Rompele la radio en la cara y quemale la casa"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "tu oponente usa mazo elfo verde?",
+    "lightning bolt hasta que muera!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "крошка моя",
+    "я по тебе топором пройдусь!!!1"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "крошка моя я по тебе",
+    "ТОПОРОМ ПРОЙДУСЬ!!!1"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "si tu hermano te dice que el viejo pascuero no existe",
+    "toma los regalos meteselos en el horto y prendeles fuego"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "VER A UN WASHITURRO",
+    "culiarlo y quemarlo hasta la muerte"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "и в гостиной при свечах",
+    "он убивал как бог"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "alguien le pega a la maria teresa",
+    "pegale con un martillo en la cara al ctm"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "alguien le golpea a la maria teresa",
+    "golpealo en la cabeza con un palo"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "atropellar a un flaite en tu auto",
+    "y decirle siente el choque"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "TU PROFESORA TE ESTA ANOTANDO",
+    "AZOTARLE LA CABEZA CONTRA EL LIBRO HASTA QUE SE BORRE LA ANOTACION CON SU SANGRE"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "pillar a un paco de transito solo en un callejon",
+    "llamar a los anarkos para ir a pegarle"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Escuchar al Antuan cantar en clases",
+    "Querer volverse un asesino en serie"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "уёёёёбак",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses extreme, unhinged frustration or rage in response to a specific trigger. The first text box describes the annoying situation or event, while the second box contains the aggressive, often violent or absurdly disproportionate reaction the user wants to take.",
+  "meaning_de": "Dieses Meme drückt extremen, grenzenlosen Frust oder Wut auf einen bestimmten Auslöser aus. Der erste Textfeld beschreibt die nervige Situation oder das Ereignis, während das zweite Feld die aggressive, oft gewaltsame oder absurd übertriebene Reaktion enthält, die der Nutzer haben möchte.",
+  "situations_en": [
+   "why is my wifi down again",
+   "my boss just asked me to work on a holiday",
+   "someone cut in line in front of me",
+   "my roommate left a dirty dish in the sink",
+   "the game server is lagging at 1000ms"
+  ],
+  "situations_de": [
+   "warum ist mein WLAN wieder down",
+   "mein Chef will, dass ich an einem Feiertag arbeite",
+   "jemand hat sich vor mir in die Schlange geschoben",
+   "mein Mitbewohner hat ein schmutziges Geschirr in der Spüle gelassen",
+   "der Game-Server laggt mit 1000ms"
+  ]
+ }
+}

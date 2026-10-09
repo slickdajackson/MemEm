@@ -1,0 +1,32 @@
+# Product layout (UNTESTED here: no Docker on the dev Mac). Qdrant is read-only data shipped as data/memes.snapshot.
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.19.2
+    command: ["./qdrant", "--snapshot", "/snapshots/memes.snapshot:memes"]
+    volumes:
+      - ./data/memes.snapshot:/snapshots/memes.snapshot:ro
+    environment:
+      QDRANT__TELEMETRY_DISABLED: "true"
+
+  memegen:
+    build:
+      context: ./vendor/memegen
+      dockerfile: Containerfile
+    environment:
+      DOMAIN: memegen:5000
+      PORT: "5000"
+
+  api:
+    build: .
+    ports: ["8080:8080"]
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      MEMEGEN_URL: http://memegen:5000
+      LLM_BASE_URL: ${LLM_BASE_URL}   # e.g. vLLM serving Qwen/Qwen3.8-27B
+      LLM_MODEL: ${LLM_MODEL}
+      LLM_API_KEY: ${LLM_API_KEY}
+      EMBED_MODEL: google/embeddinggemma-2
+      EMBED_DEVICE: ${EMBED_DEVICE:-cpu}
+    volumes:
+      - ./data/captions:/app/data/captions:ro
+    depends_on: [qdrant, memegen]

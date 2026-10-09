@@ -1,0 +1,168 @@
+{
+ "template": "dwight",
+ "name": "Schrute Facts",
+ "matched": [
+  "loc:dwight schrute",
+  "loc:dwight meme"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "love is all you need?",
+    "false. you need water and rations."
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "The lord works in mysterious ways",
+    "false. The universe works in mysterious ways until science proves otherwise"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Anything is possible",
+    "false. you can't eat a truck in one bite."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "I'm sexy and I know it",
+    "False. You have the sexappeal of a potato."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "The fastest way to a man's heart is through his stomach?",
+    "false. The fastest way to a man's heart is through his sternum"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Curiosity Killed the cat?",
+    "False. I did and then stuffed it in angelas freezer"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Whatever doesn't kill you makes you stronger",
+    "False. strokes can cause long term paralysis of the arms, legs, and face."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "its cold as shit",
+    "FALSe. human fececes is around 98.6 degrees FAHRENHEIT"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Kristen stewart is a human",
+    "False. Humans have emotions"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "A Penny saved is a penny earned?",
+    "False, if the penny was yours to begin with, there is no net profit."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Headstrong won't take you on?",
+    "False. Headstrong will take on anyone"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Diamonds are forever?",
+    "FALSE. THEY EVENTUALLY TURN INTO GRAPHITE"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ПУЗИН",
+    "НЕГОДУЭЭт!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "FALSE",
+    "the second record in the file has a Correspondencetypeid of 8"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "FALSE",
+    "YOU DID NOT"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "INCORRECTO.",
+    "EL SOL ES UNA MASA ARDIENTE CENTRADO EN EL MEDIO DE NUESTRA SISTEMA SOLAR."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "FALSO",
+    "EL SOL ES ESTRELLA ESPECTRAL QUE SE ENCUENTA EN EL CENTRO DEL SISTEMA SOLAR"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "FALSO!",
+    "EL SOL ES una ESTRELLA ESPECTRAL QUE SE ENCUENTA EN EL CENTRO DEL SISTEMA SOLAR"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "If H2O is water, and H2O2 is peroxide, what is H2O4? Drinking.",
+    "False. Dihydrogen tetroxide would not work in terms of molecular bonding."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Falso",
+    "el verano empieza el 21 de diciembre"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the character Michael Scott's deadpan, pedantic delivery of 'Schrute Facts' to aggressively debunk a common myth or romanticized idea with a harsh, literal, or scientific truth. The first text box presents the popular belief or statement, while the second box delivers the blunt, often morbid or dry correction that shatters the illusion.",
+  "meaning_de": "Dieses Meme nutzt die trockene, pedantische Art von Michael Scott, 'Schrute-Fakten' zu verbreiten, um verbreitete Mythen oder romantisierte Ideen mit einer harten, wörtlichen oder wissenschaftlichen Wahrheit zu widerlegen. Die erste Textbox präsentiert den populären Glauben, während die zweite Box die blasse, oft morbide oder trockene Korrektur liefert, die die Illusion zerstört.",
+  "situations_en": [
+   "People say money can't buy happiness, but it can buy a boat.",
+   "Is it true that you can't learn new tricks after 30?",
+   "They say the heart is the center of our emotions.",
+   "Is it true that you can't die from laughing too hard?",
+   "People claim that you can't be too rich or too thin."
+  ],
+  "situations_de": [
+   "Man sagt, Geld kann kein Glück kaufen, aber es kann ein Boot kaufen.",
+   "Ist es wahr, dass man nach dem 30. Geburtstag keine neuen Tricks mehr lernen kann?",
+   "Sie sagen, das Herz sei das Zentrum unserer Emotionen.",
+   "Ist es wahr, dass man nicht vor Lachen sterben kann?",
+   "Leute behaupten, man kann nicht zu reich oder zu dünn sein."
+  ]
+ }
+}

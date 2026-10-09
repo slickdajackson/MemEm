@@ -1,0 +1,32 @@
+{
+ "template": "mmm",
+ "name": "Minor Mistake Marvin",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Puts ice cream back",
+    "Into the refrigerator"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "The meme depicts a child standing next to a microwave that contains a completely burnt or exploded item, implying that a small, innocent action led to a disastrous or chaotic result. The text boxes are used to describe the minor initial mistake and the exaggerated, catastrophic outcome that followed.",
+  "meaning_de": "Der Meme zeigt ein Kind neben einer Mikrowelle, in der ein völlig verbranntes oder explodiertes Objekt zu sehen ist, was andeutet, dass eine kleine, unschuldige Handlung zu einem katastrophalen Ergebnis führte. Die Textfelder werden verwendet, um den kleinen Anfangsfehler und das daraus resultierende, übertriebene Chaos zu beschreiben.",
+  "situations_en": [
+   "I tried to fix the code and now the server is on fire",
+   "Just wanted to warm up my leftovers, look at this mess",
+   "I accidentally deleted the database while trying to rename a file",
+   "Tried to open a jar and now the kitchen is destroyed",
+   "I just wanted to use the printer and now the whole office is offline"
+  ],
+  "situations_de": [
+   "Ich wollte nur den Code reparieren und jetzt brennt der Server",
+   "Wollte nur mein Essen aufwärmen, schau dir dieses Chaos an",
+   "Habe die Datenbank gelöscht, während ich eine Datei umbenennen wollte",
+   "Habe versucht ein Glas zu öffnen und jetzt ist die Küche zerstört",
+   "Wollte nur den Drucker nutzen und jetzt ist das ganze Büro offline"
+  ]
+ }
+}

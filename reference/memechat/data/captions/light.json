@@ -1,0 +1,32 @@
+{
+ "template": "light",
+ "name": "Everything the Light Touches is Our Kingdom",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "What about that shadowy place?",
+    "That's beyond our borders. You must never go there."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the iconic 'King Lion' scene to express a sense of grand ownership, ambition, or delusional confidence. The first text box describes a specific goal, achievement, or situation, while the second box provides a dramatic, royal, or over-the-top declaration that everything within that scope belongs to the user.",
+  "meaning_de": "Dieses Meme nutzt die ikonische 'König-Löwe'-Szene, um ein Gefühl von großem Besitz, Ehrgeiz oder wahnhafter Selbstsicherheit auszudrücken. Der erste Textfeld beschreibt ein bestimmtes Ziel, eine Errungenschaft oder eine Situation, während das zweite Textfeld eine dramatische, königliche oder übertriebene Erklärung abgibt, dass alles in diesem Bereich dem Benutzer gehört.",
+  "situations_en": [
+   "I just bought a new gaming PC.",
+   "I finally learned how to code.",
+   "I got a promotion at work.",
+   "I just moved into a new apartment.",
+   "I finally beat that difficult level."
+  ],
+  "situations_de": [
+   "Ich habe mir gerade einen neuen Gaming-PC gekauft.",
+   "Ich habe endlich gelernt, wie man codet.",
+   "Ich habe eine Beförderung bei der Arbeit bekommen.",
+   "Ich bin gerade in eine neue Wohnung gezogen.",
+   "Ich habe dieses schwierige Level endlich besiegt."
+  ]
+ }
+}

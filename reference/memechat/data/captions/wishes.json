@@ -1,0 +1,31 @@
+{
+ "template": "wishes",
+ "name": "Genie Rules",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "I want to divide by zero"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme references the classic 'genie' trope where a wisher is bound by strict rules (no death, no love, no resurrection). The humor comes from the punchline in the second panel, which reveals a hidden, often absurd or ironic fourth rule that contradicts the initial setup or the user's intent. It is used to express that a seemingly simple action or request has a secret, unexpected consequence or catch.",
+  "meaning_de": "Dieses Meme bezieht sich auf das klassische 'Dschinn'-Thema, bei dem der Wünschende an strenge Regeln gebunden ist (kein Tod, keine Liebe, keine Auferstehung). Der Humor entsteht durch den Punchline im zweiten Panel, der eine versteckte, oft absurde oder ironische vierte Regel offenbart, die dem ursprünglichen Setup oder der Absicht des Nutzers widerspricht. Es wird verwendet, um auszudrücken, dass eine scheinbar einfache Handlung oder Anfrage eine geheime, unerwartete Konsequenz oder einen Haken hat.",
+  "situations_en": [
+   "I thought I could just edit the code without breaking anything",
+   "I tried to skip the tutorial and now I'm stuck",
+   "I told my boss I'd be there in 5 minutes, but I'm still in the shower",
+   "I bought a 'lifetime' subscription and the company went bankrupt",
+   "I tried to be subtle about my crush and it backfired"
+  ],
+  "situations_de": [
+   "Ich dachte, ich könnte den Code einfach ändern, ohne etwas zu kaputtmachen",
+   "Ich habe versucht, das Tutorial zu überspringen und stecke jetzt fest",
+   "Ich habe meinem Chef gesagt, ich wäre in 5 Minuten da, aber ich stehe noch in der Dusche",
+   "Ich habe ein 'Lebenslanges' Abo gekauft und das Unternehmen ist pleite gegangen",
+   "Ich habe versucht, mich dezent in meinen Schwarm zu verlieben, und es ist nach hinten losgegangen"
+  ]
+ }
+}

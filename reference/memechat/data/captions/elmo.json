@@ -1,0 +1,35 @@
+{
+ "template": "elmo",
+ "name": "Elmo Choosing Cocaine",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Historical Accuracy",
+    "History Channel",
+    "Aliens",
+    "Historical Accuracy",
+    ""
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a character (Elmo) choosing a harmful or chaotic option (cocaine) over a healthy one (fruit), representing a decision to go with the 'bad' or 'chaotic' path. The text boxes are used to list the options, with the final box often left blank or containing a punchline to emphasize the absurdity of the choice.",
+  "meaning_de": "Dieses Meme zeigt eine Figur (Elmo), die eine schädliche oder chaotische Option (Kokain) anstelle eines gesunden (Obst) wählt, was die Entscheidung für den 'schlechten' oder 'chaotischen' Weg darstellt. Die Textfelder werden verwendet, um die Optionen aufzulisten, wobei das letzte Feld oft leer ist oder einen Punchline enthält, um die Absurdität der Wahl zu betonen.",
+  "situations_en": [
+   "I'm not going to the gym, I'm going to the bar",
+   "Choosing the hard mode of life",
+   "I have a deadline and a party, I choose the party",
+   "Healthy breakfast vs. 3 espressos and a donut",
+   "I'm not studying, I'm going to play games"
+  ],
+  "situations_de": [
+   "Ich gehe nicht ins Fitnessstudio, ich gehe in die Bar",
+   "Ich wähle den harten Modus des Lebens",
+   "Ich habe eine Deadline und eine Party, ich wähle die Party",
+   "Gesundes Frühstück vs. 3 Espressos und ein Donut",
+   "Ich lerne nicht, ich spiele Spiele"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "slap",
+ "name": "Will Smith Slapping Chris Rock",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Me Trying to Enjoy the Weekend",
+    "Monday"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses a sudden, aggressive, or humorous interruption of a positive situation by a negative one. The first text box represents the thing being enjoyed or the current state, while the second box is the unexpected event that ruins or 'slaps' it. It conveys a sense of abrupt disappointment or comedic frustration.",
+  "meaning_de": "Dieses Meme drückt eine plötzliche, aggressive oder humorvolle Unterbrechung einer positiven Situation durch eine negative aus. Das erste Textfeld steht für das Genießte oder den aktuellen Zustand, während das zweite das unerwartete Ereignis ist, das dies ruiniert. Es vermittelt ein Gefühl von abrupter Enttäuschung oder komischer Frustration.",
+  "situations_en": [
+   "I was having a great day until I spilled coffee on my shirt.",
+   "Me feeling confident before the exam, then the first question.",
+   "My mood after a good day, then the news.",
+   "Me enjoying my quiet evening, then the neighbors start a party.",
+   "My bank account after a fun night out."
+  ],
+  "situations_de": [
+   "Ich hatte einen guten Tag, bis ich mir Kaffee auf das Hemd geschüttet habe.",
+   "Ich vor der Prüfung voller Selbstvertrauen, dann die erste Frage.",
+   "Meine Stimmung nach einem guten Tag, dann die Nachrichten.",
+   "Ich genieße meinen ruhigen Abend, dann machen die Nachbarn Party.",
+   "Mein Bankkonto nach einer lustigen Nacht."
+  ]
+ }
+}

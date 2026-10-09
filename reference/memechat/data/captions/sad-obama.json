@@ -1,0 +1,32 @@
+{
+ "template": "sad-obama",
+ "name": "Sad Barack Obama",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "sad barack obama",
+    "doesn't think you'll vote"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a photo of Barack Obama looking down with a somber expression to express disappointment, sadness, or resignation about a specific situation. The top text usually describes the event or context, while the bottom text explains the negative consequence or the speaker's feeling of defeat regarding that event.",
+  "meaning_de": "Dieses Meme verwendet ein Foto von Barack Obama mit nachdenklichem Gesichtsausdruck, um Enttäuschung, Traurigkeit oder Resignation über eine bestimmte Situation auszudrücken. Der obere Text beschreibt meist das Ereignis, während der untere Text die negative Konsequenz oder das Gefühl der Niederlage erklärt.",
+  "situations_en": [
+   "I just found out my favorite show got cancelled",
+   "My phone died right before the concert started",
+   "I forgot to save my document and lost 3 hours of work",
+   "The pizza delivery guy left it on the wrong porch",
+   "My team lost the championship in the final seconds"
+  ],
+  "situations_de": [
+   "Ich habe gerade erfahren, dass meine Lieblingsserie eingestellt wurde",
+   "Mein Handy ist kurz vor dem Konzert gestorben",
+   "Ich habe vergessen, mein Dokument zu speichern und 3 Stunden Arbeit verloren",
+   "Der Pizzabote hat sie auf die falsche Veranda gestellt",
+   "Mein Team hat die Meisterschaft in den letzten Sekunden verloren"
+  ]
+ }
+}

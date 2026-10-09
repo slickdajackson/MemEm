@@ -1,0 +1,33 @@
+{
+ "template": "pool",
+ "name": "Mother Ignoring Kid Drowning In A Pool",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Posts in Hot",
+    "Posts in New",
+    "Redditors"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a mother in a pool who is so distracted by playing with one child that she completely ignores another child who is struggling and drowning in the foreground. It is used to express the feeling of being neglected, overlooked, or completely ignored by a group or authority figure who is focused on something else, often with a tone of dramatic irony or frustration.",
+  "meaning_de": "Dieses Meme zeigt eine Mutter im Pool, die so sehr damit beschäftigt ist, mit einem Kind zu spielen, dass sie ein anderes Kind im Vordergrund, das ertrinkt, völlig ignoriert. Es wird verwendet, um das Gefühl auszudrücken, vernachlässigt, übersehen oder von einer Gruppe oder einer Autoritätsperson ignoriert zu werden, die sich auf etwas anderes konzentriert, oft mit einem Ton dramatischer Ironie oder Frustration.",
+  "situations_en": [
+   "You posted your idea but the boss only praised the other guy.",
+   "I asked for help but you only answered the other person.",
+   "The developer ignores my bug report but fixes a typo.",
+   "I'm screaming for attention but you're just laughing.",
+   "The teacher ignored my question and talked to the smart kid."
+  ],
+  "situations_de": [
+   "Du hast meine Idee ignoriert und nur den anderen gelobt.",
+   "Ich habe Hilfe gefragt, aber du hast nur den anderen geantwortet.",
+   "Der Entwickler ignoriert meinen Bug, aber korrigiert einen Tippfehler.",
+   "Ich schreie um Aufmerksamkeit, aber du lachst nur.",
+   "Der Lehrer hat meine Frage ignoriert und mit dem klugen Kind gesprochen."
+  ]
+ }
+}

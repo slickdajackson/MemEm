@@ -1,0 +1,167 @@
+{
+ "template": "jetpack",
+ "name": "Nothing To Do Here",
+ "matched": [
+  "loc:nothing to do here draw"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "nothing to do here",
+    ""
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "ИГБиТ",
+    "деканат"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "H",
+    "h"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "собираем 4 токена буминатору",
+    "одеваем расхилятора"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "СОБИРАЕМ ТОКЕНЫ БУМИ",
+    "ОДЕВАЕМ РАСХИ"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "yo",
+    "me fui"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Гильдия в свторе?",
+    "нененененененене"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "con eso es suficiente",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "NOD CON LAG",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "i",
+    "i"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "e"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "porque cuando mamá y papá pelean",
+    "nothing to do here!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Barcelona",
+    "alla voy!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Es que le voy al america...y cuau es mi idolo",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "S.O.P.A CIERRA FACEBOOK",
+    "ME PASO A TUMBLR"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Girlfriend wanna married?",
+    "must escape!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "lol"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "-",
+    "ЛЕКА НОЩ"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "PrimeSOFT",
+    "IS late AGAIN"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "The meme depicts a character frantically running away while leaving a trail of smoke, expressing a sense of urgency or a hasty departure. The first text box typically describes the situation or the task being abandoned, while the second box contains a short phrase or exclamation indicating the sudden exit or the reason for the haste.",
+  "meaning_de": "Der Meme zeigt eine Figur, die fruchtlos davonläuft und dabei eine Rauchspur hinterlässt, was ein Gefühl der Dringlichkeit oder eines hastigen Aufbruchs ausdrückt. Das erste Textfeld beschreibt in der Regel die Situation oder die Aufgabe, die aufgegeben wird, während das zweite Feld eine kurze Phrase oder Ausruf enthält, der den plötzlichen Abgang oder den Grund für die Eile anzeigt.",
+  "situations_en": [
+   "I was going to help you but I have to run",
+   "I have to leave now, bye",
+   "I am done with this, I'm out",
+   "I have to go, I'll be back later",
+   "I am leaving, I have something to do"
+  ],
+  "situations_de": [
+   "Ich wollte dir helfen, aber ich muss los",
+   "Ich muss jetzt gehen, tschüss",
+   "Ich habe genug, ich bin raus",
+   "Ich muss gehen, ich komme später wieder",
+   "Ich gehe, ich habe etwas zu tun"
+  ]
+ }
+}

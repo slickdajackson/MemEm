@@ -1,0 +1,34 @@
+{
+ "template": "sarcasticbear",
+ "name": "Sarcastic Bear",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "i'm so sorry",
+    "i haven't memorized the internet"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a bear with a wide-open mouth and an exaggerated expression, used to convey extreme sarcasm, disbelief, or a dramatic, mocking reaction to a statement. The top text usually presents a situation or a question, while the bottom text delivers the sarcastic punchline or the absurd reality, mimicking the bear's loud, mocking 'yell'.",
+  "meaning_de": "Dieses Meme zeigt einen Bären mit weit offenem Mund und übertriebener Mimik, der verwendet wird, um extremen Sarkasmus, Unglauben oder eine dramatische, spöttische Reaktion auf eine Aussage auszudrücken. Der obere Text präsentiert meist eine Situation, während der untere Text die sarkastische Pointe liefert, die dem lauten, spöttischen 'Schrei' des Bären nachahmt.",
+  "situations_en": [
+   "I finally fixed the bug",
+   "I have no idea what I did",
+   "You said you'd be ready in 5 minutes",
+   "It's been 3 hours",
+   "I'm so proud of you",
+   "You deleted the database"
+  ],
+  "situations_de": [
+   "Ich habe den Bug endlich behoben",
+   "Ich hab keine Ahnung, was ich gemacht hab",
+   "Du warst in 5 Minuten fertig",
+   "Es sind 3 Stunden vergangen",
+   "Ich bin so stolz auf dich",
+   "Du hast die Datenbank gelöscht"
+  ]
+ }
+}

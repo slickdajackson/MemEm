@@ -1,0 +1,32 @@
+{
+ "template": "cheems",
+ "name": "Cheems",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "it's a good time to sleep",
+    "nothing will go wrong after this"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features the dog Cheems looking smug and confident, often with a slight smile. It is used to express a feeling of smug satisfaction, self-assurance, or a 'I know what I'm doing' attitude, usually in a lighthearted or ironic way. The text boxes are used to state a confident claim, a plan, or a situation that the user is feeling good about, often followed by a humorous or ironic outcome implied by the dog's expression.",
+  "meaning_de": "Dieses Meme zeigt den Hund Cheems mit einem selbstzufriedenen und selbstbewussten Gesichtsausdruck, oft mit einem leichten Lächeln. Es wird verwendet, um ein Gefühl von schmeichelhafter Zufriedenheit, Selbstsicherheit oder einer 'Ich weiß, was ich tue'-Haltung auszudrücken, meist auf eine humorvolle oder ironische Weise. Die Textfelder werden verwendet, um eine selbstbewusste Aussage, einen Plan oder eine Situation zu formulieren, über die sich der Nutzer gut fühlt, oft mit einem humorvollen oder ironischen Ergebnis, das durch den Gesichtsausdruck des Hundes angedeutet wird.",
+  "situations_en": [
+   "I just fixed the bug, the code is perfect now",
+   "I'm going to sleep early, I will be productive tomorrow",
+   "I finally finished my homework, I feel so smart",
+   "I'm going to eat this entire pizza, I can do it",
+   "I'm ready for the exam, I know all the answers"
+  ],
+  "situations_de": [
+   "Ich habe gerade den Bug behoben, der Code ist jetzt perfekt",
+   "Ich gehe früh schlafen, ich werde morgen produktiv sein",
+   "Ich habe endlich meine Hausaufgaben fertig, ich fühle mich so schlau",
+   "Ich werde diese ganze Pizza essen, das schaffe ich",
+   "Ich bin bereit für die Prüfung, ich kenne alle Antworten"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "dbg",
+ "name": "Expectation vs. Reality",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Clicking the 'X' on a mobile ad",
+    "The 'X' is part of the ad"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the humorous and often painful gap between a positive expectation and a disappointing reality. The top box describes the optimistic assumption, while the bottom box reveals the harsh truth or unexpected outcome. It is used to mock situations where things didn't go as planned.",
+  "meaning_de": "Dieses Meme drückt den humorvollen und oft schmerzhaften Unterschied zwischen einer positiven Erwartung und einer enttäuschenden Realität aus. Das obere Feld beschreibt die optimistische Annahme, während das untere Feld die harte Wahrheit oder das unerwartete Ergebnis offenbart. Es wird verwendet, um Situationen zu verspotten, in denen die Dinge nicht nach Plan verliefen.",
+  "situations_en": [
+   "I thought the free trial would actually be free.",
+   "Expected a smooth landing, got a crash instead.",
+   "I assumed the 'easy' mode was actually easy.",
+   "Thought I was winning until the final boss appeared.",
+   "Expected a 5-star review, got a 1-star rant."
+  ],
+  "situations_de": [
+   "Ich dachte, die Testphase wäre wirklich kostenlos.",
+   "Erwartet habe ich eine sanfte Landung, bekommen einen Absturz.",
+   "Ich dachte, der 'Leichte' Modus wäre wirklich leicht.",
+   "Gedacht, ich gewinne, bis der Endgegner erschien.",
+   "Erwartet 5 Sterne, bekommen 1 Stern und einen Wutanfall."
+  ]
+ }
+}

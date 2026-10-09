@@ -1,0 +1,32 @@
+{
+ "template": "stonks",
+ "name": "Stonks",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "stonks"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a confident, bald man in a suit standing in front of a stock market display with a rising arrow, representing the 'stonks' trend. It is used to express blind optimism, financial success, or a smug attitude about investments and business. The text boxes are typically used to describe the specific situation or asset that is 'going up'.",
+  "meaning_de": "Dieses Meme zeigt einen selbstbewussten, kahlen Mann im Anzug vor einer Börsenanzeige mit einem steigenden Pfeil. Es wird verwendet, um blinden Optimismus, finanziellen Erfolg oder eine selbstzufriedene Haltung gegenüber Investitionen auszudrücken. Die Textfelder werden genutzt, um die spezifische Situation oder das Asset zu beschreiben, das 'steigt'.",
+  "situations_en": [
+   "My portfolio is finally in the green!",
+   "I bought that stock and it doubled.",
+   "The company just announced a huge profit.",
+   "My crypto is finally going up.",
+   "I am rich now, thanks to my investment."
+  ],
+  "situations_de": [
+   "Mein Portfolio ist endlich im Plus!",
+   "Ich habe die Aktie gekauft und sie hat sich verdoppelt.",
+   "Das Unternehmen hat gerade einen riesigen Gewinn angekündigt.",
+   "Mein Krypto steigt endlich.",
+   "Ich bin jetzt reich, dank meiner Investition."
+  ]
+ }
+}

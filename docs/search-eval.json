@@ -1,0 +1,310 @@
+{
+  "space": "litert-eg2-text",
+  "model": "litert-community/embeddinggemma-2-text-270m-litert-lm",
+  "note": "Image and image_text points are text stand-ins in the same 270M space, not 440M vision embeddings. Prototype fused R@5 was 0.72.",
+  "seconds": 1.8,
+  "r_at_1": 0.475,
+  "r_at_5": 0.65,
+  "queries": 40,
+  "misses": [
+    {
+      "q": "not sure if you're joking or being serious",
+      "expect": [
+        "fry"
+      ],
+      "got": [
+        "noidea",
+        "leo",
+        "waygd",
+        "kermit",
+        "jw"
+      ]
+    },
+    {
+      "q": "I prefer pizza over salad any day",
+      "expect": [
+        "drake"
+      ],
+      "got": [
+        "both",
+        "cmm",
+        "soup-nazi",
+        "aint-got-time",
+        "badchoice"
+      ]
+    },
+    {
+      "q": "Lieber Pizza als Salat, ganz klar",
+      "expect": [
+        "drake"
+      ],
+      "got": [
+        "soup-nazi",
+        "cmm",
+        "both",
+        "scc",
+        "snek"
+      ]
+    },
+    {
+      "q": "Überall nur Baustellen",
+      "expect": [
+        "buzz"
+      ],
+      "got": [
+        "ntot",
+        "bihw",
+        "jetpack",
+        "ds",
+        "leo"
+      ]
+    },
+    {
+      "q": "why don't you ever answer my messages?",
+      "expect": [
+        "yuno"
+      ],
+      "got": [
+        "wddth",
+        "fa",
+        "kermit",
+        "dodgson",
+        "touch"
+      ]
+    },
+    {
+      "q": "Was wäre, wenn ich dir sage, dass das Meeting auch eine Mail hätte sein können",
+      "expect": [
+        "morpheus"
+      ],
+      "got": [
+        "sohappy",
+        "hagrid",
+        "officespace",
+        "cake",
+        "badchoice"
+      ]
+    },
+    {
+      "q": "one does not simply fix a bug on friday afternoon",
+      "expect": [
+        "mordor"
+      ],
+      "got": [
+        "jetpack",
+        "facepalm",
+        "aint-got-time",
+        "mmm",
+        "kermit"
+      ]
+    },
+    {
+      "q": "Man deployt nicht einfach freitags um 17 Uhr",
+      "expect": [
+        "mordor"
+      ],
+      "got": [
+        "jetpack",
+        "ackbar",
+        "facepalm",
+        "cryingfloor",
+        "ds"
+      ]
+    },
+    {
+      "q": "is this a feature? no it's a bug",
+      "expect": [
+        "pigeon"
+      ],
+      "got": [
+        "happening",
+        "whatyear",
+        "dbg",
+        "bilbo",
+        "noidea"
+      ]
+    },
+    {
+      "q": "Ist das hier ein Feature?",
+      "expect": [
+        "pigeon"
+      ],
+      "got": [
+        "box",
+        "dodgson",
+        "sohot",
+        "ackbar",
+        "happening"
+      ]
+    },
+    {
+      "q": "I'm smiling on the outside but dying inside",
+      "expect": [
+        "harold"
+      ],
+      "got": [
+        "fa",
+        "facepalm",
+        "sb",
+        "gone",
+        "nice"
+      ]
+    },
+    {
+      "q": "Ich lächle, aber innerlich sterbe ich",
+      "expect": [
+        "harold"
+      ],
+      "got": [
+        "ll",
+        "fa",
+        "sb",
+        "bd",
+        "nice"
+      ]
+    },
+    {
+      "q": "Er guckt schon wieder der neuen Grafikkarte hinterher statt mir",
+      "expect": [
+        "db"
+      ],
+      "got": [
+        "gears",
+        "dodgson",
+        "ermg",
+        "ch",
+        "drake"
+      ]
+    },
+    {
+      "q": "Man kann nicht verlieren, wenn man nie spielt, denk mal drüber nach",
+      "expect": [
+        "rollsafe"
+      ],
+      "got": [
+        "ntot",
+        "ch",
+        "inigo",
+        "philosoraptor",
+        "live"
+      ]
+    }
+  ],
+  "extra_r_at_1": 0.45,
+  "extra_r_at_5": 0.6,
+  "extra_n": 20,
+  "extra_misses": [
+    {
+      "q": "Montag um sieben ist unmenschlich",
+      "expect": [
+        "winter",
+        "fine",
+        "mordor"
+      ],
+      "got": [
+        "fa",
+        "dodgson",
+        "facepalm",
+        "ackbar",
+        "whatyear"
+      ]
+    },
+    {
+      "q": "Der Build ist grün, ich fasse es nicht",
+      "expect": [
+        "success",
+        "stonks",
+        "awesome"
+      ],
+      "got": [
+        "jw",
+        "facepalm",
+        "bilbo",
+        "kermit",
+        "snek"
+      ]
+    },
+    {
+      "q": "Kannst du das bitte noch heute reviewen",
+      "expect": [
+        "officespace",
+        "yuno",
+        "fine"
+      ],
+      "got": [
+        "icanhas",
+        "red",
+        "gone",
+        "soa",
+        "sohot"
+      ]
+    },
+    {
+      "q": "Stell dir vor, das Ticket war die ganze Zeit erledigt",
+      "expect": [
+        "morpheus",
+        "astronaut"
+      ],
+      "got": [
+        "tried",
+        "fwp",
+        "officespace",
+        "soa",
+        "older"
+      ]
+    },
+    {
+      "q": "Er schaut der neuen GPU hinterher und nicht mir",
+      "expect": [
+        "db",
+        "drake"
+      ],
+      "got": [
+        "gears",
+        "yuno",
+        "dodgson",
+        "soup-nazi",
+        "dg"
+      ]
+    },
+    {
+      "q": "Freitags um fünf noch deployen, bloß nicht",
+      "expect": [
+        "mordor"
+      ],
+      "got": [
+        "firsttry",
+        "jetpack",
+        "drowning",
+        "cryingfloor",
+        "fetch"
+      ]
+    },
+    {
+      "q": "Ich lächle im Call und sterbe innerlich",
+      "expect": [
+        "harold"
+      ],
+      "got": [
+        "fa",
+        "ll",
+        "seagull",
+        "dsm",
+        "cryingfloor"
+      ]
+    },
+    {
+      "q": "Ist das ein Feature oder schon wieder ein Bug",
+      "expect": [
+        "pigeon"
+      ],
+      "got": [
+        "whatyear",
+        "dbg",
+        "box",
+        "firsttry",
+        "happening"
+      ]
+    }
+  ]
+}

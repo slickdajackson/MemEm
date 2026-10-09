@@ -1,0 +1,32 @@
+{
+ "template": "puffin",
+ "name": "Unpopular opinion puffin",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "I don't find Mitch Hedberg",
+    "all the funny"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the image of a puffin looking down at its own foot to express a contrarian or 'unpopular opinion' about a specific topic. The first text box usually contains the controversial or unexpected statement, while the second box often adds a punchline, a justification, or a sarcastic twist to the initial claim.",
+  "meaning_de": "Dieses Meme nutzt das Bild eines Puffins, der auf seinen eigenen Fuß schaut, um eine abweichende oder 'unbeliebte Meinung' zu einem bestimmten Thema auszudrücken. Die erste Textbox enthält in der Regel die kontroverse oder unerwartete Aussage, während die zweite Box oft einen Witz, eine Rechtfertigung oder einen sarkastischen Twist zu der ursprünglichen Behauptung hinzufügt.",
+  "situations_en": [
+   "I think pineapple on pizza is actually delicious",
+   "My unpopular opinion is that cats are superior to dogs",
+   "I genuinely think the first Star Wars trilogy is overrated",
+   "I don't find Mitch Hedberg all that funny",
+   "I think it's cool to wear socks with sandals"
+  ],
+  "situations_de": [
+   "Ich finde Ananas auf Pizza ist eigentlich lecker",
+   "Meine unbeliebte Meinung ist, dass Katzen besser sind als Hunde",
+   "Ich finde die ersten Star Wars Filme sind übertroffen",
+   "Ich finde Mitch Hedberg nicht so lustig",
+   "Ich finde es cool, Socken zu Sandalen zu tragen"
+  ]
+ }
+}

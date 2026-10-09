@@ -1,0 +1,35 @@
+{
+ "template": "spirit",
+ "name": "Fake Spirit Halloween Costume",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "My Dad",
+    "Includes:",
+    "- Nothing",
+    "- Nothing",
+    "- Nothing"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the 'Spirit Halloween' costume packaging to mock a product, person, or situation that is advertised as something grand but is actually empty or useless. The text boxes are typically used to list the name of the subject in the first box, followed by a list of 'Includes:' items in the remaining boxes, which are usually 'Nothing' or a sarcastic description of the lack of substance.",
+  "meaning_de": "Dieser Meme nutzt die Verpackung von 'Spirit Halloween'-Kostümen, um ein Produkt, eine Person oder eine Situation zu verspotten, die als großartig beworben wird, aber in Wirklichkeit leer oder nutzlos ist. Die Textfelder werden typischerweise verwendet, um den Namen des Themas im ersten Feld zu nennen, gefolgt von einer Liste von 'Enthält:'-Einträgen in den restlichen Feldern, die meistens 'Nichts' oder eine sarkastische Beschreibung des Fehlens von Substanz sind.",
+  "situations_en": [
+   "My new job title is 'Senior VP of Vibes'.",
+   "The free trial of that app is actually just an ad.",
+   "My 'wellness' routine is just lying on the couch.",
+   "The 'premium' feature is just a paywall.",
+   "My 'surprise' gift was a receipt."
+  ],
+  "situations_de": [
+   "Mein neuer Jobtitel ist 'Senior VP für Vibes'.",
+   "Die Testversion dieser App ist eigentlich nur eine Werbung.",
+   "Meine 'Wellness'-Routine besteht nur aus dem Liegen auf der Couch.",
+   "Die 'Premium'-Funktion ist nur eine Bezahlmauer.",
+   "Mein 'Überraschungs'-Geschenk war eine Quittung."
+  ]
+ }
+}

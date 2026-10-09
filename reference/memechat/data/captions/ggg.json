@@ -1,0 +1,167 @@
+{
+ "template": "ggg",
+ "name": "Good Guy Greg",
+ "matched": [
+  "loc:good guy greg"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "sleeps on your couch",
+    "makes breakfast"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "Антон",
+    "подай пиво!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "завтра",
+    "я отвезу тебя в школу"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "я курю бычки,",
+    "пока пузик раздевается"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Паааш",
+    "пошли покурим"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "как себя чувствуете молодой человек.",
+    "Я в ахуе ващщееее"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "в кубе одно быдло",
+    "заебали,блеать!!!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Talks to your crush at party",
+    "Totally talks you up"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "dING DIG DING DIG",
+    "SOU CALVO"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ты отказала",
+    "мне 2 раза тыщ тыщ"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "YOU LEFT YOUR FACEBOOK LOGGED IN",
+    "LOGS YOU OUT."
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Уёбуй",
+    "Пока не поздно"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "я альбинка",
+    "я крута"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "sets up wifi router",
+    "no password so everyone can use his connection"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Makes Bets on College Football",
+    "Donates Winnings to Losing School's General Scholarship Fund"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "comes to kill you as hired murderer",
+    "Sets out to fulfill a last wish"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "wathing american idol",
+    "voting for everyone"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Girls are saying: Stop the Spam",
+    "Stops the Spam"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Puts ***'s to blank out swearing on facebook",
+    "-"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Gets cut off on highway",
+    "promises to be better driver"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "The meme features a man with a cigarette in his nose, making a goofy and slightly deranged face. It is used to express a sense of chaotic, unfiltered, or 'stoner' energy, often in response to absurd or nonsensical situations. The text boxes are typically used to set up a scenario or a character's action, followed by a punchline that matches the chaotic energy of the image.",
+  "meaning_de": "Der Meme zeigt einen Mann mit einer Zigarette in der Nase, der ein albern und leicht verrücktes Gesicht macht. Er wird verwendet, um ein Gefühl von chaotischer, ungefilterter oder 'Stoner'-Energie auszudrücken, oft als Reaktion auf absurde oder sinnlose Situationen. Die Textfelder werden typischerweise verwendet, um ein Szenario oder eine Handlung einzuleiten, gefolgt von einem Punchline, der der chaotischen Energie des Bildes entspricht.",
+  "situations_en": [
+   "I just stubbed my toe on the bedframe",
+   "My cat just knocked my coffee off the table",
+   "I accidentally replied all to the company email",
+   "I've been awake for 48 hours and I'm still fine",
+   "I tried to cook and now there is smoke everywhere"
+  ],
+  "situations_de": [
+   "Ich hab mir gerade den Zeh am Bett abgeknickt",
+   "Meine Katze hat gerade meinen Kaffee vom Tisch geschubst",
+   "Ich hab gerade an alle im Unternehmen geantwortet",
+   "Ich bin seit 48 Stunden wach und mir geht's noch gut",
+   "Ich hab gekocht und jetzt ist überall Rauch"
+  ]
+ }
+}

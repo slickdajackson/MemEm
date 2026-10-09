@@ -1,0 +1,20 @@
+{"q": "Ich hab das Meeting schon wieder verpennt", "expect": ["fry", "facepalm", "harold"]}
+{"q": "Montag um sieben ist unmenschlich", "expect": ["winter", "fine", "mordor"]}
+{"q": "Der Build ist grün, ich fasse es nicht", "expect": ["success", "stonks", "awesome"]}
+{"q": "Kannst du das bitte noch heute reviewen", "expect": ["officespace", "yuno", "fine"]}
+{"q": "Ich nehme beides, die Pizza und den Salat", "expect": ["both", "drake"]}
+{"q": "Das war eine Falle, klick da nicht drauf", "expect": ["ackbar", "pigeon"]}
+{"q": "Ich habe keine Ahnung, aber es läuft", "expect": ["noidea", "fine", "rollsafe"]}
+{"q": "Stell dir vor, das Ticket war die ganze Zeit erledigt", "expect": ["morpheus", "astronaut"]}
+{"q": "Nimm mein Geld, ich will die neue Tastatur", "expect": ["money"]}
+{"q": "Ananas auf Pizza, ändere meine Meinung", "expect": ["cmm"]}
+{"q": "Er schaut der neuen GPU hinterher und nicht mir", "expect": ["db", "drake"]}
+{"q": "Warum antwortest du seit drei Tagen nicht", "expect": ["yuno"]}
+{"q": "Freitags um fünf noch deployen, bloß nicht", "expect": ["mordor"]}
+{"q": "Alles brennt und ich sage, passt schon", "expect": ["fine"]}
+{"q": "Ich lächle im Call und sterbe innerlich", "expect": ["harold"]}
+{"q": "Aktien nur noch nach oben, alles rein", "expect": ["stonks"]}
+{"q": "Ist das ein Feature oder schon wieder ein Bug", "expect": ["pigeon"]}
+{"q": "Macht euch bereit, die Release-Woche kommt", "expect": ["winter"]}
+{"q": "Man kann nichts falsch machen, wenn man nichts abgibt", "expect": ["rollsafe"]}
+{"q": "Links ungelesen, rechts sofort beantwortet", "expect": ["drake"]}

@@ -1,0 +1,32 @@
+{
+ "template": "lrv",
+ "name": "Laundry Room Viking",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "do the laundry they said",
+    "it will be fun they said"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a man in a flooded laundry room wearing Viking horns and rowing a bucket like a boat, expressing a sense of absurd resilience or dark humor in the face of disaster. The top text usually describes the initial expectation or a simple task, while the bottom text reveals the chaotic or disastrous reality that has ensued.",
+  "meaning_de": "Dieses Meme zeigt einen Mann in einem überfluteten Waschraum mit Wikingerhörnern, der einen Eimer wie ein Boot rudert, und drückt eine absurde Resilienz oder schwarzen Humor angesichts einer Katastrophe aus. Der obere Text beschreibt meist die anfängliche Erwartung oder eine einfache Aufgabe, während der untere Text die daraus resultierende chaotische oder desaströse Realität aufdeckt.",
+  "situations_en": [
+   "I just wanted to fix one bug, now the whole site is down",
+   "We just wanted to redecorate the basement, now we are in a boat",
+   "I started a small argument, now I am living in a swamp",
+   "Just a quick install, now I am rowing through the server room",
+   "I went to check the laundry, now I am a Viking"
+  ],
+  "situations_de": [
+   "Ich wollte nur einen Bug fixen, jetzt ist die ganze Seite down",
+   "Wir wollten nur den Keller renovieren, jetzt rudern wir im Boot",
+   "Ich hab eine kleine Debatte angefangen, jetzt lebe ich im Sumpf",
+   "Nur eine schnelle Installation, jetzt rudere ich durch den Serverraum",
+   "Ich wollte nur die Wäsche checken, jetzt bin ich ein Wikinger"
+  ]
+ }
+}

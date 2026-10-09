@@ -1,0 +1,36 @@
+{
+ "template": "perfection",
+ "name": "Perfection",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Sebastian Shaw",
+    "I prefer the real Darth Vader.",
+    "Hayden Christensen",
+    "I said, the real Darth Vader.",
+    "Jake Lloyd",
+    "Perfection."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is a reaction to a series of disappointing options or attempts, where the speaker repeatedly rejects them in favor of a specific, superior version. It ends with the final, perfect choice, expressing satisfaction and vindication.",
+  "meaning_de": "Dieses Meme ist eine Reaktion auf eine Reihe enttäuschender Optionen oder Versuche, bei denen der Sprecher sie wiederholt zugunsten einer bestimmten, überlegenen Version ablehnt. Es endet mit der finalen, perfekten Wahl und drückt Zufriedenheit und Bestätigung aus.",
+  "situations_en": [
+   "I tried the new update, it's worse.",
+   "Look at this remake, it's a disaster.",
+   "They replaced the original actor?",
+   "This sequel is a letdown.",
+   "I'm glad they brought back the original."
+  ],
+  "situations_de": [
+   "Ich habe das neue Update ausprobiert, es ist schlechter.",
+   "Schau dir diesen Remake an, es ist eine Katastrophe.",
+   "Sie haben den Originaldarsteller ersetzt?",
+   "Diese Fortsetzung ist eine Enttäuschung.",
+   "Ich bin froh, dass sie das Original zurückgebracht haben."
+  ]
+ }
+}

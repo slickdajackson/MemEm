@@ -1,0 +1,32 @@
+{
+ "template": "kramer",
+ "name": "Kramer, What's Going On In There?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Kramer, what's going on in there?",
+    "It's a Chicken Roaster sign, right across from my window."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is used to express confusion or shock at a bizarre, nonsensical, or chaotic situation that someone else is calmly explaining or dealing with. The first box is used to ask what is happening or to express disbelief, while the second box provides the absurd or unexpected explanation or context.",
+  "meaning_de": "Dieses Meme wird verwendet, um Verwirrung oder Schock über eine bizarre, unsinnige oder chaotische Situation auszudrücken, die jemand anderes ruhig erklärt oder mit der er umgeht. Die erste Box dient dazu zu fragen, was los ist oder Unfassbarkeit auszudrücken, während die zweite Box die absurde oder unerwartete Erklärung oder den Kontext liefert.",
+  "situations_en": [
+   "I just saw my cat wearing a tiny hat.",
+   "My boss just announced a 4-day work week.",
+   "Why is there a live frog in my sink?",
+   "The printer just started printing my dreams.",
+   "I accidentally replied all to the company email."
+  ],
+  "situations_de": [
+   "Ich habe gerade meine Katze mit einem winzigen Hut gesehen.",
+   "Mein Chef hat gerade eine 4-Tage-Woche angekündigt.",
+   "Warum ist eine lebende Frösche in meiner Spüle?",
+   "Der Drucker hat gerade meine Träume ausgedruckt.",
+   "Ich habe versehentlich an alle im Unternehmen geantwortet."
+  ]
+ }
+}

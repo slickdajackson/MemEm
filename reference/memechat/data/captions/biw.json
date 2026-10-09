@@ -1,0 +1,32 @@
+{
+ "template": "biw",
+ "name": "Baby Insanity Wolf",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "gets iced coffee",
+    "in the winter"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a baby wolf looking up with an ecstatic, almost unhinged expression, often used to represent a state of pure, chaotic joy or 'insanity'. The top text usually describes a specific, often mundane or seasonal situation, while the bottom text explains the absurd or exaggerated reaction to it, highlighting a contrast between the cause and the intense feeling.",
+  "meaning_de": "Dieses Meme zeigt einen Babywolf, der mit einem ekstatischen, fast verrückten Ausdruck nach oben blickt und oft verwendet wird, um einen Zustand von purer, chaotischer Freude oder 'Verrücktheit' darzustellen. Der obere Text beschreibt meist eine bestimmte, oft banale oder saisonale Situation, während der untere Text die absurde oder übertriebene Reaktion darauf erklärt und einen Kontrast zwischen Ursache und intensivem Gefühl hervorhebt.",
+  "situations_en": [
+   "I just found a 50% off coupon",
+   "my dog finally stopped barking",
+   "it is 15 degrees outside",
+   "I got the last slice of pizza",
+   "my code compiled on the first try"
+  ],
+  "situations_de": [
+   "Ich habe gerade einen 50%-Rabattcode gefunden",
+   "mein Hund hat endlich aufgehört zu bellen",
+   "es sind 15 Grad draußen",
+   "ich habe die letzte Pizzastück bekommen",
+   "mein Code hat beim ersten Mal kompiliert"
+  ]
+ }
+}

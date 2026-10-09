@@ -1,0 +1,32 @@
+{
+ "template": "bilbo",
+ "name": "Why Shouldn't I Keep It",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "After all... why not?",
+    "Why shouldn't I keep it?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a clip of a character (often associated with the movie 'The Prestige') who looks at an object with intense curiosity and then makes a face of disgust or confusion. It is used to express the attitude of 'I shouldn't have looked at this' or 'I regret opening this Pandora's box.' The first box usually sets up the temptation or the question, and the second box delivers the punchline of regret or the realization that the object is terrible.",
+  "meaning_de": "Dieses Meme verwendet einen Clip eines Charakters (oft mit dem Film 'The Prestige' assoziiert), der ein Objekt mit intensiver Neugier betrachtet und dann ein Gesicht des Ekel oder der Verwirrung macht. Es wird verwendet, um die Haltung 'Ich hätte das nicht ansehen sollen' oder 'Ich bereue es, diese Pandora's Box geöffnet zu haben' auszudrücken. Die erste Box stellt die Versuchung oder die Frage auf, und die zweite Box liefert den Punchline des Bedauerns oder der Erkenntnis, dass das Objekt schrecklich ist.",
+  "situations_en": [
+   "I opened the file and now I regret it",
+   "Why did I click that link?",
+   "I shouldn't have read the comments",
+   "I looked at the source code, oops",
+   "I opened the fridge and now I'm sad"
+  ],
+  "situations_de": [
+   "Ich habe die Datei geöffnet und bereue es",
+   "Warum habe ich auf den Link geklickt?",
+   "Ich hätte die Kommentare nicht lesen sollen",
+   "Ich habe in den Quellcode geschaut, ups",
+   "Ich habe den Kühlschrank geöffnet und bin jetzt traurig"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "template": "sad-bush",
+ "name": "Sad George Bush",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "sad george bush",
+    "doesn't think you'll vote"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses a photo of George W. Bush looking downcast to express feelings of disappointment, defeat, or quiet resignation. The text boxes are typically used to describe a specific event or expectation in the first box and the negative or anticlimactic outcome in the second, creating a humorous contrast between hope and reality.",
+  "meaning_de": "Dieses Meme verwendet ein Foto von George W. Bush mit traurigem Gesichtsausdruck, um Enttäuschung, Niederlage oder stille Resignation auszudrücken. Die Textfelder werden genutzt, um im ersten Feld eine Erwartung zu beschreiben und im zweiten das negative Ergebnis, was einen humorvollen Kontrast zwischen Hoffnung und Realität erzeugt.",
+  "situations_en": [
+   "I spent 5 hours on that project and it still looks broken.",
+   "The new update fixed one bug but broke three others.",
+   "I really wanted the concert to be good but the sound was terrible.",
+   "My plant finally bloomed and then I accidentally killed it.",
+   "I was so excited for the movie but the ending was a letdown."
+  ],
+  "situations_de": [
+   "Ich habe 5 Stunden daran gearbeitet und es sieht immer noch kaputt aus.",
+   "Das Update hat einen Bug gefixt, aber drei andere kaputt gemacht.",
+   "Ich wollte, dass das Konzert gut wird, aber der Sound war schrecklich.",
+   "Meine Pflanze hat geblüht und dann habe ich sie versehentlich getötet.",
+   "Ich war so gespannt auf den Film, aber das Ende war enttäuschend."
+  ]
+ }
+}

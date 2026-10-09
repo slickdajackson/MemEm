@@ -1,0 +1,31 @@
+{
+ "template": "dragon",
+ "name": "What Color Do You Want Your Dragon",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "OK I want a boyfriend"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses the humor of someone making an unrealistic or impossible wish (like a dragon) and being told to be realistic, only to be surprised when the wish is actually granted. The text box is used to insert the specific 'unrealistic' desire or request the person is making.",
+  "meaning_de": "Dieses Meme drückt den Humor aus, wenn jemand einen unrealistischen oder unmöglichen Wunsch (wie einen Drachen) äußert und daraufhin zur Realitätsnähe aufgefordert wird, nur um dann überrascht zu sein, als der Wunsch tatsächlich erfüllt wird. Das Textfeld wird verwendet, um den spezifischen 'unrealistischen' Wunsch oder das Anliegen einzufügen, das die Person äußert.",
+  "situations_en": [
+   "I wish I could fly to work instead of taking the bus",
+   "I want a million dollars for my birthday",
+   "Can you just make me a sandwich and do my homework?",
+   "I wish I had a superpower",
+   "I want a private island for my vacation"
+  ],
+  "situations_de": [
+   "Ich wünschte, ich könnte fliegend zur Arbeit fahren statt mit dem Bus",
+   "Ich möchte zu meinem Geburtstag eine Million Dollar",
+   "Kannst du einfach ein Sandwich machen und meine Hausaufgaben erledigen?",
+   "Ich wünschte, ich hätte eine Superkraft",
+   "Ich möchte eine Privatinsel für meinen Urlaub"
+  ]
+ }
+}

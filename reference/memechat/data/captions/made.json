@@ -1,0 +1,35 @@
+{
+ "template": "made",
+ "name": "I Made This",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "The Internet",
+    "Everyone",
+    "I made this.",
+    "You made this?",
+    "I made this."
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme is a humorous and defensive reaction to someone questioning the originality or authenticity of a creation. The first two boxes set up a scenario where the creator proudly presents their work, only to be met with skepticism. The final two boxes show the creator doubling down on their claim, often with a deadpan or unbothered attitude, to shut down the doubt.",
+  "meaning_de": "Dieses Meme ist eine humorvolle und defensive Reaktion, wenn jemand die Originalität oder Authentizität einer Kreation in Frage stellt. Die ersten beiden Boxen stellen eine Situation dar, in der der Schöpfer stolz sein Werk präsentiert, nur um mit Skepsis konfrontiert zu werden. Die letzten beiden Boxen zeigen, wie der Schöpfer seine Behauptung mit einer ausdruckslosen oder unbeeindruckten Haltung bekräftigt, um den Zweifeln ein Ende zu setzen.",
+  "situations_en": [
+   "I coded this whole app in one night.",
+   "I finally finished my novel!",
+   "Check out this new song I produced.",
+   "I built this PC from scratch.",
+   "I wrote this script for the play."
+  ],
+  "situations_de": [
+   "Ich habe diese ganze App in einer Nacht programmiert.",
+   "Ich habe meinen Roman endlich fertig!",
+   "Schaut euch diesen neuen Song an, den ich produziert habe.",
+   "Ich habe diesen PC komplett selbst gebaut.",
+   "Ich habe dieses Skript für das Stück geschrieben."
+  ]
+ }
+}

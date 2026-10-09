@@ -1,0 +1,32 @@
+{
+ "template": "box",
+ "name": "What's in the box!?",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "",
+    "What's in the box!?"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme expresses intense, almost painful curiosity or anxiety about an unknown outcome or revelation. The top text box sets up the specific mystery or situation, while the bottom box delivers the iconic, desperate question 'What's in the box!?'",
+  "meaning_de": "Dieser Meme drückt intensive, fast schmerzhafte Neugier oder Angst vor einem unbekannten Ergebnis oder einer Enthüllung aus. Das obere Textfeld beschreibt das spezifische Geheimnis, während das untere die ikonische, verzweifelte Frage 'Was ist in der Kiste!?' liefert.",
+  "situations_en": [
+   "I finally opened the shipping package and I'm shaking.",
+   "The doctor just handed me a sealed envelope.",
+   "My partner just walked in holding a gift bag.",
+   "The server just restarted and I have no idea what happened.",
+   "I just found a sealed letter from 10 years ago."
+  ],
+  "situations_de": [
+   "Ich habe das Paket endlich geöffnet und zittere.",
+   "Der Arzt hat mir gerade einen versiegelten Umschlag gegeben.",
+   "Mein Partner ist gerade mit einer Geschenktüte hereingekommen.",
+   "Der Server hat gerade neu gestartet und ich weiß nicht, was passiert ist.",
+   "Ich habe gerade einen versiegelten Brief von vor 10 Jahren gefunden."
+  ]
+ }
+}

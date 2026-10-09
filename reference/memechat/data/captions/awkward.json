@@ -1,0 +1,167 @@
+{
+ "template": "awkward",
+ "name": "Socially Awkward Penguin",
+ "matched": [
+  "loc:socially awkward penguin"
+ ],
+ "captions": [
+  {
+   "lines": [
+    "start telling joke",
+    "forget punchline"
+   ],
+   "source": "memegen"
+  },
+  {
+   "lines": [
+    "вызвали к доске",
+    "остановилось сердце"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "спросил.увидел.полюбил",
+    "добавил.трахнул.удалил"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "mira esta es la pagina hd es wena",
+    "ir mostrando y salen puros picos y hueas fletas y se alejan de ti"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Секс-шоп?",
+    "Не заходил, стесняюсь"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "Вышел на балкон покурить",
+    "Сел на стул, чтобы никто не видел"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "купил новую одежду",
+    "пошел на учебу в старой"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "пришли гости",
+    "пошел в свою комнату поспать"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "В троллейбусе подсела красивая девушка",
+    "вышел на следующей остановке"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "caminar en la calle",
+    "que una amiga te grite: teni el cierre abajo"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "в маршрутке Слушаешь музыку в наушниках",
+    "делаешь потише, чтобы никто не слышал"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ОНА удалила из друзей",
+    "месяц плакал"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "нет сигарет",
+    "стесняешься стрельнуть"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "провожу выходные один в квартире",
+    "восемь восемь один четыре"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "В +Тринадцать",
+    "Ноль ноль!"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "realizing you walk in the wrong direction",
+    "Pretend to check phone before turning around"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "mala nota en la prueba?",
+    "desear volver al pasado para decirte las respuestas"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "llegan visitas",
+    "esconderte en tu habitacion"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "больше всего тебя бесит вопрос",
+    "ну почему ты такой грустный?"
+   ],
+   "source": "loc-meme-generator"
+  },
+  {
+   "lines": [
+    "ПАССАЖИР ОТСЕЛ ОТ ТЕБЯ КАК ТОЛЬКО ПОЯВИЛОСЬ СВОБОДНОЕ МЕСТО",
+    "ВСЮ ДОРОГУ ПЕРЕЖИВАЕШЬ"
+   ],
+   "source": "loc-meme-generator"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme depicts a penguin walking with a stiff, awkward posture, representing the feeling of social anxiety or being out of place in a social situation. The first text box describes the initial action or intention, while the second box describes the awkward, uncomfortable, or failed outcome.",
+  "meaning_de": "Dieses Meme zeigt einen Pinguin, der mit steifer, unbeholfener Haltung läuft und das Gefühl von sozialer Angst oder das Nicht-dazugehören in einer Situation darstellt. Die erste Textbox beschreibt die anfängliche Handlung oder Absicht, während die zweite das unbeholfene, unangenehme oder gescheiterte Ergebnis beschreibt.",
+  "situations_en": [
+   "I tried to make small talk at the party",
+   "I walked into the wrong classroom",
+   "I waved at someone who wasn't waving at me",
+   "I tried to be funny but it was cringe",
+   "I accidentally made eye contact with a celebrity"
+  ],
+  "situations_de": [
+   "Ich hab versucht, auf der Party Smalltalk zu machen",
+   "Ich bin in den falschen Klassenraum gelaufen",
+   "Ich hab jemandem zugewunken, der gar nicht zu mir gewunken hat",
+   "Ich wollte lustig sein, aber es war peinlich",
+   "Ich hab versehentlich mit einem Promi Augenkontakt gehabt"
+  ]
+ }
+}

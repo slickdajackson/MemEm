@@ -1,0 +1,32 @@
+{
+ "template": "sf",
+ "name": "Sealed Fate",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "i accidentally used a swear word",
+    "and i know my mom heard it from the other room"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme features a baby seal looking up with large, innocent eyes from inside a wicker basket, symbolizing a situation where one is trapped, cornered, or has no way out. The text boxes are used to describe a mistake or awkward predicament in the first box and the inevitable, inescapable consequence in the second, expressing a feeling of helpless resignation or 'sealed fate'.",
+  "meaning_de": "Dieses Meme zeigt ein Baby-Robben, das mit großen, unschuldigen Augen aus einem Weidenkorb nach oben blickt, was eine Situation symbolisiert, in der man in eine Ecke gedrängt oder ohne Ausweg ist. Die Textfelder werden verwendet, um im ersten Feld einen Fehler oder eine peinliche Situation zu beschreiben und im zweiten die unvermeidliche Konsequenz, was ein Gefühl von hilfloser Resignation oder 'verurteiltem Schicksal' ausdrückt.",
+  "situations_en": [
+   "I forgot to mute my mic during the meeting",
+   "my boss just saw the chat history",
+   "I sent the text to the wrong person",
+   "I left the oven on and the smoke alarm is going",
+   "I just realized I have a test tomorrow"
+  ],
+  "situations_de": [
+   "Ich habe vergessen, mein Mikrofon zu stummschalten",
+   "meine Chefin hat gerade den Chatverlauf gesehen",
+   "Ich habe die Nachricht an die falsche Person geschickt",
+   "Ich habe den Ofen an und der Rauchmelder piept",
+   "Ich habe gerade gemerkt, dass ich morgen eine Prüfung habe"
+  ]
+ }
+}

@@ -1,0 +1,47 @@
+[
+  {"name": "wg-putzplan", "lang": "de", "turns": [
+    ["Lena", "Wer hat schon wieder das dreckige Geschirr stehen lassen?"],
+    ["Tom", "Ich war's nicht, ich hab seit Tagen nicht gekocht"],
+    ["Lena", "Komisch, deine Pfanne steht aber da drin"],
+    ["Tom", "Okay okay, ich mach's heute Abend"],
+    ["Lena", "Das sagst du jede Woche"],
+    ["Tom", "Diesmal wirklich, versprochen!"]
+  ]},
+  {"name": "montag-buero", "lang": "de", "turns": [
+    ["Sarah", "Guten Morgen, wer hat Bock auf Montag?"],
+    ["Jonas", "Niemand. Der Server ist übers Wochenende abgestürzt"],
+    ["Sarah", "Na super, und das Meeting um 9 findet trotzdem statt"],
+    ["Jonas", "Das Meeting hätte auch eine Mail sein können"],
+    ["Sarah", "Ich hol erstmal Kaffee, sonst überlebe ich das nicht"]
+  ]},
+  {"name": "pizza-abend", "lang": "de", "turns": [
+    ["Max", "Pizza heute Abend?"],
+    ["Ali", "Klar, aber diesmal ohne Ananas bitte"],
+    ["Max", "Ananas gehört auf Pizza, ändere meine Meinung"],
+    ["Ali", "Ich bestell dann einfach Sushi für mich"],
+    ["Max", "Verräter"]
+  ]},
+  {"name": "deploy-friday", "lang": "en", "turns": [
+    ["Dev", "Should we deploy the new release today?"],
+    ["Ops", "It's Friday 5pm, absolutely not"],
+    ["Dev", "But all tests are green!"],
+    ["Ops", "That's what you said last time and production burned down"],
+    ["Dev", "Fine, Monday morning then"],
+    ["Ops", "Thank you, my weekend thanks you"]
+  ]},
+  {"name": "gym-motivation", "lang": "en", "turns": [
+    ["Kim", "I'm going to the gym every day starting tomorrow"],
+    ["Sam", "You said that last January"],
+    ["Kim", "This time I already bought the membership"],
+    ["Sam", "So did half the city, see you in February"],
+    ["Kim", "Wow, thanks for the support"]
+  ]},
+  {"name": "pruefung", "lang": "de", "turns": [
+    ["Mia", "Morgen ist die Matheklausur und ich hab noch nichts gelernt"],
+    ["Ben", "Ich auch nicht, aber ich hab einen Plan"],
+    ["Mia", "Was für einen Plan?"],
+    ["Ben", "Heute Nacht alles auf einmal lernen"],
+    ["Mia", "Das klappt doch nie"],
+    ["Ben", "Hab ich bestanden! 2,3!"]
+  ]}
+]

@@ -1,0 +1,40 @@
+{"q": "not sure if you're joking or being serious", "expect": ["fry"]}
+{"q": "Ich weiß nicht, ob du mich gerade trollst oder das ernst meinst", "expect": ["fry"]}
+{"q": "I prefer pizza over salad any day", "expect": ["drake"]}
+{"q": "Lieber Pizza als Salat, ganz klar", "expect": ["drake"]}
+{"q": "finally my code compiled on the first try!", "expect": ["success", "firsttry"]}
+{"q": "Endlich hab ich die Prüfung bestanden!", "expect": ["success"]}
+{"q": "everything is on fire but I'm totally fine", "expect": ["fine"]}
+{"q": "Alles brennt, aber passt schon, mir geht's gut", "expect": ["fine"]}
+{"q": "bugs, bugs everywhere in this codebase", "expect": ["buzz"]}
+{"q": "Überall nur Baustellen", "expect": ["buzz"]}
+{"q": "why don't you ever answer my messages?", "expect": ["yuno"]}
+{"q": "Warum antwortest du nie auf meine Nachrichten?", "expect": ["yuno"]}
+{"q": "what if I told you the meeting could have been an email", "expect": ["morpheus"]}
+{"q": "Was wäre, wenn ich dir sage, dass das Meeting auch eine Mail hätte sein können", "expect": ["morpheus"]}
+{"q": "one does not simply fix a bug on friday afternoon", "expect": ["mordor"]}
+{"q": "Man deployt nicht einfach freitags um 17 Uhr", "expect": ["mordor"]}
+{"q": "I have no idea what I'm doing but it works", "expect": ["noidea"]}
+{"q": "Ich hab keine Ahnung was ich hier mache", "expect": ["noidea"]}
+{"q": "shut up and take my money, I want those new headphones", "expect": ["money"]}
+{"q": "Nimm einfach mein Geld, ich will das haben!", "expect": ["money"]}
+{"q": "is this a feature? no it's a bug", "expect": ["pigeon"]}
+{"q": "Ist das hier ein Feature?", "expect": ["pigeon"]}
+{"q": "it's a trap! don't click that link", "expect": ["ackbar"]}
+{"q": "Das ist eine Falle!", "expect": ["ackbar"]}
+{"q": "that would be great if you could come in on saturday", "expect": ["officespace"]}
+{"q": "Wäre super, wenn du am Samstag reinkommen könntest", "expect": ["officespace"]}
+{"q": "I'm smiling on the outside but dying inside", "expect": ["harold"]}
+{"q": "Ich lächle, aber innerlich sterbe ich", "expect": ["harold"]}
+{"q": "stocks only go up, investing all in", "expect": ["stonks"]}
+{"q": "Hab alles in Aktien gesteckt, kann nur steigen", "expect": ["stonks"]}
+{"q": "change my mind: pineapple belongs on pizza", "expect": ["cmm"]}
+{"q": "Ändere meine Meinung: Ananas gehört auf Pizza", "expect": ["cmm"]}
+{"q": "my boyfriend looking at a new phone while I'm standing right here", "expect": ["db"]}
+{"q": "Er guckt schon wieder der neuen Grafikkarte hinterher statt mir", "expect": ["db"]}
+{"q": "wait, it's all just javascript? always has been", "expect": ["astronaut"]}
+{"q": "Moment, das war die ganze Zeit Excel? Schon immer.", "expect": ["astronaut"]}
+{"q": "you can't get a bad grade if you never take the exam *taps head*", "expect": ["rollsafe"]}
+{"q": "Man kann nicht verlieren, wenn man nie spielt, denk mal drüber nach", "expect": ["rollsafe"]}
+{"q": "brace yourselves, the monday meetings are coming", "expect": ["winter"]}
+{"q": "Macht euch bereit, der Montag kommt", "expect": ["winter"]}

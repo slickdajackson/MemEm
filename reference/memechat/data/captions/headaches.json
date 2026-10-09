@@ -1,0 +1,31 @@
+{
+ "template": "headaches",
+ "name": "Types of Headaches",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "Breaking Production"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme uses the 'Types of Headaches' template to express that a specific situation or task is an overwhelming, all-consuming burden. The text box replaces the 'Stress' label to identify the source of the pain, implying that the topic causes maximum suffering or frustration.",
+  "meaning_de": "Dieses Meme verwendet die Vorlage 'Arten von Kopfschmerzen', um auszudrücken, dass eine bestimmte Situation oder Aufgabe eine überwältigende, alles verzehrende Belastung ist. Der Textfeld ersetzt das Label 'Stress', um die Ursache des Schmerzes zu benennen und zu implizieren, dass das Thema maximale Leiden oder Frustration verursacht.",
+  "situations_en": [
+   "I just opened the codebase and found 4000 errors",
+   "The client wants the project done by tomorrow",
+   "I have to explain the new update to the team",
+   "My laptop crashed right before the deadline",
+   "The server is down and I have no idea why"
+  ],
+  "situations_de": [
+   "Ich habe gerade den Code geöffnet und 4000 Fehler gefunden",
+   "Der Kunde will das Projekt bis morgen fertig haben",
+   "Ich muss dem Team das neue Update erklären",
+   "Mein Laptop ist kurz vor der Deadline abgestürzt",
+   "Der Server ist down und ich habe keine Ahnung warum"
+  ]
+ }
+}

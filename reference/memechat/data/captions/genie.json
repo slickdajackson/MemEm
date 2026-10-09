@@ -1,0 +1,32 @@
+{
+ "template": "genie",
+ "name": "Genie Lamp",
+ "matched": [],
+ "captions": [
+  {
+   "lines": [
+    "phenomenal cosmic power",
+    "itty bitty living space"
+   ],
+   "source": "memegen"
+  }
+ ],
+ "meaning": {
+  "meaning_en": "This meme contrasts a character's massive, powerful, or impressive appearance with their actual small, cramped, or insignificant reality. The top box describes the grand illusion or expectation, while the bottom box reveals the disappointing truth.",
+  "meaning_de": "Dieses Meme stellt den massiven, mächtigen oder beeindruckenden Auftritt eines Charakters seiner tatsächlichen kleinen, beengten oder unwichtigen Realität gegenüber. Die obere Box beschreibt die große Illusion oder Erwartung, während die untere Box die enttäuschende Wahrheit offenbart.",
+  "situations_en": [
+   "My code looks complex but it's just a print statement",
+   "I look like a pro gamer but I'm playing on easy mode",
+   "My apartment is a mansion but I live in a closet",
+   "My portfolio is impressive but I have no clients",
+   "I look like a CEO but I'm just an intern"
+  ],
+  "situations_de": [
+   "Mein Code sieht komplex aus, ist aber nur ein print-Statement",
+   "Ich sehe aus wie ein Pro-Gamer, spiele aber auf einfach",
+   "Meine Wohnung ist ein Schloss, aber ich lebe in einem Schrank",
+   "Mein Portfolio ist beeindruckend, aber ich habe keine Kunden",
+   "Ich sehe aus wie ein CEO, bin aber nur ein Praktikant"
+  ]
+ }
+}
